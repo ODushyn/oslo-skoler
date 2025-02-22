@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_a16043c743308deeb00ca0babd5b2697 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_a16043c743308deeb00ca0babd5b2697" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_a16043c743308deeb00ca0babd5b2697 = L.map(
+                "map_a16043c743308deeb00ca0babd5b2697",
+                {
+                    center: [59.881736599999996, 10.826484696587595],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_29eab141031f07d3ab7fd51e22fdbe23 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_29eab141031f07d3ab7fd51e22fdbe23.addTo(map_a16043c743308deeb00ca0babd5b2697);
+        
+    
+            var marker_abc90579bd9a4db9e216344f2a2ee88a = L.marker(
+                [59.881736599999996, 10.826484696587595],
+                {
+}
+            ).addTo(map_a16043c743308deeb00ca0babd5b2697);
+        
+    
+            var icon_dd06231c0c050d92be3d5efbb575fd45 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_abc90579bd9a4db9e216344f2a2ee88a.setIcon(icon_dd06231c0c050d92be3d5efbb575fd45);
+        
+    
+        var popup_0e3f707b2af73c261498fe01b1ae8b19 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_78f18a47609ba73e8f9b7d77039edc73 = $(`<div id="html_78f18a47609ba73e8f9b7d77039edc73" style="width: 100.0%; height: 100.0%;">         <b>Abildsø skole</b><br>         <b>Engelsk:</b> 50<br>         <b>Lesing:</b> 54<br>         <b>Regning:</b> 52<br>         </div>`)[0];
+                popup_0e3f707b2af73c261498fe01b1ae8b19.setContent(html_78f18a47609ba73e8f9b7d77039edc73);
+            
+        
+
+        marker_abc90579bd9a4db9e216344f2a2ee88a.bindPopup(popup_0e3f707b2af73c261498fe01b1ae8b19)
+        ;
+
+        
+    
+    
+            var marker_471d2fe173549e677c260227ff2de7b6 = L.marker(
+                [59.965093100000004, 10.875646258268842],
+                {
+}
+            ).addTo(map_a16043c743308deeb00ca0babd5b2697);
+        
+    
+            var icon_f18b367c4e2c6b30d380243befebbf68 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_471d2fe173549e677c260227ff2de7b6.setIcon(icon_f18b367c4e2c6b30d380243befebbf68);
+        
+    
+        var popup_38d11417862cf40c1529211bb7b0b692 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_75c13c58d88bbce29b3307a50e48c2e5 = $(`<div id="html_75c13c58d88bbce29b3307a50e48c2e5" style="width: 100.0%; height: 100.0%;">         <b>Ammerud skole</b><br>         <b>Engelsk:</b> 49<br>         <b>Lesing:</b> 50<br>         <b>Regning:</b> 50<br>         </div>`)[0];
+                popup_38d11417862cf40c1529211bb7b0b692.setContent(html_75c13c58d88bbce29b3307a50e48c2e5);
+            
+        
+
+        marker_471d2fe173549e677c260227ff2de7b6.bindPopup(popup_38d11417862cf40c1529211bb7b0b692)
+        ;
+
+        
+    
+    
+            var marker_42a6489b3943f0357d17ab26c1881197 = L.marker(
+                [59.93737595, 10.910787389858728],
+                {
+}
+            ).addTo(map_a16043c743308deeb00ca0babd5b2697);
+        
+    
+            var icon_0f0e1565829204acec45909d5cf1a943 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_42a6489b3943f0357d17ab26c1881197.setIcon(icon_0f0e1565829204acec45909d5cf1a943);
+        
+    
+        var popup_d1e1ed47405e22f65585f1b97a8017d9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9816bacf5e9df1cf330b0baf41c244f0 = $(`<div id="html_9816bacf5e9df1cf330b0baf41c244f0" style="width: 100.0%; height: 100.0%;">         <b>Bakås skole</b><br>         <b>Engelsk:</b> 50<br>         <b>Lesing:</b> 50<br>         <b>Regning:</b> 47<br>         </div>`)[0];
+                popup_d1e1ed47405e22f65585f1b97a8017d9.setContent(html_9816bacf5e9df1cf330b0baf41c244f0);
+            
+        
+
+        marker_42a6489b3943f0357d17ab26c1881197.bindPopup(popup_d1e1ed47405e22f65585f1b97a8017d9)
+        ;
+
+        
+    
+    
+            var marker_56914b1ec41caf928f2f3e3084664b2d = L.marker(
+                [59.882529149999996, 10.784960851447124],
+                {
+}
+            ).addTo(map_a16043c743308deeb00ca0babd5b2697);
+        
+    
+            var icon_c6842b2d466c6e0cf8b45518c5069d0a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "lightgreen",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_56914b1ec41caf928f2f3e3084664b2d.setIcon(icon_c6842b2d466c6e0cf8b45518c5069d0a);
+        
+    
+        var popup_404cc070b9a24aa1e0f350a4796e4fd4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a002cbf51117224033be6acc328adbd1 = $(`<div id="html_a002cbf51117224033be6acc328adbd1" style="width: 100.0%; height: 100.0%;">         <b>Bekkelaget skole</b><br>         <b>Engelsk:</b> 52<br>         <b>Lesing:</b> 55<br>         <b>Regning:</b> 53<br>         </div>`)[0];
+                popup_404cc070b9a24aa1e0f350a4796e4fd4.setContent(html_a002cbf51117224033be6acc328adbd1);
+            
+        
+
+        marker_56914b1ec41caf928f2f3e3084664b2d.bindPopup(popup_404cc070b9a24aa1e0f350a4796e4fd4)
+        ;
+
+        
+    
+    
+            var marker_1a81c88fb8a467a324fce76a446f6a0c = L.marker(
+                [59.94958415, 10.741722443791646],
+                {
+}
+            ).addTo(map_a16043c743308deeb00ca0babd5b2697);
+        
+    
+            var icon_22431909e477778215f396cb6eba9098 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkgreen",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_1a81c88fb8a467a324fce76a446f6a0c.setIcon(icon_22431909e477778215f396cb6eba9098);
+        
+    
+        var popup_7f2f2254e2197b3fdaab14195bd6d692 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_456a5efd5f17fc63782ddc808e1a8823 = $(`<div id="html_456a5efd5f17fc63782ddc808e1a8823" style="width: 100.0%; height: 100.0%;">         <b>Berg skole</b><br>         <b>Engelsk:</b> 54<br>         <b>Lesing:</b> 56<br>         <b>Regning:</b> 57<br>         </div>`)[0];
+                popup_7f2f2254e2197b3fdaab14195bd6d692.setContent(html_456a5efd5f17fc63782ddc808e1a8823);
+            
+        
+
+        marker_1a81c88fb8a467a324fce76a446f6a0c.bindPopup(popup_7f2f2254e2197b3fdaab14195bd6d692)
+        ;
+
+        
+    
+    
+            var marker_63fe4b891b234561fd895c7bbe4c7cd9 = L.marker(
+                [59.9237086, 10.654051031057925],
+                {
+}
+            ).addTo(map_a16043c743308deeb00ca0babd5b2697);
+        
+    
+            var icon_dcf42b90c326eaa50410fd116c5fc841 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkgreen",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_63fe4b891b234561fd895c7bbe4c7cd9.setIcon(icon_dcf42b90c326eaa50410fd116c5fc841);
+        
+    
+        var popup_12cd02d15e696559b37be5877507fac7 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6d26731884a036e78e9c4cbf27732927 = $(`<div id="html_6d26731884a036e78e9c4cbf27732927" style="width: 100.0%; height: 100.0%;">         <b>Bestum skole</b><br>         <b>Engelsk:</b> 56<br>         <b>Lesing:</b> 58<br>         <b>Regning:</b> 56<br>         </div>`)[0];
+                popup_12cd02d15e696559b37be5877507fac7.setContent(html_6d26731884a036e78e9c4cbf27732927);
+            
+        
+
+        marker_63fe4b891b234561fd895c7bbe4c7cd9.bindPopup(popup_12cd02d15e696559b37be5877507fac7)
+        ;
+
+        
+    
+    
+            var marker_8ccf4f286a6482f7c9f8e08770383587 = L.marker(
+                [59.9397534, 10.757407783264846],
+                {
+}
+            ).addTo(map_a16043c743308deeb00ca0babd5b2697);
+        
+    
+            var icon_4b93b7e71d7706fdd3ed2de1e1fed5df = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_8ccf4f286a6482f7c9f8e08770383587.setIcon(icon_4b93b7e71d7706fdd3ed2de1e1fed5df);
+        
+    
+        var popup_63613d41e5b5c4a9819aeee1fb023a8a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_eefa861473a34f52e628347fa0037e48 = $(`<div id="html_eefa861473a34f52e628347fa0037e48" style="width: 100.0%; height: 100.0%;">         <b>Bjølsen skole</b><br>         <b>Engelsk:</b> 52<br>         <b>Lesing:</b> 52<br>         <b>Regning:</b> 52<br>         </div>`)[0];
+                popup_63613d41e5b5c4a9819aeee1fb023a8a.setContent(html_eefa861473a34f52e628347fa0037e48);
+            
+        
+
+        marker_8ccf4f286a6482f7c9f8e08770383587.bindPopup(popup_63613d41e5b5c4a9819aeee1fb023a8a)
+        ;
+
+        
+    
+    
+            var marker_23c6f464dc354746611eea4beb26bf0c = L.marker(
+                [59.825141450000004, 10.836988070493469],
+                {
+}
+            ).addTo(map_a16043c743308deeb00ca0babd5b2697);
+        
+    
+            var icon_1eac587b11c420e11eac87f150072f39 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "lightgreen",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_23c6f464dc354746611eea4beb26bf0c.setIcon(icon_1eac587b11c420e11eac87f150072f39);
+        
+    
+        var popup_98147d4b4f7e7fb0afa39a99309a77e1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e9b9e0387db6fac1ac44c10e425e200a = $(`<div id="html_e9b9e0387db6fac1ac44c10e425e200a" style="width: 100.0%; height: 100.0%;">         <b>Bjørndal skole</b><br>         <b>Engelsk:</b> 54<br>         <b>Lesing:</b> 52<br>         <b>Regning:</b> 51<br>         </div>`)[0];
+                popup_98147d4b4f7e7fb0afa39a99309a77e1.setContent(html_e9b9e0387db6fac1ac44c10e425e200a);
+            
+        
+
+        marker_23c6f464dc354746611eea4beb26bf0c.bindPopup(popup_98147d4b4f7e7fb0afa39a99309a77e1)
+        ;
+
+        
+    
+    
+            var marker_990fa01ff1175bdd43d005835ec24060 = L.marker(
+                [59.92865405, 10.642573478584868],
+                {
+}
+            ).addTo(map_a16043c743308deeb00ca0babd5b2697);
+        
+    
+            var icon_0ae5ded899b552b0f7d78ce731bfa7aa = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "lightgreen",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_990fa01ff1175bdd43d005835ec24060.setIcon(icon_0ae5ded899b552b0f7d78ce731bfa7aa);
+        
+    
+        var popup_80b386cc87930b723d322509c198fce5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0ffb9bb0238a6b54eed129b4f6951860 = $(`<div id="html_0ffb9bb0238a6b54eed129b4f6951860" style="width: 100.0%; height: 100.0%;">         <b>Bjørnsletta skole</b><br>         <b>Engelsk:</b> 54<br>         <b>Lesing:</b> 53<br>         <b>Regning:</b> 55<br>         </div>`)[0];
+                popup_80b386cc87930b723d322509c198fce5.setContent(html_0ffb9bb0238a6b54eed129b4f6951860);
+            
+        
+
+        marker_990fa01ff1175bdd43d005835ec24060.bindPopup(popup_80b386cc87930b723d322509c198fce5)
+        ;
+
+        
+    
+    
+            var marker_ad15e850150bcca8cf0c837ca6ebf8ed = L.marker(
+                [59.9609792, 10.636240720787672],
+                {
+}
+            ).addTo(map_a16043c743308deeb00ca0babd5b2697);
+        
+    
+            var icon_ae71c71bf390c0e14d945bab9305750d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkgreen",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_ad15e850150bcca8cf0c837ca6ebf8ed.setIcon(icon_ae71c71bf390c0e14d945bab9305750d);
+        
+    
+        var popup_0cb0b2e088f01f72f300f80f157738e3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_91d3f7a6c14b2ea4bec4189d080fc86c = $(`<div id="html_91d3f7a6c14b2ea4bec4189d080fc86c" style="width: 100.0%; height: 100.0%;">         <b>Bogstad skole</b><br>         <b>Engelsk:</b> 53<br>         <b>Lesing:</b> 57<br>         <b>Regning:</b> 59<br>         </div>`)[0];
+                popup_0cb0b2e088f01f72f300f80f157738e3.setContent(html_91d3f7a6c14b2ea4bec4189d080fc86c);
+            
+        
+
+        marker_ad15e850150bcca8cf0c837ca6ebf8ed.bindPopup(popup_0cb0b2e088f01f72f300f80f157738e3)
+        ;
+
+        
+    
+</script>
+</html>
