@@ -68,4 +68,4 @@ for loc in schools:
         icon=folium.Icon(color=marker_color)
     ).add_to(m)
 
-m.save("map.html")
+m.save("index.html")
