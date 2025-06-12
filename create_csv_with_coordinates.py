@@ -16,7 +16,8 @@ def parse_csv_to_objects(file_path, output_file_path):
         for row in reader:
             lat = 0
             lng = 0
-            location = get_geo_coordinates(row['Skole'])
+            print(row['Skole'] + ", Oslo, Norway")
+            location = get_geo_coordinates(row['Skole'] + ", Oslo, Norway")
             if location:
                 lat = location.latitude
                 lng = location.longitude
