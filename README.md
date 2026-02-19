@@ -18,12 +18,19 @@ Originally built for Oslo schools, now supports **all Norwegian schools** using 
 - 🗺️ Interactive map with color-coded performance indicators
 - 📍 Automatic geocoding of school addresses
 - 🎨 Color-coded markers:
-  - 🔴 **Red**: Average < 50 (needs improvement)
-  - 🟠 **Orange**: Average 50-52 (below average)
-  - 🟢 **Light Green**: Average 52-54 (above average)
-  - 🟢 **Dark Green**: Average > 54 (excellent)
+  - 🔴 **Red**: Average < 45 (significantly below national mean)
+  - 🟠 **Orange**: Average 45-49 (below national mean)
+  - 🟢 **Light Green**: Average 50-54 (above national mean)
+  - 🟢 **Dark Green**: Average ≥ 55 (significantly above national mean)
+  - ⚪ **Gray**: No data available (all subjects missing)
 - 📊 Popup details for each school showing all test scores
 - 🌍 Automatic map centering and zoom based on data extent
+- ℹ️ Info button with detailed explanation of color distribution logic
+- 🎯 Smart handling of missing data:
+  - Schools with ALL scores missing are shown as **gray markers** (no impact on statistics)
+  - Schools with PARTIAL data are included, with average calculated only from valid scores
+  - Missing scores are displayed as "*" in school popups
+  - Gray markers are excluded from cluster color calculations
 
 ## Data Source: UDIR.no
 
@@ -189,6 +196,61 @@ oslo-skoler/
 │
 └── README.md                          # This file
 ```
+
+## Handling Missing Test Scores
+
+Some schools may have missing test scores (marked as `*` or empty in UDIR data). This typically happens with:
+- Very small schools with too few students for privacy reasons
+- Private/international schools not participating in national tests
+- Schools that didn't complete all test subjects
+
+### How the Map Handles Missing Data
+
+1. **Schools with ALL scores missing** (`*;*;*`):
+   - These schools **are shown as GRAY markers** on the map
+   - They have **no average value** and don't impact any calculations
+   - Cluster colors **exclude gray markers** from their average calculations
+   - Popup shows "Ingen data tilgjengelig" (No data available)
+   - Example: International schools, private institutions
+   - Typically ~426 schools (~24% of total)
+
+2. **Schools with PARTIAL scores** (e.g., `53;47;*`):
+   - These schools **are included** with colored markers
+   - Average is calculated **only from valid scores**
+   - Example: Score of `53;47;*` has average of `50` (not `33`)
+   - The popup shows:
+     - `*` for missing scores
+     - "basert på X fag" to indicate how many subjects were included
+   - Typically ~61 schools (~3% of total)
+
+3. **Schools with ALL scores present** (e.g., `50;48;52`):
+   - Standard colored markers based on the average
+   - Typically ~1,288 schools (~73% of total)
+
+### Example
+
+**School: Flosta skole** (Gray marker)
+- Engelsk: `*` (missing)
+- Lesing: `*` (missing)
+- Regning: `*` (missing)
+
+**Result**: 
+- Color: ⚪ Gray
+- Popup shows: "Ingen data tilgjengelig"
+- Does NOT impact cluster calculations
+
+**School: Eide skole** (Colored marker)
+- Engelsk: `*` (missing)
+- Lesing: `*` (missing)
+- Regning: `53`
+
+**Result**: 
+- Average: `53.0` (not `17.7`!)
+- Color: 🟢 Light Green
+- Popup shows: "Gjennomsnitt: 53.0 (basert på 1 fag)"
+- DOES impact cluster calculations
+
+This ensures fair representation - schools aren't penalized for missing data, and schools with no data don't skew the statistics.
 
 ## Adjusting for Different UDIR Formats
 
