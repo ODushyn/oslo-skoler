@@ -79,17 +79,44 @@ function createSchoolMarkers(schools, markerCluster) {
 }
 
 // Create a single school marker
+// Icon design:
+// - Barnaskole (5th grade): Small building with flag (currently displayed)
+// - Ungdomskole (secondary): Will use larger/taller building icon when added
 function createSchoolMarker(school) {
     const popupContent = createPopupContent(school);
 
-    const marker = L.circleMarker(
+    // Create custom school icon with SVG (barnaskole - primary school)
+    const schoolIcon = L.divIcon({
+        html: `
+            <svg width="30" height="30" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <!-- Primary school building with flag -->
+                <g>
+                    <!-- Building -->
+                    <rect x="4" y="10" width="16" height="12" fill="${school.color}" stroke="#fff" stroke-width="1.2"/>
+                    <!-- Roof -->
+                    <path d="M2 10 L12 4 L22 10 Z" fill="${school.color}" stroke="#fff" stroke-width="1.2"/>
+                    <!-- Door -->
+                    <rect x="10" y="16" width="4" height="6" fill="#fff" opacity="0.4"/>
+                    <!-- Windows -->
+                    <rect x="6" y="12" width="2.5" height="2.5" fill="#fff" opacity="0.5"/>
+                    <rect x="15.5" y="12" width="2.5" height="2.5" fill="#fff" opacity="0.5"/>
+                    <!-- Flag pole -->
+                    <line x1="12" y1="4" x2="12" y2="1" stroke="#fff" stroke-width="0.8"/>
+                    <!-- Flag -->
+                    <path d="M12 1 L16 2.5 L12 4 Z" fill="#fff" opacity="0.7"/>
+                </g>
+            </svg>
+        `,
+        className: 'school-marker-icon barnaskole-icon',
+        iconSize: [30, 30],
+        iconAnchor: [15, 15],
+        popupAnchor: [0, -15]
+    });
+
+    const marker = L.marker(
         [school.lat, school.lng],
         {
-            radius: 10,
-            color: school.color,
-            fillColor: school.color,
-            fillOpacity: 0.7,
-            weight: 2
+            icon: schoolIcon
         }
     ).bindPopup(popupContent, {
         maxWidth: 250
@@ -97,6 +124,8 @@ function createSchoolMarker(school) {
 
     // Add school data to marker for later retrieval
     marker.schoolData = school;
+    // Store color for cluster calculations
+    marker.options.fillColor = school.color;
 
     return marker;
 }

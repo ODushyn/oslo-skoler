@@ -26,6 +26,34 @@ html, body {
     font-size: 1rem;
 }
 
+/* School marker icon styles */
+.school-marker-icon {
+    background: transparent !important;
+    border: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.school-marker-icon svg {
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    transition: transform 0.2s ease;
+}
+
+.school-marker-icon:hover svg {
+    transform: scale(1.2);
+}
+
+/* Barnaskole specific styles (primary school) */
+.barnaskole-icon svg {
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+}
+
+/* Ungdomskole specific styles (secondary school) - for future use */
+.ungdomskole-icon svg {
+    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+}
+
 /* Info button styles */
 .info-button {
     position: fixed;
