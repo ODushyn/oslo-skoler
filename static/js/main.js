@@ -1,6 +1,10 @@
 // Main application script
 // Initializes the map and loads all school markers
 
+// Global variables for search functionality
+let schoolsData = [];
+let schoolMarkers = new Map(); // Map of school name -> marker
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Initializing map application...');
 
@@ -38,6 +42,9 @@ function loadSchoolData(map, markerCluster) {
         .then(data => {
             console.log(`Loaded data for ${data.schools.length} schools`);
 
+            // Store schools data globally for search
+            schoolsData = data.schools;
+
             // Update map center and zoom from loaded data
             if (data.mapConfig) {
                 map.setView(data.mapConfig.center, data.mapConfig.zoom);
@@ -48,6 +55,9 @@ function loadSchoolData(map, markerCluster) {
 
             // Add the marker cluster to the map
             markerCluster.addTo(map);
+
+            // Initialize search functionality
+            initializeSearch(map, markerCluster);
 
             console.log('✓ Map initialized successfully!');
         })
@@ -62,6 +72,9 @@ function createSchoolMarkers(schools, markerCluster) {
     schools.forEach(school => {
         const marker = createSchoolMarker(school);
         marker.addTo(markerCluster);
+
+        // Store marker reference for search
+        schoolMarkers.set(school.name, { marker: marker, school: school });
     });
 }
 
@@ -69,7 +82,7 @@ function createSchoolMarkers(schools, markerCluster) {
 function createSchoolMarker(school) {
     const popupContent = createPopupContent(school);
 
-    return L.circleMarker(
+    const marker = L.circleMarker(
         [school.lat, school.lng],
         {
             radius: 10,
@@ -79,9 +92,13 @@ function createSchoolMarker(school) {
             weight: 2
         }
     ).bindPopup(popupContent, {
-        maxWidth: 250,
-        lazy: true
+        maxWidth: 250
     });
+
+    // Add school data to marker for later retrieval
+    marker.schoolData = school;
+
+    return marker;
 }
 
 // Create popup content for a school
@@ -111,3 +128,184 @@ function createPopupContent(school) {
     }
 }
 
+// Initialize search functionality
+function initializeSearch(map, markerCluster) {
+    const searchInput = document.getElementById('schoolSearch');
+    const searchResults = document.getElementById('searchResults');
+    const clearButton = document.getElementById('clearSearch');
+
+    if (!searchInput || !searchResults || !clearButton) {
+        console.warn('Search elements not found, retrying in 100ms...');
+        setTimeout(() => initializeSearch(map, markerCluster), 100);
+        return;
+    }
+
+    // Handle input changes
+    searchInput.addEventListener('input', function() {
+        const query = this.value.trim();
+
+        // Show/hide clear button
+        if (query.length > 0) {
+            clearButton.classList.add('visible');
+        } else {
+            clearButton.classList.remove('visible');
+        }
+
+        // Perform search if query has at least 2 characters
+        if (query.length >= 2) {
+            performSearch(query, searchResults, map, markerCluster);
+        } else {
+            searchResults.classList.remove('visible');
+            searchResults.innerHTML = '';
+        }
+    });
+
+    // Handle clear button click
+    clearButton.addEventListener('click', function() {
+        searchInput.value = '';
+        clearButton.classList.remove('visible');
+        searchResults.classList.remove('visible');
+        searchResults.innerHTML = '';
+        searchInput.focus();
+    });
+
+    // Close search results when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.search-container')) {
+            searchResults.classList.remove('visible');
+        }
+    });
+
+    // Show results when clicking on search input if there's a query
+    searchInput.addEventListener('click', function() {
+        if (this.value.trim().length >= 2) {
+            searchResults.classList.add('visible');
+        }
+    });
+}
+
+// Perform search and display results
+function performSearch(query, resultsContainer, map, markerCluster) {
+    const queryLower = query.toLowerCase();
+
+    // Filter schools that match the query
+    const matchingSchools = schoolsData.filter(school =>
+        school.name.toLowerCase().includes(queryLower)
+    );
+
+    // Sort by relevance (starts with query first, then contains)
+    matchingSchools.sort((a, b) => {
+        const aStartsWith = a.name.toLowerCase().startsWith(queryLower);
+        const bStartsWith = b.name.toLowerCase().startsWith(queryLower);
+
+        if (aStartsWith && !bStartsWith) return -1;
+        if (!aStartsWith && bStartsWith) return 1;
+        return a.name.localeCompare(b.name);
+    });
+
+    // Display results
+    if (matchingSchools.length > 0) {
+        const maxResults = 10;
+        const resultsToShow = matchingSchools.slice(0, maxResults);
+
+        resultsContainer.innerHTML = resultsToShow.map(school => {
+            const highlightedName = highlightMatch(school.name, query);
+            return `
+                <div class="search-result-item" data-school-name="${escapeHtml(school.name)}">
+                    <div class="search-result-name">${highlightedName}</div>
+                    <div class="search-result-kommune">${escapeHtml(school.kommune)}</div>
+                </div>
+            `;
+        }).join('');
+
+        // Add more results indicator if needed
+        if (matchingSchools.length > maxResults) {
+            resultsContainer.innerHTML += `
+                <div class="no-results" style="font-style: normal; font-size: 12px;">
+                    Viser ${maxResults} av ${matchingSchools.length} resultater
+                </div>
+            `;
+        }
+
+        // Add click handlers to result items
+        resultsContainer.querySelectorAll('.search-result-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const schoolName = this.getAttribute('data-school-name');
+                zoomToSchool(schoolName, map, markerCluster);
+                resultsContainer.classList.remove('visible');
+
+                // Optionally clear the search input
+                const searchInput = document.getElementById('schoolSearch');
+                const clearButton = document.getElementById('clearSearch');
+                if (searchInput) {
+                    searchInput.value = '';
+                    clearButton.classList.remove('visible');
+                }
+            });
+        });
+
+        resultsContainer.classList.add('visible');
+    } else {
+        resultsContainer.innerHTML = '<div class="no-results">Ingen skoler funnet</div>';
+        resultsContainer.classList.add('visible');
+    }
+}
+
+// Highlight matching text in school name
+function highlightMatch(text, query) {
+    const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
+    return escapeHtml(text).replace(regex, '<span class="search-result-highlight">$1</span>');
+}
+
+// Escape HTML special characters
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Escape special regex characters
+function escapeRegex(text) {
+    return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// Zoom to a specific school on the map
+function zoomToSchool(schoolName, map, markerCluster) {
+    // Find the marker in the cluster by school name
+    let targetMarker = null;
+    const allMarkers = markerCluster.getLayers();
+
+    for (let i = 0; i < allMarkers.length; i++) {
+        const marker = allMarkers[i];
+        if (marker.schoolData && marker.schoolData.name === schoolName) {
+            targetMarker = marker;
+            break;
+        }
+    }
+
+    if (!targetMarker) {
+        console.error('Marker not found for school:', schoolName);
+        return;
+    }
+
+    const school = targetMarker.schoolData;
+
+    // Zoom to school location
+    map.setView([school.lat, school.lng], 15, {
+        animate: true,
+        duration: 0.8
+    });
+
+    // Wait for zoom animation, then open popup
+    setTimeout(function() {
+        if (!map.hasLayer(targetMarker)) {
+            // Marker is still clustered, use zoomToShowLayer
+            markerCluster.zoomToShowLayer(targetMarker, function() {
+                targetMarker.openPopup();
+            });
+        } else {
+            // Marker is visible, open popup directly
+            targetMarker.openPopup();
+        }
+    }, 1000);
+}

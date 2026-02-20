@@ -53,6 +53,119 @@ html, body {
     transform: scale(1.1);
 }
 
+/* Search container styles */
+.search-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    width: 320px;
+}
+
+.search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#schoolSearch {
+    width: 100%;
+    padding: 12px 40px 12px 15px;
+    font-size: 16px;
+    border: 2px solid #357ae8;
+    border-radius: 25px;
+    outline: none;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+#schoolSearch:focus {
+    border-color: #4285f4;
+    box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
+}
+
+.clear-search {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #999;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.clear-search:hover {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.clear-search.visible {
+    display: flex;
+}
+
+.search-results {
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 5px;
+    max-height: 400px;
+    overflow-y: auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    display: none;
+    width: 100%;
+}
+
+.search-results.visible {
+    display: block;
+}
+
+.search-result-item {
+    padding: 12px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover {
+    background-color: #f5f5f5;
+}
+
+.search-result-name {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 3px;
+}
+
+.search-result-kommune {
+    font-size: 13px;
+    color: #666;
+}
+
+.search-result-highlight {
+    background-color: #fff59d;
+    font-weight: bold;
+}
+
+.no-results {
+    padding: 15px;
+    text-align: center;
+    color: #666;
+    font-style: italic;
+}
+
+
 /* Modal styles */
 .modal {
     display: none;
@@ -141,5 +254,26 @@ html, body {
 
 .official-link:hover {
     background-color: #357ae8;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+    .search-container {
+        width: calc(100% - 40px);
+        left: 20px;
+        right: 20px;
+        top: 70px; /* Move below zoom controls on mobile */
+    }
+
+    .info-button {
+        right: 20px;
+        bottom: 20px;
+    }
+
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+        padding: 20px;
+    }
 }
 
