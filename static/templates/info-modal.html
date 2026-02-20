@@ -1,0 +1,77 @@
+<!-- Info Button -->
+<button class="info-button" onclick="document.getElementById('infoModal').style.display='block'" title="Om fargefordelingen">i</button>
+
+<!-- Info Modal -->
+<div id="infoModal" class="modal" onclick="if(event.target==this) this.style.display='none'">
+    <div class="modal-content">
+        <span class="close" onclick="document.getElementById('infoModal').style.display='none'">&times;</span>
+        <h2>📊 Om Fargefordelingen</h2>
+
+        <h3>Offisiell Skala</h3>
+        <p>Til nasjonale prøver er det utviklet en egen skala (skalapoeng) hvor <strong>gjennomsnittet i 2022 ble satt til 50</strong> og <strong>standardavviket til 10</strong>. Alle prøveresultater blir omregnet til denne skalaen.</p>
+
+        <div class="stats-box">
+            <strong>Datagrunnlag (1 349 skoler):</strong><br>
+            • Gjennomsnitt: 49,31 (nær landsgjennomsnitt ✓)<br>
+            • Median: 49,33<br>
+            • Standardavvik: 2,84<br>
+            • Spredning: 39-59 poeng
+        </div>
+
+        <h3>Fargeforklaring</h3>
+        <div class="color-explanation">
+            <div class="color-row">
+                <span class="color-dot" style="color: #d73027;">⬤</span>
+                <div><strong>Rød (&lt; 45):</strong> Betydelig under landsgjennomsnitt (6,1% av skoler)</div>
+            </div>
+            <div class="color-row">
+                <span class="color-dot" style="color: #fc8d59;">⬤</span>
+                <div><strong>Oransje (45-49):</strong> Under landsgjennomsnitt (51,1% av skoler)</div>
+            </div>
+            <div class="color-row">
+                <span class="color-dot" style="color: #91cf60;">⬤</span>
+                <div><strong>Lysegrønn (50-54):</strong> Over landsgjennomsnitt (40,0% av skoler)</div>
+            </div>
+            <div class="color-row">
+                <span class="color-dot" style="color: #1a9850;">⬤</span>
+                <div><strong>Mørkegrønn (≥ 55):</strong> Betydelig over landsgjennomsnitt (2,7% av skoler)</div>
+            </div>
+            <div class="color-row">
+                <span class="color-dot" style="color: #999999;">⬤</span>
+                <div><strong>Grå:</strong> Ingen data tilgjengelig (alle fag mangler)</div>
+            </div>
+        </div>
+
+        <h3>Begrunnelse</h3>
+        <p>Fargefordelingen er basert på den offisielle nasjonale skalaen (50±10) for å gi en:</p>
+        <ul>
+            <li><strong>Symmetrisk fordeling</strong> rundt landsgjennomsnittet (50)</li>
+            <li><strong>Rettferdig vurdering</strong> som gjenspeiler den statistiske virkeligheten</li>
+            <li><strong>Meningsfull tolkning</strong> basert på standardavvik</li>
+        </ul>
+
+        <p>Dette sikrer at skoler som presterer over det nasjonale gjennomsnittet får anerkjennelse, mens skoler som trenger støtte blir identifisert.</p>
+
+        <a href="https://statistikkportalen.udir.no/api/rapportering/rest/v1/Tekst/visTekst/19715?dataChanged=2026-02-19_074500#title5"
+           target="_blank"
+           class="official-link">
+           📖 Les mer hos UDIR (offisiell forklaring)
+        </a>
+    </div>
+</div>
+
+<!-- Legend Box -->
+<div style="position: fixed;
+            bottom: 50px; right: 50px; width: 240px; height: 180px;
+            background-color: white; border:2px solid grey; z-index:9999;
+            font-size:14px; padding: 10px; border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);">
+    <p style="margin: 0 0 10px 0; font-weight: bold;">Skoleoversikt.no</p>
+    <p style="margin: 0 0 5px 0; font-weight: bold; font-size: 12px;">Gjennomsnitt:</p>
+    <p style="margin: 3px 0;"><span style="color: #1a9850;">⬤</span> ≥ 55 (Meget godt)</p>
+    <p style="margin: 3px 0;"><span style="color: #91cf60;">⬤</span> 50-54 (Over landsgj.)</p>
+    <p style="margin: 3px 0;"><span style="color: #fc8d59;">⬤</span> 45-49 (Under landsgj.)</p>
+    <p style="margin: 3px 0;"><span style="color: #d73027;">⬤</span> &lt; 45 (Betydelig under)</p>
+    <p style="margin: 3px 0;"><span style="color: #999999;">⬤</span> Ingen data</p>
+</div>
+
