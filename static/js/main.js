@@ -72,7 +72,7 @@ function createSchoolMarker(school) {
     return L.circleMarker(
         [school.lat, school.lng],
         {
-            radius: 8,
+            radius: 10,
             color: school.color,
             fillColor: school.color,
             fillOpacity: 0.7,
