@@ -4,10 +4,12 @@ charset-normalizer==3.4.1
 folium==0.19.4
 geographiclib==2.0
 geopy==2.3.0
+googlemaps==4.10.0
 idna==3.10
 Jinja2==3.1.5
 MarkupSafe==3.0.2
 numpy==2.2.3
+python-dotenv==1.2.1
 requests==2.32.3
 urllib3==2.3.0
 xyzservices==2025.1.0

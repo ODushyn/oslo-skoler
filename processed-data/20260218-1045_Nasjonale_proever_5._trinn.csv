@@ -5,18 +5,18 @@ Birkenlund skole;Arendal;48;47;46;58.470299;8.792936
 Eydehavn skole;Arendal;52;46;53;58.5095539;8.8692752
 Flosta skole;Arendal;*;*;*;58.552887;8.972653
 Grimstad International School AS;Arendal;*;*;*;58.337531;8.5807805
-Hisøy skole 1-10 Skoler;Arendal;53;51;53;0;0
+Hisøy skole 1-10 Skoler;Arendal;53;51;53;58.4449844;8.7652587
 Moltemyr skole;Arendal;46;42;40;58.475933;8.764561
 Myra skole;Arendal;55;52;51;58.484573;8.732923
 Nedenes skole;Arendal;48;49;47;58.4131671;8.7094974
 Nesheim skole;Arendal;46;50;49;58.517195;8.781854
 Roligheden skole Barne-/Ungdomstrinnet;Arendal;50;53;51;58.455447;8.803997
-Rykene oppvekstsenter avd skole;Arendal;*;*;*;0;0
+Rykene oppvekstsenter avd skole;Arendal;*;*;*;58.41159200000001;8.633167199999999
 Sandnes skole;Arendal;49;47;46;68.584484;14.909814
 St. Franciskus skole;Arendal;*;*;*;58.4577927;8.7659565
-Stiftelsen steinerskolen i Arendal;Arendal;40;42;49;0;0
+Stiftelsen steinerskolen i Arendal;Arendal;40;42;49;58.4761148;8.7559636
 Stinta skole barne- og Ungdomstrinnet;Arendal;51;44;44;58.462557;8.7579788
-Strømmen oppvekstsenter avd skole;Arendal;44;46;44;0;0
+Strømmen oppvekstsenter avd skole;Arendal;44;46;44;58.45051489999999;8.742611499999999
 Stuenes skole barne- og Ungdomstrinn;Arendal;48;43;48;58.492494;8.847901
 Birkeland skole;Birkenes;*;*;*;58.3208908;8.2415812
 Engesland skole;Birkenes;*;*;*;58.52942;8.11796
@@ -66,9 +66,9 @@ Lovisenlund skole;Kristiansand;53;55;54;58.1564012;8.0096264
 Lunde skole;Kristiansand;49;49;49;58.0967352;7.7711289
 Mosby oppvekssenter skole;Kristiansand;56;51;52;58.2203603;7.9239569
 Nygård skole;Kristiansand;49;46;48;58.089446;7.816021
-Oasen skole Birkelid AS;Kristiansand;49;42;46;0;0
-Oasen skole Strømme AS grunnskole;Kristiansand;*;*;*;0;0
-Oasen skole Vågsbygd AS;Kristiansand;*;*;*;0;0
+Oasen skole Birkelid AS;Kristiansand;49;42;46;58.1253102;7.844828299999999
+Oasen skole Strømme AS grunnskole;Kristiansand;*;*;*;58.1548321;8.0760794
+Oasen skole Vågsbygd AS;Kristiansand;*;*;*;58.11919280000001;7.9475772
 Odderhei skole;Kristiansand;48;52;53;58.1341882;8.076199
 Presteheia skole;Kristiansand;47;51;52;58.16641;8.0110319
 Rosseland skole;Kristiansand;*;*;*;58.134302;7.858253
@@ -76,7 +76,7 @@ Samfundets skole Sentrum;Kristiansand;47;50;52;58.149636;7.993728
 Sjøstrand skole;Kristiansand;49;52;53;58.1019688;7.9759944
 Slettheia skole;Kristiansand;48;44;43;58.1331082;7.9614618
 Solholmen skole;Kristiansand;50;52;54;58.1479291;7.9696061
-Stiftelsen steinerskolen i Kristiansand;Kristiansand;*;*;*;0;0
+Stiftelsen steinerskolen i Kristiansand;Kristiansand;*;*;*;58.1591762;8.0152391
 Strømme skole;Kristiansand;48;49;47;58.1529083;8.0814148
 Tordenskjoldsgate skole;Kristiansand;53;46;51;58.1501825;7.9925454
 Torridal skole;Kristiansand;52;45;50;58.2044254;7.927384
@@ -91,11 +91,11 @@ Feda skole;Kvinesdal;53;50;52;58.270544;6.817146
 Kvinlog skule;Kvinesdal;*;*;*;58.5208294;6.9324785
 Liknes skole;Kvinesdal;50;48;51;58.3132;6.965267
 Vesterdalen skole;Kvinesdal;*;*;*;58.384629;6.957211
-Justøy skole - montessoriskolen i Lillesand Sti;Lillesand;*;*;*;0;0
-Lillesand kommune - Borkedalen skole;Lillesand;51;50;52;0;0
-Lillesand kommune - Brentemoen skole;Lillesand;*;48;*;0;0
-Lillesand kommune - Høvåg skole;Lillesand;45;*;*;0;0
-Lillesand kommune - Tingsaker skole;Lillesand;55;51;57;0;0
+Justøy skole - montessoriskolen i Lillesand Sti;Lillesand;*;*;*;58.2097157;8.3642904
+Lillesand kommune - Borkedalen skole;Lillesand;51;50;52;58.2442548;8.3628812
+Lillesand kommune - Brentemoen skole;Lillesand;*;48;*;58.2512604;8.3773869
+Lillesand kommune - Høvåg skole;Lillesand;45;*;*;58.1593707;8.217202499999999
+Lillesand kommune - Tingsaker skole;Lillesand;55;51;57;58.2599774;8.3992983
 Bjelland skole;Lindesnes;*;*;*;58.383364;7.525785
 Frøysland skole;Lindesnes;52;50;52;58.037979;7.453255
 Furulunden skole;Lindesnes;53;48;49;58.024961;7.446878
@@ -103,7 +103,7 @@ Holum skole;Lindesnes;48;49;50;58.096895;7.522335
 Ime skole;Lindesnes;50;48;50;58.033417;7.492194
 Laudal skole;Lindesnes;*;*;*;58.2475881;7.4982189
 Nyplass skole;Lindesnes;45;46;44;58.081044;7.312257
-Oasen skole Mandal AS;Lindesnes;*;*;*;0;0
+Oasen skole Mandal AS;Lindesnes;*;*;*;58.0334803;7.454668700000001
 Spangereid skole;Lindesnes;50;51;50;58.0472581;7.1354322
 Vigmostad skole;Lindesnes;*;*;*;58.201928;7.337459
 Øyslebø skole;Lindesnes;50;52;47;58.1711322;7.5587268
@@ -111,10 +111,10 @@ Berge barneskole;Lyngdal;52;49;50;58.1364648;7.068251
 Byremo barneskule;Lyngdal;49;51;51;58.4231356;7.4042642
 Konsmo skole;Lyngdal;56;56;53;58.2997439;7.3611687
 Kvås skole;Lyngdal;*;*;*;58.246447;7.185249
-Stiftelsen Lyngdal Kristne grunnskole;Lyngdal;50;52;51;0;0
-Å barneskole;Lyngdal;53;50;52;0;0
+Stiftelsen Lyngdal Kristne grunnskole;Lyngdal;50;52;51;58.129238;7.065723999999999
+Å barneskole;Lyngdal;53;50;52;58.1591023;7.0961533
 Årnes skole;Lyngdal;*;*;*;60.129706;11.476634
-Hope oppvekstsenter Avdeling skole;Risør;*;*;*;0;0
+Hope oppvekstsenter Avdeling skole;Risør;*;*;*;58.6895508;9.1462124
 Risør barneskole;Risør;49;49;*;58.716532;9.219084
 Søndeled skole;Risør;*;*;49;58.762854;9.081439
 Sinnes skule;Sirdal;*;*;*;58.913905;6.884116
@@ -122,10 +122,10 @@ Tonstad skule;Sirdal;*;*;*;58.671944;6.721219
 Tvedestrand barneskole;Tvedestrand;52;51;50;58.6293317;8.9374461
 Valle skule;Valle;*;*;*;62.47841;6.661038
 Vegårshei skule;Vegårshei;49;48;52;58.75259;8.861058
-Eikeland oppvekstsenter Avdeling skole;Vennesla;43;44;45;0;0
+Eikeland oppvekstsenter Avdeling skole;Vennesla;43;44;45;58.3392091;7.8096552
 Kvarstein skole;Vennesla;47;50;53;58.237717;7.939567
 Moseidmoen skole;Vennesla;43;42;43;58.2602514;7.9581254
-Oasen skole Vennesla AS;Vennesla;51;50;49;0;0
+Oasen skole Vennesla AS;Vennesla;51;50;49;58.2777255;7.970207
 Skarpengland skole;Vennesla;51;45;45;58.2946496;7.8526035
 Vennesla skole;Vennesla;52;51;51;58.2759824;7.9724086
 Åmli skule;Åmli;47;46;50;58.772319;8.49638
@@ -152,23 +152,23 @@ Rønningen skole;Asker;55;52;51;59.8182215;10.4287453
 Slemmestad barneskole;Asker;50;48;48;59.7793429;10.4913742
 Solberg skole;Asker;*;*;*;59.763357;10.077614
 Spikkestad skole;Asker;48;49;49;59.7494921;10.3360997
-Steinerskolen i Asker skole;Asker;46;47;49;0;0
-Steinerskolen i Hurum Sti;Asker;*;*;*;0;0
-Stiftelsen Asker International School;Asker;65;45;57;0;0
-Stiftelsen Vollen montessoriskole;Asker;*;*;*;0;0
+Steinerskolen i Asker skole;Asker;46;47;49;59.8613471;10.4950208
+Steinerskolen i Hurum Sti;Asker;*;*;*;59.6330556;10.4958333
+Stiftelsen Asker International School;Asker;65;45;57;59.8297074;10.4171605
+Stiftelsen Vollen montessoriskole;Asker;*;*;*;59.807371;10.4854282
 Sydskogen skole;Asker;50;48;48;59.7596789;10.4525153
 Sætre skole;Asker;49;48;48;59.570211;9.273259
 Tofte skole;Asker;46;41;42;59.5416449;10.554122
 Torvbråten skole;Asker;48;47;48;59.7615417;10.4796738
 Vardåsen skole;Asker;53;55;53;59.8194701;10.3792916
 Vettre skole;Asker;52;52;52;59.8256635;10.4692543
-Aurskog-Høland kommune - Aursmoen skole;Aurskog-Høland;50;48;47;0;0
-Aurskog-Høland kommune - Bjørkelangen skole;Aurskog-Høland;49;46;44;0;0
-Aurskog-Høland kommune - Bråte skole;Aurskog-Høland;46;47;47;0;0
-Aurskog-Høland kommune - Haneborg skole;Aurskog-Høland;48;51;52;0;0
-Aurskog-Høland kommune - Løken skole;Aurskog-Høland;48;44;44;0;0
-Aurskog-Høland kommune - Rømskog skole;Aurskog-Høland;*;*;*;0;0
-Aurskog-Høland kommune - Setskog oppvekstsenter - skole;Aurskog-Høland;*;*;*;0;0
+Aurskog-Høland kommune - Aursmoen skole;Aurskog-Høland;50;48;47;59.92424249999999;11.4502345
+Aurskog-Høland kommune - Bjørkelangen skole;Aurskog-Høland;49;46;44;59.8747487;11.559191
+Aurskog-Høland kommune - Bråte skole;Aurskog-Høland;46;47;47;59.7211759;11.4531086
+Aurskog-Høland kommune - Haneborg skole;Aurskog-Høland;48;51;52;59.9275779;11.5432195
+Aurskog-Høland kommune - Løken skole;Aurskog-Høland;48;44;44;59.7969962;11.4654578
+Aurskog-Høland kommune - Rømskog skole;Aurskog-Høland;*;*;*;59.7492056;11.8105123
+Aurskog-Høland kommune - Setskog oppvekstsenter - skole;Aurskog-Høland;*;*;*;59.83092509999999;11.7207282
 Anna Krefting skole;Bærum;52;54;51;59.9488103;10.5133311
 Bekkestua barneskole;Bærum;55;52;55;59.9239072;10.5897697
 Blommenholm skole;Bærum;50;52;53;59.8985044;10.5484334
@@ -196,7 +196,7 @@ Skui skole;Bærum;50;47;45;59.9271543;10.4472109
 Snarøya skole;Bærum;51;49;50;59.888472;10.6230547
 Stabekk skole;Bærum;53;52;57;59.9154946;10.5932701
 Steinerskolen i Bærum Grunnskoleundervisning;Bærum;44;51;48;59.930249;10.60661
-Stiftelsen Bærum montessoriskole;Bærum;49;49;55;0;0
+Stiftelsen Bærum montessoriskole;Bærum;49;49;55;59.907659;10.5788424
 Storøya skole;Bærum;52;51;54;59.893952;10.609953
 Tanum skole;Bærum;48;53;53;59.885377;10.477058
 Bønsmoen skole;Eidsvoll;49;42;44;60.283946;11.17933
@@ -212,14 +212,14 @@ Kirkebygden barne- og ungdomsskole;Enebakk;54;49;51;59.7663725;11.1490756
 Stranden skole;Enebakk;51;47;48;59.8229826;11.1663221
 Ytre Enebakk skole;Enebakk;51;50;51;59.7208951;11.056512
 Dal skole;Frogn;54;51;50;59.7448728;10.6974616
-Drøbak Montessori barneskole AS;Frogn;*;*;*;0;0
+Drøbak Montessori barneskole AS;Frogn;*;*;*;59.6630543;10.634973
 Drøbak skole;Frogn;58;49;50;59.6672255;10.6347553
 Dyrløkkeåsen skole;Frogn;49;46;46;59.6674657;10.6556839
 Heer skole;Frogn;*;*;*;59.6835312;10.6628232
 Sogsti skole;Frogn;53;49;50;59.6545812;10.6465293
 Gjerdrum barneskole;Gjerdrum;50;48;49;60.0709621;11.0380711
 Veståsen skole;Gjerdrum;52;51;50;60.0833663;10.9983622
-Hurdal skole og kultursenter avd skole;Hurdal;*;*;*;0;0
+Hurdal skole og kultursenter avd skole;Hurdal;*;*;*;60.43333430000001;11.0688343
 Hurdal steinerskole;Hurdal;*;*;*;60.4085572;11.0510112
 Bergerbakken skole;Jevnaker;49;49;50;60.2384093;10.3549972
 Toso skole;Jevnaker;50;47;43;60.2378267;10.4247958
@@ -228,13 +228,13 @@ Blaker skole;Lillestrøm;49;45;50;59.9904606;11.3721399
 Brånås skole;Lillestrøm;52;49;49;59.9980929;11.0228659
 Dalen skole;Lillestrøm;47;47;46;59.8762306;11.218963
 Frogner skole;Lillestrøm;52;46;48;60.0254365;11.103104
-Frydenlund skole og ressurssenter;Lillestrøm;;;;0;0
+Frydenlund skole og ressurssenter;Lillestrøm;;;;59.9507395;11.0139051
 Garderåsen skole;Lillestrøm;53;53;53;59.9422593;11.1535736
 Gjellerås skole;Lillestrøm;52;47;47;59.9662106;11.0001965
 Hovinhøgda skole;Lillestrøm;52;49;48;59.9321862;11.1419808
 Kjeller skole;Lillestrøm;51;50;51;59.9742877;11.0399084
 Kjellervolla skole;Lillestrøm;50;48;46;59.9649947;11.0442783
-Oks friskole Sti;Lillestrøm;56;51;52;0;0
+Oks friskole Sti;Lillestrøm;56;51;52;59.9814731;11.0146295
 Riddersand skole;Lillestrøm;51;47;47;59.917226;11.169982
 Sagdalen skole;Lillestrøm;51;45;48;59.950985;11.011879
 Skjetten skole;Lillestrøm;51;47;48;59.9599672;10.9966942
@@ -255,7 +255,7 @@ Kurland skole;Lørenskog;53;53;52;59.9331299;11.0182876
 Luhr skole;Lørenskog;51;49;48;59.9434059;10.9554905
 Lørenskog friskole;Lørenskog;52;54;53;59.931378;10.929107
 Rasta skole;Lørenskog;55;52;50;59.920513;10.938593
-Rudolf steinerskolen Lørenskog Sti;Lørenskog;43;45;42;0;0
+Rudolf steinerskolen Lørenskog Sti;Lørenskog;43;45;42;59.9131554;10.9383158
 Solheim skole;Lørenskog;55;49;53;59.9299351;10.9542929
 Åsen skole;Lørenskog;52;46;48;61.026777;10.753892
 Eltonåsen skole;Nannestad;47;46;44;60.13167;11.014821
@@ -266,9 +266,9 @@ Auli skole;Nes;51;43;44;60.035082;11.360623
 Fenstad skole;Nes;52;48;52;60.2156359;11.4020068
 Fjellfoten skole;Nes;55;48;48;60.093182;11.474796
 Framtun skole;Nes;46;42;45;60.060872;11.409578
-Hoppensprett Akademiet Brårud AS;Nes;*;*;*;0;0
+Hoppensprett Akademiet Brårud AS;Nes;*;*;*;60.2088577;11.3323299
 Neskollen skole;Nes;50;49;50;60.125442;11.3394039
-Romerike International School Sti;Nes;*;*;*;0;0
+Romerike International School Sti;Nes;*;*;*;60.12736080000001;11.3380797
 Skogbygda skole;Nes;51;47;51;60.2283522;11.5155903
 Østgård skole;Nes;45;45;51;60.120193;11.530076
 Årnes skole;Nes;48;48;49;60.129706;11.476634
@@ -278,7 +278,7 @@ Fjellstrand skole;Nesodden;56;57;55;59.7964325;10.6228268
 Jaer skole;Nesodden;54;57;52;59.7906901;10.6901685
 Myklerud skole;Nesodden;48;48;50;59.7465612;10.6138539
 Nesoddtangen skole;Nesodden;48;52;50;59.854107;10.665036
-Rudolf steinerskolen stiftelsen avd Undervisning;Nesodden;37;49;43;0;0
+Rudolf steinerskolen stiftelsen avd Undervisning;Nesodden;37;49;43;59.80428189999999;10.6381967
 Elvetangen skole;Nittedal;52;52;51;60.1123359;10.8483702
 Holumskogen skole;Nittedal;49;48;47;59.98366;10.938499
 Rotnes skole;Nittedal;49;52;49;60.055015;10.873204
@@ -289,7 +289,7 @@ Bøleråsen skole;Nordre Follo;50;50;48;59.763816;10.856641
 Finstad skole;Nordre Follo;50;49;51;59.7158004;10.8220352
 Follo barne- og ungdomsskole;Nordre Follo;;;;59.7659528;10.8440732
 Greverud skole;Nordre Follo;49;50;50;59.768128;10.811089
-Hans Nielsen Hauges grunnskole Follo AS;Nordre Follo;*;*;*;0;0
+Hans Nielsen Hauges grunnskole Follo AS;Nordre Follo;*;*;*;59.73520579999999;10.9082107
 Hebekk skole;Nordre Follo;53;52;54;59.7251426;10.832854
 Kolbotn skole;Nordre Follo;51;51;52;59.8126987;10.803732
 Kråkstad skole;Nordre Follo;50;49;48;59.6777853;10.8856734
@@ -330,7 +330,7 @@ Sjøskogen skole;Ås;52;50;50;59.7416273;10.7718757
 Solberg skole;Ås;51;50;49;59.763357;10.077614
 Steinerskolen i Ås;Ås;*;*;*;59.6865617;10.8116304
 Åsgård skole;Ås;51;52;53;59.6637337;10.7866962
-Akademiet realfagsskole Drammen AS;Drammen;*;*;*;0;0
+Akademiet realfagsskole Drammen AS;Drammen;*;*;*;59.74860529999999;10.1719843
 Aronsløkka skole;Drammen;55;50;52;59.7624067;10.1289493
 Bragernes skole;Drammen;53;52;53;59.7485795;10.2260466
 Brandengen skole;Drammen;51;43;44;59.7292059;10.2227334
@@ -341,7 +341,7 @@ Hallermoen skole;Drammen;50;49;52;59.7283256;10.1467357
 Konnerud skole;Drammen;51;48;52;59.7217704;10.133261
 Krokstad skole;Drammen;49;46;44;59.758275;10.0004039
 Mjøndalen skole;Drammen;54;49;55;59.7477459;10.0124481
-Norlights montessoriskole Drammen AS;Drammen;*;*;*;0;0
+Norlights montessoriskole Drammen AS;Drammen;*;*;*;59.7397994;10.1809964
 Rosendal skole;Drammen;*;*;*;59.7501414;10.0259396
 Rødskog skole;Drammen;52;50;52;59.7450104;10.1598414
 Skoger skole;Drammen;54;48;49;59.6852526;10.2509535
@@ -362,18 +362,18 @@ Hemsedal skole;Hemsedal;51;48;52;60.862643;8.561334
 Geilo barne- og ungdomsskole;Hol;49;49;50;60.53399;8.21917
 Hallingskarvet skole;Hol;45;48;45;60.6154819;8.2980795
 Røyse skole;Hole;*;*;*;60.0915234;10.2196871
-Sundvollen oppvekstsenter Avdeling skole;Hole;53;52;55;0;0
+Sundvollen oppvekstsenter Avdeling skole;Hole;53;52;55;60.05866199999999;10.312644
 Tyrifjord barne- og ungdomsskole;Hole;*;*;*;60.068448;10.171658
 Vik skole;Hole;52;52;51;65.313092;12.1685992
 Efteløt skole;Kongsberg;*;*;*;59.550077;9.811701
 Gamlegrendåsen skole;Kongsberg;49;50;48;59.6507825;9.664883
 Hvittingfoss barne- og ungdomsskole;Kongsberg;*;*;*;59.489087;10.00927
-Kongsberg steinerskole AS;Kongsberg;*;*;*;0;0
+Kongsberg steinerskole AS;Kongsberg;*;*;*;59.6305663;9.7198321
 Kongsgårdmoen skole;Kongsberg;52;48;50;59.6270015;9.6470317
 Madsebakken skole;Kongsberg;48;51;53;59.668946;9.673686
 Raumyr skole;Kongsberg;50;49;51;59.675182;9.654772
 Skavanger skole;Kongsberg;49;47;46;59.6820409;9.6281613
-Stiftelsen Kongsberg International School;Kongsberg;*;*;*;0;0
+Stiftelsen Kongsberg International School;Kongsberg;*;*;*;59.67596069999999;9.642636099999999
 Wennersborg skole;Kongsberg;56;49;51;59.6532015;9.6398211
 Krødsherad skole;Krødsherad;49;49;54;60.1241455;9.7871805
 Egge skole;Lier;*;*;*;59.8142403;10.2137001
@@ -390,18 +390,18 @@ Enger skole;Modum;53;52;49;59.891921;9.927209
 Stalsberg skole;Modum;47;47;52;59.922573;9.963959
 Sysle skole;Modum;49;53;51;59.9917586;9.9157845
 Vikersund skole;Modum;47;46;45;59.9734617;9.9926433
-Nesbyen skole;Nesbyen;50;47;49;0;0
+Nesbyen skole;Nesbyen;50;47;49;60.5680861;9.1027428
 Rødberg skole;Nore og Uvdal;*;*;*;60.26882;8.944285
 Uvdal skole;Nore og Uvdal;*;*;*;60.270674;8.744945
 Benterud skole;Ringerike;50;46;45;60.159879;10.249777
-Discovery International School AS;Ringerike;*;;;0;0
+Discovery International School AS;Ringerike;*;;;60.2054315;10.3682193
 Hallingby skole;Ringerike;*;49;51;60.2687919;10.1792931
 Helgerud skole;Ringerike;51;48;51;60.1849;10.1955
 Nes skole;Ringerike;*;*;*;60.565726;9.986816
-Ringerike Montessori AS;Ringerike;*;*;*;0;0
-Ringerike steinerskole Sti;Ringerike;*;*;*;0;0
+Ringerike Montessori AS;Ringerike;*;*;*;60.13550770000001;10.1666881
+Ringerike steinerskole Sti;Ringerike;*;*;*;60.20940689999999;10.3760064
 Sokna skole;Ringerike;*;*;*;60.2426759;9.9310896
-Steinsfjorden montessoriskole SA;Ringerike;*;*;*;0;0
+Steinsfjorden montessoriskole SA;Ringerike;*;*;*;60.1290624;10.3519346
 Tyristrand skole;Ringerike;50;48;47;60.085273;10.102012
 Ullerål skole;Ringerike;53;49;52;60.18133;10.267012
 Vang skole;Ringerike;50;50;52;60.1744603;10.3226608
@@ -419,11 +419,11 @@ Vestfossen barneskole;Øvre Eiker;51;49;52;59.729771;9.868933
 Nedre-Ål skule;Ål;51;50;50;60.628525;8.550031
 Nordbygdene skule;Ål;*;*;*;60.70158;8.486949
 Torpo skule;Ål;*;*;*;60.665291;8.721256
-Alta Kristne grunnskole SA;Alta;*;*;*;0;0
+Alta Kristne grunnskole SA;Alta;*;*;*;69.9677541;23.3515328
 Bossekop skole;Alta;57;53;54;69.9601438;23.2423801
 Elvebakken skole;Alta;47;45;39;69.9710749;23.3647513
 Gakori skole;Alta;51;44;47;69.9520893;23.2214782
-Haldde montessoriskole SA;Alta;*;*;*;0;0
+Haldde montessoriskole SA;Alta;*;*;*;69.9313348;23.0178681
 Kaiskuru skole;Alta;56;50;54;69.9560231;23.3732165
 Komsa skole;Alta;51;46;48;69.973064;23.269944
 Leirbotn skole;Alta;*;*;*;70.120693;23.394276
@@ -434,7 +434,7 @@ Tverrelvdalen skole;Alta;46;49;53;69.932999;23.432776
 Øvre Alta skole;Alta;47;44;40;69.9273941;23.2660226
 Berlevåg skole;Berlevåg;*;*;*;70.8610772;29.0918586
 Båtsfjord skole;Båtsfjord;*;*;*;70.63308;29.717738
-Boftsa oppvekstsenter Avdeling skole;Deatnu - Tana;*;*;*;0;0
+Boftsa oppvekstsenter Avdeling skole;Deatnu - Tana;*;*;*;70.3788295;28.1762119
 Deanu Sàmeskuvla;Deatnu - Tana;*;;*;70.19649;28.1689365
 Tanabru skole;Deatnu - Tana;46;*;43;70.197898;28.166543
 Gamvik skole;Gamvik;*;*;*;71.063754;28.241559
@@ -449,29 +449,29 @@ Kvalsund skole;Hammerfest - Hámmerfeasta;*;*;*;70.4985035;23.9736593
 Reindalen skole;Hammerfest - Hámmerfeasta;50;47;52;70.6915962;23.7007339
 Breivikbotn skole;Hasvik;*;*;*;70.591564;22.302993
 Hasvik skole;Hasvik;*;*;*;70.4889359;22.1502253
-Sørvær oppvekstsenter Avdeling skole;Hasvik;*;*;*;0;0
+Sørvær oppvekstsenter Avdeling skole;Hasvik;*;*;*;70.63010369999999;21.9851267
 Karasjok grunnskole;Kárášjohka - Karasjok;50;*;44;69.4693965;25.5146275
 Kjøllefjord skole;Lebesby;*;*;*;70.9449785;27.3576028
 Høgtun skole;Loppa;*;*;*;70.250454;22.352506
 Havøysund skole;Måsøy;50;40;42;70.9988847;24.6573876
 Honningsvåg skole;Nordkapp;51;47;51;70.97842;25.977887
-Billefjord Sjøsamiske oppvekstsenter Avdeling skole;Porsanger - Porsángu - Porsanki;*;*;*;0;0
+Billefjord Sjøsamiske oppvekstsenter Avdeling skole;Porsanger - Porsángu - Porsanki;*;*;*;70.31648009999999;25.047947
 Lakselv barneskole;Porsanger - Porsángu - Porsanki;*;*;*;70.0486892;24.9676467
-Bugøynes oppvekstsenter avd skole;Sør-Varanger;*;*;*;0;0
-Hesseng flerbrukssenter avd skole;Sør-Varanger;52;52;52;0;0
+Bugøynes oppvekstsenter avd skole;Sør-Varanger;*;*;*;69.9734941;29.6408802
+Hesseng flerbrukssenter avd skole;Sør-Varanger;52;52;52;69.6910628;29.98805
 Kirkenes skole;Sør-Varanger;52;49;46;69.723396;30.0582691
 Pasvik skole;Sør-Varanger;*;*;*;69.454864;30.054626
 Sandnes og Bjørnevatn skole;Sør-Varanger;47;50;49;69.6687274;29.972181
-Unjargga Oahppogaldu Nesseby oppvekstsenter avd skole;Unjárga - Nesseby;*;*;*;0;0
-Vadsø barne- og kulturskole avd skole;Vadsø;*;*;*;0;0
-Vadsø kommune Vestre Jakobselv oppvekstsenter avd skole;Vadsø;*;*;*;0;0
-Vardø kommune grunnskole;Vardø;52;45;45;0;0
+Unjargga Oahppogaldu Nesseby oppvekstsenter avd skole;Unjárga - Nesseby;*;*;*;70.17449599999999;28.5536708
+Vadsø barne- og kulturskole avd skole;Vadsø;*;*;*;70.0750927;29.75437509999999
+Vadsø kommune Vestre Jakobselv oppvekstsenter avd skole;Vadsø;*;*;*;70.11798089999999;29.3359618
+Vardø kommune grunnskole;Vardø;52;45;45;70.3705875;31.1094377
 Alvdal barneskole;Alvdal;45;46;47;62.1043282;10.6428324
 Dovre barneskole;Dovre;47;47;46;62.0778772;9.1257012
-Eidskog montessoriskole SA;Eidskog;*;*;*;0;0
+Eidskog montessoriskole SA;Eidskog;*;*;*;59.92636299999999;11.993246
 Magnor skole;Eidskog;*;*;*;59.9452511;12.1707863
 Skotterud skole;Eidskog;*;47;*;59.9855247;12.1361543
-Elverum kommune - Ydalir skole;Elverum;53;51;50;0;0
+Elverum kommune - Ydalir skole;Elverum;53;51;50;60.8920444;11.580184
 Frydenlund skole;Elverum;52;47;45;68.4412587;17.4152958
 Hanstad skole;Elverum;51;49;50;60.8620607;11.5699666
 Hernes skole;Elverum;49;50;50;60.9262174;11.6371196
@@ -503,7 +503,7 @@ Sanne skole;Gran;*;*;*;60.367119;10.5320166
 Trintom skole;Gran;49;48;44;60.3597266;10.5866814
 Grue barne- og ungdomsskole;Grue;50;46;45;60.450287;12.054574
 Greveløkka skole;Hamar;*;*;*;60.8027511;11.0657521
-Hamar Montessori skole Sti;Hamar;*;*;*;0;0
+Hamar Montessori skole Sti;Hamar;*;*;*;60.8207101;11.0477278
 Ingeberg skole;Hamar;45;54;54;60.8279967;11.1303065
 Lovisenberg skole;Hamar;49;49;49;60.7955029;11.1644969
 Lunden skole;Hamar;50;52;51;60.8381517;11.1966283
@@ -514,8 +514,8 @@ Solvang skole;Hamar;52;45;47;59.418499;5.286613
 Storhamar skole;Hamar;53;53;50;60.8013624;11.0502486
 Austmarka barne- og ungdomsskole;Kongsvinger;*;*;*;60.1007697;12.323332
 Brandval skole;Kongsvinger;50;46;49;60.321062;12.006254
-Finnskogen montessoriskole Ba;Kongsvinger;*;*;*;0;0
-Kongsvinger montessoriskole SA;Kongsvinger;*;*;*;0;0
+Finnskogen montessoriskole Ba;Kongsvinger;*;*;*;60.2983238;12.2842641
+Kongsvinger montessoriskole SA;Kongsvinger;*;*;*;60.17325930000001;12.0184654
 Langeland skole;Kongsvinger;51;49;50;60.1985647;11.9918973
 Marikollen skole;Kongsvinger;50;49;52;60.1911318;11.9718448
 Roverud skole;Kongsvinger;*;*;*;60.2581124;12.0630206
@@ -527,7 +527,7 @@ Hammartun skole;Lillehammer;50;55;52;61.1125741;10.4630517
 Jørstadmoen skole;Lillehammer;51;47;49;61.1544956;10.3911893
 Nordre Ål skole;Lillehammer;50;51;52;61.1326354;10.4644826
 Røyslimoen skole;Lillehammer;51;54;52;61.0957844;10.5092306
-Stiftelsen Lillehammer steinerskole;Lillehammer;*;*;*;0;0
+Stiftelsen Lillehammer steinerskole;Lillehammer;*;*;*;61.0998604;10.4244938
 Søre Ål barneskole;Lillehammer;44;48;50;61.0937316;10.4762316
 Vingar skole;Lillehammer;45;45;42;61.1081794;10.4276023
 Vingrom skole;Lillehammer;*;*;*;61.0480805;10.4322006
@@ -538,15 +538,15 @@ Lund skole;Løten;*;*;*;60.8313485;11.3125381
 Østvang skole;Løten;48;45;45;60.8229989;11.3532734
 Ådalsbruk skole;Løten;46;48;48;60.7879169;11.3286193
 Nord-Aurdal barneskole;Nord-Aurdal;*;*;*;60.9879904;9.2433618
-Valdres montessoriskule SA;Nord-Aurdal;*;*;*;0;0
+Valdres montessoriskule SA;Nord-Aurdal;*;*;*;60.998427;9.101026000000001
 Barhaug skole;Nord-Fron;44;45;46;61.5985663;9.7297053
 Kvam skole;Nord-Fron;*;*;*;64.138733;11.733867
-Skåbu oppvekstsenter avd skole;Nord-Fron;*;*;*;0;0
+Skåbu oppvekstsenter avd skole;Nord-Fron;*;*;*;61.5293674;9.4162353
 Sødorp skole;Nord-Fron;46;50;45;61.5910945;9.76476
 Mo barne- og ungdomsskole;Nord-Odal;48;50;53;60.423664;11.642413
 Sand sentralskole;Nord-Odal;52;51;51;60.390831;11.534826
-Nordre Land kommune 0-24 Torpa barne- og ungdomsskole;Nordre Land;46;51;51;0;0
-Nordre Land kommune Dokka barne- og ungdomsskole;Nordre Land;48;45;46;0;0
+Nordre Land kommune 0-24 Torpa barne- og ungdomsskole;Nordre Land;46;51;51;60.9661071;10.1081095
+Nordre Land kommune Dokka barne- og ungdomsskole;Nordre Land;48;45;46;60.83448789999999;10.0756769
 Os skole;Os;49;50;50;59.440117;11.311685
 Berger skole;Rendalen;*;*;*;61.89333;11.076386
 Fagertun skole;Rendalen;*;*;*;61.720727;11.195858
@@ -574,7 +574,7 @@ Breidablikk skole;Stange;46;45;39;63.3488639;10.3612663
 Hoberg skole;Stange;53;49;50;60.7718533;11.1347856
 Solvin skole;Stange;44;45;48;60.7331954;11.26021
 Stange skole;Stange;51;48;49;60.6359564;10.9109152
-Steinerskolen på Hedemarken avd grunnskolen Ottestad;Stange;41;41;40;0;0
+Steinerskolen på Hedemarken avd grunnskolen Ottestad;Stange;41;41;40;60.7774681;11.1027464
 Tangen skole;Stange;42;43;44;60.6166324;11.2590873
 Vallset skole;Stange;47;51;50;60.6810849;11.3422031
 Koppang skole;Stor-Elvdal;*;*;*;61.5672189;11.0631423
@@ -588,8 +588,8 @@ Tolga skole;Tolga;*;*;*;62.4114022;10.9966047
 Vingelen skole;Tolga;*;*;*;62.414454;10.866655
 Innbygda skole;Trysil;47;46;45;61.314827;12.266887
 Jordet skole;Trysil;*;*;*;59.0173881;10.0113318
-Trysil montessoriskole SA;Trysil;*;*;*;0;0
-Fåset skole og barnehage avd skole;Tynset;*;*;*;0;0
+Trysil montessoriskole SA;Trysil;*;*;*;61.1351552;12.4970169
+Fåset skole og barnehage avd skole;Tynset;*;*;*;62.25926999999999;10.65815
 Kvikne skole;Tynset;*;*;*;62.5610682;10.3238832
 Tylldalen skole;Tynset;*;*;*;62.127633;10.799686
 Tynset barneskole;Tynset;55;51;54;62.2725088;10.7776553
@@ -615,10 +615,10 @@ Solvang skole;Øyer;48;45;44;59.418499;5.286613
 Lidar skule;Øystre Slidre;50;46;48;61.2024225;8.9744619
 Rogne skule;Øystre Slidre;53;48;49;61.0817499;9.1276716
 Åmot Barne og ungdomsskole;Åmot;*;*;*;61.1402518;11.3679599
-Åmot montessoriskole SA;Åmot;*;*;*;0;0
+Åmot montessoriskole SA;Åmot;*;*;*;61.30172390000001;11.4620755
 Solør montessoriskole;Åsnes;*;*;*;60.575068;12.071309
 Åsnes barneskole;Åsnes;*;*;*;60.6111663;12.0181214
-Gossen barne- og ungdomsskole avd skole;Aukra;53;46;45;0;0
+Gossen barne- og ungdomsskole avd skole;Aukra;53;46;45;62.806707;6.8826449
 Julsundet skole;Aukra;56;48;49;62.7724432;6.9931739
 Aure barne- og ungdomsskole;Aure;*;*;*;63.268008;8.5344466
 Tustna barne- og ungdomsskole;Aure;*;*;*;63.158431;7.963703
@@ -634,12 +634,12 @@ Valderøy barneskule;Giske;49;47;49;62.504644;6.130757
 Vigra skule;Giske;53;46;47;62.572816;6.115895
 Angvik skule;Gjemnes;*;*;*;62.897063;8.08902
 Batnfjord skule;Gjemnes;45;43;45;62.8926676;7.677178
-Torvikbukt skule SA;Gjemnes;*;*;*;0;0
+Torvikbukt skule SA;Gjemnes;*;*;*;62.9420035;7.8590615
 Brattvåg barneskule;Haram;45;*;48;62.6007655;6.4412866
 Eidet skule;Haram;47;46;*;62.546373;6.59721
 Grytastranda montessoriskule;Haram;*;*;*;62.533667;6.354615
 Haramsøy barne- og ungdomsskule;Haram;*;*;*;62.6441541;6.2605425
-Hildre montessoriskule SA;Haram;*;*;*;0;0
+Hildre montessoriskule SA;Haram;*;*;*;62.6038155;6.3529263
 Søvik barneskule;Haram;*;*;*;62.54656;6.285734
 Bigset skule;Hareid;52;52;54;62.357025;5.967164
 Brandal friskule;Hareid;*;*;*;62.401344;6.006172
@@ -652,7 +652,7 @@ Moltu skule;Herøy (Møre og Romsdal);*;*;*;62.2949535;5.6355735
 Møre barne- og ungdomsskule;Herøy (Møre og Romsdal);44;39;37;62.2784638;5.8073176
 Nerlandsøy skule;Herøy (Møre og Romsdal);*;*;*;62.3409717;5.5855062
 Stokksund barne- og ungdomsskule;Herøy (Møre og Romsdal);*;*;*;62.3030602;5.7301058
-Bud skule;Hustadvika;*;*;*;0;0
+Bud skule;Hustadvika;*;*;*;62.90564000000001;6.9222
 Eide barneskole;Hustadvika;49;47;49;62.917977;7.4455997
 Haukås skole;Hustadvika;53;49;48;60.4906797;5.3846293
 Hustad skole;Hustadvika;*;49;47;62.96058;7.115704
@@ -670,7 +670,7 @@ Rensvik skole;Kristiansund;52;46;45;63.095868;7.813852
 Bolsøya skole;Molde;*;*;*;62.7305792;7.3213494
 Eidsvåg barne- og ungdomsskole;Molde;51;46;46;62.778045;8.074184
 Eresfjord barne- og ungdomsskule;Molde;*;*;*;62.6617782;8.1148537
-Kleive oppvekstsenter skole;Molde;*;*;*;0;0
+Kleive oppvekstsenter skole;Molde;*;*;*;62.7924124;7.6573138
 Kvam skole;Molde;48;51;54;64.138733;11.733867
 Kviltorp skole;Molde;51;45;48;62.7437216;7.233375
 Langmyra skole;Molde;49;46;46;62.7430637;7.1812964
@@ -680,15 +680,15 @@ Nordbyen skole;Molde;50;53;54;62.7551827;7.2228338
 Sellanrå skole;Molde;52;49;50;62.7391966;7.1440242
 Skjevik barne- og ungdomsskole;Molde;53;48;47;62.7868336;7.532336
 Tøndergård skole og ressurssenter;Molde;;;;62.743326;7.208114
-Vistdal oppvekstsenter skole;Molde;*;*;*;0;0
+Vistdal oppvekstsenter skole;Molde;*;*;*;62.72054099999999;7.9317386
 Vågsetra barne- og ungdomsskole;Molde;47;43;44;62.7139085;7.4253729
 Årølia skole;Molde;51;51;53;62.755497;7.291231
-Innfjorden friskole SA;Rauma;*;*;*;0;0
+Innfjorden friskole SA;Rauma;*;*;*;62.4937236;7.5604139
 Isfjorden skole;Rauma;49;52;53;62.577077;7.788514
 Måndalen barne- og ungdomsskule;Rauma;*;*;*;62.5309903;7.4358184
 Åfarnes barne- og ungdomsskole;Rauma;42;50;49;62.6588821;7.5034956
 Åndalsnes barneskole;Rauma;50;48;55;62.563204;7.6874949
-Gursken oppvekstsenter avd skule;Sande;*;*;*;0;0
+Gursken oppvekstsenter avd skule;Sande;*;*;*;62.2170511;5.6530625
 Kvamsøy barne- og ungdomsskule;Sande;*;*;*;62.2006971;5.4140455
 Larsnes skule;Sande;*;*;*;62.2088599;5.5739374
 Smøla barneskole;Smøla;47;45;47;63.4600345;8.0093286
@@ -698,20 +698,20 @@ Sunnylven skule;Stranda;*;*;*;62.0847895;6.8706648
 Langevåg skule;Sula;48;45;44;62.4391371;6.2133564
 Rørstadmarka skule;Sula;55;51;55;62.4310488;6.265395
 Solevåg skule;Sula;50;46;46;62.42722;6.31145
-Gjøra oppvekstsenter avd skule;Sunndal;;;*;0;0
+Gjøra oppvekstsenter avd skule;Sunndal;;;*;62.54787529999999;9.1127479
 Løykja skole;Sunndal;*;54;*;62.652574;8.695233
 Sande skole;Sunndal;50;45;45;59.1376099;10.2279857
 Tredal skole;Sunndal;*;46;55;62.6667258;8.5331818
 Ålvundfjord skule;Sunndal;44;50;46;62.840684;8.518549
-Bøfjorden og Bæverfjord oppvekstsenter avd Bæverfjord skule;Surnadal;*;*;*;0;0
-Mo oppvekstsenter avd skule;Surnadal;*;*;*;0;0
+Bøfjorden og Bæverfjord oppvekstsenter avd Bæverfjord skule;Surnadal;*;*;*;63.02643;8.598329999999999
+Mo oppvekstsenter avd skule;Surnadal;*;*;*;62.8767125;8.8802145
 Surnadal barne- og ungdomsskule;Surnadal;49;47;47;62.98125;8.716892
 Todalen og Stangvik oppvekstsenter;Surnadal;*;*;*;62.90216;8.597267
 Aure barneskule;Sykkylven;*;*;50;62.3949467;6.5975492
-Hundeidvik privatskule AS;Sykkylven;*;*;*;0;0
+Hundeidvik privatskule AS;Sykkylven;*;*;*;62.37643000000001;6.433375
 Sørestranda skule;Sykkylven;*;*;50;62.383375;6.550883
-Velledalen montessoriskule AS;Sykkylven;*;*;*;0;0
-Meisingset oppvekstsenter avd skole;Tingvoll;*;*;*;0;0
+Velledalen montessoriskule AS;Sykkylven;*;*;*;62.291885;6.646948
+Meisingset oppvekstsenter avd skole;Tingvoll;*;*;*;62.8623369;8.2936804
 Straumsnes barne- og ungdomsskole;Tingvoll;*;*;*;63.0357876;8.0393527
 Tingvoll barne- og ungdomsskole;Tingvoll;50;46;44;62.9143256;8.1970924
 Haddal skule;Ulstein;*;*;*;62.282304;5.875451
@@ -721,17 +721,17 @@ Ulsteinvik barneskule;Ulstein;49;48;49;62.344812;5.850679
 Fiskå skule;Vanylven;*;51;49;62.100773;5.566612
 Myklebust skule;Vanylven;*;*;*;62.087657;5.740295
 Åheim skule;Vanylven;*;*;*;62.036029;5.533243
-Fiksdal friskule SA;Vestnes;*;*;*;0;0
+Fiksdal friskule SA;Vestnes;*;*;*;62.51882999999999;7.12671
 Helland barneskule;Vestnes;46;45;46;62.616256;7.091351
 Tomrefjord skule;Vestnes;47;42;42;62.602138;6.929263
 Tresfjord Enspire skule;Vestnes;*;*;*;62.5194794;7.1274426
-Vike montessoriskule SA;Vestnes;*;*;*;0;0
+Vike montessoriskule SA;Vestnes;*;*;*;62.61908279999999;7.148950399999999
 Bratteberg skule;Volda;52;49;47;62.1497344;6.1124774
 Dalsfjord skule;Volda;*;*;*;62.112963;5.938836
 Folkestad skule;Volda;*;*;*;59.436525;9.046218
 Hornindal skule;Volda;53;56;55;61.976545;6.51911
 Mork skule;Volda;42;43;42;62.168956;6.025039
-Ulvestad barneskule AS;Volda;*;*;*;0;0
+Ulvestad barneskule AS;Volda;*;*;*;62.16601559999999;5.931412600000001
 Øyra skule;Volda;52;50;52;62.1482881;6.0789836
 Dalane skule;Ørsta;53;44;49;62.1593822;6.2305895
 Hovden skule;Ørsta;51;48;50;62.185468;6.081063
@@ -749,26 +749,26 @@ Hatlane skole;Ålesund;49;51;53;62.460655;6.271124
 Hessa skole;Ålesund;54;49;50;62.458454;6.130492
 Larsgården skole;Ålesund;55;54;53;62.4747654;6.239191
 Lerstad barneskole;Ålesund;46;46;44;62.468511;6.307165
-Møre barne- og ungdomsskule Skodje AS;Ålesund;*;*;*;0;0
-Skodje barne- og ungdomsskole avd barneskole;Ålesund;49;45;52;0;0
+Møre barne- og ungdomsskule Skodje AS;Ålesund;*;*;*;62.484107;6.5067624
+Skodje barne- og ungdomsskole avd barneskole;Ålesund;49;45;52;62.493139;6.1956365
 Spjelkavik barneskole;Ålesund;53;49;49;62.460561;6.369287
 Steinerskolen Ålesund;Ålesund;44;42;48;62.462039;6.266049
-Stette friskule SA;Ålesund;*;*;*;0;0
-Stiftelsen Møre barne- og Ungdomsskule, Ålesund;Ålesund;*;*;*;0;0
+Stette friskule SA;Ålesund;*;*;*;62.523519;6.6306525
+Stiftelsen Møre barne- og Ungdomsskule, Ålesund;Ålesund;*;*;*;62.4343013;6.3982646
 Stokke og Vik skole;Ålesund;51;44;51;62.4954081;6.3265649
 Valle skule;Ålesund;48;46;48;62.47841;6.661038
 Volsdalen skole;Ålesund;51;48;49;62.4715411;6.1911927
 Ørskog skule;Ålesund;49;42;46;62.4776723;6.8200132
-Aalesund International School Sti;Ålesund;*;*;*;0;0
+Aalesund International School Sti;Ålesund;*;*;*;62.4655911;6.251226099999999
 Åse skole;Ålesund;53;51;52;62.4637209;6.3304081
 Bjarnetjønna skole;Alstahaug;*;*;*;66.016541;12.6157037
-Søvik oppvekstsenter avd skole;Alstahaug;*;*;*;0;0
+Søvik oppvekstsenter avd skole;Alstahaug;*;*;*;65.9216446;12.4483551
 Andenes skole;Andøy;*;*;*;69.3160729;16.1287824
-Bleik og Omegn Montessori Skolelag;Andøy;*;*;*;0;0
+Bleik og Omegn Montessori Skolelag;Andøy;*;*;*;69.2729858;15.9650248
 Risøyhamn skole;Andøy;*;*;*;68.968579;15.636839
 Åse montessoriskole;Andøy;*;*;*;69.015781;15.807296
 Beiarn barne- og ungdomsskole;Beiarn;*;*;*;66.916132;14.768424
-Bindalseidet skole SA;Bindal;*;*;*;0;0
+Bindalseidet skole SA;Bindal;*;*;*;65.1268844;12.232336
 Terråk skole;Bindal;*;*;*;65.086116;12.367723
 Alberthaugen skole;Bodø;;;;67.274059;14.42673
 Alstad barneskole;Bodø;50;49;53;67.274192;14.481268
@@ -776,17 +776,17 @@ Aspåsen skole;Bodø;52;48;50;67.278264;14.3814433
 Bodøsjøen skole;Bodø;53;50;49;67.2705576;14.4407984
 Grønnåsen skole;Bodø;51;48;46;67.28083;14.46653
 Hunstad barneskole;Bodø;51;47;52;67.28481;14.5395746
-Kjerringøy oppvekstsenter avd skole;Bodø;*;*;*;0;0
+Kjerringøy oppvekstsenter avd skole;Bodø;*;*;*;67.51701;14.761825
 Løpsmark skole;Bodø;50;49;50;67.3104829;14.4512237
-Misvær oppvekstsenter avd skole;Bodø;*;*;*;0;0
+Misvær oppvekstsenter avd skole;Bodø;*;*;*;67.11930439999999;15.0136669
 Mørkvedbukta skole;Bodø;51;52;50;67.2795874;14.5648885
 Mørkvedmarka skole;Bodø;48;48;47;67.2910513;14.5884512
 Rønvik skole;Bodø;51;49;48;67.2963286;14.4186545
 Saltstraumen skole;Bodø;*;*;*;67.235808;14.624071
 Saltvern skole;Bodø;49;50;48;67.2891967;14.4311788
-Skaug oppvekstsenter avd skole;Bodø;53;53;51;0;0
-Skjerstad oppvekstsenter avd skole;Bodø;*;*;*;0;0
-Skolen i Væran avd skole;Bodø;*;*;;0;0
+Skaug oppvekstsenter avd skole;Bodø;53;53;51;67.3872509;14.6363858
+Skjerstad oppvekstsenter avd skole;Bodø;*;*;*;67.2330873;15.0165269
+Skolen i Væran avd skole;Bodø;*;*;;67.28291850000001;14.4150773
 St Eysteins skole;Bodø;*;*;*;67.2757827;14.3659777
 Tverlandet skole;Bodø;51;48;51;67.2972568;14.7279171
 Østbyen skole;Bodø;49;45;43;67.2803239;14.4093963
@@ -796,7 +796,7 @@ Eidet skole;Bø;*;*;*;68.73484;14.596156
 Steine skole;Bø;*;*;*;68.6178734;14.4621788
 Straume skole;Bø;49;49;46;68.688083;14.47901
 Dønna barne- og ungdomsskole;Dønna;*;*;*;66.107939;12.490327
-Løkta oppvekstsenter avd skole;Dønna;*;*;*;0;0
+Løkta oppvekstsenter avd skole;Dønna;*;*;*;66.1492091;12.7284506
 Nord-Dønna montessoriskole;Dønna;*;*;*;66.175489;12.544201
 Evenes skole;Evenes - Evenášši;*;*;*;68.4830049;16.8883717
 Sulitjelma skole;Fauske - Fuossko;*;*;*;67.134484;16.069571
@@ -804,14 +804,14 @@ Valnesfjord skole;Fauske - Fuossko;*;*;*;67.295143;15.177556
 Vestmyra skole;Fauske - Fuossko;45;46;42;67.2643815;15.3770206
 Flakstad barne- og ungdomsskole;Flakstad;*;*;*;68.0918472;13.2295923
 Vikten skole;Flakstad;*;*;*;68.138748;13.312834
-Inndyr skole avd skole;Gildeskål;*;*;*;0;0
-Nygårdsjøen oppvekstsenter avd skole;Gildeskål;*;*;*;0;0
+Inndyr skole avd skole;Gildeskål;*;*;*;67.03615529999999;14.0351118
+Nygårdsjøen oppvekstsenter avd skole;Gildeskål;*;*;*;67.1017773;14.3057446
 Sandhornøy skole;Gildeskål;*;*;*;67.1360206;14.0788274
-Sørarnøy skole og barnehage avd skole;Gildeskål;*;*;*;0;0
+Sørarnøy skole og barnehage avd skole;Gildeskål;*;*;*;67.1415195;13.9703605
 Grane barne- og ungdomsskole;Grane;*;*;*;65.5344215;13.4001263
 Drag skole;Hábmer - Hamarøy;*;*;*;68.040368;16.08117
 Hamarøy montessoriskole;Hábmer - Hamarøy;*;*;*;68.0233458;15.3490422
-Innhavet oppvekstsenter avd skole;Hábmer - Hamarøy;*;*;*;0;0
+Innhavet oppvekstsenter avd skole;Hábmer - Hamarøy;*;*;*;67.9633381;15.9319406
 Oppeid skole;Hábmer - Hamarøy;*;*;45;68.083115;15.6237288
 Innlandet skole;Hadsel;*;*;*;68.557258;15.217526
 Melbu skole;Hadsel;*;50;51;68.503361;14.803934
@@ -823,19 +823,19 @@ Hemnes sentralskole;Hemnes;49;50;54;66.225854;13.607253
 Korgen sentralskole;Hemnes;51;50;54;66.077643;13.808271
 Herøy skole;Herøy (Nordland);45;43;47;65.97647;12.275334
 Leirfjord barne- og ungdomsskole;Leirfjord;49;47;47;66.065339;12.938717
-Konsvik oppvekstsenter avd skole;Lurøy;*;*;*;0;0
-Kvarøy oppvekstsenter skole;Lurøy;*;*;*;0;0
+Konsvik oppvekstsenter avd skole;Lurøy;*;*;*;66.49904;13.09218
+Kvarøy oppvekstsenter skole;Lurøy;*;*;*;66.4858551;12.9605545
 Lovund skole;Lurøy;*;*;*;66.3665553;12.3577187
-Onøy Lurøy oppvekstsenter avd skole;Lurøy;*;*;*;0;0
-Sleneset oppvekstsenter skole;Lurøy;*;*;*;0;0
+Onøy Lurøy oppvekstsenter avd skole;Lurøy;*;*;*;66.3983066;12.8683511
+Sleneset oppvekstsenter skole;Lurøy;*;*;*;66.3635288;12.5942675
 Lødingen skole;Lødingen;*;*;*;68.4091271;15.9757767
 Vestbygd skole;Lødingen;*;*;*;68.347844;15.508176
-Bolga oppvekstsenter avd skole;Meløy;*;*;*;0;0
+Bolga oppvekstsenter avd skole;Meløy;*;*;*;66.8023606;13.205873
 Enga skole;Meløy;*;*;*;66.7843739;13.5319175
 Glomfjord skole;Meløy;43;*;*;66.8177981;13.9584396
 Halsa skole;Meløy;52;48;56;66.742114;13.578547
-Meløy oppvekstsenter avd skole;Meløy;*;*;*;0;0
-Neverdal Enspire skole AS;Meløy;*;*;*;0;0
+Meløy oppvekstsenter avd skole;Meløy;*;*;*;66.8233041;13.4107259
+Neverdal Enspire skole AS;Meløy;*;*;*;66.83453159999999;13.7758067
 Spildra skole;Meløy;51;47;49;66.8633455;13.7266786
 Sørvågen skole;Moskenes;*;*;*;67.889407;13.016659
 Ankenes skole;Narvik;53;49;52;68.417451;17.383271
@@ -848,19 +848,19 @@ Kjøpsvik skole;Narvik;*;*;*;68.0994642;16.3864997
 Narvik montessoriskole;Narvik;53;48;49;68.412662;17.439285
 Skistua barneskole;Narvik;51;47;49;68.4350025;17.4415526
 Skjomen skole;Narvik;;;;68.246395;17.412057
-Nesna skole avd Nesna;Nesna;52;44;49;0;0
-Båsmo barneskole;Rana - Raane;48;45;46;0;0
-Dalsgrenda montessoriskole SA;Rana - Raane;*;*;*;0;0
-Frikult grunnskole AS;Rana - Raane;*;*;*;0;0
-Gruben barneskole;Rana - Raane;51;48;51;0;0
-Grønfjelldal montessoriskole SA;Rana - Raane;*;*;*;0;0
-Hauknes skole;Rana - Raane;50;47;50;0;0
-Lyngheim skole;Rana - Raane;51;46;44;0;0
-Selfors barneskole;Rana - Raane;51;*;*;0;0
-Skonseng skole;Rana - Raane;54;53;57;0;0
-Storforshei barne- og ungdomsskole;Rana - Raane;49;46;50;0;0
-Utskarpen barne- og ungdomsskole;Rana - Raane;45;46;49;0;0
-Ytteren skole;Rana - Raane;47;45;44;0;0
+Nesna skole avd Nesna;Nesna;52;44;49;66.198574;13.0228596
+Båsmo barneskole;Rana - Raane;48;45;46;66.33534259999999;14.1090756
+Dalsgrenda montessoriskole SA;Rana - Raane;*;*;*;66.2487556;13.9944585
+Frikult grunnskole AS;Rana - Raane;*;*;*;66.3378225;14.0921857
+Gruben barneskole;Rana - Raane;51;48;51;66.3196748;14.1957036
+Grønfjelldal montessoriskole SA;Rana - Raane;*;*;*;66.3451535;14.7090605
+Hauknes skole;Rana - Raane;50;47;50;66.2855001;14.0542641
+Lyngheim skole;Rana - Raane;51;46;44;66.3198692;14.158431
+Selfors barneskole;Rana - Raane;51;*;*;66.3260453;14.1810297
+Skonseng skole;Rana - Raane;54;53;57;66.3578818;14.3448663
+Storforshei barne- og ungdomsskole;Rana - Raane;49;46;50;66.403802;14.5278825
+Utskarpen barne- og ungdomsskole;Rana - Raane;45;46;49;66.2929552;13.5636178
+Ytteren skole;Rana - Raane;47;45;44;66.348233;14.1288177
 Jektvik skole;Rødøy;*;*;*;66.6247423;13.2908386
 Rødøy skole;Rødøy;;*;;66.6614026;13.0760148
 Tjongsfjord skole;Rødøy;*;*;*;66.6980997;13.4192097
@@ -880,10 +880,10 @@ Steigenskolen Leines;Steigen;*;*;*;67.735888;14.81105
 Steigenskolen Leinesfjord;Steigen;*;*;*;67.7770618;15.0163165
 Steigenskolen Nordfold;Steigen;*;*;*;67.762179;15.223982
 Vik skole;Sømna;48;48;51;65.313092;12.1685992
-Røsvik oppvekstsenter skole;Sørfold - Fuolldá;*;*;*;0;0
+Røsvik oppvekstsenter skole;Sørfold - Fuolldá;*;*;*;67.4780018;15.4616644
 Straumen skole;Sørfold - Fuolldá;*;*;*;67.344047;15.5931639
 Husøy skole;Træna;*;*;*;69.5439037;17.6597625
-Elsfjord montessoriskole SA;Vefsn;*;*;*;0;0
+Elsfjord montessoriskole SA;Vefsn;*;*;*;66.10317119999999;13.5437815
 Granmoen skole;Vefsn;53;*;53;65.977084;13.215423
 Kulstad skole;Vefsn;50;47;47;65.8664742;13.1998603
 Mosjøen skole;Vefsn;*;53;*;65.836467;13.2043304
@@ -892,7 +892,7 @@ Vega barne- og ungdomsskole;Vega;*;*;*;65.675159;11.951084
 Ballstad skole;Vestvågøy;*;*;*;68.084381;13.538986
 Buksnes skole;Vestvågøy;54;49;47;68.1186061;13.5555038
 Bøstad skole;Vestvågøy;*;*;*;68.239284;13.751981
-Eltoft montessoriskole AS;Vestvågøy;*;*;*;0;0
+Eltoft montessoriskole AS;Vestvågøy;*;*;*;68.2413835;13.689078
 Fygle skole;Vestvågøy;51;53;53;68.145669;13.648834
 Leknes skole;Vestvågøy;49;52;52;68.146443;13.619627
 Opdøl montessoriskole Barne og ungdomsskole;Vestvågøy;*;*;*;68.186768;13.652838
@@ -908,7 +908,7 @@ Svolvær skole;Vågan;51;53;54;68.238891;14.5596784
 Ørsnes privatskole;Vågan;*;*;*;68.200513;14.395262
 Alsvåg skole;Øksnes;*;*;*;68.905345;15.265138
 Myre skole;Øksnes;*;*;*;68.9159106;15.0859659
-Hattfjelldal oppvekstsenter avd skole;Aarborte - Hattfjelldal;49;*;44;0;0
+Hattfjelldal oppvekstsenter avd skole;Aarborte - Hattfjelldal;49;*;44;65.5978384;14.000663
 Abildsø skole;Oslo;46;47;48;59.8817366;10.8264847
 Ammerud skole;Oslo;52;50;51;59.9650676;10.8744148
 Bakås skole;Oslo;53;49;50;59.937376;10.9107874
@@ -960,11 +960,11 @@ Lilleaker skole;Oslo;51;55;54;59.923186;10.639382
 Lilleborg skole;Oslo;53;56;54;59.9332473;10.7648266
 Lindeberg skole;Oslo;52;47;49;59.9314545;10.8801598
 Linderud skole;Oslo;49;41;41;59.9405182;10.8341715
-Ljabruskolen - steinerskole for Elever Med Spesielle Behov Sti;Oslo;;;;0;0
+Ljabruskolen - steinerskole for Elever Med Spesielle Behov Sti;Oslo;;;;59.8499145;10.8043963
 Ljan skole;Oslo;48;52;52;59.8469668;10.7865588
 Lusetjern skole;Oslo;50;46;46;59.832486;10.7898316
 Lutvann skole;Oslo;56;47;51;59.9248999;10.8701153
-Lycee Francais Rene Cassin Doslo;Oslo;58;50;54;0;0
+Lycee Francais Rene Cassin Doslo;Oslo;58;50;54;59.9171054;10.7175156
 Lysejordet skole;Oslo;50;54;54;59.9371666;10.6384289
 Lønnebakken skole;Oslo;*;*;*;59.9458532;10.8583003
 Løren skole;Oslo;49;49;50;59.9313577;10.8029223
@@ -981,7 +981,7 @@ Nordseter skole;Oslo;55;54;56;59.8670285;10.7958636
 Nordstrand skole;Oslo;55;58;61;59.8606361;10.7941898
 Nordtvet skole;Oslo;53;47;47;59.9515444;10.8723504
 Nordvoll skole;Oslo;;;;59.9239294;10.8647258
-Norlights International School Oslo AS;Oslo;57;45;47;0;0
+Norlights International School Oslo AS;Oslo;57;45;47;59.96161579999999;10.6921527
 Nyskolen i Oslo grunnskole;Oslo;50;47;47;59.8634086;10.8389793
 Nøklevann skole;Oslo;49;51;52;59.8768138;10.8490941
 Oppsal skole;Oslo;51;55;55;59.8979404;10.8440061
@@ -991,7 +991,7 @@ Prinsdal skole;Oslo;52;46;50;59.8364455;10.8140134
 Refstad skole;Oslo;52;55;54;59.9377747;10.8055204
 Rommen skole;Oslo;54;48;48;59.9667545;10.9141406
 Rosenholm skole;Oslo;52;45;46;59.8289813;10.7854303
-Rudolf steinerskolen i Oslo Sti;Oslo;43;48;46;0;0
+Rudolf steinerskolen i Oslo Sti;Oslo;43;48;46;59.9493186;10.6568737
 Ruseløkka skole;Oslo;57;51;54;59.9132435;10.7254875
 Rustad skole;Oslo;50;50;50;59.8714475;10.8391353
 Ryenberget skole;Oslo;*;*;*;59.8988205;10.8022744
@@ -1003,11 +1003,11 @@ Skjønnhaug skole;Oslo;55;52;54;59.9288367;10.8768111
 Skøyen skole;Oslo;55;56;57;59.9292402;10.6911537
 Slemdal skole;Oslo;54;57;57;59.9515517;10.6926458
 Smestad skole;Oslo;54;53;55;59.9327026;10.6826142
-St Sunniva skole avd Undervisning;Oslo;56;52;51;0;0
+St Sunniva skole avd Undervisning;Oslo;56;52;51;59.9187763;10.7452095
 Steinerskolen på Nordstrand;Oslo;42;47;41;59.861879;10.79017
 Stenbråten skole;Oslo;50;49;49;59.8525578;10.825315
-Stiftelsen Den Tysk-Norske skolen i Oslo avd grunnskole og videregående;Oslo;;55;55;0;0
-Stiftelsen montessoriskolen Lyse;Oslo;49;51;52;0;0
+Stiftelsen Den Tysk-Norske skolen i Oslo avd grunnskole og videregående;Oslo;;55;55;59.9362861;10.7591832
+Stiftelsen montessoriskolen Lyse;Oslo;49;51;52;59.9312396;10.6428908
 Stovner skole;Oslo;58;53;55;59.9565379;10.9269123
 Svendstuen skole;Oslo;50;55;56;59.9583808;10.688866
 Sørkedalen skole;Oslo;*;*;*;60.0172038;10.6136941
@@ -1026,7 +1026,7 @@ Uranienborg skole;Oslo;55;51;53;59.9200769;10.7189385
 Vahl skole;Oslo;48;47;45;59.916692;10.766812
 Veitvet skole;Oslo;47;44;42;59.9417435;10.8543925
 Vestli skole;Oslo;50;42;45;59.9709441;10.9275395
-Vetland skole grunnskole;Oslo;;*;48;0;0
+Vetland skole grunnskole;Oslo;;*;48;59.8972682;10.8437798
 Vinderen skole;Oslo;50;57;56;59.9413983;10.7065774
 Voksen skole;Oslo;50;53;53;59.9550546;10.6530682
 Vollebekk skole;Oslo;52;49;47;59.9373465;10.827204
@@ -1072,17 +1072,17 @@ Varhaug skule;Hå;51;45;50;58.616247;5.6522916
 Vigrestad storskule;Hå;46;43;45;58.570164;5.701873
 Avaldsnes skole;Karmøy;51;46;49;59.353919;5.280175
 Grindhaug skole;Karmøy;46;44;48;59.258139;5.202383
-Haugesund International School Sti;Karmøy;60;47;52;0;0
+Haugesund International School Sti;Karmøy;60;47;52;59.38999219999999;5.2448461
 Håvik skole;Karmøy;52;45;48;59.3184161;5.2873946
 Kolnes skole;Karmøy;51;51;53;59.389297;5.372639
 Kopervik skole;Karmøy;54;50;51;59.2879962;5.2945919
-Kvalavåg montessoriskole AS;Karmøy;54;52;46;0;0
+Kvalavåg montessoriskole AS;Karmøy;54;52;46;59.32526979999999;5.2071519
 Mykje skole;Karmøy;50;48;51;59.3497782;5.3305008
 Norheim skole;Karmøy;52;47;52;59.379101;5.321386
 Sevland skole;Karmøy;50;44;47;59.272708;5.202154
 Skudeneshavn skole;Karmøy;50;47;48;59.1519812;5.2637278
 Stangaland skole;Karmøy;51;47;50;59.2733857;5.3149587
-Sørhåland barneskole AS;Karmøy;52;52;55;0;0
+Sørhåland barneskole AS;Karmøy;52;52;55;59.15524529999999;5.2352909
 Torvastad skole og kultursenter;Karmøy;47;45;44;59.38934;5.252592
 Veavågen skole;Karmøy;54;52;49;59.291999;5.226075
 Ådland skole;Karmøy;*;*;*;59.242583;5.202559
@@ -1107,7 +1107,7 @@ Bogafjell skole;Sandnes;53;50;52;58.821316;5.750795
 Buggeland skole;Sandnes;52;52;56;58.814702;5.754574
 Figgjo skole;Sandnes;48;42;46;58.7870286;5.8057876
 Forsand skule;Sandnes;45;46;47;58.8974353;6.1327058
-Forus friskole - Bus;Sandnes;*;51;52;0;0
+Forus friskole - Bus;Sandnes;*;51;52;58.8838575;5.7389581
 Ganddal skole;Sandnes;51;48;50;58.823177;5.712217
 Hana skole;Sandnes;56;47;50;58.855692;5.7754053
 Hommersåk skole;Sandnes;50;49;52;58.9260621;5.8497511
@@ -1119,8 +1119,8 @@ Lura skole;Sandnes;51;44;47;58.876059;5.735786
 Malmheim skole;Sandnes;43;44;43;58.8332151;5.6600383
 Maudland skole;Sandnes;47;49;51;58.9189919;5.8721256
 Porsholen skole;Sandnes;56;51;50;58.880862;5.736366
-Sandnes friskole AS;Sandnes;*;46;44;0;0
-Sandnes International School AS;Sandnes;55;*;*;0;0
+Sandnes friskole AS;Sandnes;*;46;44;58.8238813;5.717138299999999
+Sandnes International School AS;Sandnes;55;*;*;58.8828251;5.7415339
 Sandved skole;Sandnes;53;52;53;58.8406983;5.7162822
 Smeaheia skole;Sandnes;53;49;53;58.863323;5.722858
 Stangeland skole;Sandnes;53;51;51;58.855087;5.715774
@@ -1140,8 +1140,8 @@ Sande skole;Sola;49;48;47;59.1376099;10.2279857
 Skadberg skole;Sola;53;49;51;58.8832812;5.6679041
 Storevarden skole;Sola;53;48;52;58.938784;5.574271
 Auglend skole;Stavanger;52;52;52;58.94684;5.726762
-Biss Gausel Sti;Stavanger;62;39;50;0;0
-Biss Sentrum AS;Stavanger;57;41;46;0;0
+Biss Gausel Sti;Stavanger;62;39;50;58.8972309;5.7335555
+Biss Sentrum AS;Stavanger;57;41;46;58.9753288;5.7126109
 Buøy skole;Stavanger;49;43;45;58.985833;5.734569
 Byfjord skole;Stavanger;49;46;47;58.980259;5.7022731
 Eiganes skole;Stavanger;49;50;47;58.9643697;5.707083
@@ -1153,7 +1153,7 @@ Hundvåg skole;Stavanger;50;50;51;58.9965278;5.7338149
 Johannes læringssenter Flerspråklige Barn;Stavanger;*;;;58.9673177;5.7551632
 Jåtten skole;Stavanger;53;49;53;58.91544;5.725749
 Kampen skole;Stavanger;50;48;50;58.9720155;5.7159438
-Kristen friskole AS;Stavanger;*;52;52;0;0
+Kristen friskole AS;Stavanger;*;52;52;58.9517458;5.7029362
 Kvaleberg skole;Stavanger;52;51;50;58.944473;5.74471
 Kvernevik skole;Stavanger;51;46;48;58.966746;5.60549
 Lassa skole;Stavanger;55;54;56;58.957486;5.6944977
@@ -1161,11 +1161,11 @@ Lervig skole;Stavanger;50;48;47;58.9670448;5.757639
 Madlamark skole;Stavanger;52;50;52;58.9498673;5.6779947
 Madlavoll skole;Stavanger;50;51;50;58.9425631;5.6905122
 Mosterøy skole;Stavanger;50;51;50;59.078809;5.669468
-Norlights montessoriskole Stavanger AS;Stavanger;*;*;*;0;0
+Norlights montessoriskole Stavanger AS;Stavanger;*;*;*;58.89365549999999;5.724426100000001
 Nylund skole;Stavanger;54;51;51;58.9650385;5.7505283
-Ombo oppvekstsenter Avdeling skule;Stavanger;*;*;*;0;0
+Ombo oppvekstsenter Avdeling skule;Stavanger;*;*;*;58.9699756;5.7331073
 Roaldsøy skole;Stavanger;50;49;47;58.9934958;5.7641061
-Sjernarøy oppvekstsenter Avdeling skule;Stavanger;49;46;48;0;0
+Sjernarøy oppvekstsenter Avdeling skule;Stavanger;49;46;48;58.9699756;5.7331073
 Skeie skole;Stavanger;54;49;52;60.286274;5.3151172
 Stavanger Kristne grunnskole;Stavanger;*;*;*;58.960849;5.691295
 Steinerskolen Stavanger grunnskole;Stavanger;53;*;*;58.938509;5.734847
@@ -1183,12 +1183,12 @@ Fjelltun skole;Strand;46;44;44;59.027431;6.0286995
 Kfskolen - Jørpeland;Strand;*;*;*;59.027069;6.025578
 Nordre Strand skole;Strand;*;*;*;59.1132;6.000744
 Tau skole;Strand;*;*;*;59.063439;5.924126
-Tryggheim Strand AS;Strand;*;*;*;0;0
-Erfjord skule avd skule;Suldal;*;*;*;0;0
-Jelsa oppvekstsenter avd skule;Suldal;*;*;*;0;0
-Marvik skule avd skule;Suldal;*;*;*;0;0
-Sand skule avd skule;Suldal;50;49;51;0;0
-Vinjar skule avd skule;Suldal;50;53;58;0;0
+Tryggheim Strand AS;Strand;*;*;*;59.0671006;5.9203225
+Erfjord skule avd skule;Suldal;*;*;*;59.35498;6.21868
+Jelsa oppvekstsenter avd skule;Suldal;*;*;*;59.3432404;6.0416758
+Marvik skule avd skule;Suldal;*;*;*;59.41090939999999;6.0820712
+Sand skule avd skule;Suldal;50;49;51;59.49165199999999;6.2542059
+Vinjar skule avd skule;Suldal;50;53;58;59.4889404;6.4967378
 Bryne skule;Time;51;47;48;58.7327749;5.6447463
 Frøyland skule;Time;50;50;*;58.7735847;5.7272009
 Hognestad skule;Time;*;*;*;58.7057022;5.6598874
@@ -1204,12 +1204,12 @@ Nedstrand barne- og ungdomsskule;Tysvær;*;*;*;59.348863;5.798302
 Straumen skule;Tysvær;*;*;*;59.431135;5.612954
 Tysværvåg barne- og ungdomsskule;Tysvær;50;46;46;59.333951;5.485997
 Utsira skole;Utsira;*;*;*;59.305707;4.8877612
-Sandeid oppvekstsenter;Vindafjord;*;*;*;0;0
+Sandeid oppvekstsenter;Vindafjord;*;*;*;59.5450845;5.8575075
 Skjold skule;Vindafjord;48;47;47;59.506205;5.596689
 Vats skule;Vindafjord;*;*;*;59.491237;5.731826
-Vik oppvekstsenter;Vindafjord;*;*;*;0;0
+Vik oppvekstsenter;Vindafjord;*;*;*;59.5756312;5.7705398
 Vikedal skule;Vindafjord;46;43;45;59.496903;5.90859
-Vågen oppvekstsenter;Vindafjord;44;47;48;0;0
+Vågen oppvekstsenter;Vindafjord;44;47;48;59.5756312;5.7705398
 Ølen skule;Vindafjord;49;43;44;59.604518;5.813243
 Herre skole;Bamble;*;*;*;59.1027718;9.5657062
 Langesund barneskole;Bamble;51;49;46;59.004785;9.733766
@@ -1220,7 +1220,7 @@ Drangedal 10-Årige skole;Drangedal;53;49;48;59.09819;9.057917
 Kroken skole;Drangedal;*;*;*;58.9706119;9.1610414
 Tørdal skule;Drangedal;*;*;*;59.154031;8.813619
 Gimle skule;Fyresdal;*;*;*;59.186477;8.086589
-Hjartdal montessoriskule Sti;Hjartdal;*;*;*;0;0
+Hjartdal montessoriskule Sti;Hjartdal;*;*;*;59.60689379999999;8.7002758
 Sauland skule;Hjartdal;*;*;*;59.620404;8.930894
 Helle skole;Kragerø;*;*;*;58.9039461;9.3710134
 Kragerø skole;Kragerø;52;50;49;58.8674668;9.4089338
@@ -1231,30 +1231,30 @@ Bø skule;Midt-Telemark;46;46;45;59.4132312;9.0761357
 Folkestad skule;Midt-Telemark;42;46;46;59.436525;9.046218
 Gvarv skole;Midt-Telemark;*;*;*;59.3880656;9.1897282
 Sauar friskole;Midt-Telemark;*;*;*;59.41963;9.280634
-Kyrkjebygda oppvekstsenter Avdeling skule;Nissedal;*;*;*;0;0
+Kyrkjebygda oppvekstsenter Avdeling skule;Nissedal;*;*;*;59.16674;8.50221
 Tveit skule / Nissedal ungdomsskule;Nissedal;*;*;*;59.0241316;8.5204674
 Helgen montessoriskole;Nome;*;*;*;59.255845;9.35933
 Holla 10-Årige skole;Nome;*;*;*;59.278989;9.262437
 Lunde 10-Årige skole;Nome;48;46;46;59.306893;9.101499
 Gransherad skole;Notodden;*;*;*;59.6927;9.026822
 Heddal barneskole;Notodden;46;45;44;59.5815333;9.1713419
-Hjuksebø montessoriskole SA;Notodden;46;*;*;0;0
+Hjuksebø montessoriskole SA;Notodden;46;*;*;59.5087432;9.333044
 Høgås skole;Notodden;56;52;57;59.5628443;9.3031421
-Lisleherad montessoriskole SA;Notodden;;*;*;0;0
+Lisleherad montessoriskole SA;Notodden;;*;*;59.5990702;9.2713818
 Sætre skole;Notodden;53;47;52;59.570211;9.273259
 Tinnesmoen skole;Notodden;49;44;43;59.5712786;9.2589382
 Tveiten skole;Notodden;*;*;*;59.5483354;9.2827194
 Bergsbygda montessoriskole;Porsgrunn;*;*;*;59.085119;9.720866
 Borge skole;Porsgrunn;54;50;50;59.224678;11.045441
 Brattås skole;Porsgrunn;49;50;55;59.1958048;10.38974
-Brevik oppvekstsenter avd skole;Porsgrunn;*;*;*;0;0
+Brevik oppvekstsenter avd skole;Porsgrunn;*;*;*;59.05669140000001;9.691799099999999
 Grønli skole;Porsgrunn;49;48;48;59.124869;9.655141
-Heistadskolene avd Barn;Porsgrunn;50;50;52;0;0
+Heistadskolene avd Barn;Porsgrunn;50;50;52;59.1385567;9.6555147
 Klevstrand skole;Porsgrunn;50;47;43;59.117907;9.65119
 Langangen skole;Porsgrunn;*;*;*;59.082114;9.810021
 Myrene skole;Porsgrunn;47;49;46;59.1362024;9.6706104
 Sandøya montessoriskole;Porsgrunn;*;*;*;59.050366;9.729837
-Stiftelsen International School Telemark;Porsgrunn;59;46;49;0;0
+Stiftelsen International School Telemark;Porsgrunn;59;46;49;59.1055274;9.6814783
 Stridsklev skole;Porsgrunn;49;48;46;59.111471;9.668901
 Tveten skole;Porsgrunn;55;51;51;59.1168376;9.6975417
 Vestsiden skole;Porsgrunn;49;47;46;59.146152;9.6380182
@@ -1265,7 +1265,7 @@ Bratsbergkleiva skole;Skien;55;51;52;59.2056861;9.6165985
 Buer skole;Skien;50;48;45;59.1691451;9.66189
 Bølehøgda skole;Skien;51;51;54;59.1847816;9.6375989
 Gjerpen barneskole;Skien;49;46;49;59.22536;9.607712
-Kilebygda montessoriskole SA;Skien;*;*;*;0;0
+Kilebygda montessoriskole SA;Skien;*;*;*;59.10654;9.432559999999999
 Kjørbekkhøgda skole;Skien;49;47;46;59.1782711;9.6157229
 Klyve skole;Skien;52;49;52;59.152148;9.628152
 Kollmyr skole;Skien;50;50;53;59.2132668;9.5546096
@@ -1273,58 +1273,58 @@ Lunde barneskole;Skien;50;46;45;59.1616573;10.9330632
 Moflata skole;Skien;50;46;47;59.187281;9.596311
 Oasen skole Grenland AS;Skien;*;*;*;59.2072798;9.5679599
 Skauen Kristelige skole;Skien;40;53;55;59.1942334;9.6304571
-Skien kommune Spesialpedagogisk Enhet;Skien;;;;0;0
-Skotfoss oppvekstsenter avd skole;Skien;53;48;50;0;0
+Skien kommune Spesialpedagogisk Enhet;Skien;;;;59.2074695;9.6105133
+Skotfoss oppvekstsenter avd skole;Skien;53;48;50;59.2154017;9.5251184
 Stigeråsen skole;Skien;49;46;48;59.219115;9.5620603
 Venstøp skole;Skien;46;50;49;59.2474246;9.5714919
 Åfoss skole;Skien;53;52;53;59.198042;9.543717
 Atrå barne- og ungdomsskole;Tinn;43;44;44;59.987721;8.736121
 Rjukan barneskole;Tinn;*;*;*;59.879653;8.615192
-Tinn montessoriskole SA;Tinn;*;*;*;0;0
+Tinn montessoriskole SA;Tinn;*;*;*;60.0477578;8.8189364
 Høydalsmo skule;Tokke;*;*;*;59.4981467;8.1953745
 Tokke skule;Tokke;*;*;*;59.446297;7.986363
-Edland skule avd skule;Vinje;*;*;*;0;0
-Rauland skule avd skule;Vinje;48;49;54;0;0
-Øyfjell oppvekstsenter avd skule;Vinje;*;*;*;0;0
-Åmot skule avd skule;Vinje;46;44;40;0;0
-Laksvatn oppvekstsenter avd skole;Balsfjord;*;*;*;0;0
+Edland skule avd skule;Vinje;*;*;*;59.73834919999999;7.597175699999999
+Rauland skule avd skule;Vinje;48;49;54;59.6945875;8.0646003
+Øyfjell oppvekstsenter avd skule;Vinje;*;*;*;59.57484;8.18909
+Åmot skule avd skule;Vinje;46;44;40;59.572815;7.9904943
+Laksvatn oppvekstsenter avd skole;Balsfjord;*;*;*;69.377178;19.3667836
 Malangen skole;Balsfjord;*;*;*;69.3317693;18.9010924
 Nordkjosbotn skole;Balsfjord;47;46;44;69.216643;19.5628308
 Storsteinnes skole;Balsfjord;49;42;45;69.237018;19.2134314
 Setermoen skole;Bardu;51;47;46;68.8746987;18.3617323
 Grov skole;Dielddanuorri - Tjeldsund;*;*;*;68.678161;17.120938
 Ramsund skole;Dielddanuorri - Tjeldsund;41;47;47;68.493184;16.518401
-Sandstrand Montessoriforening;Dielddanuorri - Tjeldsund;*;*;*;0;0
+Sandstrand Montessoriforening;Dielddanuorri - Tjeldsund;*;*;*;68.51828189999999;16.1748426
 Skånland skole;Dielddanuorri - Tjeldsund;55;51;51;68.5802405;16.5829349
 Elvetun skole;Dyrøy;*;*;*;69.0881395;17.6973243
 Indre Kåfjord barne- og ungdomsskole;Gáivuotna - Kåfjord - Kaivuono;*;*;*;69.469272;20.920538
 Manndalen skole;Gáivuotna - Kåfjord - Kaivuono;49;46;54;69.5262456;20.5266678
 Olderdalen skole;Gáivuotna - Kåfjord - Kaivuono;*;*;*;69.6051785;20.5344448
-Gratangsbotn skole;Gratangen - Rivtták;*;*;*;0;0
-Montessoriskolen Morgan AS;Gratangen - Rivtták;*;*;*;0;0
+Gratangsbotn skole;Gratangen - Rivtták;*;*;*;68.67260139999999;17.6944891
+Montessoriskolen Morgan AS;Gratangen - Rivtták;*;*;*;68.69544789999999;17.4912636
 Bergseng skole;Harstad - Hárstták;51;50;48;68.8074824;16.4981755
-Harstad montessoriskole SA;Harstad - Hárstták;*;*;*;0;0
+Harstad montessoriskole SA;Harstad - Hárstták;*;*;*;68.7870276;16.5859545
 Harstad skole 1 - 7 skole;Harstad - Hárstták;50;49;49;68.8037872;16.5411417
 Kanebogen skole;Harstad - Hárstták;51;46;46;68.7796957;16.5591787
 Kila skole;Harstad - Hárstták;53;53;53;68.7337361;16.5632135
 Medkila skole;Harstad - Hárstták;51;49;49;68.7593987;16.5414041
 Seljestad barneskole;Harstad - Hárstták;50;46;45;68.7868455;16.5323163
 Sørvik skole;Harstad - Hárstták;47;44;45;68.683497;16.527067
-Øyriket oppvekstsenter avd skole;Harstad - Hárstták;*;*;*;0;0
+Øyriket oppvekstsenter avd skole;Harstad - Hárstták;*;*;*;69.0144072;16.4725171
 Andørja montessoriskole;Ibestad;*;*;*;68.917851;17.165543
 Ibestad skole;Ibestad;*;*;*;68.785074;17.157938
 Hansnes barne- og ungdomsskole;Karlsøy;*;*;*;69.9613128;19.6068772
-Vannvåg oppvekstsenter avd skole;Karlsøy;;*;*;0;0
+Vannvåg oppvekstsenter avd skole;Karlsøy;;*;*;70.07301079999999;19.9786927
 Borkenes skole;Kvæfjord;49;49;49;68.773333;16.179925
 Kvænangen barne- og ungdomsskole;Kvænangen;49;50;51;69.9320029;22.041418
 Lavangen skole;Loabák - Lavangen;*;*;*;68.746774;17.813489
 Eidebakken skole;Lyngen;47;47;45;69.575713;20.196784
 Lenangen skole;Lyngen;*;*;*;69.813049;20.0248504
-Lyngsdalen oppvekstsenter Avdeling skole;Lyngen;*;*;*;0;0
-Bjørkeng oppvekstsenter avd skole;Målselv;*;*;*;0;0
+Lyngsdalen oppvekstsenter Avdeling skole;Lyngen;*;*;*;69.72161899999999;20.0580352
+Bjørkeng oppvekstsenter avd skole;Målselv;*;*;*;69.027974;19.2962776
 Fagerlidal skole;Målselv;46;44;47;69.0745071;18.5378118
-Karlstad oppvekstsenter avd skole;Målselv;*;*;*;0;0
-Mellembygd Kultur og oppvekstsenter avd skole;Målselv;*;*;*;0;0
+Karlstad oppvekstsenter avd skole;Målselv;*;*;*;69.2130875;18.461866
+Mellembygd Kultur og oppvekstsenter avd skole;Målselv;*;*;*;69.0225524;18.8540388
 Olsborg skole;Målselv;48;51;45;69.1493538;18.5969064
 Sameskolen i Troms;Målselv;*;*;*;69.100786;18.58841
 Øvergård montessoriskole;Målselv;*;*;*;69.021238;19.447656
@@ -1332,7 +1332,7 @@ Moan skole;Nordreisa - Ráisa - Raisi;*;49;*;69.7700995;21.0462411
 Reisa montessoriskole;Nordreisa - Ráisa - Raisi;*;*;*;69.745537;21.111743
 Rotsundelv skole;Nordreisa - Ráisa - Raisi;*;;*;69.7863579;20.7049638
 Straumfjordnes skole;Nordreisa - Ráisa - Raisi;*;*;*;69.868798;21.213897
-Salangen kommune Salangen skole;Salangen;44;46;38;0;0
+Salangen kommune Salangen skole;Salangen;44;46;38;68.8740688;17.8434515
 Berg montessoriskole;Senja;*;*;*;69.44718;17.290889
 Botnhamn skole grunnskole 1.-10.;Senja;*;*;*;69.5008945;17.870606
 Finnsnes barneskole;Senja;50;46;47;69.2350505;17.9997604
@@ -1376,8 +1376,8 @@ Skjelnan skole;Tromsø;50;47;48;69.6905019;19.0809572
 Slettaelva skole;Tromsø;52;51;50;69.7030731;18.8945209
 Solneset skole;Tromsø;51;50;51;69.6959225;18.9558043
 Stakkevollan skole;Tromsø;43;46;48;69.694031;18.9926901
-Steinerskolen i Tromsø Sti;Tromsø;*;*;*;0;0
-Stiftelsen Tromsø International School;Tromsø;55;48;46;0;0
+Steinerskolen i Tromsø Sti;Tromsø;*;*;*;69.6409638;18.9347625
+Stiftelsen Tromsø International School;Tromsø;55;48;46;69.681299;18.9655023
 Storelva skole;Tromsø;50;46;51;69.684588;18.7966386
 Straumsbukta skole;Tromsø;*;*;*;69.5765;18.628501
 Tromsdalen skole;Tromsø;49;49;44;69.6472611;18.9943092
@@ -1387,46 +1387,46 @@ Workinnmarka skole;Tromsø;51;49;49;69.6672365;18.9347369
 Lauvsnes skole;Flatanger;*;*;*;64.497828;10.906349
 Utvorda skole;Flatanger;*;*;*;64.584318;10.990721
 Frosta skole;Frosta;47;47;48;63.5865716;10.7372608
-Dyrøy oppvekstsenter avd skole;Frøya;*;*;*;0;0
-Mausund oppvekstsenter avd skole;Frøya;*;*;*;0;0
+Dyrøy oppvekstsenter avd skole;Frøya;*;*;*;63.7967879;8.6861788
+Mausund oppvekstsenter avd skole;Frøya;*;*;*;63.7967879;8.6861788
 Nabeita skole;Frøya;56;50;57;63.697582;8.791313
-Nordskag oppvekstsenter avd skole;Frøya;*;*;*;0;0
+Nordskag oppvekstsenter avd skole;Frøya;*;*;*;63.7967879;8.6861788
 Sistranda barneskole;Frøya;52;48;51;63.7303344;8.8288995
 Grong barne- og ungdomsskole;Grong;*;*;*;64.4647501;12.3102764
-Harran oppvekstsenter Avdeling skole;Grong;*;*;*;0;0
+Harran oppvekstsenter Avdeling skole;Grong;*;*;*;64.5654615;12.5012686
 Halsa barne- og ungdomsskole;Heim;*;*;*;63.1199545;8.322643
 Sodin skole;Heim;51;50;53;63.2919435;9.0813117
 Svanem skole;Heim;*;*;*;63.394543;8.983378
-Barman oppvekstsenter avd skole;Hitra;*;*;52;0;0
+Barman oppvekstsenter avd skole;Hitra;*;*;52;63.6219542;8.8507927
 Fillan skole;Hitra;45;39;39;63.6027148;8.9750119
-Knarrlagsund oppvekstsenter avd skole;Hitra;*;*;*;0;0
-Strand oppvekstsenter avd skole;Hitra;*;*;*;0;0
-Holtålen kommune Haltdalen oppvekstsenter avd skole;Holtålen;*;*;*;0;0
-Holtålen kommune Hov skole;Holtålen;*;*;*;0;0
+Knarrlagsund oppvekstsenter avd skole;Hitra;*;*;*;63.66509130000001;9.0780213
+Strand oppvekstsenter avd skole;Hitra;*;*;*;63.535385;8.4012567
+Holtålen kommune Haltdalen oppvekstsenter avd skole;Holtålen;*;*;*;62.92110160000001;11.1682454
+Holtålen kommune Hov skole;Holtålen;*;*;*;62.84242279999999;11.2909801
 Høylandet barne- og ungdomsskole;Høylandet;56;53;48;64.625102;12.290765
 Oppvekstsenter Vest skole;Inderøy;48;47;46;63.8637054;11.1523594
 Røra skole;Inderøy;55;50;51;63.8603735;11.3974124
 Sakshaug skole;Inderøy;48;49;48;63.879187;11.287588
 Sandvollan skole;Inderøy;*;*;*;63.9497745;11.3339617
-Skarnsundet montessoriskole SA;Inderøy;*;*;*;0;0
+Skarnsundet montessoriskole SA;Inderøy;*;*;*;63.81895729999999;11.0067612
 Mælan skole;Indre Fosen;*;*;*;63.75313;10.132458
-Skaugdalen montessoriskole SA;Indre Fosen;*;*;*;0;0
+Skaugdalen montessoriskole SA;Indre Fosen;*;*;*;63.6519697;10.1476325
 Stadsbygd skole;Indre Fosen;46;45;43;63.511834;10.001422
 Testmann Minne skole;Indre Fosen;48;47;48;63.6805398;10.6056591
 Vanvikan skole;Indre Fosen;49;46;46;63.555811;10.221984
 Åsly skole;Indre Fosen;49;48;46;63.586873;9.962247
 Leka barne- og ungdomsskole;Leka;*;*;*;65.094337;11.7067
-Ekne barneskole;Levanger - Levangke;*;*;*;0;0
-Frol barneskole;Levanger - Levangke;51;49;50;0;0
-Halsan barneskole;Levanger - Levangke;49;49;48;0;0
-Markabygda montessoriskole SA;Levanger - Levangke;*;*;*;0;0
+Ekne barneskole;Levanger - Levangke;*;*;*;63.70140419999999;11.0427757
+Frol barneskole;Levanger - Levangke;51;49;50;63.74560630000001;11.3204698
+Halsan barneskole;Levanger - Levangke;49;49;48;63.7242883;11.308733
+Markabygda montessoriskole SA;Levanger - Levangke;*;*;*;63.6374448;11.2780083
 Nesheim skole;Levanger - Levangke;48;49;47;58.517195;8.781854
-Skogn barne- og ungdomsskole;Levanger - Levangke;53;49;50;0;0
-Vårtun Kristne oppvekstsenter SA;Levanger - Levangke;*;*;*;0;0
-Ytterøy barne- og ungdomsskole;Levanger - Levangke;*;*;*;0;0
-Åsen barne- og ungdomsskole;Levanger - Levangke;49;48;49;0;0
-Lierne kommune - Stortangen skole;Lierne;*;*;*;0;0
-Lierne kommune - Sørli skole;Lierne;*;*;*;0;0
+Skogn barne- og ungdomsskole;Levanger - Levangke;53;49;50;63.69918;11.2037816
+Vårtun Kristne oppvekstsenter SA;Levanger - Levangke;*;*;*;63.7407007;11.2516278
+Ytterøy barne- og ungdomsskole;Levanger - Levangke;*;*;*;63.69918;11.2037816
+Åsen barne- og ungdomsskole;Levanger - Levangke;49;48;49;63.61183089999999;11.050696
+Lierne kommune - Stortangen skole;Lierne;*;*;*;64.46096;13.598644
+Lierne kommune - Sørli skole;Lierne;*;*;*;64.2230369;13.8355535
 Hommelvik skole;Malvik;52;49;48;63.4122878;10.8055642
 Saksvik skole;Malvik;55;50;50;63.4346685;10.6022059
 Sveberg skole;Malvik;53;51;57;63.422365;10.759203
@@ -1441,27 +1441,27 @@ Høyeggen skole;Melhus;50;49;49;63.2871343;10.296127
 Lundamo skole;Melhus;47;45;46;63.1512245;10.2877632
 Rosmælen skole;Melhus;54;52;58;63.226405;10.273746
 Meråker skole;Meråker;50;48;49;63.413249;11.733703
-Budal Oppvekstområde avd skole;Midtre Gauldal;*;*;*;0;0
-Singsaas Oppvekstområde avd skole;Midtre Gauldal;*;*;44;0;0
+Budal Oppvekstområde avd skole;Midtre Gauldal;*;*;*;62.88358400000001;10.4832677
+Singsaas Oppvekstområde avd skole;Midtre Gauldal;*;*;44;62.9561801;10.7308071
 Soknedal skole;Midtre Gauldal;*;*;*;62.955976;10.189387
 Støren barneskole;Midtre Gauldal;51;48;*;63.0336614;10.2866913
-Bangsund skole;Namsos - Nåavmesjenjaelmie;*;*;*;0;0
-Bjørkly skole;Namsos - Nåavmesjenjaelmie;*;*;*;0;0
-Høknes barneskole;Namsos - Nåavmesjenjaelmie;50;46;49;0;0
-Jøa barne- og ungdomsskole;Namsos - Nåavmesjenjaelmie;*;*;*;0;0
-Namdalseid skole;Namsos - Nåavmesjenjaelmie;54;49;46;0;0
-Namsos barneskole;Namsos - Nåavmesjenjaelmie;50;47;48;0;0
-Otterøy oppvekstsenter avd skole;Namsos - Nåavmesjenjaelmie;*;*;*;0;0
-Sørenget oppvekstsenter avd skole;Namsos - Nåavmesjenjaelmie;50;45;47;0;0
-Vestbyen skole;Namsos - Nåavmesjenjaelmie;44;46;47;0;0
+Bangsund skole;Namsos - Nåavmesjenjaelmie;*;*;*;64.39210589999999;11.3975063
+Bjørkly skole;Namsos - Nåavmesjenjaelmie;*;*;*;64.4106106;11.4747427
+Høknes barneskole;Namsos - Nåavmesjenjaelmie;50;46;49;64.47377829999999;11.5344912
+Jøa barne- og ungdomsskole;Namsos - Nåavmesjenjaelmie;*;*;*;64.6522528;11.265237
+Namdalseid skole;Namsos - Nåavmesjenjaelmie;54;49;46;64.2406048;11.2085927
+Namsos barneskole;Namsos - Nåavmesjenjaelmie;50;47;48;64.4705328;11.5145775
+Otterøy oppvekstsenter avd skole;Namsos - Nåavmesjenjaelmie;*;*;*;64.5398738;11.2668408
+Sørenget oppvekstsenter avd skole;Namsos - Nåavmesjenjaelmie;50;45;47;64.530239;11.5417422
+Vestbyen skole;Namsos - Nåavmesjenjaelmie;44;46;47;64.4701259;11.4711791
 Namsskogan skole;Namsskogan;*;*;*;64.9250685;13.161329
 Austafjord skole;Nærøysund;*;*;*;64.91787;10.942743
-Foldereid oppvekstsenter avd skole;Nærøysund;*;*;*;0;0
-Gravvik oppvekstsenter avd skole;Nærøysund;*;*;*;0;0
+Foldereid oppvekstsenter avd skole;Nærøysund;*;*;*;64.9611923;12.1780318
+Gravvik oppvekstsenter avd skole;Nærøysund;*;*;*;64.98986889999999;11.7296439
 Kolvereid skole;Nærøysund;53;48;48;64.8632685;11.597365
 Nærøysundet skole;Nærøysund;53;51;58;64.857266;11.288739
 Rørvik skole;Nærøysund;49;46;46;64.8711255;11.2391862
-Val Skoler AS avd Vgs;Nærøysund;*;*;*;0;0
+Val Skoler AS avd Vgs;Nærøysund;*;*;*;64.9135214;10.5378601
 Aune barneskole;Oppdal;49;49;49;62.596561;9.683402
 Drivdalen skole;Oppdal;*;46;*;62.534208;9.615784
 Midtbygda skole;Oppdal;*;*;*;62.616535;9.567065
@@ -1471,7 +1471,7 @@ Gjølme skole;Orkland;52;44;41;63.3178382;9.8063251
 Grøtte skole;Orkland;48;48;48;63.2612401;9.8110749
 Lensvik skole;Orkland;50;47;49;63.5057889;9.8234578
 Lysheim skole;Orkland;*;*;*;59.3832666;10.4139492
-Løkken Verk montessoriskole SA;Orkland;*;*;*;0;0
+Løkken Verk montessoriskole SA;Orkland;*;*;*;63.12642109999999;9.7071875
 Meldal barne- og ungdomsskole;Orkland;49;47;49;63.0424163;9.7016376
 Orkanger barneskole;Orkland;56;54;52;63.3065903;9.851979
 Aa skole;Orkland;*;*;*;63.399166;9.502278
@@ -1479,20 +1479,20 @@ Aa skole;Orkland;*;*;*;63.399166;9.502278
 Strand barne- og ungdomsskole;Osen;*;*;*;64.322437;10.456993
 Hunn skole;Overhalla;53;48;48;64.462423;11.765572
 Overhalla barne- og ungdomsskole;Overhalla;*;*;*;64.497881;11.962529
-Overhalla montessoriskole SA;Overhalla;*;*;*;0;0
+Overhalla montessoriskole SA;Overhalla;*;*;*;64.4644227;12.0544589
 Rennebu barne- og ungdomsskole;Rennebu;*;*;*;62.8295953;10.0064129
-Voll skole AS;Rennebu;*;*;*;0;0
+Voll skole AS;Rennebu;*;*;*;62.87648549999999;9.8377602
 Rindal skole;Rindal;45;49;49;63.0583209;9.2115405
-Brekken skole;Røros - Rosse;*;*;*;0;0
-Glåmos skole;Røros - Rosse;*;*;*;0;0
-Røros skole;Røros - Rosse;51;48;46;0;0
-Røyrvik oppvekstsenter Avdeling skole;Raarvihke - Røyrvik;*;*;*;0;0
+Brekken skole;Røros - Rosse;*;*;*;62.649464;11.864231
+Glåmos skole;Røros - Rosse;*;*;*;62.67279599999999;11.4240792
+Røros skole;Røros - Rosse;51;48;46;62.57776729999999;11.3699308
+Røyrvik oppvekstsenter Avdeling skole;Raarvihke - Røyrvik;*;*;*;64.8840161;13.5625541
 Bell skole;Selbu;*;*;*;63.228164;11.033625
 Selbustrand skole;Selbu;*;*;*;63.26888;11.007719
 Buvik skole;Skaun;49;47;46;63.3110141;10.1772213
 Børsa skole;Skaun;44;46;44;63.325663;10.0663487
 Venn oppvekstsenter avd skole;Skaun;51;48;51;63.2503115;10.0504839
-Snåsa montessoriskole SA;Snåase - Snåsa;*;*;*;0;0
+Snåsa montessoriskole SA;Snåase - Snåsa;*;*;*;64.2786239;12.5272364
 Snåsa skole;Snåase - Snåsa;47;46;49;64.246639;12.364104
 Åarjel-Saemiej Skuvle;Snåase - Snåsa;*;*;*;64.2485067;12.3589346
 Beitstad skole;Steinkjer;43;47;48;64.109821;11.3897057
@@ -1509,9 +1509,9 @@ Ogndal skole;Steinkjer;*;*;*;64.026821;11.66895
 Steinkjer montessoriskole;Steinkjer;52;47;49;64.0144;11.477604
 Steinkjer skole;Steinkjer;52;51;52;64.0116691;11.5005439
 Elvran skole;Stjørdal;47;48;49;63.392998;11.07255
-Fagerhaug International School AS;Stjørdal;*;*;*;0;0
-Fagerhaug Kristne skole SA;Stjørdal;*;*;*;0;0
-Forradal oppvekstsenter skole;Stjørdal;*;*;*;0;0
+Fagerhaug International School AS;Stjørdal;*;*;*;63.4712526;10.9456154
+Fagerhaug Kristne skole SA;Stjørdal;*;*;*;63.4712526;10.9456154
+Forradal oppvekstsenter skole;Stjørdal;*;*;*;63.49635699999999;11.356232
 Fosslia skole;Stjørdal;52;49;52;63.480968;10.941482
 Halsen barneskole;Stjørdal;47;42;45;63.472332;10.927685
 Haraldreina skole;Stjørdal;*;*;*;63.461935;10.975921
@@ -1519,10 +1519,10 @@ Hegra barneskole;Stjørdal;51;52;50;63.47003;11.11003
 Kvislabakken skole;Stjørdal;50;47;45;63.482646;10.898398
 Lånke skole;Stjørdal;50;46;49;63.441752;10.939151
 Skatval skole;Stjørdal;47;45;45;63.5097475;10.8289858
-Skjelstadmark oppvekstsenter skole;Stjørdal;49;47;50;0;0
+Skjelstadmark oppvekstsenter skole;Stjørdal;49;47;50;63.51710039999999;11.0843112
 Adventkirken skole Nidelven;Trondheim - Tråante;*;*;*;63.4254857;10.3905494
 Berg skole;Trondheim - Tråante;49;51;53;59.1246674;11.2981091
-Birralee International School Trondheim AS avd skole;Trondheim - Tråante;62;47;51;0;0
+Birralee International School Trondheim AS avd skole;Trondheim - Tråante;62;47;51;63.42718720000001;10.3899759
 Bispehaugen skole;Trondheim - Tråante;51;52;50;63.4317327;10.4152158
 Bratsberg skole;Trondheim - Tråante;48;47;49;63.349667;10.480921
 Breidablikk skole;Trondheim - Tråante;50;48;49;63.3488639;10.3612663
@@ -1534,7 +1534,7 @@ Eberg skole;Trondheim - Tråante;50;50;52;63.4185529;10.4394758
 Flatåsen skole;Trondheim - Tråante;49;46;45;63.3761168;10.3393667
 Hallset skole;Trondheim - Tråante;52;51;51;63.3923226;10.367412
 Hansbakken skole;Trondheim - Tråante;51;49;49;63.4288842;10.5428569
-Heimdal Friskole, Kristen grunnskole Heimdal;Trondheim - Tråante;*;*;*;0;0
+Heimdal Friskole, Kristen grunnskole Heimdal;Trondheim - Tråante;*;*;*;63.36138339999999;10.3519884
 Huseby barneskole - Ac Møller tegnspråksenter;Trondheim - Tråante;49;47;47;63.363169;10.351354
 Hårstad skole;Trondheim - Tråante;48;48;48;63.351136;10.383558
 Ila skole;Trondheim - Tråante;53;52;58;63.4303821;10.3717905
@@ -1558,9 +1558,9 @@ Stabbursmoen skole;Trondheim - Tråante;48;48;49;63.3538291;10.3499481
 Stavset skole;Trondheim - Tråante;47;50;53;63.3867863;10.3325184
 Steindal skole;Trondheim - Tråante;47;47;51;63.401082;10.431042
 Steinerskolen i Trondheim grunnskole;Trondheim - Tråante;42;49;42;63.430361;10.372582
-Stiftelsen steinerskolen Rotvoll;Trondheim - Tråante;*;*;*;0;0
-Stiftelsen Trondheim International School;Trondheim - Tråante;54;42;48;0;0
-Stiftelsen Trondheim Kristne Grunnskole, tomasskolen;Trondheim - Tråante;49;48;48;0;0
+Stiftelsen steinerskolen Rotvoll;Trondheim - Tråante;*;*;*;63.4395517;10.4855429
+Stiftelsen Trondheim International School;Trondheim - Tråante;54;42;48;63.4290426;10.4129556
+Stiftelsen Trondheim Kristne Grunnskole, tomasskolen;Trondheim - Tråante;49;48;48;63.4294197;10.4140159
 Strindheim skole;Trondheim - Tråante;49;49;50;63.432415;10.455516
 Sørborgen skole;Trondheim - Tråante;47;47;46;63.3053692;10.4615558
 Tanem skole;Trondheim - Tråante;51;47;50;63.3071831;10.4261277
@@ -1572,7 +1572,7 @@ Vikåsen skole;Trondheim - Tråante;47;50;51;63.412619;10.53793
 Åsvang skole;Trondheim - Tråante;53;53;53;63.4114706;10.452474
 Åsveien skole og ressurssenter;Trondheim - Tråante;51;51;51;63.414751;10.369812
 Tydal barne- og ungdomsskole;Tydal;*;*;*;63.041537;11.669671
-Helgådal Montessori SA;Verdal;*;*;*;0;0
+Helgådal Montessori SA;Verdal;*;*;*;63.82074850000001;11.9036771
 Stiklestad skole;Verdal;49;49;47;63.803187;11.565922
 Verdalsøra barneskole;Verdal;51;46;46;63.800392;11.485393
 Vinne skole;Verdal;47;45;43;63.774366;11.490492
@@ -1580,11 +1580,11 @@ Vuku barne- og ungdomsskole;Verdal;*;*;*;63.775678;11.739301
 Ørmelen skole;Verdal;49;45;44;63.791799;11.469068
 Botngård barneskole;Ørland;54;47;50;63.764131;9.815578
 Brekstad barneskole;Ørland;47;46;*;63.6889084;9.6613587
-Fagerenget montessoriskole SA;Ørland;*;*;*;0;0
+Fagerenget montessoriskole SA;Ørland;*;*;*;63.8737186;9.8853907
 Opphaug skole;Ørland;57;59;62;63.7264741;9.6938933
 Vallersund oppvekstsenter;Ørland;*;*;41;63.8515203;9.7456223
 Brandsfjord barne- og ungdomsskole;Åfjord;*;*;*;64.188039;10.421431
-Stokksund grunnskole og Sfo;Åfjord;*;*;*;0;0
+Stokksund grunnskole og Sfo;Åfjord;*;*;*;64.0377007;10.0588711
 Åset skole;Åfjord;49;47;50;63.9632751;10.2228609
 Brattås skole;Færder;50;*;*;59.1958048;10.38974
 Føynland skole;Færder;51;51;59;59.236384;10.446737
@@ -1598,14 +1598,14 @@ Botne skole;Holmestrand;52;48;49;59.4957927;10.2569404
 Ekeberg skole;Holmestrand;52;50;48;59.4794293;10.3081745
 Galleberg skole;Holmestrand;57;55;57;59.6276658;10.2153173
 Hof skole;Holmestrand;50;47;50;59.5384492;10.0756699
-Holmestrand Internasjonale montessoriskole Sti;Holmestrand;*;*;*;0;0
+Holmestrand Internasjonale montessoriskole Sti;Holmestrand;*;*;*;59.4899189;10.315035
 Kjeldås skole;Holmestrand;*;*;*;59.650464;10.236676
 Kleiverud skole;Holmestrand;54;50;50;59.5115241;10.2821046
 Klokkerjordet skole;Holmestrand;49;49;48;59.5864884;10.2147766
 Selvik skole;Holmestrand;47;49;48;59.5585641;10.2805014
 Fagerheim skole;Horten;*;*;*;59.4255408;10.3725326
 Granly skole;Horten;52;49;49;59.2905416;10.4164836
-Horten montessoriskole SA;Horten;*;*;*;0;0
+Horten montessoriskole SA;Horten;*;*;*;59.4354094;10.4298526
 Lillås skole;Horten;54;54;54;59.4212316;10.4611278
 Lysheim skole;Horten;54;52;57;59.3832666;10.4139492
 Nordskogen skole;Horten;51;46;48;59.4168608;10.453972
@@ -1644,7 +1644,7 @@ Mokollen skole;Sandefjord;*;*;*;59.145127;10.211794
 Mosserød skole;Sandefjord;56;50;50;59.1477028;10.2089036
 Ormestad skole;Sandefjord;47;41;45;59.1163765;10.2552477
 Sande skole;Sandefjord;55;53;58;59.1376099;10.2279857
-Skagerak International School Sti;Sandefjord;*;*;*;0;0
+Skagerak International School Sti;Sandefjord;*;*;*;59.11993580000001;10.2311224
 Store Bergan skole;Sandefjord;51;52;52;59.101624;10.20823
 Unneberg skole;Sandefjord;53;51;52;59.1529882;10.2513993
 Vennerød skole;Sandefjord;52;52;51;59.269629;10.237493
@@ -1664,10 +1664,10 @@ Ringshaug skole;Tønsberg;51;51;52;59.2847552;10.4873148
 Røråstoppen skole;Tønsberg;55;51;51;59.3707243;10.2792563
 Sandeåsen skole;Tønsberg;54;53;52;59.2782177;10.4491411
 Sem skole;Tønsberg;49;49;50;59.285461;10.33206
-Skagerak International School, Tønsberg AS;Tønsberg;53;*;*;0;0
+Skagerak International School, Tønsberg AS;Tønsberg;53;*;*;59.2705435;10.4057618
 Solerød skole;Tønsberg;49;49;45;59.3712932;10.364377
 Træleborg skole;Tønsberg;50;45;44;59.2645065;10.4228133
-Tønsberg Montessori skole Sti;Tønsberg;47;48;44;0;0
+Tønsberg Montessori skole Sti;Tønsberg;47;48;44;59.3317231;10.4243069
 Vear skole;Tønsberg;51;47;50;59.2592864;10.3598661
 Volden skole;Tønsberg;*;49;52;59.313054;10.49462
 Alversund skule;Alver;52;49;50;60.5663411;5.2354927
@@ -1718,7 +1718,7 @@ Bergen Kristne grunnskole;Bergen;51;49;47;60.338955;5.320512
 Bjørgvin montessoriskole;Bergen;53;48;;60.34995;5.35078
 Bjørndalsskogen skole;Bergen;52;46;49;60.3481221;5.2431481
 Bønes skole;Bergen;48;51;54;60.332453;5.308696
-Christi Krybbe Skoler;Bergen;53;48;54;0;0
+Christi Krybbe Skoler;Bergen;53;48;54;60.3966213;5.3282817
 Damsgård skole;Bergen;51;47;49;60.382029;5.302015
 Eidsvåg skole;Bergen;54;54;54;60.436853;5.306215
 Fjellsdalen skole;Bergen;50;51;55;60.3350587;5.2944897
@@ -1732,7 +1732,7 @@ Hellen skole;Bergen;57;51;51;60.4256145;5.2979683
 Hjellestad skole;Bergen;56;54;59;60.2575806;5.2538213
 Holen skole;Bergen;47;46;47;60.3897144;5.2833266
 Hordvik skole;Bergen;45;45;45;60.5199197;5.3100645
-International School Of Bergen avd skole;Bergen;63;51;56;0;0
+International School Of Bergen avd skole;Bergen;63;51;56;60.2948011;5.280665099999999
 Kaland skole;Bergen;50;46;52;60.27956;5.406729
 Kalvatræet skole;Bergen;53;49;50;60.445735;5.320663
 Kirkevoll skole;Bergen;51;50;49;60.2650217;5.3473818
@@ -1740,20 +1740,20 @@ Kjøkkelvik skole;Bergen;48;45;46;60.3738648;5.2309805
 Kringlebotn skole;Bergen;49;52;49;60.32841;5.3718516
 Krohnengen skole;Bergen;50;50;52;60.4006155;5.3283371
 Krokeide skole;Bergen;*;*;*;60.2327461;5.2956851
-Kronstad Oppveksttun skole;Bergen;45;48;46;0;0
+Kronstad Oppveksttun skole;Bergen;45;48;46;60.3755622;5.3477529
 Kyrkjekrinsen skole;Bergen;52;44;47;60.4760506;5.3429962
 Landås skole;Bergen;47;52;50;60.3623338;5.3702454
 Li skole;Bergen;50;45;45;60.4645669;5.3512125
 Liland skole;Bergen;49;46;48;60.2858581;5.2462082
 Loddefjord skole;Bergen;51;45;43;60.363746;5.231251
 Lone skule;Bergen;49;45;47;60.3763056;5.45561
-Lyshovden Oppveksttun avd skole;Bergen;49;49;52;0;0
+Lyshovden Oppveksttun avd skole;Bergen;49;49;52;60.3478277;5.3004568
 Løvås Oppveksttun - skole;Bergen;52;47;47;60.353598;5.291919
 Mathopen skole;Bergen;49;47;47;60.334528;5.2108892
 Midtun skole;Bergen;55;54;55;60.3144987;5.3578223
 Minde skole;Bergen;52;48;49;60.3544355;5.3363718
 Mjølkeråen skole;Bergen;47;47;49;60.4855031;5.2639743
-Møhlenpris Oppveksttun avd skole;Bergen;53;53;55;0;0
+Møhlenpris Oppveksttun avd skole;Bergen;53;53;55;60.3832329;5.3233647
 Møllebakken skole;Bergen;*;*;*;60.3782656;5.3387771
 Nattland skole;Bergen;49;53;53;60.337658;5.373347
 Nordnes skole;Bergen;53;50;56;60.3973682;5.3078664
@@ -1762,7 +1762,7 @@ Nygårdslien skole;Bergen;45;45;48;60.3826545;5.2737298
 Olsvik skole;Bergen;51;48;49;60.381833;5.214957
 Paradis skole;Bergen;53;54;59;60.3385215;5.3425887
 Rolland skole;Bergen;47;44;49;60.4633965;5.3328132
-Rudolf steinerskolen i Bergen skolen;Bergen;45;48;42;0;0
+Rudolf steinerskolen i Bergen skolen;Bergen;45;48;42;60.34367890000001;5.3430755
 Salhus skule;Bergen;*;*;*;60.504263;5.264062
 Seljedalen skole;Bergen;48;48;47;60.360717;5.285271
 Skeie skole;Bergen;52;52;53;60.286274;5.3151172
@@ -1771,11 +1771,11 @@ Skranevatnet skole;Bergen;52;51;50;60.3006897;5.2848965
 Slettebakken skole;Bergen;52;48;50;60.3556354;5.3573668
 Smørås skole;Bergen;53;50;50;60.3018477;5.3508612
 St Paul skole;Bergen;48;45;45;60.3887239;5.3235193
-Stiftelsen Davinci montessoriskole;Bergen;*;*;*;0;0
-Stiftelsen montessoriskolen i Bergen;Bergen;47;49;46;0;0
-Stiftelsen steinerskolen på Skjold;Bergen;39;46;40;0;0
+Stiftelsen Davinci montessoriskole;Bergen;*;*;*;60.3499461;5.350781599999999
+Stiftelsen montessoriskolen i Bergen;Bergen;47;49;46;60.3448126;5.2833966
+Stiftelsen steinerskolen på Skjold;Bergen;39;46;40;60.31014080000001;5.3289912
 Sædalen skole;Bergen;49;52;51;60.349924;5.3927159
-Sælen Oppveksttun avd skole;Bergen;52;50;47;0;0
+Sælen Oppveksttun avd skole;Bergen;52;50;47;60.34681430000001;5.2825367
 Søreide skole;Bergen;49;51;52;60.3179533;5.2705804
 Søråshøgda skole;Bergen;53;54;57;60.302549;5.3181206
 Tertnes skole;Bergen;48;49;49;60.456794;5.285436
@@ -1794,17 +1794,17 @@ Lunde barneskule;Bjørnafjorden;50;45;48;60.1618353;5.4406922
 Lysekloster barneskule;Bjørnafjorden;54;47;49;60.2114775;5.3889218
 Nore Neset barneskule;Bjørnafjorden;49;48;49;60.1782639;5.4120137
 Os barneskule;Bjørnafjorden;53;47;55;60.1886257;5.4682052
-Strandvik Vekst AS;Bjørnafjorden;*;*;*;0;0
+Strandvik Vekst AS;Bjørnafjorden;*;*;*;60.157526;5.661754
 Strøno barneskule;Bjørnafjorden;*;*;*;60.1737013;5.3483671
 Søfteland barneskule;Bjørnafjorden;49;45;48;60.2368442;5.451555
 Søre Øyane barneskule;Bjørnafjorden;56;51;55;60.147109;5.3748524
 Vinnes friskule;Bjørnafjorden;*;*;*;60.1530802;5.5862535
 Ådlandsfjorden barneskule;Bjørnafjorden;*;*;*;60.282435;5.656443
-Davik Oppvekst avd skule;Bremanger;*;*;*;0;0
-Hauge Oppvekst avd skule;Bremanger;*;*;*;0;0
-Kalvåg Oppvekst Frøyen skule;Bremanger;*;*;*;0;0
-Svelgen Oppvekst avd skule;Bremanger;*;*;*;0;0
-Ålfoten oppvekstsenter avd skule;Bremanger;*;*;*;0;0
+Davik Oppvekst avd skule;Bremanger;*;*;*;61.88783340000001;5.5383995
+Hauge Oppvekst avd skule;Bremanger;*;*;*;61.84093859999999;4.9601277
+Kalvåg Oppvekst Frøyen skule;Bremanger;*;*;*;61.76753739999999;4.8753766
+Svelgen Oppvekst avd skule;Bremanger;*;*;*;61.76624760000001;5.286304400000001
+Ålfoten oppvekstsenter avd skule;Bremanger;*;*;*;61.8280164;5.6635249
 Gilje skule;Bømlo;46;44;48;59.771603;5.192172
 Hillestveit skule;Bømlo;*;*;*;59.6006264;5.2097133
 Meling skule;Bømlo;48;45;49;59.791666;5.141062
@@ -1856,15 +1856,15 @@ Sunde skule;Kvinnherad;41;49;48;61.4287287;5.9333679
 Undarheim skule;Kvinnherad;57;49;54;59.8536582;5.7468896
 Uskedalen skule;Kvinnherad;*;*;*;59.9338239;5.8613172
 Valen skule;Kvinnherad;52;49;54;59.828972;5.7868151
-Ølve montessoriskule SA;Kvinnherad;*;*;*;0;0
+Ølve montessoriskule SA;Kvinnherad;*;*;*;60.01262909999999;5.814530599999999
 Gaupne skule;Luster;51;51;55;61.4032598;7.2910534
 Hafslo barne- og ungdomsskule;Luster;46;45;48;61.3137678;7.2018761
-Indre Hafslo oppvekstsenter skule;Luster;*;*;*;0;0
+Indre Hafslo oppvekstsenter skule;Luster;*;*;*;61.36319359999999;7.2673639
 Jostedal oppvekstsenter skule;Luster;*;*;*;61.603777;7.291709
-Luster oppvekstsenter skule;Luster;*;*;*;0;0
-Skjolden oppvekstsenter skule;Luster;*;*;*;0;0
-Solvorn oppvekstsenter skule;Luster;*;*;*;0;0
-Veitastrond oppvekstsenter skule;Luster;*;*;*;0;0
+Luster oppvekstsenter skule;Luster;*;*;*;61.44474829999999;7.460290799999999
+Skjolden oppvekstsenter skule;Luster;*;*;*;61.4911264;7.6027819
+Solvorn oppvekstsenter skule;Luster;*;*;*;61.3013699;7.237411
+Veitastrond oppvekstsenter skule;Luster;*;*;*;61.4837534;7.030597999999999
 Borgund skule;Lærdal;*;;*;61.0814645;7.8532066
 Lærdalsøyri skule;Lærdal;*;43;*;61.1015215;7.4939525
 Matre skule;Masfjorden;*;*;*;60.873552;5.584373
@@ -1874,22 +1874,22 @@ Mo skule;Modalen;*;*;*;60.8174504;5.8095532
 Fotlandsvåg skule;Osterøy;*;*;*;60.588326;5.5244
 Haus skule;Osterøy;*;*;*;60.455354;5.489353
 Hjellvik montessoriskule;Osterøy;*;*;*;60.551212;5.408236
-Hosanger montessoriskule Sti;Osterøy;*;*;*;0;0
+Hosanger montessoriskule Sti;Osterøy;*;*;*;60.57018539999999;5.4854851
 Lonevåg skule;Osterøy;*;*;*;60.5214924;5.5100352
 Valestrand skule;Osterøy;49;47;47;60.5058989;5.4366498
 Samnanger barneskule;Samnanger;52;49;53;60.395182;5.767057
-Fjærland oppvekstsenter avd skule;Sogndal;*;*;*;0;0
+Fjærland oppvekstsenter avd skule;Sogndal;*;*;*;61.39809580000001;6.7388017
 Kaupanger skule;Sogndal;52;49;50;61.188162;7.224538
 Leikanger barneskule;Sogndal;50;49;50;61.1921915;6.8540395
 Norane skule;Sogndal;*;*;*;61.180946;7.015672
-Sagatun skule avd skule;Sogndal;49;51;51;0;0
+Sagatun skule avd skule;Sogndal;49;51;51;61.2057102;6.525644
 Trudvang skule;Sogndal;48;51;52;61.2325362;7.0996655
-Solund skule;Solund;*;*;*;0;0
-Bryggja skule AS;Stad;*;*;*;0;0
+Solund skule;Solund;*;*;*;61.0752123;4.8400659
+Bryggja skule AS;Stad;*;*;*;61.94245840000001;5.4515549
 Flatraket skule;Stad;*;*;*;61.9748517;5.2245734
 Haugen skule;Stad;49;52;47;61.9247606;5.883831
 Hjelle skule;Stad;*;*;*;61.918745;6.079254
-Kjølsdalen montessoriskule SA;Stad;*;*;*;0;0
+Kjølsdalen montessoriskule SA;Stad;*;*;*;61.91747089999999;5.6257209
 Nordfjordeid skule;Stad;52;54;56;61.911568;5.9935528
 Selje skule;Stad;*;*;*;62.042713;5.350402
 Stadlandet skule;Stad;44;43;42;62.111885;5.332945
@@ -1899,7 +1899,7 @@ Langeland skule;Stord;50;46;48;59.768022;5.47407
 Leirvik skule;Stord;52;49;50;59.7784094;5.4940417
 Rommetveit skule;Stord;49;51;49;59.8164556;5.5230189
 Sagvåg skule;Stord;*;*;*;59.7808635;5.3799135
-Stord Kristne skule AS;Stord;*;*;*;0;0
+Stord Kristne skule AS;Stord;*;*;*;59.7787658;5.484934700000001
 Tjødnalio skule;Stord;50;47;48;59.770477;5.412
 Loen skule;Stryn;56;*;*;61.8677952;6.8463498
 Nordsida skule;Stryn;*;*;*;61.854046;6.524772
@@ -1910,7 +1910,7 @@ Vikane skule;Stryn;*;*;*;61.850811;6.617213
 Bygstad skule;Sunnfjord;54;55;60;61.37994;5.671383
 Flatene skule;Sunnfjord;53;50;52;61.4487503;5.8375177
 Førde barneskule;Sunnfjord;53;50;49;61.454744;5.8627033
-Holsen skule og barnehage avd skule;Sunnfjord;*;*;*;0;0
+Holsen skule og barnehage avd skule;Sunnfjord;*;*;*;61.41834299999999;6.157249999999999
 Naustdal skule;Sunnfjord;50;49;51;61.512436;5.7151693
 Sande skule;Sunnfjord;43;45;46;61.325499;5.798629
 Skei skule;Sunnfjord;52;53;57;61.578304;6.48906
@@ -1921,7 +1921,7 @@ Viksdalen skule;Sunnfjord;*;*;*;61.353341;6.117325
 Auklandshamn skule;Sveio;*;*;*;59.63804;5.386294
 Førde skule;Sveio;*;*;*;59.609879;5.472384
 Sveio skule;Sveio;47;44;46;59.543927;5.3583
-Valestrand oppvekstsenter avd skule;Sveio;*;*;*;0;0
+Valestrand oppvekstsenter avd skule;Sveio;*;*;*;59.70268929999999;5.485767099999999
 Vikse skule;Sveio;51;46;50;59.499258;5.300948
 Onarheim skule;Tysnes;*;*;*;59.949114;5.629531
 Tysnes skule;Tysnes;*;*;*;60.040914;5.537552
@@ -1942,7 +1942,7 @@ Stanghelle skule;Vaksdal;50;49;46;60.553416;5.7467792
 Vaksdal skule;Vaksdal;46;48;50;60.475627;5.740248
 Feios skule;Vik;*;*;*;61.149316;6.765864
 Flatbygdi skule;Vik;47;52;52;61.08131;6.579037
-Fresvik Enspire skule AS;Vik;*;*;*;0;0
+Fresvik Enspire skule AS;Vik;*;*;*;61.0662079;6.931176199999999
 Bjørgum skule;Voss;46;46;48;60.6164692;6.537184
 Bulken skule;Voss;54;50;50;60.628014;6.316238
 Evanger skule;Voss;*;*;*;60.647468;6.116103
@@ -1975,7 +1975,7 @@ Aremark skole;Aremark;*;*;*;59.22587;11.6987897
 Ambjørnrød skole;Fredrikstad;51;45;46;59.2469351;10.9208601
 Begby barne- og ungdomsskole;Fredrikstad;56;56;53;59.2158526;11.0101875
 Borge skole;Fredrikstad;51;50;47;59.224678;11.045441
-Childrens International School Fredrikstad AS;Fredrikstad;62;49;53;0;0
+Childrens International School Fredrikstad AS;Fredrikstad;62;49;53;59.2072675;10.9646607
 Cicignon skole;Fredrikstad;49;47;46;59.2074881;10.952143
 Gudeberg barne- og ungdomsskole;Fredrikstad;50;47;51;59.2051783;10.9620669
 Hauge skole;Fredrikstad;54;48;47;59.2534335;10.9880905
@@ -1989,7 +1989,7 @@ Rekustad skole;Fredrikstad;56;52;55;59.2661442;10.9921675
 Rød skole Kråkerøy;Fredrikstad;50;49;49;59.1949709;10.9098701
 Rød skole Onsøy;Fredrikstad;48;48;49;59.2073649;10.8845998
 Rødsmyra skole;Fredrikstad;50;50;49;59.1993756;10.9272542
-Råkollen skole avd Råkollen;Fredrikstad;;;;0;0
+Råkollen skole avd Råkollen;Fredrikstad;;;;59.2144901;10.9734817
 Sagabakken skole;Fredrikstad;47;43;42;59.2182304;10.9843249
 Slevik skole;Fredrikstad;*;*;53;59.200212;10.83359
 Steinerskolen i Fredrikstad;Fredrikstad;44;45;40;59.2664481;10.9976719
@@ -2000,7 +2000,7 @@ Trosvik skole;Fredrikstad;51;49;49;59.2250992;10.9261056
 Årum skole;Fredrikstad;51;48;49;59.261623;11.091202
 Berg skole;Halden;55;51;50;59.1246674;11.2981091
 Gimle skole;Halden;48;47;47;59.1379043;11.4093539
-Halden montessoriskole AS;Halden;*;*;*;0;0
+Halden montessoriskole AS;Halden;*;*;*;59.1181095;11.396638
 Hjortsberg skole;Halden;51;46;45;59.1409368;11.383616
 Kongeveien skole;Halden;51;46;45;59.113484;11.408196
 Låby skole;Halden;49;47;47;59.130458;11.3652475
@@ -2010,7 +2010,7 @@ Hvaler barne- og ungdomsskole;Hvaler;*;*;*;59.0706735;10.9431632
 Askimbyen skole;Indre Østfold;54;52;55;59.5846527;11.156015
 Båstad skole;Indre Østfold;50;49;49;59.6910025;11.295451
 Grøtvedt skole;Indre Østfold;48;45;48;59.5891182;11.1790057
-Havnås oppvekstsenter avd skole;Indre Østfold;*;*;*;0;0
+Havnås oppvekstsenter avd skole;Indre Østfold;*;*;*;59.6173002;11.4110344
 Hovin skole;Indre Østfold;51;47;49;59.6234244;11.0799735
 Hærland skole;Indre Østfold;*;*;*;59.5502413;11.4239798
 Kirkefjerdingen skole;Indre Østfold;53;49;47;59.5239462;11.2660029
@@ -2022,14 +2022,14 @@ Ringvoll skole;Indre Østfold;53;47;53;59.5562462;10.8447214
 Rom skole;Indre Østfold;53;48;50;59.5900472;11.1295431
 Skjønhaug skole;Indre Østfold;49;47;48;59.63789;11.323199
 Spydeberg skole;Indre Østfold;52;50;46;59.59611;11.068364
-Stiftelsen steinerskolen i Indre Østfold;Indre Østfold;*;*;*;0;0
+Stiftelsen steinerskolen i Indre Østfold;Indre Østfold;*;*;*;59.58636889999999;11.1242289
 Tenor skole;Indre Østfold;53;52;52;59.5781615;11.2587335
 Tomter skole;Indre Østfold;52;51;53;59.658264;11.00346
 Trømborg skole;Indre Østfold;47;46;44;59.507023;11.363131
-Marker kommune - Marker skole;Marker;50;46;48;0;0
+Marker kommune - Marker skole;Marker;50;46;48;59.47818359999999;11.6577836
 Buen barne- og ungdomsskole;Moss;*;*;*;59.41864;10.68474
 Bytårnet skole;Moss;53;45;44;59.4324636;10.6683428
-Children's International School Moss AS;Moss;58;48;51;0;0
+Children's International School Moss AS;Moss;58;48;51;59.43999299999999;10.669487
 Ekholt skole;Moss;50;49;48;59.4107683;10.6793996
 Halmstad skole;Moss;51;46;45;59.3804625;10.7454294
 Krapfoss skole;Moss;49;45;46;59.4332052;10.6819278
@@ -2039,8 +2039,8 @@ Nøkkeland skole;Moss;54;48;46;59.4690671;10.6927398
 Ramberg skole;Moss;50;51;45;59.4419108;10.6286131
 Refsnes skole;Moss;50;50;55;59.4398796;10.6185434
 Reier skole;Moss;56;55;55;59.4296667;10.6296697
-Steinerskolen i Moss Grunnskole/Adm;Moss;47;46;41;0;0
-Torderød skole Adventistkirkens grunnskole;Moss;*;*;*;0;0
+Steinerskolen i Moss Grunnskole/Adm;Moss;47;46;41;59.4340914;10.6583833
+Torderød skole Adventistkirkens grunnskole;Moss;*;*;*;59.4348131;10.6391264
 Vang skole og ressurssenter;Moss;47;47;46;59.3828254;10.6896823
 Verket skole;Moss;52;45;46;59.4443577;10.678576
 Øreåsen skole;Moss;52;48;49;59.419936;10.6898839
@@ -2048,11 +2048,11 @@ Verket skole;Moss;52;45;46;59.4443577;10.678576
 Bergenhus skole;Rakkestad;50;49;46;59.420057;11.347595
 Kirkeng skole;Rakkestad;49;48;49;59.357136;11.420453
 Os skole;Rakkestad;50;47;46;59.440117;11.311685
-Råde kommune Karlshus skole;Råde;47;49;51;0;0
-Råde kommune Spetalen skole;Råde;46;49;53;0;0
+Råde kommune Karlshus skole;Råde;47;49;51;59.34763299999999;10.868676
+Råde kommune Spetalen skole;Råde;46;49;53;59.2975447;10.7680439
 Alvimhaugen barneskole;Sarpsborg;48;42;44;59.271519;11.08821
 Borgen barneskole;Sarpsborg;49;47;47;59.2642693;11.1685206
-Childrens International School Sarpsborg AS;Sarpsborg;*;*;*;0;0
+Childrens International School Sarpsborg AS;Sarpsborg;*;*;*;59.29207650000001;11.0952356
 Grålum barneskole;Sarpsborg;50;49;49;59.290898;11.057991
 Hafslund barneskole;Sarpsborg;49;44;46;59.2716883;11.1432606
 Hafslundsøy barneskole;Sarpsborg;51;49;47;59.2854185;11.1465887

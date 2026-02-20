@@ -158,7 +158,7 @@ Could not find coordinates for [address]
 You can also import and use the function in your own scripts:
 
 ```python
-from helpers.find_school_coordinates import find_school_coordinates
+from utils.find_school_coordinates import find_school_coordinates
 
 # Get coordinates
 lat, lng = find_school_coordinates("Elvebakken skole, Oslo, Norway")
