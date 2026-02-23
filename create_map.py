@@ -156,18 +156,43 @@ def prepare_school_data_for_export(schools):
     return prepared_data
 
 
-def create_norway_schools_map(input_file='processed-data/20260218-1045_Nasjonale_proever_5._trinn.csv',
+def create_norway_schools_map(input_files=None,
                                output_data_file='static/js/school-data.json',
                                map_title='Norwegian Schools Performance Map'):
     """
     Create school data JSON file for the interactive map.
 
     Args:
-        input_file: Path to CSV file with school data and coordinates
+        input_files: List of paths to CSV files with school data and coordinates
+                    If None, defaults to both 5. trinn and ungdomstrinn files
         output_data_file: Path to output JSON data file
         map_title: Title for the map (for logging purposes)
     """
-    schools = parse_csv_to_objects(input_file)
+    if input_files is None:
+        input_files = [
+            'processed-data/20260218-1045_Nasjonale_proever_5._trinn.csv',
+            'processed-data/20260218-1047_Nasjonale_proever_ungdomstrinn.csv'
+        ]
+
+    # Parse all input files and merge the data
+    schools = []
+    schools_dict = {}  # Use dict to handle potential duplicates
+
+    for input_file in input_files:
+        print(f"Reading {input_file}...")
+        file_schools = parse_csv_to_objects(input_file)
+
+        # Use (name, kommune) as key to handle duplicates
+        # If a school appears in both files, keep the first one
+        for school in file_schools:
+            key = (school['name'], school['kommune'])
+            if key not in schools_dict:
+                schools_dict[key] = school
+
+        print(f"  - Found {len(file_schools)} schools with valid coordinates")
+
+    schools = list(schools_dict.values())
+    print(f"\nTotal unique schools: {len(schools)}")
 
     if not schools:
         print("ERROR: No schools with valid coordinates found!")
@@ -200,7 +225,7 @@ def create_norway_schools_map(input_file='processed-data/20260218-1045_Nasjonale
     with open(output_data_file, 'w', encoding='utf-8') as f:
         json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-    print(f"✓ School data saved to {output_data_file}")
+    print(f"[SUCCESS] School data saved to {output_data_file}")
     print(f"  - Total schools: {len(schools)}")
     print(f"  - Map center: {map_config['center']}")
     print(f"  - Zoom level: {map_config['zoom']}")
@@ -213,11 +238,11 @@ def create_norway_schools_map(input_file='processed-data/20260218-1045_Nasjonale
         color_counts[color] = color_counts.get(color, 0) + 1
 
     color_names = {
-        '#d73027': '🔴 Red (<45)',
-        '#fc8d59': '🟠 Orange (45-49)',
-        '#91cf60': '🟢 Light Green (50-54)',
-        '#1a9850': '🟢 Dark Green (≥55)',
-        '#999999': '⚪ Gray (No data)'
+        '#d73027': 'Red (<45)',
+        '#fc8d59': 'Orange (45-49)',
+        '#91cf60': 'Light Green (50-54)',
+        '#1a9850': 'Dark Green (>=55)',
+        '#999999': 'Gray (No data)'
     }
 
     for color, count in sorted(color_counts.items()):
@@ -226,13 +251,16 @@ def create_norway_schools_map(input_file='processed-data/20260218-1045_Nasjonale
 
 
 if __name__ == "__main__":
-    # Generate JSON data file for the map
+    # Generate JSON data file for the map using BOTH data sources
     create_norway_schools_map(
-        input_file='processed-data/20260218-1045_Nasjonale_proever_5._trinn.csv',
+        input_files=[
+            'processed-data/20260218-1045_Nasjonale_proever_5._trinn.csv',
+            'processed-data/20260218-1047_Nasjonale_proever_ungdomstrinn.csv'
+        ],
         output_data_file='static/js/school-data.json',
         map_title='Norwegian Schools Performance 2024-2025'
     )
 
-    print("\n✓ Map data generation complete!")
+    print("\n[SUCCESS] Map data generation complete!")
     print("  Open index.html in a browser to view the map.")
 
