@@ -3,7 +3,7 @@
 
 // Global variables for search functionality
 let schoolsData = [];
-let schoolMarkers = new Map(); // Map of school name -> marker
+let schoolMarkers = new Map(); // Map of school unique key (name + kommune) -> marker
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Initializing map application...');
@@ -73,8 +73,9 @@ function createSchoolMarkers(schools, markerCluster) {
         const marker = createSchoolMarker(school);
         marker.addTo(markerCluster);
 
-        // Store marker reference for search
-        schoolMarkers.set(school.name, { marker: marker, school: school });
+        // Store marker reference for search using unique key (name + kommune)
+        const uniqueKey = `${school.name}|${school.kommune}`;
+        schoolMarkers.set(uniqueKey, { marker: marker, school: school });
     });
 }
 
@@ -240,7 +241,7 @@ function performSearch(query, resultsContainer, map, markerCluster) {
         resultsContainer.innerHTML = resultsToShow.map(school => {
             const highlightedName = highlightMatch(school.name, query);
             return `
-                <div class="search-result-item" data-school-name="${escapeHtml(school.name)}">
+                <div class="search-result-item" data-school-name="${escapeHtml(school.name)}" data-school-kommune="${escapeHtml(school.kommune)}">
                     <div class="search-result-name">${highlightedName}</div>
                     <div class="search-result-kommune">${escapeHtml(school.kommune)}</div>
                 </div>
@@ -260,7 +261,8 @@ function performSearch(query, resultsContainer, map, markerCluster) {
         resultsContainer.querySelectorAll('.search-result-item').forEach(item => {
             item.addEventListener('click', function() {
                 const schoolName = this.getAttribute('data-school-name');
-                zoomToSchool(schoolName, map, markerCluster);
+                const schoolKommune = this.getAttribute('data-school-kommune');
+                zoomToSchool(schoolName, schoolKommune, map, markerCluster);
                 resultsContainer.classList.remove('visible');
 
                 // Optionally clear the search input
@@ -299,21 +301,23 @@ function escapeRegex(text) {
 }
 
 // Zoom to a specific school on the map
-function zoomToSchool(schoolName, map, markerCluster) {
-    // Find the marker in the cluster by school name
+function zoomToSchool(schoolName, schoolKommune, map, markerCluster) {
+    // Find the marker in the cluster by school name AND kommune
     let targetMarker = null;
     const allMarkers = markerCluster.getLayers();
 
     for (let i = 0; i < allMarkers.length; i++) {
         const marker = allMarkers[i];
-        if (marker.schoolData && marker.schoolData.name === schoolName) {
+        if (marker.schoolData &&
+            marker.schoolData.name === schoolName &&
+            marker.schoolData.kommune === schoolKommune) {
             targetMarker = marker;
             break;
         }
     }
 
     if (!targetMarker) {
-        console.error('Marker not found for school:', schoolName);
+        console.error('Marker not found for school:', schoolName, 'in kommune:', schoolKommune);
         return;
     }
 
