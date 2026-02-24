@@ -296,6 +296,83 @@ html, body {
     background-color: #357ae8;
 }
 
+/* ── School popup styles ──────────────────────────────────────────────── */
+.popup-school {
+    font-size: 13px;
+    line-height: 1.5;
+    min-width: 220px;
+}
+
+.popup-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 2px;
+}
+
+.popup-name {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.popup-year {
+    font-size: 12px;
+    color: #777;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.popup-kommune {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 6px;
+}
+
+.popup-current {
+    margin-bottom: 8px;
+}
+
+.popup-history {
+    margin-top: 8px;
+    border-top: 1px solid #ddd;
+    padding-top: 6px;
+}
+
+.popup-history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.popup-history-table th,
+.popup-history-table td {
+    text-align: center;
+    padding: 2px 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.popup-history-table th {
+    background: #f5f5f5;
+    font-weight: 600;
+    color: #444;
+}
+
+.popup-history-table td:first-child {
+    text-align: left;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.popup-history-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.popup-history-table tbody tr:hover {
+    background: #f9f9f9;
+}
+
 /* Responsive styles for smaller screens */
 @media (max-width: 768px) {
     .search-container {

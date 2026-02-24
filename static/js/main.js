@@ -125,7 +125,7 @@ function createSchoolMarker(school) {
             icon: schoolIcon
         }
     ).bindPopup(popupContent, {
-        maxWidth: 250
+        maxWidth: 320
     });
 
     // Add school data to marker for later retrieval
@@ -138,29 +138,52 @@ function createSchoolMarker(school) {
 
 // Create popup content for a school
 function createPopupContent(school) {
-    const formatScore = (score) => score === null ? '*' : score;
+    const formatScore = (score) => (score === null || score === undefined) ? '*' : score;
 
-    if (school.hasData) {
-        return `
-            <b>${school.name}</b><br>
-            <b>Kommune:</b> ${school.kommune}<br>
-            <br>
-            <b>Engelsk:</b> ${formatScore(school.engelsk)}<br>
-            <b>Lesing:</b> ${formatScore(school.lesing)}<br>
-            <b>Regning:</b> ${formatScore(school.regning)}<br>
-            <b>Gjennomsnitt:</b> ${school.average.toFixed(1)} (basert på ${school.validScoresCount} fag)
-        `;
-    } else {
-        return `
-            <b>${school.name}</b><br>
-            <b>Kommune:</b> ${school.kommune}<br>
-            <br>
-            <b>Engelsk:</b> *<br>
-            <b>Lesing:</b> *<br>
-            <b>Regning:</b> *<br>
-            <b>Status:</b> <i>Ingen data tilgjengelig</i>
-        `;
+    const currentScores = school.hasData
+        ? `<b>Engelsk:</b> ${formatScore(school.engelsk)}&nbsp;&nbsp;
+           <b>Lesing:</b> ${formatScore(school.lesing)}&nbsp;&nbsp;
+           <b>Regning:</b> ${formatScore(school.regning)}<br>
+           <b>Snitt:</b> ${school.average.toFixed(1)} <small>(${school.validScoresCount} fag)</small>`
+        : `<b>Engelsk:</b> *&nbsp;&nbsp;<b>Lesing:</b> *&nbsp;&nbsp;<b>Regning:</b> *<br>
+           <i style="color:#888">Ingen data tilgjengelig</i>`;
+
+    let historyHtml = '';
+    if (school.history && school.history.length > 0) {
+        const rows = [...school.history].reverse().map(h => {
+            const scores = [h.engelsk, h.lesing, h.regning].filter(s => s !== null && s !== undefined);
+            const avg = scores.length > 0 ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : '*';
+            return `<tr>
+                <td>${h.year}</td>
+                <td>${formatScore(h.engelsk)}</td>
+                <td>${formatScore(h.lesing)}</td>
+                <td>${formatScore(h.regning)}</td>
+                <td>${avg}</td>
+            </tr>`;
+        }).join('');
+
+        historyHtml = `
+            <div class="popup-history">
+                <b>Historikk</b>
+                <table class="popup-history-table">
+                    <thead>
+                        <tr><th>År</th><th>Eng</th><th>Les</th><th>Reg</th><th>Snitt</th></tr>
+                    </thead>
+                    <tbody>${rows}</tbody>
+                </table>
+            </div>`;
     }
+
+    return `
+        <div class="popup-school">
+            <div class="popup-header">
+                <span class="popup-name">${school.name}</span>
+                <span class="popup-year">2025-26</span>
+            </div>
+            <div class="popup-kommune">${school.kommune}</div>
+            <div class="popup-current">${currentScores}</div>
+            ${historyHtml}
+        </div>`;
 }
 
 // Initialize search functionality

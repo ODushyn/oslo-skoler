@@ -118,9 +118,11 @@ def calculate_map_config(schools):
     }
 
 
-def prepare_school_data_for_export(schools):
+def prepare_school_data_for_export(schools, history=None):
     """Prepare school data with all necessary computed fields for JSON export."""
     prepared_data = []
+    if history is None:
+        history = {}
 
     for school in schools:
         engelsk = school['engelsk']
@@ -145,6 +147,11 @@ def prepare_school_data_for_export(schools):
         }
         fill_color = color_map.get(marker_color, '#999999')
 
+        # Look up historical data for this school
+        school_type = school.get('school_type', 'unknown')
+        key = (school['name'].lower(), school['kommune'].lower(), school_type)
+        school_history = history.get(key, [])
+
         prepared_data.append({
             'name': school['name'],
             'kommune': school['kommune'],
@@ -158,9 +165,66 @@ def prepare_school_data_for_export(schools):
             'color': fill_color,
             'validScoresCount': len(valid_scores),
             'schoolType': school.get('school_type', 'unknown'),
+            'history': school_history,
         })
 
     return prepared_data
+
+
+def load_historical_data(processed_dir='processed-data', current_year_prefix='2025-26'):
+    """
+    Load score history from all processed files that are NOT the current year.
+    Returns a dict: (name_lower, kommune_lower, school_type) -> list of
+        {'year': '2024-25', 'engelsk': int|None, 'lesing': int|None, 'regning': int|None}
+    sorted oldest-first.
+    """
+    history = {}  # key -> list of year dicts
+
+    processed_path = Path(processed_dir)
+    csv_files = sorted(processed_path.glob('*.csv'))
+
+    for csv_file in csv_files:
+        fname = csv_file.name
+        if fname.startswith(current_year_prefix):
+            continue
+
+        # Extract year prefix e.g. "2024-25"
+        year = fname[:7]
+
+        if '5._trinn' in fname or '5._Trinn' in fname.lower():
+            school_type = 'barneskole'
+        elif 'ungdomstrinn' in fname.lower():
+            school_type = 'ungdomsskole'
+        else:
+            school_type = 'unknown'
+
+        with open(csv_file, newline='', encoding='utf-8') as f:
+            reader = csv.DictReader(f, delimiter=';')
+            for row in reader:
+                name = row.get('EnhetNavn', '').strip()
+                kommune = row.get('Kommune', '').strip()
+                if not name:
+                    continue
+
+                def parse_score(v):
+                    v = v.strip() if v else ''
+                    return None if v in ('*', '', '0') else int(v)
+
+                entry = {
+                    'year': year,
+                    'engelsk': parse_score(row.get('Engelsk', '')),
+                    'lesing': parse_score(row.get('Lesing', '')),
+                    'regning': parse_score(row.get('Regning', '')),
+                }
+
+                key = (name.lower(), kommune.lower(), school_type)
+                history.setdefault(key, []).append(entry)
+
+    # Sort each list by year ascending
+    for key in history:
+        history[key].sort(key=lambda e: e['year'])
+
+    return history
 
 
 def create_norway_schools_map(input_files=None,
@@ -177,8 +241,8 @@ def create_norway_schools_map(input_files=None,
     """
     if input_files is None:
         input_files = [
-            'processed-data/20260218-1045_Nasjonale_proever_5._trinn.csv',
-            'processed-data/20260218-1047_Nasjonale_proever_ungdomstrinn.csv'
+            'processed-data/2025-26_20260218-1045_Nasjonale_proever_5._trinn.csv',
+            'processed-data/2025-26_20260218-1047_Nasjonale_proever_ungdomstrinn.csv'
         ]
 
     # Parse all input files and merge the data
@@ -222,8 +286,13 @@ def create_norway_schools_map(input_files=None,
     # Calculate map configuration
     map_config = calculate_map_config(schools)
 
+    # Load historical data from previous years
+    print("\nLoading historical data from previous years...")
+    history = load_historical_data()
+    print(f"  - Loaded history for {len(history)} school/type entries")
+
     # Prepare school data with computed fields
-    prepared_schools = prepare_school_data_for_export(schools)
+    prepared_schools = prepare_school_data_for_export(schools, history=history)
 
     # Create output data structure
     output_data = {
@@ -273,8 +342,8 @@ if __name__ == "__main__":
     # Generate JSON data file for the map using BOTH data sources
     create_norway_schools_map(
         input_files=[
-            'processed-data/20260218-1045_Nasjonale_proever_5._trinn.csv',
-            'processed-data/20260218-1047_Nasjonale_proever_ungdomstrinn.csv'
+            'processed-data/2025-26_20260218-1045_Nasjonale_proever_5._trinn.csv',
+            'processed-data/2025-26_20260218-1047_Nasjonale_proever_ungdomstrinn.csv'
         ],
         output_data_file='static/js/school-data.json',
         map_title='Norwegian Schools Performance 2024-2025'
