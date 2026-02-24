@@ -1,13 +1,73 @@
-<!-- Search Box -->
-<div class="search-container">
-    <div class="search-input-wrapper">
-        <input type="text" id="schoolSearch" placeholder="Søk etter skole..." autocomplete="off">
-        <button id="clearSearch" class="clear-search" title="Tøm søk">&times;</button>
+<!-- Search + Legend toolbar -->
+<div class="map-toolbar">
+    <div class="search-container">
+        <div class="search-input-wrapper">
+            <input type="text" id="schoolSearch" placeholder="Søk etter skole..." autocomplete="off">
+            <button id="clearSearch" class="clear-search" title="Tøm søk">&times;</button>
+        </div>
+        <div id="searchResults" class="search-results"></div>
     </div>
-    <div id="searchResults" class="search-results"></div>
-</div>
 
-<!-- Info Modal -->
+    <!-- Legend Box -->
+    <div id="legendBox" class="legend-box">
+
+        <!-- Collapsed state: round i-button -->
+        <button id="legendCollapsed"
+                onclick="document.getElementById('legendCollapsed').style.display='none';
+                         document.getElementById('legendExpanded').style.display='block';"
+                title="Info"
+                style="width:44px; height:44px; background-color:#4285f4; color:white;
+                       border:2px solid #357ae8; border-radius:50%; font-size:22px; font-weight:bold;
+                       cursor:pointer; display:flex; align-items:center; justify-content:center;
+                       box-shadow:0 2px 10px rgba(0,0,0,0.3); transition:background-color 0.2s;">i</button>
+
+        <!-- Expanded state: full panel -->
+        <div id="legendExpanded"
+             style="display:none; width:240px; background-color:white; border:2px solid grey;
+                    font-size:14px; border-radius:5px; box-shadow:0 0 15px rgba(0,0,0,0.2);">
+            <div style="padding:8px 10px; display:flex; align-items:center; justify-content:space-between;
+                        font-weight:bold; border-bottom:1px solid #eee;">
+                <span>Info</span>
+                <span onclick="document.getElementById('legendExpanded').style.display='none';
+                               document.getElementById('legendCollapsed').style.display='flex';"
+                      style="cursor:pointer; font-size:18px; line-height:1; padding:0 2px;"
+                      title="Lukk">×</span>
+            </div>
+            <div style="padding:10px;">
+                <p style="margin:3px 0; display:flex; align-items:center; gap:6px;">
+                    <svg width="40" height="40" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><rect x="3" y="10" width="18" height="11" fill="#888"/><polygon points="2,10 12,2 22,10" fill="#666"/><rect x="9" y="15" width="6" height="6" fill="white"/></svg>
+                    Ungdomsskole
+                </p>
+                <p style="margin:3px 0; display:flex; align-items:center; gap:6px;">
+                    <svg width="30" height="30" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0; margin-left:5px;"><rect x="3" y="10" width="18" height="11" fill="#888"/><polygon points="2,10 12,2 22,10" fill="#666"/><rect x="9" y="15" width="6" height="6" fill="white"/></svg>
+                    Barneskole
+                </p>
+                <hr style="margin:8px 0; border:none; border-top:1px solid #ccc;">
+                <button onclick="document.getElementById('infoModal').style.display='block'"
+                        title="Om fargefordelingen"
+                        style="width:100%; padding:6px 0; background-color:#4285f4; color:white;
+                               border:none; border-radius:4px; font-size:13px; cursor:pointer;
+                               display:flex; align-items:center; justify-content:center; gap:6px;">
+                    <span style="font-size:15px; font-weight:bold; width:20px; height:20px;
+                                 border:2px solid white; border-radius:50%; display:inline-flex;
+                                 align-items:center; justify-content:center; line-height:1;">i</span>
+                    Om fargefordelingen
+                </button>
+                <button onclick="document.getElementById('skolekretsModal').style.display='block'"
+                        title="Om skolekrets"
+                        style="width:100%; margin-top:6px; padding:6px 0; background-color:#4285f4; color:white;
+                               border:none; border-radius:4px; font-size:13px; cursor:pointer;
+                               display:flex; align-items:center; justify-content:center; gap:6px;">
+                    <span style="font-size:16px; line-height:1;">🗺️</span>
+                    Om skolekrets
+                </button>
+            </div>
+        </div>
+
+    </div><!-- /legendBox -->
+</div><!-- /map-toolbar -->
+
+<!-- Om Fargefordelingen Modal -->
 <div id="infoModal" class="modal" onclick="if(event.target==this) this.style.display='none'">
     <div class="modal-content">
         <span class="close" onclick="document.getElementById('infoModal').style.display='none'">&times;</span>
@@ -66,7 +126,7 @@
     </div>
 </div>
 
-<!-- Skolekrets Modal -->
+<!-- Om Skolekrets Modal -->
 <div id="skolekretsModal" class="modal" onclick="if(event.target==this) this.style.display='none'">
     <div class="modal-content">
         <span class="close" onclick="document.getElementById('skolekretsModal').style.display='none'">&times;</span>
@@ -89,65 +149,6 @@
             </div>
         </div>
         <p style="margin-top:16px; font-size:13px; color:#666;">For andre kommuner, søk etter «skolekrets» på kommunens egne nettsider.</p>
-    </div>
-</div>
-
-<!-- Legend Box -->
-<div id="legendBox" style="position:fixed; bottom:50px; right:50px; z-index:9999;">
-
-    <!-- Collapsed state: round i-button -->
-    <button id="legendCollapsed"
-            onclick="document.getElementById('legendCollapsed').style.display='none';
-                     document.getElementById('legendExpanded').style.display='block';"
-            title="Forklaring"
-            style="width:44px; height:44px; background-color:#4285f4; color:white;
-                   border:2px solid #357ae8; border-radius:50%; font-size:22px; font-weight:bold;
-                   cursor:pointer; display:flex; align-items:center; justify-content:center;
-                   box-shadow:0 2px 10px rgba(0,0,0,0.3); transition:background-color 0.2s;">i</button>
-
-    <!-- Expanded state: full panel -->
-    <div id="legendExpanded"
-         style="display:none; width:240px; background-color:white; border:2px solid grey;
-                font-size:14px; border-radius:5px; box-shadow:0 0 15px rgba(0,0,0,0.2);">
-        <!-- Header -->
-        <div style="padding:8px 10px; display:flex; align-items:center; justify-content:space-between;
-                    font-weight:bold; border-bottom:1px solid #eee;">
-            <span>Info</span>
-            <span onclick="document.getElementById('legendExpanded').style.display='none';
-                           document.getElementById('legendCollapsed').style.display='flex';"
-                  style="cursor:pointer; font-size:18px; line-height:1; padding:0 2px;"
-                  title="Lukk">×</span>
-        </div>
-        <!-- Body -->
-        <div style="padding:10px;">
-            <p style="margin:3px 0; display:flex; align-items:center; gap:6px;">
-                <svg width="40" height="40" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><rect x="3" y="10" width="18" height="11" fill="#888"/><polygon points="2,10 12,2 22,10" fill="#666"/><rect x="9" y="15" width="6" height="6" fill="white"/></svg>
-                Ungdomsskole
-            </p>
-            <p style="margin:3px 0; display:flex; align-items:center; gap:6px;">
-                <svg width="30" height="30" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0; margin-left:5px;"><rect x="3" y="10" width="18" height="11" fill="#888"/><polygon points="2,10 12,2 22,10" fill="#666"/><rect x="9" y="15" width="6" height="6" fill="white"/></svg>
-                Barneskole
-            </p>
-            <hr style="margin:8px 0; border:none; border-top:1px solid #ccc;">
-            <button onclick="document.getElementById('infoModal').style.display='block'"
-                    title="Om fargefordelingen"
-                    style="width:100%; padding:6px 0; background-color:#4285f4; color:white;
-                           border:none; border-radius:4px; font-size:13px; cursor:pointer;
-                           display:flex; align-items:center; justify-content:center; gap:6px;">
-                <span style="font-size:15px; font-weight:bold; width:20px; height:20px;
-                             border:2px solid white; border-radius:50%; display:inline-flex;
-                             align-items:center; justify-content:center; line-height:1;">i</span>
-                Om fargefordelingen
-            </button>
-            <button onclick="document.getElementById('skolekretsModal').style.display='block'"
-                    title="Om skolekrets"
-                    style="width:100%; margin-top:6px; padding:6px 0; background-color:#4285f4; color:white;
-                           border:none; border-radius:4px; font-size:13px; cursor:pointer;
-                           display:flex; align-items:center; justify-content:center; gap:6px;">
-                <span style="font-size:16px; line-height:1;">🗺️</span>
-                Om skolekrets
-            </button>
-        </div>
     </div>
 </div>
 
