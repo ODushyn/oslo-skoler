@@ -3,8 +3,13 @@ import csv
 from pathlib import Path
 
 
-def parse_csv_to_objects(file_path):
-    """Parse CSV file with school data and coordinates."""
+def parse_csv_to_objects(file_path, school_type=None):
+    """Parse CSV file with school data and coordinates.
+
+    Args:
+        file_path: Path to CSV file
+        school_type: Type of school ('barneskole' or 'ungdomsskole')
+    """
     data = []
 
     with open(file_path, newline='', encoding='utf-8') as csvfile:
@@ -34,6 +39,7 @@ def parse_csv_to_objects(file_path):
                 'regning': regning,
                 'lat': float(row['lat']),
                 'lng': float(row['lng']),
+                'school_type': school_type,
             })
 
     return data
@@ -150,7 +156,8 @@ def prepare_school_data_for_export(schools):
             'average': average,
             'hasData': has_data,
             'color': fill_color,
-            'validScoresCount': len(valid_scores)
+            'validScoresCount': len(valid_scores),
+            'schoolType': school.get('school_type', 'unknown'),
         })
 
     return prepared_data
@@ -180,16 +187,28 @@ def create_norway_schools_map(input_files=None,
 
     for input_file in input_files:
         print(f"Reading {input_file}...")
-        file_schools = parse_csv_to_objects(input_file)
+
+        # Determine school type from filename
+        if '5._trinn' in input_file:
+            school_type = 'barneskole'
+        elif 'ungdomstrinn' in input_file:
+            school_type = 'ungdomsskole'
+        else:
+            school_type = 'unknown'
+
+        file_schools = parse_csv_to_objects(input_file, school_type=school_type)
 
         # Use (name, kommune) as key to handle duplicates
-        # If a school appears in both files, keep the first one
+        # If a school appears in both files, prioritize ungdomsskole (they serve both levels)
         for school in file_schools:
             key = (school['name'], school['kommune'])
             if key not in schools_dict:
                 schools_dict[key] = school
+            elif school['school_type'] == 'ungdomsskole':
+                # Replace barneskole entry with ungdomsskole if it exists in both
+                schools_dict[key] = school
 
-        print(f"  - Found {len(file_schools)} schools with valid coordinates")
+        print(f"  - Found {len(file_schools)} schools with valid coordinates ({school_type})")
 
     schools = list(schools_dict.values())
     print(f"\nTotal unique schools: {len(schools)}")

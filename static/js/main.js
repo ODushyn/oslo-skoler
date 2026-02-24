@@ -81,16 +81,21 @@ function createSchoolMarkers(schools, markerCluster) {
 
 // Create a single school marker
 // Icon design:
-// - Barnaskole (5th grade): Small building with flag (currently displayed)
-// - Ungdomskole (secondary): Will use larger/taller building icon when added
+// - Barnaskole (5th grade): Small building with flag (30x30 pixels)
+// - Ungdomskole (secondary): Larger/taller building icon (40x40 pixels)
 function createSchoolMarker(school) {
     const popupContent = createPopupContent(school);
 
-    // Create custom school icon with SVG (barnaskole - primary school)
+    // Determine icon size based on school type
+    const isUngdomsskole = school.schoolType === 'ungdomsskole';
+    const iconSize = isUngdomsskole ? 40 : 30;
+    const iconAnchor = iconSize / 2;
+
+    // Create custom school icon with SVG
     const schoolIcon = L.divIcon({
         html: `
-            <svg width="30" height="30" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <!-- Primary school building with flag -->
+            <svg width="${iconSize}" height="${iconSize}" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <!-- School building with flag -->
                 <g>
                     <!-- Building -->
                     <rect x="4" y="10" width="16" height="12" fill="${school.color}" stroke="#fff" stroke-width="1.2"/>
@@ -108,10 +113,10 @@ function createSchoolMarker(school) {
                 </g>
             </svg>
         `,
-        className: 'school-marker-icon barnaskole-icon',
-        iconSize: [30, 30],
-        iconAnchor: [15, 15],
-        popupAnchor: [0, -15]
+        className: `school-marker-icon ${isUngdomsskole ? 'ungdomsskole-icon' : 'barnaskole-icon'}`,
+        iconSize: [iconSize, iconSize],
+        iconAnchor: [iconAnchor, iconAnchor],
+        popupAnchor: [0, -iconAnchor]
     });
 
     const marker = L.marker(
