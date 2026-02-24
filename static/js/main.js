@@ -5,6 +5,42 @@
 let schoolsData = [];
 let schoolMarkers = new Map(); // Map of school unique key (name + kommune) -> marker
 
+// ── Legend & modal helpers (must be global for inline onclick handlers) ───────
+function legendOpen() {
+    const panel = document.getElementById('legendExpanded');
+    const btn = document.getElementById('legendCollapsed');
+    if (panel.style.display === 'block') {
+        legendClose();
+        return;
+    }
+    panel.style.display = 'block';
+    btn.style.backgroundColor = '#357ae8';
+
+    // Close when clicking outside
+    setTimeout(() => {
+        document.addEventListener('click', _legendOutsideHandler);
+    }, 0);
+}
+function legendClose() {
+    const panel = document.getElementById('legendExpanded');
+    const btn = document.getElementById('legendCollapsed');
+    panel.style.display = 'none';
+    btn.style.backgroundColor = '#4285f4';
+    document.removeEventListener('click', _legendOutsideHandler);
+}
+function _legendOutsideHandler(e) {
+    const box = document.getElementById('legendBox');
+    if (box && !box.contains(e.target)) {
+        legendClose();
+    }
+}
+function openModal(id) {
+    document.getElementById(id).classList.add('is-open');
+}
+function closeModal(id) {
+    document.getElementById(id).classList.remove('is-open');
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Initializing map application...');
 
