@@ -78,6 +78,11 @@ function loadSchoolData(map, markerCluster) {
         .then(data => {
             console.log(`Loaded data for ${data.schools.length} schools`);
 
+            // Store the current year globally so popups can display it
+            if (data.metadata && data.metadata.currentYear) {
+                window.SCHOOL_DATA_YEAR = data.metadata.currentYear;
+            }
+
             // Store schools data globally for search
             schoolsData = data.schools;
 
@@ -214,7 +219,7 @@ function createPopupContent(school) {
         <div class="popup-school">
             <div class="popup-header">
                 <span class="popup-name">${school.name}</span>
-                <span class="popup-year">2025-26</span>
+                <span class="popup-year">${window.SCHOOL_DATA_YEAR || ''}</span>
             </div>
             <div class="popup-kommune">${school.kommune}</div>
             <div class="popup-current">${currentScores}</div>

@@ -1,6 +1,13 @@
 import json
 import csv
 from pathlib import Path
+from datetime import date
+
+# ─────────────────────────────────────────────────────────────────────────────
+# UPDATE THIS SINGLE VALUE EACH YEAR when new data arrives.
+# Format: 'YYYY-YY'  e.g. '2025-26', '2026-27'
+# ─────────────────────────────────────────────────────────────────────────────
+CURRENT_YEAR = '2025-26'
 
 
 def parse_csv_to_objects(file_path, school_type=None):
@@ -171,13 +178,15 @@ def prepare_school_data_for_export(schools, history=None):
     return prepared_data
 
 
-def load_historical_data(processed_dir='processed-data', current_year_prefix='2025-26'):
+def load_historical_data(processed_dir='processed-data', current_year_prefix=None):
     """
     Load score history from all processed files that are NOT the current year.
     Returns a dict: (name_lower, kommune_lower, school_type) -> list of
         {'year': '2024-25', 'engelsk': int|None, 'lesing': int|None, 'regning': int|None}
     sorted oldest-first.
     """
+    if current_year_prefix is None:
+        current_year_prefix = CURRENT_YEAR
     history = {}  # key -> list of year dicts
 
     processed_path = Path(processed_dir)
@@ -227,23 +236,49 @@ def load_historical_data(processed_dir='processed-data', current_year_prefix='20
     return history
 
 
+def find_current_year_files(processed_dir='processed-data', current_year=None):
+    """Auto-detect the two CSV files for the current year (5._trinn + ungdomstrinn)."""
+    if current_year is None:
+        current_year = CURRENT_YEAR
+    processed_path = Path(processed_dir)
+    barnetrinn = sorted(processed_path.glob(f'{current_year}_*_Nasjonale_proever_5._trinn.csv'))
+    ungdom = sorted(processed_path.glob(f'{current_year}_*_Nasjonale_proever_ungdomstrinn.csv'))
+
+    files = []
+    if barnetrinn:
+        files.append(str(barnetrinn[-1]))
+    if ungdom:
+        files.append(str(ungdom[-1]))
+
+    if not files:
+        raise FileNotFoundError(
+            f"No processed-data files found for year '{current_year}'. "
+            f"Expected files matching '{current_year}_*_Nasjonale_proever_5._trinn.csv' "
+            f"and '{current_year}_*_Nasjonale_proever_ungdomstrinn.csv' in '{processed_dir}'."
+        )
+    return files
+
+
 def create_norway_schools_map(input_files=None,
                                output_data_file='static/js/school-data.json',
-                               map_title='Norwegian Schools Performance Map'):
+                               map_title=None):
     """
     Create school data JSON file for the interactive map.
 
     Args:
-        input_files: List of paths to CSV files with school data and coordinates
-                    If None, defaults to both 5. trinn and ungdomstrinn files
+        input_files: List of paths to CSV files with school data and coordinates.
+                    If None, auto-detects the files for CURRENT_YEAR.
         output_data_file: Path to output JSON data file
         map_title: Title for the map (for logging purposes)
     """
     if input_files is None:
-        input_files = [
-            'processed-data/2025-26_20260218-1045_Nasjonale_proever_5._trinn.csv',
-            'processed-data/2025-26_20260218-1047_Nasjonale_proever_ungdomstrinn.csv'
-        ]
+        input_files = find_current_year_files()
+        print(f"Auto-detected input files for '{CURRENT_YEAR}':")
+        for f in input_files:
+            print(f"  {f}")
+
+    if map_title is None:
+        map_title = f'Norwegian Schools Performance {CURRENT_YEAR}'
 
     # Parse all input files and merge the data
     schools = []
@@ -301,7 +336,8 @@ def create_norway_schools_map(input_files=None,
         'metadata': {
             'totalSchools': len(schools),
             'title': map_title,
-            'generated': '2026-02-20'
+            'currentYear': CURRENT_YEAR,
+            'generated': date.today().isoformat()
         }
     }
 
@@ -339,14 +375,10 @@ def create_norway_schools_map(input_files=None,
 
 
 if __name__ == "__main__":
-    # Generate JSON data file for the map using BOTH data sources
+    # Auto-detects the two files for CURRENT_YEAR from processed-data/.
+    # Update CURRENT_YEAR at the top of this file each year before running.
     create_norway_schools_map(
-        input_files=[
-            'processed-data/2025-26_20260218-1045_Nasjonale_proever_5._trinn.csv',
-            'processed-data/2025-26_20260218-1047_Nasjonale_proever_ungdomstrinn.csv'
-        ],
         output_data_file='static/js/school-data.json',
-        map_title='Norwegian Schools Performance 2024-2025'
     )
 
     print("\n[SUCCESS] Map data generation complete!")
