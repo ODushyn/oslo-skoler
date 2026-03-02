@@ -1,336 +1,184 @@
-# Skoleoversikt.no - Norwegian Schools Performance Map
+# Skolekartet — Norwegian Schools Performance Map
 
-Interactive visualization of Norwegian school performance based on national standardized tests (Nasjonale Prøver).
+Live at **[skolekartet.no](https://skolekartet.no)**
 
-**Domain:** skoleoversikt.no
+---
 
-## Overview
+## 1. Introduction
 
-This project creates an interactive map showing Norwegian schools color-coded by their academic performance in:
-- **Engelsk** (English)
-- **Lesing** (Reading)
-- **Regning** (Mathematics)
+Skolekartet is an interactive map that visualises Norwegian school performance based on results from the national standardised tests (_Nasjonale Prøver_) published by UDIR (Utdanningsdirektoratet).
 
-Originally built for Oslo schools, now supports **all Norwegian schools** using data from UDIR (Utdanningsdirektoratet).
+### Goal
 
-## Features
+To give parents, students, and anyone interested a clear, geographic overview of how schools perform — making it easy to compare schools across a municipality or the whole country, and to spot trends over multiple years.
 
-- 🗺️ Interactive map with color-coded performance indicators
-- 📍 Automatic geocoding of school addresses
-- 🎨 Color-coded markers:
-  - 🔴 **Red**: Average < 45 (significantly below national mean)
-  - 🟠 **Orange**: Average 45-49 (below national mean)
-  - 🟢 **Light Green**: Average 50-54 (above national mean)
-  - 🟢 **Dark Green**: Average ≥ 55 (significantly above national mean)
-  - ⚪ **Gray**: No data available (all subjects missing)
-- 📊 Popup details for each school showing all test scores
-- 🌍 Automatic map centering and zoom based on data extent
-- ℹ️ Info button with detailed explanation of color distribution logic
-- 🎯 Smart handling of missing data:
-  - Schools with ALL scores missing are shown as **gray markers** (no impact on statistics)
-  - Schools with PARTIAL data are included, with average calculated only from valid scores
-  - Missing scores are displayed as "*" in school popups
-  - Gray markers are excluded from cluster color calculations
+### Main Features
 
-## Data Source: UDIR.no
+- **Interactive map** with a colour-coded marker for every Norwegian school that has data
+- **Two school types** displayed: barneskole (5. trinn) and ungdomsskole
+- **Colour scale** based on the official national average (50 ± 10):
+  - 🔴 **Red** `< 45` — significantly below national average
+  - 🟠 **Orange** `45–49` — below national average
+  - 🟢 **Light green** `50–54` — above national average
+  - 🟢 **Dark green** `≥ 55` — significantly above national average
+  - ⚪ **Grey** — no data available
+- **School popup** showing current-year scores (Engelsk, Lesing, Regning) plus a year-by-year history table
+- **Search** by school name across all schools
+- **Legend panel** with explanation of the colour scale and school-district (_skolekrets_) links
+- **Feedback form** (Formspree) accessible directly from the toolbar
+- **Multi-year support** — new data for each school year is added on top; previous years stay as historical data in every popup
 
-### Getting Data from UDIR
+---
 
-1. Visit [UDIR Skoleporten](https://skoleporten.udir.no/)
-2. Navigate to "Nasjonale prøver" section
-3. Export data for desired year (e.g., 2024-2025)
-4. Download as CSV format
-5. Save the file in this project directory
+## 2. Implementation Details
 
-### Expected UDIR CSV Format
+### Data Source
 
-The UDIR CSV typically includes these columns:
-- `Skolenavn` or `Skole` - School name
-- `Kommune` - Municipality name
-- `Fylke` - County name (optional)
-- `Engelsk` - English test score
-- `Lesing` or `Norsk lesing` - Reading test score
-- `Regning` or `Matematikk` - Math test score
+All school performance data comes from **[skoleporten.udir.no](https://skoleporten.udir.no)** — the official Norwegian directorate for education. Data is exported as CSV and covers:
 
-**Note**: The exact column names may vary. The script will display available columns and needs adjustment if column names differ.
+- `Engelsk` — English test score
+- `Lesing` — Reading test score
+- `Regning` — Mathematics test score
 
-## Installation
+Scores are on the official national scale where **the 2022 national average was set to 50** and the standard deviation to 10.
+
+Two separate exports are used each year:
+- `Nasjonale_proever_5._trinn.csv` — barneskole (grade 5)
+- `Nasjonale_proever_ungdomstrinn.csv` — ungdomsskole
+
+Raw exports are stored in `source-data/`, processed files (with geocoded coordinates) in `processed-data/`.
+
+### Geocoding
+
+School addresses are geocoded using **OpenStreetMap Nominatim** (via `geopy`). Coordinates are cached in `cached-data/skoler-geo-coordinates.csv` so that schools already seen are never re-geocoded. This makes annual updates fast — only new or renamed schools require a network call.
+
+Schools that cannot be geocoded are silently excluded from the map (coordinate defaults to `0,0` and are filtered out).
+
+### Missing Data Handling
+
+UDIR marks unavailable scores as `*` (typically for very small schools where publishing results would compromise student privacy).
+
+| Case | How it is handled |
+|---|---|
+| All three scores missing (`*;*;*`) | School shown as **grey marker**; excluded from cluster colour calculations |
+| Some scores missing (`53;*;47`) | Average calculated from **valid scores only**; popup shows `*` for missing subjects with a note like "basert på 2 fag" |
+| All scores present | Standard coloured marker |
+
+This ensures schools are never penalised for missing data and that grey markers do not distort the statistics of surrounding clusters.
+
+### Map Data
+
+All school data is compiled once into `static/js/school-data.json` by the Python pipeline. The JSON contains every school with its coordinates, scores per year, and school type. The browser loads this file once and renders everything client-side using **Leaflet**.
+
+---
+
+## 3. Technical Details (for developers)
 
 ### Prerequisites
+
 - Python 3.7+
-- pip
+- `pip install -r requirements.txt`
 
-### Setup
-
-```bash
-# Clone or download this repository
-cd oslo-skoler
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-## Usage
-
-### Step 1: Prepare Your Data
-
-Place your UDIR CSV file in the project directory. For example:
-- `udir_nasjonale_prover_2024-2025.csv`
-
-### Step 2: Geocode Schools
-
-Edit `create_csv_with_coordinates.py` to use your input file:
-
-```python
-# Update these lines at the bottom of the file:
-input_file = 'udir_nasjonale_prover_2024-2025.csv'
-output_file = 'norge_skoler_coordinates.csv'
-```
-
-Then run:
-
-```bash
-python create_csv_with_coordinates.py
-```
-
-**Note**: This process can take time for nationwide data (several minutes to hours depending on number of schools). The script includes rate limiting to respect the Nominatim API.
-
-### Step 3: Create the Map
-
-Edit `create_map.py` to use your geocoded file:
-
-```python
-# Update these lines at the bottom:
-create_norway_schools_map(
-    input_file='norge_skoler_coordinates.csv',
-    output_file='norge_skoler_kart.html',
-    map_title='Norwegian Schools Performance 2024-2025'
-)
-```
-
-Then run:
-
-```bash
-python create_map.py
-```
-
-### Step 4: View the Map
-
-Open the generated HTML file in your web browser:
-- Windows: Double-click `norge_skoler_kart.html`
-- Or open directly in browser
-
-## Helper Scripts
-
-### Find School Coordinates
-
-The `helpers/find_school_coordinates.py` script allows you to quickly find coordinates for a specific address.
-
-#### Usage as a Command-Line Tool
-
-```bash
-# Basic usage
-python3 -m helpers.find_school_coordinates "Elvebakken skole, Oslo, Norway"
-
-# With full address including street
-python3 -m helpers.find_school_coordinates "Grooseveien 36, 4876 Grimstad, Norway"
-
-# Another example with school name and municipality
-python3 -m helpers.find_school_coordinates "Majorstuen skole, Oslo, Norway"
-```
-
-**Output:**
-```
-Address: Grooseveien 36, 4876 Grimstad, Norway
-Coordinates: 58.3396542;8.5934425
-```
-
-If geocoding fails, you'll see a warning:
-```
-WARNING: Could not geocode [address]
-Could not find coordinates for [address]
-```
-
-**Note:** Use `python3 -m` to run the script as a module. This ensures proper import paths.
-
-#### Usage as a Python Module
-
-You can also import and use the function in your own scripts:
-
-```python
-from utils.find_school_coordinates import find_school_coordinates
-
-# Get coordinates
-lat, lng = find_school_coordinates("Elvebakken skole, Oslo, Norway")
-
-if lat and lng:
-    print(f"Latitude: {lat}, Longitude: {lng}")
-else:
-    print("Geocoding failed")
-```
-
-#### Tips
-
-- Include as much detail as possible in the address (school name, municipality, country)
-- The script uses the same geocoding service as the main application
-- Results are returned from OpenStreetMap's Nominatim service
-- Be mindful of rate limits when making multiple requests
-
-## Project Structure
+### Project Structure
 
 ```
 oslo-skoler/
+├── import_exam_result.py          # ⭐ Main annual-update script (run this each year)
+├── create_csv_with_coordinates.py # Geocodes a source CSV → processed-data/
+├── create_map.py                  # Builds static/js/school-data.json from processed CSVs
+├── geo.py                         # Geocoding utilities + cache logic
 │
-├── geo.py                              # Geocoding utilities
-├── create_csv_with_coordinates.py      # Script to add coordinates to school data
-├── create_map.py                       # Script to generate interactive map
-├── requirements.txt                    # Python dependencies
+├── source-data/                   # Raw UDIR exports (one CSV per school type per year)
+├── processed-data/                # Geocoded CSVs (generated, do not edit manually)
+├── cached-data/
+│   └── skoler-geo-coordinates.csv # Geocoding cache (commit this file)
 │
-├── helpers/                            # Helper scripts
-│   ├── __init__.py                     # Makes helpers a Python package
-│   └── find_school_coordinates.py      # CLI tool to find coordinates by address
+├── static/
+│   ├── js/
+│   │   ├── school-data.json       # Generated map data (commit this file)
+│   │   ├── main.js                # App logic (search, modals, feedback form)
+│   │   ├── map-init.js            # Leaflet map initialisation
+│   │   └── school-markers.js      # Marker rendering logic
+│   ├── css/styles.css
+│   └── templates/info-modal.html  # Legend, modals, feedback form HTML
 │
-├── skoler_2024-2025.csv               # Original Oslo data (example)
-├── skoler_2024-2025_coordinates.csv   # Oslo data with coordinates
-├── index.html                         # Generated map for Oslo
-│
-└── README.md                          # This file
+├── index.html                     # Entry point served by GitHub Pages
+├── CNAME                          # Custom domain: skolekartet.no
+├── robots.txt
+└── sitemap.xml
 ```
 
-## Handling Missing Test Scores
+### First-time Setup
 
-Some schools may have missing test scores (marked as `*` or empty in UDIR data). This typically happens with:
-- Very small schools with too few students for privacy reasons
-- Private/international schools not participating in national tests
-- Schools that didn't complete all test subjects
-
-### How the Map Handles Missing Data
-
-1. **Schools with ALL scores missing** (`*;*;*`):
-   - These schools **are shown as GRAY markers** on the map
-   - They have **no average value** and don't impact any calculations
-   - Cluster colors **exclude gray markers** from their average calculations
-   - Popup shows "Ingen data tilgjengelig" (No data available)
-   - Example: International schools, private institutions
-   - Typically ~426 schools (~24% of total)
-
-2. **Schools with PARTIAL scores** (e.g., `53;47;*`):
-   - These schools **are included** with colored markers
-   - Average is calculated **only from valid scores**
-   - Example: Score of `53;47;*` has average of `50` (not `33`)
-   - The popup shows:
-     - `*` for missing scores
-     - "basert på X fag" to indicate how many subjects were included
-   - Typically ~61 schools (~3% of total)
-
-3. **Schools with ALL scores present** (e.g., `50;48;52`):
-   - Standard colored markers based on the average
-   - Typically ~1,288 schools (~73% of total)
-
-### Example
-
-**School: Flosta skole** (Gray marker)
-- Engelsk: `*` (missing)
-- Lesing: `*` (missing)
-- Regning: `*` (missing)
-
-**Result**: 
-- Color: ⚪ Gray
-- Popup shows: "Ingen data tilgjengelig"
-- Does NOT impact cluster calculations
-
-**School: Eide skole** (Colored marker)
-- Engelsk: `*` (missing)
-- Lesing: `*` (missing)
-- Regning: `53`
-
-**Result**: 
-- Average: `53.0` (not `17.7`!)
-- Color: 🟢 Light Green
-- Popup shows: "Gjennomsnitt: 53.0 (basert på 1 fag)"
-- DOES impact cluster calculations
-
-This ensures fair representation - schools aren't penalized for missing data, and schools with no data don't skew the statistics.
-
-## Adjusting for Different UDIR Formats
-
-If your UDIR CSV has different column names, modify `create_csv_with_coordinates.py`:
-
-```python
-# Find these lines and adjust column names:
-school_name = row.get('Skole') or row.get('Skolenavn')  # Adjust as needed
-municipality = row.get('Kommune', 'Oslo')
-engelsk = row.get('Engelsk', 0)
-lesing = row.get('Lesing', 0)
-regning = row.get('Regning', 0)
+```bash
+git clone https://github.com/ODushyn/oslo-skoler.git
+cd oslo-skoler
+python -m venv .venv
+.venv\Scripts\activate        # Windows
+# source .venv/bin/activate   # macOS/Linux
+pip install -r requirements.txt
 ```
 
-The script will print available column names when you run it, helping you identify the correct names.
+Open `index.html` in a browser — the map works immediately from the committed `school-data.json`.
 
-## Tips for Large Datasets
+### Adding a New School Year
 
-For nationwide Norwegian data (thousands of schools):
+When UDIR publishes new data (typically February–March each year):
 
-1. **Geocoding**: 
-   - Can take 2-5 hours for all schools
-   - Consider running overnight
-   - Failed geocoding attempts are logged
-   - You can resume by filtering already processed schools
+**1. Download the two CSV exports from [skoleporten.udir.no](https://skoleporten.udir.no)**
+- Nasjonale prøver → 5. trinn → export as CSV → save to `source-data/`
+- Nasjonale prøver → ungdomstrinn → export as CSV → save to `source-data/`
 
-2. **Map Performance**:
-   - Maps with 1000+ markers may load slowly
-   - Consider filtering by county/region for better performance
-   - Add clustering for large datasets (see Folium documentation)
+File names follow the pattern: `YYYY-YY_YYYYMMDD-HHMM_Nasjonale_proever_5._trinn.csv`
 
-3. **API Rate Limits**:
-   - Current delay: 0.1s per school (respects Nominatim terms)
-   - For commercial use, consider paid geocoding services
+**2. Run the update script**
 
-## Migration from Oslo to Norway-wide
+```bash
+python import_exam_result.py 2026-27 \
+    "source-data/2026-27_20270215-1000_Nasjonale_proever_5._trinn.csv" \
+    "source-data/2026-27_20270215-1001_Nasjonale_proever_ungdomstrinn.csv"
+```
 
-The scripts maintain backward compatibility. Existing Oslo data will continue to work:
-- Oslo data doesn't require `Kommune` column
-- Scripts default to Oslo if municipality is missing
+This single command:
+1. Validates both source files exist
+2. Geocodes new schools (cached schools are instant)
+3. Writes two files to `processed-data/`
+4. Updates `CURRENT_YEAR` in `create_map.py`
+5. Regenerates `static/js/school-data.json`
 
-## Future Enhancements
+**3. Verify and commit**
 
-- [ ] Add marker clustering for better performance with large datasets
-- [ ] Filter controls (by county, municipality, performance level)
-- [ ] Export performance statistics
-- [ ] Comparison views (year-over-year)
-- [ ] Integration with additional UDIR metrics
+```bash
+# Open index.html in a browser and check the map looks correct
+git add processed-data/ static/js/school-data.json create_map.py cached-data/
+git commit -m "Add 2026-27 school year data"
+git push
+```
 
-## Dependencies
+GitHub Pages deploys automatically on push — the live site updates within ~1 minute.
 
-- `folium` - Interactive map generation
-- `geopy` - Geocoding service
-- Python standard library: `csv`, `time`
+### Manual Step-by-Step (alternative to the update script)
 
-See `requirements.txt` for full dependency list.
+```bash
+# 1. Geocode each source file separately
+python create_csv_with_coordinates.py \
+    "source-data/2026-27_XXXXXXXX-XXXX_Nasjonale_proever_5._trinn.csv"
 
-## License
+python create_csv_with_coordinates.py \
+    "source-data/2026-27_XXXXXXXX-XXXX_Nasjonale_proever_ungdomstrinn.csv"
 
-This is a personal project for visualizing public educational data.
-Data source: UDIR (Utdanningsdirektoratet) - Norway's Directorate for Education and Training
+# 2. Update CURRENT_YEAR in create_map.py (one line near the top)
+#    CURRENT_YEAR = '2026-27'
 
-## Troubleshooting
+# 3. Regenerate the map data
+python create_map.py
+```
 
-### "Could not geocode" warnings
-- Some school names may not geocode correctly
-- Try manually adding coordinates for failed schools
-- Check if school name includes special characters or abbreviations
+### Utilities
 
-### Column not found errors
-- Check actual UDIR CSV column names
-- Update column names in `create_csv_with_coordinates.py`
-- The script prints available columns to help debug
+**Find coordinates for a single address:**
 
-### Map doesn't center correctly
-- Ensure you have valid coordinates for multiple schools
-- Check that lat/lng are not 0 values
-- Script automatically calculates center from valid schools
-
-## Contact
-
-For questions or issues, please create an issue in the repository.
-
+```bash
+python -m utils.find_school_coordinates "Majorstuen skole, Oslo, Norway"
+# Output → Coordinates: 59.9260;10.7205
+```
