@@ -41,6 +41,44 @@ function closeModal(id) {
     document.getElementById(id).classList.remove('is-open');
 }
 
+// ── Feedback form handler ─────────────────────────────────────────────────────
+async function handleFeedbackSubmit(event) {
+    event.preventDefault();
+    const form = document.getElementById('feedbackForm');
+    const btn = document.getElementById('feedbackSubmitBtn');
+    const status = document.getElementById('feedbackStatus');
+
+    btn.disabled = true;
+    btn.textContent = 'Sender...';
+    status.style.display = 'none';
+
+    try {
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+            status.style.display = 'block';
+            status.style.backgroundColor = '#e6f4ea';
+            status.style.color = '#1e7e34';
+            status.textContent = '✓ Takk! Meldingen din er sendt.';
+            form.reset();
+            btn.textContent = 'Sendt!';
+        } else {
+            throw new Error('server error');
+        }
+    } catch (_) {
+        status.style.display = 'block';
+        status.style.backgroundColor = '#fdecea';
+        status.style.color = '#c62828';
+        status.textContent = '✗ Noe gikk galt. Prøv igjen eller send e-post direkte.';
+        btn.disabled = false;
+        btn.textContent = 'Send melding';
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Initializing map application...');
 
