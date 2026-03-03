@@ -399,7 +399,8 @@ html, body {
 /* Responsive styles for smaller screens */
 @media (max-width: 768px) {
     .search-container {
-        width: calc(100vw - 120px);
+        /* viewport - left offset (50px) - feedback btn (44px) - legend btn (44px) - gaps (30px) */
+        width: calc(100vw - 168px);
     }
 
     .info-modal-content {
@@ -409,7 +410,7 @@ html, body {
 
 @media (max-width: 480px) {
     .search-container {
-        width: calc(100vw - 120px);
+        width: calc(100vw - 168px);
     }
 }
 
