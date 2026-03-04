@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Load UI components from external HTML
 function loadUIComponents() {
-    fetch('static/templates/info-modal.html')
+    fetch('static/templates/info-modal.html', { cache: 'no-cache' })
         .then(response => response.text())
         .then(html => {
             document.getElementById('ui-components').innerHTML = html;
@@ -106,7 +106,7 @@ function loadUIComponents() {
 
 // Load school data from JSON file and create markers
 function loadSchoolData(map, markerCluster) {
-    fetch('static/js/school-data.json')
+    fetch('static/js/school-data.json', { cache: 'no-cache' })
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
