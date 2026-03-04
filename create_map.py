@@ -57,11 +57,11 @@ def determine_marker_color(engelsk, lesing, regning):
     Determine marker color based on average test scores.
     Only calculates average from valid (non-None) scores.
 
-    Based on the national scale where mean=50 and SD=10:
+    Based on the national scale where actual Oslo mean=49.31:
     - Gray: All scores missing (no data available)
     - Red: < 45 (significantly below national mean)
-    - Orange: 45-50 (below national mean)
-    - Light Green: 50-55 (above national mean)
+    - Orange: 45-49.31 (below Oslo mean)
+    - Light Green: 49.31-55 (above Oslo mean)
     - Dark Green: > 55 (significantly above national mean)
     """
     # Collect only valid scores (not None)
@@ -75,9 +75,9 @@ def determine_marker_color(engelsk, lesing, regning):
 
     if average < 45:
         return "red"
-    elif 45 <= average < 50:
+    elif 45 <= average < 49.31:
         return "orange"
-    elif 50 <= average < 55:
+    elif 49.31 <= average < 55:
         return "lightgreen"
     else:
         return "darkgreen"
@@ -353,7 +353,7 @@ def create_norway_schools_map(input_files=None,
     print(f"  - Total schools: {len(schools)}")
     print(f"  - Map center: {map_config['center']}")
     print(f"  - Zoom level: {map_config['zoom']}")
-    print(f"\nColor distribution (based on national scale 50±10):")
+    print(f"\nColor distribution (based on Oslo mean 49.31):")
 
     # Calculate color distribution
     color_counts = {}
@@ -363,8 +363,8 @@ def create_norway_schools_map(input_files=None,
 
     color_names = {
         '#d73027': 'Red (<45)',
-        '#fc8d59': 'Orange (45-49)',
-        '#91cf60': 'Light Green (50-54)',
+        '#fc8d59': 'Orange (45-49.31)',
+        '#91cf60': 'Light Green (49.31-55)',
         '#1a9850': 'Dark Green (>=55)',
         '#999999': 'Gray (No data)'
     }
