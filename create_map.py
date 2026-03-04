@@ -57,11 +57,11 @@ def determine_marker_color(engelsk, lesing, regning):
     Determine marker color based on average test scores.
     Only calculates average from valid (non-None) scores.
 
-    Based on the national scale where actual Oslo mean=49.31:
+    Based on the national scale where actual national mean=49.31:
     - Gray: All scores missing (no data available)
     - Red: < 45 (significantly below national mean)
-    - Orange: 45-49.31 (below Oslo mean)
-    - Light Green: 49.31-55 (above Oslo mean)
+    - Orange: 45-49.31 (below actual national mean)
+    - Light Green: 49.31-55 (above actual national mean)
     - Dark Green: > 55 (significantly above national mean)
     """
     # Collect only valid scores (not None)
