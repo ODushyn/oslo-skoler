@@ -7,28 +7,26 @@ function initMap() {
             center: [61.624746195799126, 10.01940767020763],
             crs: L.CRS.EPSG3857,
             zoom: 5,
+            minZoom: 1,
+            maxZoom: 19, // needed by the marker cluster plugin (was set by the old tile layer)
+            // MapLibre limits latitude more strictly than Leaflet; keep panning inside it
+            maxBounds: [[180, -Infinity], [-180, Infinity]],
+            maxBoundsViscosity: 1,
             zoomControl: true,
             preferCanvas: true
         }
     );
 
-    // Add tile layer
-    var tile_layer_4d247cb440c4f464ef03b772875f5d7a = L.tileLayer(
-        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-        {
-            minZoom: 0,
-            maxZoom: 19,
-            maxNativeZoom: 19,
-            noWrap: false,
-            attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
-            subdomains: "abc",
-            detectRetina: false,
-            tms: false,
-            opacity: 1
+    // Base map: OpenFreeMap vector tiles (free, no API key), drawn by MapLibre GL
+    // inside Leaflet. Attribution is required by OpenFreeMap / OpenMapTiles / OpenStreetMap.
+    L.maplibreGL({
+        style: 'https://tiles.openfreemap.org/styles/liberty',
+        attributionControl: {
+            customAttribution: '<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> ' +
+                '<a href="https://www.openmaptiles.org/" target="_blank" rel="noopener">&copy; OpenMapTiles</a> ' +
+                'Data from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
         }
-    );
-
-    tile_layer_4d247cb440c4f464ef03b772875f5d7a.addTo(map_a50579ea0c01426b15ce2ac53c4f579f);
+    }).addTo(map_a50579ea0c01426b15ce2ac53c4f579f);
 
     // Initialize marker cluster
     var marker_cluster_66d9cb3de4e330e0d20b4c240f24f016 = L.markerClusterGroup({
@@ -90,8 +88,8 @@ function initMap() {
         var size = childCount < 10 ? 'small' : (childCount < 100 ? 'medium' : 'large');
 
         return L.divIcon({
-            html: '<div style="background-color: ' + color + '; width: 100%; height: 100%; border-radius: 50%; display: flex; align-items: center; justify-content: center;"><span style="color: white; font-weight: bold;">' + childCount + '</span></div>',
-            className: 'marker-cluster marker-cluster-' + size,
+            html: '<span class="school-cluster score-' + scoreCategory(color) + '">' + childCount + '</span>',
+            className: 'school-cluster-icon school-cluster-' + size,
             iconSize: new L.Point(40, 40)
         });
     };

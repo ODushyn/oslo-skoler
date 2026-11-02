@@ -1,9 +1,18 @@
+/* Designsystemet (Digdir) provides the component styles via the `ds` cascade layer.
+   This file only holds map layout and small adjustments for using the components on top of a map. */
+
 /* Main map container styles */
 html, body {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
+}
+
+body {
+    font-family: var(--ds-font-family), sans-serif;
+    color: var(--ds-color-neutral-text-default);
+    background: var(--ds-color-neutral-background-default);
 }
 
 #map {
@@ -24,393 +33,384 @@ html, body {
 
 .leaflet-container {
     font-size: 1rem;
+    font-family: var(--ds-font-family), sans-serif;
 }
 
-/* School marker icon styles */
+/* ── Score colours (Designsystemet tokens) ──────────────────────────────
+   One class per score category. --score-bg is the fill, --score-fg the text/icon colour
+   on top of it, both taken from the theme so they follow Designsystemet. */
+.score-very-low {
+    --score-bg: var(--ds-color-danger-base-default);
+    --score-fg: var(--ds-color-danger-base-contrast-default);
+}
+
+.score-low {
+    --score-bg: var(--ds-color-warning-base-default);
+    --score-fg: var(--ds-color-warning-base-contrast-default);
+}
+
+.score-high {
+    --score-bg: var(--ds-color-success-border-subtle);
+    --score-fg: var(--ds-color-success-text-default);
+}
+
+.score-very-high {
+    --score-bg: var(--ds-color-success-base-default);
+    --score-fg: var(--ds-color-success-base-contrast-default);
+}
+
+.score-none {
+    --score-bg: var(--ds-color-neutral-border-default);
+    --score-fg: var(--ds-color-neutral-base-contrast-default);
+}
+
+/* School marker: round badge with the Aksel "HatSchool" icon */
 .school-marker-icon {
     background: transparent !important;
     border: none !important;
+}
+
+.school-marker {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.school-marker-icon svg {
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: var(--ds-border-radius-full);
+    border: 2px solid var(--ds-color-neutral-background-default);
+    background: var(--score-bg);
+    color: var(--score-fg);
+    box-shadow: var(--ds-shadow-sm);
     transition: transform 0.2s ease;
 }
 
-.school-marker-icon:hover svg {
-    transform: scale(1.2);
+.school-marker svg {
+    width: 64%;
+    height: 64%;
 }
 
-/* Barnaskole specific styles (primary school) */
-.barnaskole-icon svg {
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+.school-marker-icon:hover .school-marker {
+    transform: scale(1.15);
 }
 
-/* Ungdomskole specific styles (secondary school) - for future use */
-.ungdomskole-icon svg {
-    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+/* Marker clusters: score colour of the average, with a soft ring in the same colour */
+.school-cluster-icon {
+    background: transparent;
 }
 
-/* Info button styles */
-.info-button {
-    background-color: #4285f4;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 13px;
-    cursor: pointer;
-    z-index: 9999;
+.school-cluster {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--ds-border-radius-full);
+    background: var(--score-bg);
+    color: var(--score-fg);
+    font-family: var(--ds-font-family), sans-serif;
+    font-size: var(--ds-font-size-2, 0.875rem);
+    font-weight: var(--ds-font-weight-semibold);
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--score-bg) 35%, transparent);
 }
 
-.info-button:hover {
-    background-color: #357ae8;
-    transform: scale(1.1);
+/* ── Toolbar: sits next to the zoom controls ────────────────────────────── */
+/* Leaflet zoom control styled with Designsystemet tokens.
+   It sits 10px from the top/left (Leaflet default); the toolbar lines up with its top edge. */
+.leaflet-control-zoom.leaflet-bar {
+    border: none;
+    border-radius: var(--ds-border-radius-default);
+    box-shadow: var(--ds-shadow-md);
+    overflow: hidden;
 }
 
-/* Search container styles */
-/* Toolbar: sits next to zoom controls, vertically centres children */
+.leaflet-control-zoom.leaflet-bar a {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    color: var(--ds-color-neutral-text-default);
+    background: var(--ds-color-neutral-surface-default);
+    border-bottom-color: var(--ds-color-neutral-border-subtle);
+    font-family: var(--ds-font-family), sans-serif;
+}
+
+.leaflet-control-zoom.leaflet-bar a:hover {
+    background: var(--ds-color-neutral-surface-hover);
+}
+
+.leaflet-control-zoom.leaflet-bar a:focus-visible {
+    outline: var(--dsc-focus-outline);
+    box-shadow: var(--dsc-focus-boxShadow-inset);
+}
+
 .map-toolbar {
     position: fixed;
-    top: 16px;
-    left: 50px;
+    top: 10px;
+    /* zoom control: 10px offset + 30px wide, then the same gap as between toolbar items */
+    left: calc(10px + 30px + var(--ds-size-2));
     display: flex;
     align-items: center;
-    gap: 10px;
-    z-index: 9999;
+    gap: var(--ds-size-2);
+    z-index: 1000;
 }
 
-.search-container {
-    position: relative;
+.search-field {
     width: 320px;
 }
 
-/* Legend box */
-.legend-box {
-    flex-shrink: 0;
-    position: relative;
+/* Field adds space after its label; the label here is visually hidden,
+   so remove that space to keep the input level with the buttons. */
+.search-field > .ds-suggestion {
+    margin-top: 0;
 }
 
-#legendExpanded {
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 140%;
-    width: 250px;
-    max-width: calc(100vw - 32px);
-    max-height: calc(100vh - 110px);
-    overflow-y: auto;
-    background-color: white;
-    border: 2px solid #aaa;
-    border-radius: 5px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-    font-size: 14px;
-    z-index: 10001;
+.search-field .ds-input {
+    box-shadow: var(--ds-shadow-md);
 }
 
-
-.search-input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
+/* The suggestion list only opens while typing, so hide the dropdown chevron
+   that Suggestion shows when the clear button is hidden. */
+.search-field .ds-suggestion > input {
+    background-image: none;
 }
 
-#schoolSearch {
-    width: 100%;
-    padding: 12px 40px 12px 15px;
-    font-size: 16px;
-    border: 2px solid #357ae8;
-    border-radius: 25px;
-    outline: none;
-    background-color: white;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
+.toolbar-button {
+    box-shadow: var(--ds-shadow-md);
 }
 
-#schoolSearch:focus {
-    border-color: #4285f4;
-    box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
-}
-
-.clear-search {
-    position: absolute;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: #999;
-    cursor: pointer;
-    padding: 0;
-    width: 30px;
-    height: 30px;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: all 0.2s ease;
-}
-
-.clear-search:hover {
-    background-color: #f0f0f0;
-    color: #333;
-}
-
-.clear-search.visible {
-    display: flex;
-}
-
-.search-results {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background-color: white;
-    border-radius: 10px;
-    margin-top: 5px;
-    max-height: 400px;
-    overflow-y: auto;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    display: none;
-    z-index: 10000;
-}
-
-.search-results.visible {
-    display: block;
-}
-
-.search-result-item {
-    padding: 12px 15px;
-    cursor: pointer;
-    border-bottom: 1px solid #eee;
-    transition: background-color 0.2s ease;
-}
-
-.search-result-item:last-child {
-    border-bottom: none;
-}
-
-.search-result-item:hover {
-    background-color: #f5f5f5;
-}
-
+/* Search results (Designsystemet Suggestion list) */
 .search-result-name {
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 3px;
+    display: block;
+    font-weight: var(--ds-font-weight-medium);
 }
 
 .search-result-kommune {
-    font-size: 13px;
-    color: #666;
+    display: block;
+    font-size: var(--ds-font-size-minus-1);
+    color: var(--ds-color-neutral-text-subtle);
 }
 
 .search-result-highlight {
-    background-color: #fff59d;
-    font-weight: bold;
+    background: var(--ds-color-warning-surface-tinted);
+    color: inherit;
+    font-weight: var(--ds-font-weight-semibold);
 }
 
-.no-results {
-    padding: 15px;
-    text-align: center;
-    color: #666;
-    font-style: italic;
+.search-more {
+    margin: 0;
+    padding: var(--ds-size-1) var(--ds-size-3);
+    color: var(--ds-color-neutral-text-subtle);
 }
 
-
-/* Modal styles */
-.info-modal {
-    display: none;
-    position: fixed;
-    z-index: 10000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    box-sizing: border-box;
+/* Legend popover */
+.legend-popover {
+    width: 260px;
 }
 
-.info-modal.is-open {
+.legend-popover .ds-heading {
+    margin: 0 0 var(--ds-size-2);
+}
+
+.legend-types {
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ds-size-1);
+    margin: 0;
 }
 
-.info-modal-content {
-    background-color: white;
-    padding: 30px;
-    border: 1px solid #888;
-    width: 100%;
-    max-width: 680px;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    max-height: calc(100vh - 32px);
-    overflow-y: auto;
-    box-sizing: border-box;
+.legend-marker {
+    display: inline-flex;
+    flex-shrink: 0;
 }
 
-.info-modal-content h2 {
+.legend-marker--lg {
+    width: 40px;
+    height: 40px;
+}
+
+.legend-marker--sm {
+    width: 30px;
+    height: 30px;
+}
+
+.legend-popover .ds-divider {
+    margin-block: var(--ds-size-2);
+}
+
+.legend-actions {
+    display: grid;
+    gap: var(--ds-size-2);
+}
+
+/* Aksel icons next to text */
+.ds-heading .ds-icon {
+    margin-inline-end: var(--ds-size-2);
+    vertical-align: -0.15em;
+    width: 1.1em;
+    height: 1.1em;
+}
+
+.ds-link .ds-icon {
+    width: 1em;
+    height: 1em;
+    margin-inline-start: var(--ds-size-1);
+    vertical-align: -0.1em;
+}
+
+.toolbar-button .ds-icon {
+    width: var(--ds-size-6);
+    height: var(--ds-size-6);
+}
+
+/* ── Dialog content ─────────────────────────────────────────────────────── */
+.ds-dialog > .ds-heading:first-of-type {
     margin-top: 0;
-    color: #333;
 }
 
-.info-modal-content h3 {
-    color: #4285f4;
-    margin-top: 20px;
+.ds-dialog .ds-heading,
+.ds-dialog .ds-paragraph,
+.ds-dialog .ds-list,
+.ds-dialog .ds-card,
+.ds-dialog .ds-table {
+    margin-block: 0 var(--ds-size-4);
 }
 
-.info-modal-close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    line-height: 20px;
+.ds-dialog h3.ds-heading {
+    margin-top: var(--ds-size-6);
 }
 
-.info-modal-close:hover {
-    color: #000;
+.ds-dialog .ds-card .ds-paragraph,
+.ds-dialog .ds-card .ds-list {
+    margin-bottom: var(--ds-size-1);
 }
 
-.color-explanation {
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #f5f5f5;
-    border-radius: 5px;
-}
-
-.color-row {
+.color-explanation li {
     display: flex;
     align-items: center;
-    margin: 8px 0;
+    gap: var(--ds-size-3);
 }
 
 .color-dot {
-    font-size: 20px;
-    margin-right: 10px;
-    width: 30px;
-}
-
-.stats-box {
-    background-color: #e8f0fe;
-    padding: 15px;
-    border-radius: 5px;
-    margin: 15px 0;
-}
-
-.official-link {
     display: inline-block;
-    margin-top: 15px;
-    padding: 10px 20px;
-    background-color: #4285f4;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    flex-shrink: 0;
+    width: 0.9em;
+    height: 0.9em;
+    margin-inline-end: var(--ds-size-2);
+    border-radius: 50%;
+    background: var(--score-bg);
+    vertical-align: -0.05em;
 }
 
-.official-link:hover {
-    background-color: #357ae8;
+.color-explanation .color-dot {
+    width: 1.1em;
+    height: 1.1em;
+    margin-inline-end: 0;
 }
 
-/* ── School popup styles ──────────────────────────────────────────────── */
+.range-table {
+    width: 100%;
+}
+
+.ds-table .num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.ds-dialog .table-caption {
+    margin-top: calc(-1 * var(--ds-size-3));
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+/* Feedback form */
+.feedback-dialog {
+    --dsc-dialog-max-width: 30rem;
+}
+
+.feedback-form {
+    display: grid;
+    gap: var(--ds-size-4);
+}
+
+.feedback-form .ds-label {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-size-2);
+}
+
+.ds-label-hint {
+    font-weight: var(--ds-font-weight-regular);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.feedback-form textarea {
+    resize: vertical;
+}
+
+/* ── School popup (inside the Leaflet popup) ─────────────────────────────── */
 .popup-school {
-    font-size: 13px;
-    line-height: 1.5;
     min-width: 220px;
+}
+
+.popup-school .ds-paragraph {
+    margin: 0 0 var(--ds-size-2);
 }
 
 .popup-header {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 2px;
+    gap: var(--ds-size-2);
+    margin-bottom: var(--ds-size-1);
 }
 
-.popup-name {
-    font-weight: bold;
-    font-size: 14px;
+.popup-header .ds-heading {
+    margin: 0;
 }
 
-.popup-year {
-    font-size: 12px;
-    color: #777;
-    white-space: nowrap;
+.popup-header .ds-tag {
     flex-shrink: 0;
 }
 
-.popup-kommune {
-    font-size: 12px;
-    color: #666;
-    margin-bottom: 6px;
-}
-
-.popup-current {
-    margin-bottom: 8px;
+.popup-kommune,
+.popup-muted {
+    color: var(--ds-color-neutral-text-subtle);
 }
 
 .popup-history {
-    margin-top: 8px;
-    border-top: 1px solid #ddd;
-    padding-top: 6px;
+    margin-top: var(--ds-size-2);
+    padding-top: var(--ds-size-2);
+    border-top: 1px solid var(--ds-color-neutral-border-subtle);
+}
+
+.popup-history .ds-heading {
+    margin: 0 0 var(--ds-size-1);
 }
 
 .popup-history-table {
     width: 100%;
-    border-collapse: collapse;
-    font-size: 12px;
-    margin-top: 4px;
 }
 
 .popup-history-table th,
 .popup-history-table td {
     text-align: center;
-    padding: 2px 5px;
-    border-bottom: 1px solid #eee;
 }
 
-.popup-history-table th {
-    background: #f5f5f5;
-    font-weight: 600;
-    color: #444;
-}
-
+.popup-history-table th:first-child,
 .popup-history-table td:first-child {
     text-align: left;
-    font-weight: 500;
     white-space: nowrap;
-}
-
-.popup-history-table tbody tr:last-child td {
-    border-bottom: none;
-}
-
-.popup-history-table tbody tr:hover {
-    background: #f9f9f9;
 }
 
 /* Responsive styles for smaller screens */
 @media (max-width: 768px) {
-    .search-container {
-        /* viewport - left offset (50px) - feedback btn (44px) - legend btn (44px) - gaps (30px) */
-        width: calc(100vw - 168px);
+    .map-toolbar {
+        right: 10px;
     }
 
-    .info-modal-content {
-        padding: 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .search-container {
-        width: calc(100vw - 168px);
+    .search-field {
+        flex: 1;
+        min-width: 0;
+        width: auto;
     }
 }
-

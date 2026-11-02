@@ -5,41 +5,8 @@
 let schoolsData = [];
 let schoolMarkers = new Map(); // Map of school unique key (name + kommune) -> marker
 
-// ── Legend & modal helpers (must be global for inline onclick handlers) ───────
-function legendOpen() {
-    const panel = document.getElementById('legendExpanded');
-    const btn = document.getElementById('legendCollapsed');
-    if (panel.style.display === 'block') {
-        legendClose();
-        return;
-    }
-    panel.style.display = 'block';
-    btn.style.backgroundColor = '#357ae8';
-
-    // Close when clicking outside
-    setTimeout(() => {
-        document.addEventListener('click', _legendOutsideHandler);
-    }, 0);
-}
-function legendClose() {
-    const panel = document.getElementById('legendExpanded');
-    const btn = document.getElementById('legendCollapsed');
-    panel.style.display = 'none';
-    btn.style.backgroundColor = '#4285f4';
-    document.removeEventListener('click', _legendOutsideHandler);
-}
-function _legendOutsideHandler(e) {
-    const box = document.getElementById('legendBox');
-    if (box && !box.contains(e.target)) {
-        legendClose();
-    }
-}
-function openModal(id) {
-    document.getElementById(id).classList.add('is-open');
-}
-function closeModal(id) {
-    document.getElementById(id).classList.remove('is-open');
-}
+// Dialogs and the info popover are opened and closed by Designsystemet
+// (native <dialog>, popover and command/commandfor), so no helpers are needed here.
 
 // ── Feedback form handler ─────────────────────────────────────────────────────
 async function handleFeedbackSubmit(event) {
@@ -49,8 +16,9 @@ async function handleFeedbackSubmit(event) {
     const status = document.getElementById('feedbackStatus');
 
     btn.disabled = true;
+    btn.setAttribute('aria-busy', 'true');
     btn.textContent = 'Sender...';
-    status.style.display = 'none';
+    status.hidden = true;
 
     try {
         const response = await fetch(form.action, {
@@ -60,21 +28,21 @@ async function handleFeedbackSubmit(event) {
         });
 
         if (response.ok) {
-            status.style.display = 'block';
-            status.style.backgroundColor = '#e6f4ea';
-            status.style.color = '#1e7e34';
-            status.textContent = '✓ Takk! Meldingen din er sendt.';
+            status.dataset.color = 'success';
+            status.textContent = 'Takk! Meldingen din er sendt.';
+            status.hidden = false;
             form.reset();
+            btn.removeAttribute('aria-busy');
             btn.textContent = 'Sendt!';
         } else {
             throw new Error('server error');
         }
     } catch (_) {
-        status.style.display = 'block';
-        status.style.backgroundColor = '#fdecea';
-        status.style.color = '#c62828';
-        status.textContent = '✗ Noe gikk galt. Prøv igjen eller send e-post direkte.';
+        status.dataset.color = 'danger';
+        status.textContent = 'Noe gikk galt. Prøv igjen eller send e-post direkte.';
+        status.hidden = false;
         btn.disabled = false;
+        btn.removeAttribute('aria-busy');
         btn.textContent = 'Send melding';
     }
 }
@@ -98,6 +66,8 @@ function loadUIComponents() {
         .then(response => response.text())
         .then(html => {
             document.getElementById('ui-components').innerHTML = html;
+            // Legend shows the same badge as the map markers
+            document.querySelectorAll('[data-legend-icon]').forEach(el => { el.innerHTML = HAT_SCHOOL_ICON; });
         })
         .catch(error => {
             console.error('Error loading UI components:', error);
@@ -159,9 +129,9 @@ function createSchoolMarkers(schools, markerCluster) {
 }
 
 // Create a single school marker
-// Icon design:
-// - Barnaskole (5th grade): Small building with flag (30x30 pixels)
-// - Ungdomskole (secondary): Larger/taller building icon (40x40 pixels)
+// Icon design: a round badge in the score colour with the Aksel "HatSchool" icon.
+// - Barneskole (5th grade): 30x30 pixels
+// - Ungdomsskole (secondary): 40x40 pixels
 function createSchoolMarker(school) {
     const popupContent = createPopupContent(school);
 
@@ -170,28 +140,8 @@ function createSchoolMarker(school) {
     const iconSize = isUngdomsskole ? 40 : 30;
     const iconAnchor = iconSize / 2;
 
-    // Create custom school icon with SVG
     const schoolIcon = L.divIcon({
-        html: `
-            <svg width="${iconSize}" height="${iconSize}" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <!-- School building with flag -->
-                <g>
-                    <!-- Building -->
-                    <rect x="4" y="10" width="16" height="12" fill="${school.color}" stroke="#fff" stroke-width="1.2"/>
-                    <!-- Roof -->
-                    <path d="M2 10 L12 4 L22 10 Z" fill="${school.color}" stroke="#fff" stroke-width="1.2"/>
-                    <!-- Door -->
-                    <rect x="10" y="16" width="4" height="6" fill="#fff" opacity="0.4"/>
-                    <!-- Windows -->
-                    <rect x="6" y="12" width="2.5" height="2.5" fill="#fff" opacity="0.5"/>
-                    <rect x="15.5" y="12" width="2.5" height="2.5" fill="#fff" opacity="0.5"/>
-                    <!-- Flag pole -->
-                    <line x1="12" y1="4" x2="12" y2="1" stroke="#fff" stroke-width="0.8"/>
-                    <!-- Flag -->
-                    <path d="M12 1 L16 2.5 L12 4 Z" fill="#fff" opacity="0.7"/>
-                </g>
-            </svg>
-        `,
+        html: `<span class="school-marker score-${scoreCategory(school.color)}">${HAT_SCHOOL_ICON}</span>`,
         className: `school-marker-icon ${isUngdomsskole ? 'ungdomsskole-icon' : 'barnaskole-icon'}`,
         iconSize: [iconSize, iconSize],
         iconAnchor: [iconAnchor, iconAnchor],
@@ -215,17 +165,21 @@ function createSchoolMarker(school) {
     return marker;
 }
 
-// Create popup content for a school
+// Create popup content for a school (Designsystemet heading, tag, paragraph and table)
 function createPopupContent(school) {
     const formatScore = (score) => (score === null || score === undefined) ? '*' : score;
 
     const currentScores = school.hasData
-        ? `<b>Engelsk:</b> ${formatScore(school.engelsk)}&nbsp;&nbsp;
-           <b>Lesing:</b> ${formatScore(school.lesing)}&nbsp;&nbsp;
-           <b>Regning:</b> ${formatScore(school.regning)}<br>
-           <b>Snitt:</b> ${school.average.toFixed(1)} <small>(${school.validScoresCount} fag)</small>`
-        : `<b>Engelsk:</b> *&nbsp;&nbsp;<b>Lesing:</b> *&nbsp;&nbsp;<b>Regning:</b> *<br>
-           <i style="color:#888">Ingen data tilgjengelig</i>`;
+        ? `<p class="ds-paragraph" data-size="sm">
+               <strong>Engelsk:</strong> ${formatScore(school.engelsk)}&nbsp;&nbsp;
+               <strong>Lesing:</strong> ${formatScore(school.lesing)}&nbsp;&nbsp;
+               <strong>Regning:</strong> ${formatScore(school.regning)}<br>
+               <strong>Snitt:</strong> ${school.average.toFixed(1)} <small>(${school.validScoresCount} fag)</small>
+           </p>`
+        : `<p class="ds-paragraph" data-size="sm">
+               <strong>Engelsk:</strong> *&nbsp;&nbsp;<strong>Lesing:</strong> *&nbsp;&nbsp;<strong>Regning:</strong> *<br>
+               <em class="popup-muted">Ingen data tilgjengelig</em>
+           </p>`;
 
     let historyHtml = '';
     if (school.history && school.history.length > 0) {
@@ -243,8 +197,8 @@ function createPopupContent(school) {
 
         historyHtml = `
             <div class="popup-history">
-                <b>Historikk</b>
-                <table class="popup-history-table">
+                <h4 class="ds-heading" data-size="2xs">Historikk</h4>
+                <table class="ds-table popup-history-table" data-size="sm" data-border>
                     <thead>
                         <tr><th>År</th><th>Eng</th><th>Les</th><th>Reg</th><th>Snitt</th></tr>
                     </thead>
@@ -253,79 +207,62 @@ function createPopupContent(school) {
             </div>`;
     }
 
+    const yearTag = window.SCHOOL_DATA_YEAR
+        ? `<span class="ds-tag" data-color="neutral" data-size="sm">${window.SCHOOL_DATA_YEAR}</span>`
+        : '';
+
     return `
         <div class="popup-school">
             <div class="popup-header">
-                <span class="popup-name">${school.name}</span>
-                <span class="popup-year">${window.SCHOOL_DATA_YEAR || ''}</span>
+                <h3 class="ds-heading popup-name" data-size="2xs">${school.name}</h3>
+                ${yearTag}
             </div>
-            <div class="popup-kommune">${school.kommune}</div>
+            <p class="ds-paragraph popup-kommune" data-size="xs">${school.kommune}</p>
             <div class="popup-current">${currentScores}</div>
             ${historyHtml}
         </div>`;
 }
 
-// Initialize search functionality
+// Initialize search functionality (Designsystemet Suggestion / u-combobox)
+const MAX_SEARCH_RESULTS = 10;
+
 function initializeSearch(map, markerCluster) {
+    const suggestion = document.getElementById('schoolSuggestion');
     const searchInput = document.getElementById('schoolSearch');
     const searchResults = document.getElementById('searchResults');
-    const clearButton = document.getElementById('clearSearch');
 
-    if (!searchInput || !searchResults || !clearButton) {
+    if (!suggestion || !searchInput || !searchResults) {
         console.warn('Search elements not found, retrying in 100ms...');
         setTimeout(() => initializeSearch(map, markerCluster), 100);
         return;
     }
 
-    // Handle input changes
+    // Render matching schools as options while typing
     searchInput.addEventListener('input', function() {
-        const query = this.value.trim();
-
-        // Show/hide clear button
-        if (query.length > 0) {
-            clearButton.classList.add('visible');
-        } else {
-            clearButton.classList.remove('visible');
-        }
-
-        // Perform search if query has at least 2 characters
-        if (query.length >= 2) {
-            performSearch(query, searchResults, map, markerCluster);
-        } else {
-            searchResults.classList.remove('visible');
-            searchResults.innerHTML = '';
-        }
+        renderSearchResults(this.value.trim(), searchResults);
     });
 
-    // Handle clear button click
-    clearButton.addEventListener('click', function() {
+    // An option was picked (click or keyboard). Prevent the combobox from
+    // keeping it as a selected value, and zoom to the school instead.
+    suggestion.addEventListener('comboboxbeforeselect', function(event) {
+        event.preventDefault();
+        const option = event.detail;
+        const key = option && option.value;
+        if (!key || !schoolMarkers.has(key)) return;
+
+        const { school } = schoolMarkers.get(key);
+        zoomToSchool(school.name, school.kommune, map, markerCluster);
+
         searchInput.value = '';
-        clearButton.classList.remove('visible');
-        searchResults.classList.remove('visible');
-        searchResults.innerHTML = '';
-        searchInput.focus();
-    });
-
-    // Close search results when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.search-container')) {
-            searchResults.classList.remove('visible');
-        }
-    });
-
-    // Show results when clicking on search input if there's a query
-    searchInput.addEventListener('click', function() {
-        if (this.value.trim().length >= 2) {
-            searchResults.classList.add('visible');
-        }
+        renderSearchResults('', searchResults);
+        searchInput.blur();
     });
 }
 
-// Perform search and display results
-function performSearch(query, resultsContainer, map, markerCluster) {
+// Find schools matching the query, best matches first
+function findSchools(query) {
     const queryLower = query.toLowerCase();
 
-    // Filter schools that match the query
     const matchingSchools = schoolsData.filter(school =>
         school.name.toLowerCase().includes(queryLower)
     );
@@ -340,59 +277,41 @@ function performSearch(query, resultsContainer, map, markerCluster) {
         return a.name.localeCompare(b.name);
     });
 
-    // Display results
-    if (matchingSchools.length > 0) {
-        const maxResults = 10;
-        const resultsToShow = matchingSchools.slice(0, maxResults);
+    return matchingSchools;
+}
 
-        resultsContainer.innerHTML = resultsToShow.map(school => {
-            const highlightedName = highlightMatch(school.name, query);
-            return `
-                <div class="search-result-item" data-school-name="${escapeHtml(school.name)}" data-school-kommune="${escapeHtml(school.kommune)}">
-                    <div class="search-result-name">${highlightedName}</div>
-                    <div class="search-result-kommune">${escapeHtml(school.kommune)}</div>
-                </div>
-            `;
-        }).join('');
+// Fill the suggestion list with options for the query
+function renderSearchResults(query, resultsContainer) {
+    const empty = '<u-option data-empty>Ingen skoler funnet</u-option>';
 
-        // Add more results indicator if needed
-        if (matchingSchools.length > maxResults) {
-            resultsContainer.innerHTML += `
-                <div class="no-results" style="font-style: normal; font-size: 12px;">
-                    Viser ${maxResults} av ${matchingSchools.length} resultater
-                </div>
-            `;
-        }
-
-        // Add click handlers to result items
-        resultsContainer.querySelectorAll('.search-result-item').forEach(item => {
-            item.addEventListener('click', function() {
-                const schoolName = this.getAttribute('data-school-name');
-                const schoolKommune = this.getAttribute('data-school-kommune');
-                zoomToSchool(schoolName, schoolKommune, map, markerCluster);
-                resultsContainer.classList.remove('visible');
-
-                // Optionally clear the search input
-                const searchInput = document.getElementById('schoolSearch');
-                const clearButton = document.getElementById('clearSearch');
-                if (searchInput) {
-                    searchInput.value = '';
-                    clearButton.classList.remove('visible');
-                }
-            });
-        });
-
-        resultsContainer.classList.add('visible');
-    } else {
-        resultsContainer.innerHTML = '<div class="no-results">Ingen skoler funnet</div>';
-        resultsContainer.classList.add('visible');
+    // Search only when the query has at least 2 characters
+    if (query.length < 2) {
+        resultsContainer.innerHTML = '';
+        return;
     }
+
+    const matchingSchools = findSchools(query);
+    const options = matchingSchools.slice(0, MAX_SEARCH_RESULTS).map(school => {
+        const key = `${school.name}|${school.kommune}`;
+        return `
+            <u-option value="${escapeHtml(key)}" label="${escapeHtml(school.name)}">
+                <span class="search-result-name">${highlightMatch(school.name, query)}</span>
+                <span class="search-result-kommune">${escapeHtml(school.kommune)}</span>
+            </u-option>`;
+    }).join('');
+
+    let more = '';
+    if (matchingSchools.length > MAX_SEARCH_RESULTS) {
+        more = `<p class="ds-paragraph search-more" data-size="xs" aria-hidden="true">Viser ${MAX_SEARCH_RESULTS} av ${matchingSchools.length} resultater</p>`;
+    }
+
+    resultsContainer.innerHTML = options + more + empty;
 }
 
 // Highlight matching text in school name
 function highlightMatch(text, query) {
     const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
-    return escapeHtml(text).replace(regex, '<span class="search-result-highlight">$1</span>');
+    return escapeHtml(text).replace(regex, '<mark class="search-result-highlight">$1</mark>');
 }
 
 // Escape HTML special characters
