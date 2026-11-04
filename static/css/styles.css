@@ -371,18 +371,35 @@ main:focus {
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: var(--ds-size-2);
+    gap: var(--ds-size-8);
 }
 
-.site-primary .ds-button {
-    font-weight: var(--ds-font-weight-medium);
+/* Navigation links as on designsystemet.no: plain text, an underline on hover, and a thick underline in
+   the brand colour under the page you are on */
+.site-primary__link {
+    padding-block: var(--ds-size-2);
     color: var(--ds-color-neutral-text-default);
+    font-weight: var(--ds-font-weight-medium);
+    text-decoration: none;
+    text-underline-offset: 0.45em;
 }
 
-.site-primary .ds-button[aria-current="page"] {
+.site-primary__link:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+}
+
+.site-primary__link[aria-current="page"] {
     color: var(--ds-color-brand1-text-default);
     text-decoration: underline;
-    text-underline-offset: 0.35em;
+    text-decoration-thickness: 3px;
+    text-decoration-color: var(--ds-color-brand1-base-default);
+}
+
+.site-primary__link:focus-visible {
+    outline: var(--dsc-focus-outline, 3px solid var(--ds-color-focus-outer));
+    outline-offset: 2px;
+    border-radius: var(--ds-border-radius-sm);
 }
 
 /* Below this width the links would run into the buttons on the right; they are in the menu as well */
