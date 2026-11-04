@@ -3320,7 +3320,7 @@ body.has-page-feedback {
     flex-wrap: wrap;
     align-items: center;
     gap: var(--ds-size-2) var(--ds-size-5);
-    margin: var(--ds-size-4) 0 0;
+    margin: var(--ds-size-6) 0 0;
     padding: 0;
     border: 0;
 }
@@ -3334,6 +3334,7 @@ body.has-page-feedback {
     margin: 0;
     padding: 0;
     font-weight: var(--ds-font-weight-medium);
+    color: var(--ds-color-brand1-text-subtle); /* the same colour as the sort button ("Nærmest") */
 }
 
 .ds-fieldset.score-bar > * + * {
