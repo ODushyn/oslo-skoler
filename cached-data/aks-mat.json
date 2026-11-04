@@ -1,0 +1,296 @@
+{
+"fetched": "2026-11-03",
+"schools": {
+"874589802": {
+"url": "https://grunerlokka.osloskolen.no/aktivitetsskolen/vare-tilbud/matservering/",
+"facts": {
+"perWeek": 5
+}
+},
+"874589942": {
+"url": "https://lilleaker.osloskolen.no/aktivitetsskolen/planer/ukeplaner-lillebasen/",
+"facts": {
+"perWeek": 2,
+"days": [
+"tirsdag",
+"torsdag"
+],
+"packedDays": [
+"mandag",
+"onsdag",
+"fredag"
+]
+}
+},
+"874590002": {
+"url": "https://manglerud.osloskolen.no/aktivitetsskolen/vare-tilbud/maltider/",
+"facts": {
+"warm": true,
+"packedDays": [
+"mandag"
+]
+}
+},
+"912697711": {
+"url": "https://berg.osloskolen.no/aktivitetsskolen/vare-tilbud/mat/",
+"facts": {
+"perWeek": 1
+}
+},
+"913579321": {
+"url": "https://teglverket.osloskolen.no/aktivitetsskolen/vare-tilbud/aks-pa-tgv/",
+"facts": {
+"perWeek": 5
+}
+},
+"916203993": {
+"url": "https://fernandanissen.osloskolen.no/aktivitetsskolen/aks-pa-fernanda-nissen/apningstider/",
+"facts": {
+"warm": true,
+"warmPerWeek": 1
+}
+},
+"973626442": {
+"url": "https://gamlebyen.osloskolen.no/aktivitetsskolen/vare-tilbud/mat/",
+"facts": {
+"warm": true
+}
+},
+"974589680": {
+"url": "https://bjolsen.osloskolen.no/aktivitetsskolen/generell-informasjon/generell-informasjon/",
+"facts": {
+"perWeek": 2,
+"warm": true,
+"warmPerWeek": 2
+}
+},
+"974589699": {
+"url": "https://grindbakken.osloskolen.no/aktivitetsskolen/aks-pa-grindbakken/rammeplan-og-oslostandarden/",
+"facts": {
+"perWeek": 1
+}
+},
+"974589761": {
+"url": "https://furuset.osloskolen.no/aktivitetsskolen/ukeplaner/matplan/",
+"facts": {
+"perWeek": 5
+}
+},
+"974589842": {
+"url": "https://hoybraten.osloskolen.no/aktivitetsskolen/vare-tilbud/maltider/",
+"facts": {
+"warm": true,
+"warmPerWeek": 1
+}
+},
+"974589869": {
+"url": "https://ila.osloskolen.no/aktivitetsskolen/vare-tilbud2/Aktivitetstilbud/",
+"facts": {
+"perWeek": 5,
+"warm": true,
+"warmPerWeek": 5
+}
+},
+"974589907": {
+"url": "https://klemetsrud.osloskolen.no/aktivitetsskolen/aks-pa-klemetsrud-skole/informasjon-fra-aks/",
+"facts": {
+"warm": true
+}
+},
+"974590018": {
+"url": "https://maridalen.osloskolen.no/aktivitetsskolen/vare-tilbud/matservering/",
+"facts": {
+"perWeek": 2,
+"days": [
+"tirsdag",
+"torsdag"
+]
+}
+},
+"974590026": {
+"url": "https://marienlyst.osloskolen.no/aktivitetsskolen/vare-tilbud/maltider/",
+"facts": {
+"perWeek": 5,
+"warm": true
+}
+},
+"974590093": {
+"url": "https://oppsal.osloskolen.no/aktivitetsskolen/aks-pa-oppsal-skole/rutiner-og-regler2/",
+"facts": {
+"perWeek": 5,
+"warm": true
+}
+},
+"974590107": {
+"url": "https://prinsdal.osloskolen.no/aktivitetsskolen/aks-pa-prinsdal-skole/om-aks-prinsdal/",
+"facts": {
+"perWeek": 3,
+"days": [
+"mandag",
+"onsdag",
+"fredag"
+],
+"packedDays": [
+"tirsdag",
+"torsdag"
+]
+}
+},
+"974590115": {
+"url": "https://rommen.osloskolen.no/aktivitetsskolen/vare-tilbud/mat-og-maltidsglede/",
+"facts": {
+"perWeek": 4,
+"days": [
+"mandag",
+"tirsdag",
+"onsdag",
+"fredag"
+],
+"packedDays": [
+"torsdag"
+]
+}
+},
+"974590123": {
+"url": "https://tiurleiken.osloskolen.no/aktivitetsskolen/aks-pa-tiurleiken-skole/om-aks-tiurleiken/",
+"facts": {
+"warm": true,
+"warmPerWeek": 3
+}
+},
+"974590174": {
+"url": "https://sinsen.osloskolen.no/aktivitetsskolen/aks-pa-sinsen-skole/mattilbudet-pa-aks/",
+"facts": {
+"perWeek": 5
+}
+},
+"974590190": {
+"url": "https://smestad.osloskolen.no/aktivitetsskolen/aks-pa-smestad-skole/matservering/",
+"facts": {
+"perWeek": 5,
+"warm": true
+}
+},
+"974590255": {
+"url": "https://trosterud.osloskolen.no/aktivitetsskolen/aks-pa-trosterud-skole/praktisk-informasjon/",
+"facts": {
+"perWeek": 2
+}
+},
+"974590298": {
+"url": "https://tasen.osloskolen.no/aktivitetsskolen/vare-tilbud/matbasen/",
+"facts": {
+"perWeek": 5
+}
+},
+"974590301": {
+"url": "https://ulleval.osloskolen.no/aktivitetsskolen/vare-baser/matservering/",
+"facts": {
+"perWeek": 2,
+"days": [
+"onsdag",
+"fredag"
+],
+"packedDays": [
+"mandag",
+"tirsdag",
+"torsdag"
+]
+}
+},
+"974590328": {
+"url": "https://uranienborg.osloskolen.no/aktivitetsskolen/aks-pa-uranienborg-skole/rutiner/",
+"facts": {
+"warm": true
+}
+},
+"974590336": {
+"url": "https://veitvet.osloskolen.no/aktivitetsskolen/vare-tilbud/meny/",
+"facts": {
+"warm": true
+}
+},
+"974590379": {
+"url": "https://valerenga.osloskolen.no/aktivitetsskolen/aks-pa-valerenga-skole2/mat/",
+"facts": {
+"perWeek": 4,
+"days": [
+"mandag",
+"tirsdag",
+"onsdag",
+"fredag"
+],
+"packedDays": [
+"torsdag"
+]
+}
+},
+"974590387": {
+"url": "https://ostensjo.osloskolen.no/aktivitetsskolen/rutiner/mat/",
+"facts": {
+"warm": true,
+"warmPerWeek": 2,
+"packedDays": [
+"tirsdag"
+]
+}
+},
+"974590484": {
+"url": "https://toppasen.osloskolen.no/aktivitetsskolen/aks-pa-toppasen-skole/rutiner-pa-aktivitetsskolen/",
+"facts": {
+"perWeek": 1,
+"days": [
+"fredag"
+],
+"packedDays": [
+"mandag",
+"tirsdag",
+"onsdag",
+"torsdag"
+]
+}
+},
+"974590506": {
+"url": "https://jeriko.osloskolen.no/aktivitetsskolen/vare-tilbud/mat-og-helse/",
+"facts": {
+"perWeek": 3
+}
+},
+"975960277": {
+"url": "https://stenbraten.osloskolen.no/aktivitetsskolen/aks-pa-stenbraten-skole/regler-og-rutiner-ved-stenbraten-aks/",
+"facts": {
+"warm": true
+}
+},
+"979127413": {
+"url": "https://svendstuen.osloskolen.no/aktivitetsskolen/aks-pa-svendstuen-skole/apningstider/",
+"facts": {
+"warm": true
+}
+},
+"979127502": {
+"url": "https://seterbraten.osloskolen.no/aktivitetsskolen/aktuelt/velkommen-til-seterbraten-aktivitetsskole2/",
+"facts": {
+"perWeek": 3,
+"days": [
+"mandag",
+"onsdag",
+"fredag"
+],
+"warm": true,
+"warmPerWeek": 1,
+"packedDays": [
+"tirsdag",
+"torsdag"
+]
+}
+},
+"987131780": {
+"url": "https://kastellet.osloskolen.no/aktivitetsskolen/aks-pa-kastellet-skole/rutiner-og-regler/",
+"facts": {
+"perWeek": 5,
+"warm": true
+}
+}
+}
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="no" data-color-scheme="light" data-color="brand1">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Personvern – Skolekartet</title>
+    <meta name="description" content="Hvordan Skolekartet behandler opplysninger, hva som lagres på enheten din, og hvilke tjenester nettleseren din kontakter." />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="canonical" href="https://skolekartet.no/personvern.html" />
+
+    <!-- Designsystemet (Digdir): font, theme and component CSS -->
+    <link rel="stylesheet" id="dsTheme" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/theme/designsystemet.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/src/index.css" />
+
+
+    <link rel="stylesheet" href="static/css/styles.css?v=126"/>
+
+    <script src="static/js/i18n.js?v=69"></script>
+    <script src="static/js/theme.js?v=7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-web@1.23.0/dist/umd/index.js"></script>
+</head>
+<body>
+    <a class="ds-skip-link" href="#main">Hopp til hovedinnhold</a>
+
+    <!-- Header (shared, see static/js/layout.js) -->
+    <div id="site-header"></div>
+    <script src="static/js/layout.js?v=18"></script>
+
+    <main id="main" tabindex="-1" class="page">
+        <div class="site-container page__container">
+            <a class="ds-button page__back" data-variant="tertiary" data-size="sm" href="./" data-back>Tilbake</a>
+            <article class="page__content">
+            <h1 class="ds-heading" data-size="md">Personvern</h1>
+            <p class="ds-paragraph school-page__sources section-source" data-size="xs">Sist oppdatert 4. november 2026.</p>
+            <p class="ds-paragraph">Skolekartet er en informasjonstjeneste. Vi samler ikke inn opplysninger om deg, med ett unntak: tilbakemeldinger du selv velger å sende. Vi har ingen innlogging, ingen analyseverktøy og setter ingen informasjonskapsler (cookies).</p>
+            <h2 class="ds-heading" data-size="xs">Hvem har ansvaret?</h2>
+            <p class="ds-paragraph">Skolekartet er et privat, ikke-kommersielt prosjekt og har ansvaret for opplysningene som beskrives her. Spørsmål om personvern, eller ønske om å få slettet en tilbakemelding, kan sendes via <a class="ds-link" href="tilbakemelding.html">tilbakemeldingsskjemaet</a>.</p>
+
+            <h2 class="ds-heading" data-size="xs">Dette samler vi ikke inn</h2>
+            <ul class="ds-list">
+                <li>Vi har ingen innlogging eller brukerkontoer.</li>
+                <li>Vi bruker ingen analyseverktøy og teller ikke besøk.</li>
+                <li>Vi setter ingen informasjonskapsler.</li>
+                <li>Adressen du søker på, lagres ikke hos oss og legges aldri i lenker du kan dele.</li>
+                <li>Vi lagrer ikke hvilke skoler du ser på eller hva du søker etter.</li>
+            </ul>
+
+            <h2 class="ds-heading" data-size="xs">Adressesøk, posisjon og gangtid</h2>
+            <p class="ds-paragraph">Adressen du skriver, sendes direkte fra nettleseren din til Kartverkets adresse-API for å finne posisjonen. Kartverket ser da teksten og IP-adressen din. For gangtid sendes bare koordinatene for adressen og skolen til Enturs reiseplanlegger, ikke selve adressen. Adressen huskes i nettleserfanen så lenge den er åpen, slik at skolesiden kan vise gangtid og kartet kan vises likt når du går tilbake. Den forsvinner når fanen lukkes.</p>
+            <p class="ds-paragraph">Velger du «Din posisjon» i adressefeltet eller på kartet, spør nettleseren deg først om lov. Posisjonen brukes bare i nettleseren din, akkurat som en adresse du har søkt på: den sendes ikke til Kartverket eller oss og legges ikke i lenker. For gangtid sendes bare koordinatene til Entur, som for en adresse. Du kan når som helst ta tilbake tillatelsen i nettleserens innstillinger.</p>
+
+            <h2 class="ds-heading" data-size="xs">Lagring på enheten din</h2>
+            <p class="ds-paragraph">Skolekartet lagrer bare det som trengs for funksjoner du selv bruker. Slik lagring krever ikke samtykke etter ekomloven § 3-15. Du kan slette alt ved å slette nettstedsdata i nettleseren.</p>
+            <div class="table-scroll">
+                <table class="ds-table sources-table" data-size="sm" data-border>
+                    <thead><tr><th>Nøkkel og type</th><th>Formål</th><th>Lagringstid</th></tr></thead>
+                    <tbody>
+                    <tr><td><code>skolekartet.lagrede</code><br>localStorage</td><td>Skoler du selv lagrer med bokmerket («Lagre til senere»)</td><td>Til du fjerner skolene eller sletter nettstedsdata</td></tr>
+                    <tr><td><code>skolekartet-lang</code><br>localStorage</td><td>Språket du har valgt</td><td>Til du velger et annet språk eller sletter nettstedsdata</td></tr>
+                    <tr><td><code>skolekartet.tema, skolekartet.modus</code><br>localStorage</td><td>Temaet og lys eller mørk modus du har valgt</td><td>Til du velger noe annet eller sletter nettstedsdata</td></tr>
+                    <tr><td><code>skolekartet-adresse</code><br>sessionStorage</td><td>Adressen eller posisjonen du søkte på, for gangtid på skolesiden</td><td>Til fanen lukkes</td></tr>
+                    <tr><td><code>skolekartet.kart, skolekartet.tilbake</code><br>sessionStorage</td><td>Kartet og listen slik de var, når du går tilbake fra en skoleside</td><td>Til fanen lukkes</td></tr>
+                    <tr><td><code>skolekartet.feedback.…</code><br>sessionStorage</td><td>At du har svart på «Fant du det du lette etter?» på en side</td><td>Til fanen lukkes</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 class="ds-heading" data-size="xs">Tilbakemeldinger</h2>
+            <p class="ds-paragraph">Det er frivillig å sende tilbakemelding. Svar på «Fant du det du lette etter?» og meldinger fra tilbakemeldingsskjemaet sendes via Formspree (Formspree Inc., USA), som behandler dem på våre vegne. Med svaret følger adressen til siden og sidetittelen. E-postadressen din følger bare med hvis du selv skriver den inn. Formspree registrerer også IP-adressen din. Formspree lagrer data hos Amazon Web Services i USA og oppgir at overføringen bygger på EUs standardkontraktsklausuler.</p>
+            <p class="ds-paragraph">Vi bruker tilbakemeldingene bare til å rette feil, forbedre Skolekartet og svare deg hvis du har oppgitt e-post. Grunnlaget er vår berettigede interesse i å drive en tjeneste som fungerer (personvernforordningen artikkel 6 nr. 1 bokstav f). Vi publiserer ikke tilbakemeldinger og deler dem ikke med andre. Vi beholder dem så lenge de er nyttige for å forbedre tjenesten, og sletter dem når de ikke lenger trengs. Du kan når som helst be oss slette en tilbakemelding du har sendt.</p>
+            <p class="ds-paragraph">Ikke skriv navn, telefonnummer eller andre personopplysninger i tekstfeltet.</p>
+
+            <h2 class="ds-heading" data-size="xs">Tjenester nettleseren din kontakter</h2>
+            <p class="ds-paragraph">Når du bruker Skolekartet, henter nettleseren innhold fra disse tjenestene. De ser IP-adressen din, slik det er på de fleste nettsider, men får ikke vite hva du søker på, med unntak av Kartverket ved adressesøk.</p>
+            <ul class="ds-list">
+                <li>GitHub Pages (GitHub Inc., USA): selve nettstedet</li>
+                <li>OpenFreeMap: bakgrunnskartet</li>
+                <li>jsDelivr og cdnjs: Designsystemet og kartbibliotekene</li>
+                <li>Kartverket: adressesøk</li>
+                <li>Entur: gangrute, bare koordinater</li>
+                <li>Utdanningsdirektoratet: opplysninger fra skoleregisteret når du åpner en skoleside</li>
+                <li>Wikimedia Commons: bilder av skolene</li>
+            </ul>
+
+            <h2 class="ds-heading" data-size="xs">Opplysninger om skoler</h2>
+            <p class="ds-paragraph">Vi viser offentlige opplysninger om skolene. Fra Enhetsregisteret viser vi bare felles e-postadresser og fasttelefon, ikke adresser eller mobilnumre som ser ut til å tilhøre en person. Ved bilder står fotografens navn, slik lisensen krever. Resultatene fra nasjonale prøver og Elevundersøkelsen er tall for hele grupper. Udir skjuler tall for små grupper, og vi viser aldri svar fra enkeltelever.</p>
+
+            <h2 class="ds-heading" data-size="xs">Dine rettigheter</h2>
+            <p class="ds-paragraph">Du kan be om innsyn i, retting av eller sletting av opplysninger vi har om deg, for eksempel en tilbakemelding du har sendt. Du kan også klage til <a class="ds-link" href="https://www.datatilsynet.no/" target="_blank" rel="noopener">Datatilsynet<svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M20.5319 3.47126C20.603 3.5428 20.6568 3.62511 20.6931 3.71291C20.7298 3.80134 20.75 3.89831 20.75 4V11.5C20.75 11.9142 20.4142 12.25 20 12.25C19.5858 12.25 19.25 11.9142 19.25 11.5V5.81066L10.5303 14.5303C10.2374 14.8232 9.76256 14.8232 9.46967 14.5303C9.17678 14.2374 9.17678 13.7626 9.46967 13.4697L18.1893 4.75H12.5C12.0858 4.75 11.75 4.41421 11.75 4C11.75 3.58579 12.0858 3.25 12.5 3.25H20C20.2063 3.25 20.3931 3.33329 20.5287 3.46808L20.5303 3.46967L20.5319 3.47126ZM4.75 9C4.75 8.86193 4.86193 8.75 5 8.75H12C12.4142 8.75 12.75 8.41421 12.75 8C12.75 7.58579 12.4142 7.25 12 7.25H5C4.0335 7.25 3.25 8.0335 3.25 9V19C3.25 19.9665 4.0335 20.75 5 20.75H15C15.9665 20.75 16.75 19.9665 16.75 19V12C16.75 11.5858 16.4142 11.25 16 11.25C15.5858 11.25 15.25 11.5858 15.25 12V19C15.25 19.1381 15.1381 19.25 15 19.25H5C4.86193 19.25 4.75 19.1381 4.75 19V9Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></a>.</p>
+            </article>
+        </div>
+    </main>
+
+    <!-- Footer (shared, see static/js/layout.js) -->
+    <div id="site-footer"></div>
+</body>
+</html>
