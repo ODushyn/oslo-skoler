@@ -267,7 +267,6 @@ const I18N = (() => {
         'Én gang i uken': 'Once a week',
         'Lagre til senere': 'Save for later',
         "Snitt nasjonale prøver": "National test average",
-        "Snitt nasjonale prøver {year}": "National test average {year}",
         "Skolekartet er et privat, ikke-kommersielt prosjekt og har ansvaret for opplysningene som beskrives her. Spørsmål om personvern, eller ønske om å få slettet en tilbakemelding, kan sendes til": "Skolekartet is a private, non-commercial project and is responsible for the information described here. Questions about privacy, or a request to have feedback deleted, can be sent to",
         "eller via": "or through",
         "Lukk filter": "Close filters",

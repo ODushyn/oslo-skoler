@@ -196,7 +196,6 @@ window.I18N_UK = {
     "Én gang i uken": "Раз на тиждень",
     "Lagre til senere": "Зберегти на потім",
     "Snitt nasjonale prøver": "Середній бал національних тестів",
-    "Snitt nasjonale prøver {year}": "Середній бал національних тестів {year}",
     "Skolekartet er et privat, ikke-kommersielt prosjekt og har ansvaret for opplysningene som beskrives her. Spørsmål om personvern, eller ønske om å få slettet en tilbakemelding, kan sendes til": "Skolekartet — приватний некомерційний проєкт, який відповідає за інформацію, описану тут. Питання про захист даних або прохання видалити відгук можна надіслати на",
     "eller via": "або через",
     "Lukk filter": "Закрити фільтри",

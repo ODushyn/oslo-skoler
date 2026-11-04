@@ -3357,3 +3357,15 @@ body.has-page-feedback {
 .ds-fieldset.score-bar > * + * {
     margin: 0;
 }
+
+/* "Snitt nasjonale prøver (i)": the icon opens the page that explains the colours */
+.score-bar > legend {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-size-1);
+}
+
+.score-bar__info.ds-button {
+    margin-block: calc(-1 * var(--ds-size-2));
+    color: inherit;
+}

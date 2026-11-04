@@ -331,14 +331,6 @@ function zoomToMarker(targetMarker, map, markerCluster) {
 // when the daily refresh (update_data.py) loads new numbers
 function setDataTooltips(metadata) {
     const year = value => String(value).replace('-', '–');
-    // "25–26" for the short headings
-    const shortYear = value => String(value).replace(/^\d{2}(\d{2})-(\d{2})$/, '$1–$2');
-    // "Snitt nasjonale prøver 2025–26" over the result choices (the row under the search and the filter panel)
-    if (metadata.currentYear) {
-        document.querySelectorAll('[data-score-title]').forEach(title => {
-            title.textContent = t('Snitt nasjonale prøver {year}', { year: shortYear(metadata.currentYear) });
-        });
-    }
     const snitt = document.getElementById('snittHelp');
     if (snitt && metadata.currentYear) {
         snitt.dataset.tooltip = t('Snittet er gjennomsnittet av skolens skalapoeng i engelsk, lesing og regning på nasjonale prøver {year}. Fag uten publisert resultat telles ikke med. Skalaen er satt slik at landsgjennomsnittet var 50 i 2022.',
