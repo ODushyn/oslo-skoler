@@ -1806,12 +1806,27 @@ button.school-stat[aria-selected="true"] .school-stat__more {
         grid-template-columns: minmax(0, 1fr);
     }
 
-    /* Map first, then the list */
+    /* List first; "Vis kart" opens the map above it */
+    .map-toggle.ds-button {
+        display: inline-flex;
+        order: -2;
+        justify-self: start;
+    }
+
     .results-map {
         order: -1;
         position: relative;
         top: 0;
         height: 60vh;
+    }
+
+    /* Closed map: kept at its real size but out of sight, because the list shows the schools inside the
+       map's view (a map with no size would leave the list empty) */
+    .results-grid:not([data-map-open]) .results-map {
+        position: absolute;
+        left: -200vw;
+        width: calc(100vw - 2 * var(--ds-size-4));
+        visibility: hidden;
     }
 
     .site-footer__grid {
@@ -1842,6 +1857,29 @@ button.school-stat[aria-selected="true"] .school-stat__more {
         --dsc-button-padding: var(--ds-size-2);
     }
 
+    .site-header__inner {
+        column-gap: var(--ds-size-2);
+    }
+}
+
+/* Narrow phones (under 400 px): a smaller logo and tighter icon buttons, so the header never gets wider
+   than the screen */
+@media (max-width: 400px) {
+    .site-logo {
+        gap: var(--ds-size-1);
+        font-size: var(--ds-font-size-4);
+    }
+
+    .site-logo__mark svg,
+    .site-logo__mark {
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+
+    .site-nav .ds-button {
+        --dsc-button-padding: var(--ds-size-1);
+    }
+
 
     .search-panel {
         padding-block: var(--ds-size-6) var(--ds-size-4);
@@ -1857,8 +1895,29 @@ button.school-stat[aria-selected="true"] .school-stat__more {
         min-width: 0;
     }
 
-    /* Phones: the buttons under the field show only their icons (the words stay for screen readers) */
-    .search-bar .search-bar__label {
+    /* Phones: "(•) Adresse ( ) Skolenavn" always on one line; "Søk på" is read by screen readers only,
+       the heading above already says what the search is for */
+    .search-mode {
+        flex-wrap: nowrap;
+        column-gap: var(--ds-size-4);
+    }
+
+    .search-mode > legend {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+
+    .search-mode .ds-label {
+        white-space: nowrap;
+    }
+
+    /* Phones: Filter and Nullstill show only their icons (the words stay for screen readers);
+       "Nasjonale prøver" keeps its words */
+    .search-bar :is(.filter-toggle, .filter-reset) .search-bar__label {
         position: absolute;
         width: 1px;
         height: 1px;
@@ -3385,4 +3444,11 @@ body.has-page-feedback {
 .score-bar__info.ds-button {
     margin-block: calc(-1 * var(--ds-size-2));
     color: inherit;
+}
+
+/* "Vis kart" is only for phones (see the 640 px rules) */
+@media (min-width: 641px) {
+    .map-toggle.ds-button {
+        display: none;
+    }
 }

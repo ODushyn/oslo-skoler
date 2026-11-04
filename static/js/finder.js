@@ -71,6 +71,7 @@ const Finder = (() => {
         bindSaved();
         bindAddressSearch();
         bindLocate();
+        bindMapToggle();
         bindSearchMode();
 
         el('showMore').addEventListener('click', () => {
@@ -779,11 +780,27 @@ const Finder = (() => {
         keepList = fromList;
         zoomToMarker(entry.marker, map, cluster);
 
-        // On small screens the map sits above the list: bring it into view
+        // On small screens the map is closed until it is needed, and then sits above the list
+        if (phoneLayout.matches) setMapOpen(true);
         const mapBox = document.querySelector('.results-map').getBoundingClientRect();
         if (mapBox.top < 0 || mapBox.bottom > window.innerHeight) {
             document.querySelector('.results-map').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+    }
+
+    // ── Phones: list first, map on demand ─────────────────────────────────
+    const phoneLayout = window.matchMedia('(max-width: 640px)');
+
+    function bindMapToggle() {
+        el('mapToggle').addEventListener('click', () => setMapOpen(!el('resultsGrid').hasAttribute('data-map-open')));
+    }
+
+    function setMapOpen(open) {
+        el('resultsGrid').toggleAttribute('data-map-open', open);
+        el('mapToggle').setAttribute('aria-expanded', String(open));
+        el('mapToggleLabel').textContent = t(open ? 'Skjul kart' : 'Vis kart');
+        // The map was drawn while hidden; let Leaflet (and the base map) measure it again
+        if (open) requestAnimationFrame(() => map.invalidateSize());
     }
 
     // ── Search mode: one search row, the select decides what we search by ─
