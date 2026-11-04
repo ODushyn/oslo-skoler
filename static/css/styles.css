@@ -3358,7 +3358,7 @@ body.has-page-feedback {
     margin: 0;
 }
 
-/* "Snitt nasjonale prøver (i)": the icon opens the page that explains the colours */
+/* "Snitt nasjonale prøver →": the arrow opens the page that explains the colours, like "Les mer om skolen →" */
 .score-bar > legend {
     display: inline-flex;
     align-items: center;
