@@ -2,7 +2,7 @@
 // main.js creates the markers and calls Finder.init(map, markerCluster, entries).
 
 const Finder = (() => {
-    const PAGE_SIZE = 20;
+    const PAGE_SIZE = 10;
     const ADDRESS_API = 'https://ws.geonorge.no/adresser/v1/sok';
     const ALL_TYPES = ['barneskole', 'ungdomsskole'];
     const ALL_OWNERS = ['offentlig', 'privat'];
