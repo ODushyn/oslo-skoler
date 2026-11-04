@@ -147,7 +147,7 @@
         if (slot && current !== 'tilbakemelding.html') {
             slot.insertAdjacentHTML('beforebegin', '<div id="page-feedback"></div>');
             const script = document.createElement('script');
-            script.src = 'static/js/page-feedback.js?v=3';
+            script.src = 'static/js/page-feedback.js?v=4';
             document.body.appendChild(script);
         }
         if (slot) slot.outerHTML = footer;
