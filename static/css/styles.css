@@ -434,8 +434,10 @@ main:focus {
     margin: 0;
 }
 
+/* Centre "Søk på (•) Adresse ( ) Skolenavn" on the 48 px input. A fieldset centres its content in an
+   inner box that does not grow with min-height, so the space goes in as padding instead. */
 .search-mode {
-    min-height: var(--ds-size-12);
+    padding-block: calc((var(--ds-size-12) - 1lh) / 2);
 }
 
 /* The address field takes most of the row; its messages stack under it */
