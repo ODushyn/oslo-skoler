@@ -103,7 +103,6 @@ const I18N = (() => {
         'Alle kommuner': 'All municipalities',
         'Profil': 'Profile',
         'Alle profiler': 'All profiles',
-        'Resultat nasjonale prøver': 'National test results',
         'Snittet er gjennomsnittet av skolens skalapoeng i engelsk, lesing og regning på nasjonale prøver 2025–26. Fag uten publisert resultat telles ikke med. Skalaen er satt slik at landsgjennomsnittet var 50 i 2022.':
             'The average of the school’s scale points in English, reading and numeracy on the 2025–26 national tests. Subjects without a published result are not counted. The scale is set so that the national average was 50 in 2022.',
         'Under 45': 'Under 45',
@@ -267,6 +266,8 @@ const I18N = (() => {
         'AKS-sidene på skolens nettside, lest {date}': 'the after-school pages on the school’s website, read {date}',
         'Én gang i uken': 'Once a week',
         'Lagre til senere': 'Save for later',
+        "Snitt nasjonale prøver": "National test average",
+        "Snitt nasjonale prøver {year}": "National test average {year}",
         "Skolekartet er et privat, ikke-kommersielt prosjekt og har ansvaret for opplysningene som beskrives her. Spørsmål om personvern, eller ønske om å få slettet en tilbakemelding, kan sendes til": "Skolekartet is a private, non-commercial project and is responsible for the information described here. Questions about privacy, or a request to have feedback deleted, can be sent to",
         "eller via": "or through",
         "Lukk filter": "Close filters",
