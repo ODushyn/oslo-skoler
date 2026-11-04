@@ -195,6 +195,8 @@ window.I18N_UK = {
     "AKS-sidene på skolens nettside, lest {date}": "сторінки AKS на вебсайті школи, прочитано {date}",
     "Én gang i uken": "Раз на тиждень",
     "Lagre til senere": "Зберегти на потім",
+    "Nasjonale prøver {year}": "Національні тести {year}",
+    "Skjul kartet": "Сховати карту",
     "Skolekartet er et privat, ikke-kommersielt prosjekt og har ansvaret for opplysningene som beskrives her. Spørsmål om personvern, eller ønske om å få slettet en tilbakemelding, kan sendes via": "Skolekartet — приватний некомерційний проєкт, який відповідає за інформацію, описану тут. Питання про захист даних або прохання видалити відгук можна надіслати через",
     "Kom i kontakt med oss": "Зв'язатися з нами",
     "Kildekoden på GitHub": "Вихідний код на GitHub",

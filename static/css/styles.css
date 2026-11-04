@@ -3264,6 +3264,54 @@ body.has-page-feedback {
     gap: var(--ds-size-1);
 }
 
+/* Phones: a tapped card opens into the details under it (finder.js cardDetails), in the same frame as
+   the picked card, using its whole width */
+.school-list__item.is-open > .school-card.ds-card {
+    border-bottom-color: transparent;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.school-card__details {
+    display: grid;
+    gap: var(--ds-size-1);
+    margin-top: -1px;
+    padding: 0 var(--ds-size-3) var(--ds-size-3);
+    border: 1px solid var(--ds-color-brand1-border-default);
+    border-top: 0;
+    border-radius: 0 0 var(--ds-border-radius-lg) var(--ds-border-radius-lg);
+    background: var(--ds-color-brand1-surface-tinted);
+}
+
+.school-card__details[hidden] {
+    display: none;
+}
+
+.school-card__details .ds-paragraph {
+    margin: 0;
+}
+
+.school-card__year,
+.school-card__notes {
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.school-card__details .school-card__photo {
+    margin: var(--ds-size-2) 0 0;
+}
+
+/* Side by side when they fit, otherwise one full-width button per row */
+.school-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-2);
+    margin-top: var(--ds-size-2);
+}
+
+.school-card__actions > .ds-button {
+    flex: 1 1 auto;
+}
+
 /* School cards in the list: the bookmark button in the top right corner, over the card */
 .school-list__item {
     position: relative;
@@ -3357,8 +3405,10 @@ body.has-page-feedback {
     margin-left: calc(var(--ds-size-9) * -0.4);
 }
 
-/* In the popup: "5. trinn" / "Ungdomstrinnet" with a small badge before each level's numbers */
-.popup-school .popup-level {
+/* In the popup and an open phone card: "5. trinn" / "Ungdomstrinnet" with a small badge before each
+   level's numbers */
+.popup-school .popup-level,
+.school-card__details .popup-level {
     display: flex;
     align-items: center;
     gap: var(--ds-size-2);

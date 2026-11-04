@@ -266,6 +266,8 @@ const I18N = (() => {
         'AKS-sidene på skolens nettside, lest {date}': 'the after-school pages on the school’s website, read {date}',
         'Én gang i uken': 'Once a week',
         'Lagre til senere': 'Save for later',
+        'Nasjonale prøver {year}': 'National tests {year}',
+        'Skjul kartet': 'Hide the map',
         "Skolekartet er et privat, ikke-kommersielt prosjekt og har ansvaret for opplysningene som beskrives her. Spørsmål om personvern, eller ønske om å få slettet en tilbakemelding, kan sendes via": "Skolekartet is a private, non-commercial project and is responsible for the information described here. Questions about privacy, or a request to have feedback deleted, can be sent through",
         "Kom i kontakt med oss": "Get in touch",
         "Kildekoden på GitHub": "Source code on GitHub",

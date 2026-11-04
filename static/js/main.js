@@ -167,7 +167,7 @@ function createPopupContent(levels) {
             ? `<strong>Snitt</strong> ${formatDecimal(level.average)} <small>${t('({count} fag)', { count: level.validScoresCount })}</small>`
             : '<strong>Snitt</strong> –';
         const trivsel = level.trivsel
-            ? `<strong>Trivsel</strong> ${t('{value} av 5', { value: formatDecimal(level.trivsel.score) })} <small>${t('({trinn}. trinn)', { trinn: level.trivsel.trinn })}</small>`
+            ? `<strong>Trivsel</strong> ${formatDecimal(level.trivsel.score)} <small>${t('({trinn}. trinn)', { trinn: level.trivsel.trinn })}</small>`
             : '<strong>Trivsel</strong> –';
         const mobbing = level.mobbing
             ? `<strong>Mobbing</strong> ${formatPercent(level.mobbing.share)} <small>${t('(landet {value})', { value: formatPercent(level.mobbing.national) })}</small>`
