@@ -75,7 +75,6 @@
                     <a class="ds-button saved-link" data-variant="tertiary" data-size="sm" href="${typeof I18N !== 'undefined' ? I18N.href('./?lagrede=1') : './?lagrede=1'}"
                        aria-label="Lagrede skoler">${ICONS.bookmark}<span class="site-nav__label">Lagrede skoler</span><span class="saved-link__count" aria-hidden="true" hidden></span></a>
                     ${typeof I18N !== 'undefined' ? I18N.switchLink() : ''}
-                    ${typeof THEME !== 'undefined' ? THEME.schemeButtonHtml() : ''}
                     ${menuHtml}
                 </nav>
             </div>

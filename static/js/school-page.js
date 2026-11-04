@@ -1062,7 +1062,7 @@
     function showMap(s) {
         const map = L.map('schoolMap', { center: [s.lat, s.lng], zoom: 15, scrollWheelZoom: false, zoomControl: true });
         schoolMap = map;
-        const baseMap = L.maplibreGL({
+        L.maplibreGL({
             style: typeof THEME !== 'undefined' ? THEME.mapStyle() : 'https://tiles.openfreemap.org/styles/liberty',
             attributionControl: {
                 customAttribution: '<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> ' +
@@ -1070,7 +1070,6 @@
                     'Data from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
             }
         }).addTo(map);
-        document.addEventListener('colorscheme', () => baseMap.getMaplibreMap().setStyle(THEME.mapStyle()));
         const size = s.schoolType === 'ungdomsskole' ? 40 : 30;
         L.marker([s.lat, s.lng], {
             icon: L.divIcon({

@@ -19,7 +19,7 @@ function initMap() {
 
     // Base map: OpenFreeMap vector tiles (free, no API key), drawn by MapLibre GL
     // inside Leaflet. Attribution is required by OpenFreeMap / OpenMapTiles / OpenStreetMap.
-    const baseMap = L.maplibreGL({
+    L.maplibreGL({
         style: typeof THEME !== 'undefined' ? THEME.mapStyle() : 'https://tiles.openfreemap.org/styles/liberty',
         attributionControl: {
             customAttribution: '<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> ' +
@@ -27,8 +27,6 @@ function initMap() {
                 'Data from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
         }
     }).addTo(map_a50579ea0c01426b15ce2ac53c4f579f);
-    // Light or dark base map, following the header's light/dark button
-    document.addEventListener('colorscheme', () => baseMap.getMaplibreMap().setStyle(THEME.mapStyle()));
 
     L.control.zoom({ position: 'topright' }).addTo(map_a50579ea0c01426b15ce2ac53c4f579f);
 
