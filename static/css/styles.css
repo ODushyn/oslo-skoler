@@ -409,7 +409,6 @@ main:focus {
     flex-wrap: wrap; /* buttons move to the next line when the row is too narrow */
     align-items: flex-start;
     gap: var(--ds-size-2) var(--ds-size-4);
-    max-width: 72rem;
 }
 
 /* "Søk på  (•) Adresse  ( ) Skolenavn" on one line */
@@ -444,7 +443,7 @@ main:focus {
 .search-bar__field {
     display: flex;
     flex-direction: column;
-    flex: 2 1 32rem;
+    flex: 2 1 24rem;
     min-width: 0;
 }
 
@@ -2252,10 +2251,16 @@ button.school-stat[aria-selected="true"] .school-stat__more {
     margin-top: var(--ds-size-2);
 }
 
-.filter-dd__panel .filter-option .ds-label {
+/* Icon or colour dot centred on the text of each choice (filter panel and the "Nasjonale prøver" row) */
+.filter-option .ds-label {
     display: inline-flex;
     align-items: center;
     gap: var(--ds-size-2);
+}
+
+.filter-option .ds-label .chip-icon,
+.filter-option .ds-label .color-dot {
+    margin-inline-end: 0;
 }
 
 @media (max-width: 640px) {
@@ -3288,4 +3293,49 @@ body.has-page-feedback {
 
 .filter-checks > legend {
     margin-bottom: var(--ds-size-2);
+}
+
+/* "Nasjonale prøver": a button before "Filter" that opens a row with the result colours under the search */
+.score-toggle__dots {
+    display: inline-flex;
+}
+
+.score-toggle__dots .color-dot {
+    width: 0.6em;
+    height: 0.6em;
+    margin-inline-end: 2px;
+}
+
+.score-toggle__dots .color-dot:last-child {
+    margin-inline-end: var(--ds-size-1);
+}
+
+.score-toggle[aria-expanded="true"],
+.score-toggle[data-active] {
+    background: var(--ds-color-brand1-surface-tinted);
+}
+
+.score-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ds-size-2) var(--ds-size-5);
+    margin: var(--ds-size-4) 0 0;
+    padding: 0;
+    border: 0;
+}
+
+.score-bar[hidden] {
+    display: none;
+}
+
+.score-bar > legend {
+    float: left;
+    margin: 0;
+    padding: 0;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.ds-fieldset.score-bar > * + * {
+    margin: 0;
 }

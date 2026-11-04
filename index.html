@@ -38,7 +38,7 @@
 
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="static/css/styles.css?v=137"/>
+    <link rel="stylesheet" href="static/css/styles.css?v=140"/>
     <script src="static/js/i18n.js?v=71"></script>
     <script src="static/js/theme.js?v=7"></script>
 
@@ -110,12 +110,45 @@
                             </ds-suggestion>
                         </ds-field>
                     </div>
+                    <!-- The site's main idea gets its own button: results from the national tests, as a row under the search -->
+                    <button type="button" class="ds-button score-toggle" data-variant="secondary"
+                            id="scoreToggle" aria-expanded="false" aria-controls="scoreBar">
+                        <span class="score-toggle__dots" aria-hidden="true"><span class="color-dot score-very-low"></span><span class="color-dot score-low"></span><span class="color-dot score-high"></span><span class="color-dot score-very-high"></span></span>Nasjonale prøver
+                    </button>
                     <button type="button" class="ds-button filter-toggle" data-variant="secondary"
                             id="filterToggle" aria-expanded="false" aria-controls="filterPanel">
                         <svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M3.25 7C3.25 6.58579 3.58579 6.25 4 6.25H20C20.4142 6.25 20.75 6.58579 20.75 7C20.75 7.41421 20.4142 7.75 20 7.75L4 7.75C3.58579 7.75 3.25 7.41421 3.25 7ZM6.25 12C6.25 11.5858 6.58579 11.25 7 11.25H17C17.4142 11.25 17.75 11.5858 17.75 12C17.75 12.4142 17.4142 12.75 17 12.75H7C6.58579 12.75 6.25 12.4142 6.25 12ZM10 16.25C9.58579 16.25 9.25 16.5858 9.25 17C9.25 17.4142 9.58579 17.75 10 17.75H14C14.4142 17.75 14.75 17.4142 14.75 17C14.75 16.5858 14.4142 16.25 14 16.25H10Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg><span id="filterToggleLabel">Filter</span><span class="ds-badge" data-size="sm" id="filterCount" hidden></span>
                     </button>
                     <button type="button" class="ds-button filter-reset" data-variant="tertiary" id="resetFilters" data-aksel="arrowCirclepath" disabled>Nullstill</button>
                 </div>
+
+                <!-- "Nasjonale prøver": the same choices as in the filter panel (same name="score", kept in step by
+                     finder.js), so the main filter is one click away -->
+                <fieldset class="ds-fieldset score-bar" id="scoreBar" hidden>
+                    <legend class="ds-label" data-size="sm">Resultat nasjonale prøver</legend>
+                    <div class="filter-checks__options score-bar__options">
+                        <ds-field class="ds-field filter-option">
+                            <input class="ds-input" type="checkbox" id="q-score-very-low" name="score" value="very-low" checked />
+                            <label class="ds-label" data-weight="regular" for="q-score-very-low"><span class="color-dot score-very-low" aria-hidden="true"></span>Under 45</label>
+                        </ds-field>
+                        <ds-field class="ds-field filter-option">
+                            <input class="ds-input" type="checkbox" id="q-score-low" name="score" value="low" checked />
+                            <label class="ds-label" data-weight="regular" for="q-score-low"><span class="color-dot score-low" aria-hidden="true"></span>45–49,3</label>
+                        </ds-field>
+                        <ds-field class="ds-field filter-option">
+                            <input class="ds-input" type="checkbox" id="q-score-high" name="score" value="high" checked />
+                            <label class="ds-label" data-weight="regular" for="q-score-high"><span class="color-dot score-high" aria-hidden="true"></span>49,3–55</label>
+                        </ds-field>
+                        <ds-field class="ds-field filter-option">
+                            <input class="ds-input" type="checkbox" id="q-score-very-high" name="score" value="very-high" checked />
+                            <label class="ds-label" data-weight="regular" for="q-score-very-high"><span class="color-dot score-very-high" aria-hidden="true"></span>55 og over</label>
+                        </ds-field>
+                        <ds-field class="ds-field filter-option">
+                            <input class="ds-input" type="checkbox" id="q-score-none" name="score" value="none" checked />
+                            <label class="ds-label" data-weight="regular" for="q-score-none"><span class="color-dot score-none" aria-hidden="true"></span>Ingen data</label>
+                        </ds-field>
+                        </div>
+                </fieldset>
 
                 <!-- Filters slide in from the right (Designsystemet Dialog, data-placement="right"), as on many
                      search pages; on phones the panel takes the whole width. The results update as you choose. -->
@@ -322,7 +355,7 @@
     <script src="static/js/score-colors.js?v=2"></script>
     <script src="static/js/shared.js?v=19"></script>
     <script src="static/js/map-init.js?v=11"></script>
-    <script src="static/js/finder.js?v=66"></script>
+    <script src="static/js/finder.js?v=67"></script>
     <script src="static/js/main.js?v=33"></script>
 </body>
 </html>
