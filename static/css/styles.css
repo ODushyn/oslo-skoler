@@ -3054,6 +3054,11 @@ body.has-page-feedback {
     margin: var(--ds-size-5) 0 var(--ds-size-2);
 }
 
+/* Text right after a folded block (Details) gets the same space everywhere, as the register link has */
+.page__content .ds-details + .ds-paragraph {
+    margin-top: var(--ds-size-5);
+}
+
 .register-link .ds-link {
     display: inline-flex;
     align-items: center;
