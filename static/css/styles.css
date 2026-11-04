@@ -1,416 +1,3164 @@
-/* Main map container styles */
-html, body {
-    width: 100%;
-    height: 100%;
+/* Inter, served from this site (static/fonts, SIL Open Font License, see OFL.txt) instead of
+   Google Fonts, so visitors' IP addresses are not sent to Google */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+    src: url('../fonts/inter-cyrillic-400-normal.woff2') format('woff2');
+    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+    src: url('../fonts/inter-latin-ext-400-normal.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+    src: url('../fonts/inter-latin-400-normal.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 500;
+    src: url('../fonts/inter-cyrillic-500-normal.woff2') format('woff2');
+    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 500;
+    src: url('../fonts/inter-latin-ext-500-normal.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 500;
+    src: url('../fonts/inter-latin-500-normal.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 600;
+    src: url('../fonts/inter-cyrillic-600-normal.woff2') format('woff2');
+    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 600;
+    src: url('../fonts/inter-latin-ext-600-normal.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 600;
+    src: url('../fonts/inter-latin-600-normal.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 700;
+    src: url('../fonts/inter-cyrillic-700-normal.woff2') format('woff2');
+    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 700;
+    src: url('../fonts/inter-latin-ext-700-normal.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 700;
+    src: url('../fonts/inter-latin-700-normal.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Designsystemet (Digdir) provides the component styles via the `ds` cascade layer.
+   This file only holds map layout and small adjustments for using the components on top of a map. */
+
+/* ── Page ────────────────────────────────────────────────────────────── */
+html {
+    scroll-padding-top: var(--ds-size-4);
+}
+
+body {
     margin: 0;
-    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--ds-font-family), sans-serif;
+    color: var(--ds-color-neutral-text-default);
+    background: var(--ds-color-neutral-background-default);
 }
 
-#map {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
+main {
+    flex: 1;
 }
 
+main:focus {
+    outline: none;
+}
+
+.site-container {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 90rem;
+    margin-inline: auto;
+    padding-inline: var(--ds-size-6);
+}
+
+/* Map fills its box in the results area */
 #map_a50579ea0c01426b15ce2ac53c4f579f {
     position: relative;
-    width: 100.0%;
-    height: 100.0%;
-    left: 0.0%;
-    top: 0.0%;
+    width: 100%;
+    height: 100%;
 }
 
 .leaflet-container {
     font-size: 1rem;
+    font-family: var(--ds-font-family), sans-serif;
 }
 
-/* School marker icon styles */
+/* ── Score colours (Designsystemet tokens) ──────────────────────────────
+   One class per score category. --score-bg is the fill, --score-fg the text/icon colour
+   on top of it, both taken from the theme so they follow Designsystemet. */
+.score-very-low {
+    --score-bg: var(--ds-color-danger-base-default);
+    --score-fg: var(--ds-color-danger-base-contrast-default);
+}
+
+.score-low {
+    --score-bg: var(--ds-color-warning-base-default);
+    --score-fg: var(--ds-color-warning-base-contrast-default);
+}
+
+.score-high {
+    --score-bg: var(--ds-color-success-border-subtle);
+    --score-fg: var(--ds-color-success-text-default);
+}
+
+.score-very-high {
+    --score-bg: var(--ds-color-success-base-default);
+    --score-fg: var(--ds-color-success-base-contrast-default);
+}
+
+.score-none {
+    --score-bg: var(--ds-color-neutral-border-default);
+    --score-fg: var(--ds-color-neutral-base-contrast-default);
+}
+
+/* School marker: round badge with the Aksel "HatSchool" icon */
 .school-marker-icon {
     background: transparent !important;
     border: none !important;
+}
+
+.school-marker {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.school-marker-icon svg {
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: var(--ds-border-radius-full);
+    border: 2px solid var(--ds-color-neutral-background-default);
+    background: var(--score-bg);
+    color: var(--score-fg);
+    box-shadow: var(--ds-shadow-sm);
     transition: transform 0.2s ease;
 }
 
-.school-marker-icon:hover svg {
-    transform: scale(1.2);
+.school-marker svg {
+    width: 64%;
+    height: 64%;
 }
 
-/* Barnaskole specific styles (primary school) */
-.barnaskole-icon svg {
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+.school-marker-icon:hover .school-marker {
+    transform: scale(1.15);
 }
 
-/* Ungdomskole specific styles (secondary school) - for future use */
-.ungdomskole-icon svg {
-    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+/* Marker clusters: score colour of the average, with a soft ring in the same colour */
+.school-cluster-icon {
+    background: transparent;
 }
 
-/* Info button styles */
-.info-button {
-    background-color: #4285f4;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 13px;
-    cursor: pointer;
-    z-index: 9999;
+.school-cluster {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.info-button:hover {
-    background-color: #357ae8;
-    transform: scale(1.1);
-}
-
-/* Search container styles */
-/* Toolbar: sits next to zoom controls, vertically centres children */
-.map-toolbar {
-    position: fixed;
-    top: 16px;
-    left: 50px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    z-index: 9999;
-}
-
-.search-container {
-    position: relative;
-    width: 320px;
-}
-
-/* Legend box */
-.legend-box {
-    flex-shrink: 0;
-    position: relative;
-}
-
-#legendExpanded {
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 140%;
-    width: 250px;
-    max-width: calc(100vw - 32px);
-    max-height: calc(100vh - 110px);
-    overflow-y: auto;
-    background-color: white;
-    border: 2px solid #aaa;
-    border-radius: 5px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-    font-size: 14px;
-    z-index: 10001;
-}
-
-
-.search-input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-#schoolSearch {
     width: 100%;
-    padding: 12px 40px 12px 15px;
-    font-size: 16px;
-    border: 2px solid #357ae8;
-    border-radius: 25px;
-    outline: none;
-    background-color: white;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
+    height: 100%;
+    border-radius: var(--ds-border-radius-full);
+    background: var(--score-bg);
+    color: var(--score-fg);
+    font-family: var(--ds-font-family), sans-serif;
+    font-size: var(--ds-font-size-2, 0.875rem);
+    font-weight: var(--ds-font-weight-semibold);
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--score-bg) 35%, transparent);
 }
 
-#schoolSearch:focus {
-    border-color: #4285f4;
-    box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
-}
-
-.clear-search {
-    position: absolute;
-    right: 10px;
-    background: none;
+/* ── Map controls ───────────────────────────────────────────────────────
+   Leaflet zoom control (top-right corner) styled with Designsystemet tokens. */
+.leaflet-control-zoom.leaflet-bar,
+.leaflet-control-locate.leaflet-bar {
     border: none;
-    font-size: 24px;
-    color: #999;
-    cursor: pointer;
-    padding: 0;
+    border-radius: var(--ds-border-radius-default);
+    box-shadow: var(--ds-shadow-md);
+    overflow: hidden;
+}
+
+.leaflet-control-zoom.leaflet-bar a,
+.leaflet-control-locate.leaflet-bar a {
     width: 30px;
     height: 30px;
-    display: none;
+    line-height: 30px;
+    color: var(--ds-color-neutral-text-default);
+    background: var(--ds-color-neutral-surface-default);
+    border-bottom-color: var(--ds-color-neutral-border-subtle);
+    font-family: var(--ds-font-family), sans-serif;
+}
+
+.leaflet-control-zoom.leaflet-bar a:hover,
+.leaflet-control-locate.leaflet-bar a:hover {
+    background: var(--ds-color-neutral-surface-hover);
+}
+
+.leaflet-control-zoom.leaflet-bar a:focus-visible,
+.leaflet-control-locate.leaflet-bar a:focus-visible {
+    outline: var(--dsc-focus-outline);
+    box-shadow: var(--dsc-focus-boxShadow-inset);
+}
+
+/* "Bruk min posisjon" on the map: the target icon centred in a zoom-sized button */
+.leaflet-control-locate.leaflet-bar a {
+    display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    transition: all 0.2s ease;
 }
 
-.clear-search:hover {
-    background-color: #f0f0f0;
-    color: #333;
+.leaflet-control-locate .ds-icon {
+    width: 18px;
+    height: 18px;
 }
 
-.clear-search.visible {
+/* Popups and the attribution line take the theme's colours too, so they follow light and dark mode */
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+    color: var(--ds-color-neutral-text-default);
+    background: var(--ds-color-neutral-surface-default);
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.leaflet-container .leaflet-control-attribution {
+    color: var(--ds-color-neutral-text-subtle);
+    background: color-mix(in srgb, var(--ds-color-neutral-background-default) 80%, transparent);
+}
+
+.leaflet-container .leaflet-control-attribution a {
+    color: var(--ds-color-accent-text-subtle, var(--ds-color-brand1-text-subtle));
+}
+
+/* ── Header ─────────────────────────────────────────────────────────── */
+.site-header {
+    background: var(--ds-color-neutral-background-default);
+    border-bottom: 1px solid var(--ds-color-neutral-border-subtle);
+}
+
+.site-header__inner {
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ds-size-2) var(--ds-size-4);
+    padding-block: var(--ds-size-3);
 }
 
-.search-results {
+.site-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-size-2);
+    color: var(--ds-color-neutral-text-default);
+    font-size: var(--ds-heading-xs-font-size);
+    font-weight: var(--ds-font-weight-semibold);
+    text-decoration: none;
+}
+
+.site-logo__mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--ds-size-10);
+    height: var(--ds-size-10);
+    border-radius: var(--ds-border-radius-full);
+    background: var(--ds-color-brand1-base-default);
+    color: var(--ds-color-brand1-base-contrast-default);
+}
+
+.site-logo__icon {
+    width: 65%;
+    height: 65%;
+}
+
+.site-logo:focus-visible {
+    outline: var(--dsc-focus-outline);
+    box-shadow: var(--dsc-focus-boxShadow);
+    border-radius: var(--ds-border-radius-sm);
+}
+
+.site-nav [aria-current="page"] {
+    background: var(--ds-color-brand1-surface-tinted);
+}
+
+.footer-links {
+    display: grid;
+    gap: var(--ds-size-2);
+    margin: 0;
+    padding: 0;
+}
+
+.site-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-1);
+}
+
+/* ── Search: one row, the select chooses what to search by ─────────── */
+.search-panel {
+    background: var(--ds-color-brand1-background-tinted);
+    padding-block: var(--ds-size-8) var(--ds-size-6);
+}
+
+.search-panel .ds-heading {
+    margin: 0 0 var(--ds-size-4);
+}
+
+.search-bar {
+    display: flex;
+    flex-wrap: wrap; /* buttons move to the next line when the row is too narrow */
+    align-items: center;
+    gap: var(--ds-size-2) var(--ds-size-4);
+    max-width: 64rem;
+}
+
+/* "Søk på  (•) Adresse  ( ) Skolenavn" on one line */
+.search-mode {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ds-size-2) var(--ds-size-5);
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.search-mode > legend {
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+.ds-fieldset.search-mode > * + * {
+    margin: 0;
+}
+
+.search-bar__field {
+    flex: 1 1 16rem;
+    min-width: 0;
+}
+
+/* "Din posisjon": the target icon at the end of the empty address field (the clear button takes its
+   place once there is text), the first suggestion, and why it did not work when the browser said no */
+.address-input {
+    position: relative;
+}
+
+.locate-inline.ds-button {
     position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background-color: white;
-    border-radius: 10px;
-    margin-top: 5px;
-    max-height: 400px;
-    overflow-y: auto;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    top: 50%;
+    right: var(--ds-size-2);
+    transform: translateY(-50%);
+    width: 2.25rem;
+    height: 2.25rem;
+    min-height: 0;
+    padding: 0;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+#addressField:has(#addressSearch:not(:placeholder-shown)) .locate-inline {
     display: none;
-    z-index: 10000;
 }
 
-.search-results.visible {
+.locate-option {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-size-2);
+}
+
+.locate-option .ds-icon {
+    flex-shrink: 0;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.locate-error {
+    margin: var(--ds-size-1) 0 0;
+    color: var(--ds-color-danger-text-subtle);
+}
+
+/* Field adds space after its (visually hidden) label; drop it so the input
+   lines up with the radio buttons and the Filtre button */
+.search-bar__field .ds-field > .ds-suggestion {
+    margin-top: 0;
+}
+
+/* Designsystemet sets display on .ds-field; keep the inactive field hidden */
+.search-bar__field > [hidden] {
+    display: none !important;
+}
+
+.search-bar input[type="search"] {
+    background-color: var(--ds-color-neutral-background-default);
+}
+
+/* Suggestion shows a chevron while the clear button is hidden; the lists here
+   only open while typing, so drop it. */
+.search-bar .ds-suggestion > input {
+    background-image: none;
+}
+
+/* Filter toggle at the end of the search row */
+.filter-toggle {
+    flex-shrink: 0;
+}
+
+.filter-toggle .ds-badge {
+    margin-inline-start: var(--ds-size-1);
+}
+
+/* ── Filters: one quiet row under the search ────────────────────────── */
+/* Two compact rows: chips (type, owner, result) on top, the two selects below */
+/* Row 1: type, owner, kommune, profile. Row 2 and 3: Snitt and Trivsel chips */
+.filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--ds-size-4) var(--ds-size-6);
+    max-width: 64rem;
+    margin-top: var(--ds-size-4);
+}
+
+.filter-group--wide {
+    flex-basis: 100%;
+}
+
+/* Icons inside chips, the same as on markers and in the list */
+.chip-icon {
+    display: inline-flex;
+    margin-inline-end: 0.3em;
+}
+
+.chip-icon svg {
+    width: 1.15em;
+    height: 1.15em;
+}
+
+/* Owner icon sits on the text baseline, like the words around it */
+.owner-meta {
+    white-space: nowrap;
+}
+
+.owner-icon {
+    width: 1.1em;
+    height: 1.1em;
+    margin-inline-end: 0.15em;
+    vertical-align: -0.2em;
+}
+
+.filter-bar[hidden] {
+    display: none;
+}
+
+.filter-group {
+    margin: 0;
+}
+
+/* Same 8px between a group's label and its controls, for chips and selects */
+.filter-group legend {
+    margin-bottom: var(--ds-size-2);
+}
+
+.ds-fieldset.filter-group > .chip-row {
+    margin-top: 0;
+}
+
+/* Legend with a small help button (tooltip) */
+.filter-legend {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-size-1);
+}
+
+.filter-help.ds-button {
+    --dsc-button-size: var(--ds-size-7);
+    --dsc-button-padding: 0;
+    margin-block: calc(-1 * var(--ds-size-1));
+}
+
+/* Longer tooltip texts wrap instead of spanning the whole page */
+.ds-tooltip {
+    max-width: min(22rem, calc(100vw - 2rem));
+    white-space: normal;
+}
+
+.chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-2);
+}
+
+.filter-group select {
+    min-width: 13rem;
+}
+
+/* "Nullstill filter" sits next to the toggle; it is disabled while no filter is on */
+.filter-reset {
+    flex-shrink: 0;
+}
+
+.filter-reset .ds-icon {
+    width: 1.2em;
+    height: 1.2em;
+}
+
+/* ── Results: list next to the map ──────────────────────────────────── */
+.results {
+    padding-block: var(--ds-size-6);
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: minmax(20rem, 28rem) minmax(0, 1fr);
+    gap: var(--ds-size-6);
+    align-items: start;
+}
+
+.results-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--ds-size-1) var(--ds-size-3);
+    margin-bottom: var(--ds-size-4);
+}
+
+.results-head > div:first-child {
+    flex: 1 1 12rem;
+    min-width: 0;
+}
+
+/* "Skoler i nærheten (12)": the same size and weight as "Trolig skolekrets for adressen" (.own-schools__eyebrow) */
+.results-title--nearby.ds-heading {
+    font-size: inherit;
+    line-height: 1.5;
+    font-weight: var(--ds-font-weight-semibold);
+    letter-spacing: normal;
+}
+
+.results-list .ds-heading {
+    margin: 0 0 var(--ds-size-1);
+}
+
+.results-list #resultCount {
+    margin: 0;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.results-note {
+    margin-bottom: var(--ds-size-4);
+}
+
+.results-note .ds-paragraph,
+.results-note .ds-list {
+    margin: 0;
+}
+
+.results-note > * + * {
+    margin-top: var(--ds-size-2);
+}
+
+.results-note__title {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-size-2);
+}
+
+.results-note__list {
+    padding-left: var(--ds-size-5);
+}
+
+.results-note__muted {
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.school-card__krets {
+    align-self: flex-start;
+}
+
+/* Sort: a small "Sorter: Nærmest ▾" button next to the heading; the menu is a Designsystemet Dropdown.
+   When the heading and a long order (Ukrainian) do not fit on one line, the button moves under the
+   heading and stays at the right edge. */
+.results-sort {
+    flex: 0 1 auto;
+    max-width: 100%;
+    margin-left: auto;
+}
+
+.sort-switch.ds-button {
+    max-width: 100%;
+    gap: var(--ds-size-1);
+    padding-inline: var(--ds-size-2);
+    font-weight: var(--ds-font-weight-medium);
+}
+
+/* A long order (Ukrainian) is cut with "…" rather than pushing the button past the screen edge */
+#sortLabel {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* "Sorter:" is read by screen readers ("Sorter: Nærmest"); on screen the arrows icon says it */
+.sort-switch__prefix {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+.sort-menu__item.ds-button {
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.sort-menu__item[aria-current="true"] {
+    background: var(--ds-color-brand1-surface-tinted);
+}
+
+.school-list {
+    list-style: none;
+    margin: 0 0 var(--ds-size-4);
+    padding: 0;
+    display: grid;
+    gap: var(--ds-size-2);
+}
+
+.school-card.ds-card {
+    --dsc-card-padding: var(--ds-size-3);
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: var(--ds-size-3);
+    width: 100%;
+    text-align: start;
+    color: inherit;
+}
+
+.school-card__badge {
+    width: var(--ds-size-9);
+    height: var(--ds-size-9);
+}
+
+.school-card__body {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+}
+
+.school-card__name {
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+/* One row of pairs: "Snitt 47,0   Trivsel 3,9 av 5   Mobbing –", spaced instead of "·" between them */
+.school-card__stats {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: var(--ds-size-4);
+    margin-top: 2px;
+    font-size: var(--ds-font-size-minus-1);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.school-card__stat {
+    white-space: nowrap;
+}
+
+/* "Tallene ble sist sjekket mot kildene …" under the footer's short description */
+.footer-status {
+    margin-top: var(--ds-size-2);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.school-card__stat-value {
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-color-neutral-text-default);
+}
+
+.school-card__meta,
+.school-card__scores {
+    font-size: var(--ds-font-size-minus-1);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.school-card__avg {
+    display: grid;
+    justify-items: end;
+    text-align: end;
+}
+
+.school-card__avg-value {
+    font-size: var(--ds-heading-2xs-font-size);
+    font-weight: var(--ds-font-weight-semibold);
+    font-variant-numeric: tabular-nums;
+}
+
+.school-card__avg-label {
+    font-size: var(--ds-font-size-minus-1);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+/* Map stays in view while the list scrolls */
+.results-map {
+    position: sticky;
+    top: var(--ds-size-4);
+    height: calc(100vh - 2 * var(--ds-size-4));
+    min-height: 24rem;
+    border-radius: var(--ds-border-radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--ds-color-neutral-border-subtle);
+}
+
+/* Address pin on the map */
+.address-marker-icon {
+    background: transparent;
+    border: none;
+}
+
+.address-marker {
     display: block;
+    width: 100%;
+    height: 100%;
+    color: var(--ds-color-brand1-base-default);
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
 }
 
-.search-result-item {
-    padding: 12px 15px;
-    cursor: pointer;
-    border-bottom: 1px solid #eee;
-    transition: background-color 0.2s ease;
+.address-marker svg {
+    width: 100%;
+    height: 100%;
 }
 
-.search-result-item:last-child {
-    border-bottom: none;
+/* ── Footer ─────────────────────────────────────────────────────────── */
+.site-footer {
+    margin-top: var(--ds-size-8);
+    padding-block: var(--ds-size-8);
+    background: var(--ds-color-neutral-background-tinted);
+    border-top: 1px solid var(--ds-color-neutral-border-subtle);
 }
 
-.search-result-item:hover {
-    background-color: #f5f5f5;
+/* "Til toppen": round button sitting on the top edge of the footer */
+.site-footer__top {
+    position: relative;
+    height: 0;
+    margin-top: calc(-1 * var(--ds-size-8));
+    margin-bottom: var(--ds-size-8);
 }
 
+.back-to-top.ds-button {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    translate: -50% -50%;
+    width: var(--ds-size-12);
+    height: var(--ds-size-12);
+    border-radius: var(--ds-border-radius-full);
+    border: 3px solid var(--ds-color-neutral-background-default);
+    box-shadow: var(--ds-shadow-md);
+}
+
+.back-to-top .ds-icon {
+    width: var(--ds-size-7);
+    height: var(--ds-size-7);
+}
+
+/* Three parts: what Skolekartet is, the service links, and feedback */
+.site-footer__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--ds-size-6);
+}
+
+.site-footer .ds-heading {
+    margin: 0 0 var(--ds-size-2);
+}
+
+.site-footer .ds-paragraph,
+.site-footer .ds-list {
+    margin: 0;
+}
+
+/* Search results (Designsystemet Suggestion list) */
 .search-result-name {
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 3px;
+    display: block;
+    font-weight: var(--ds-font-weight-medium);
 }
 
 .search-result-kommune {
-    font-size: 13px;
-    color: #666;
+    display: block;
+    font-size: var(--ds-font-size-minus-1);
+    color: var(--ds-color-neutral-text-subtle);
 }
 
 .search-result-highlight {
-    background-color: #fff59d;
-    font-weight: bold;
+    background: var(--ds-color-warning-surface-tinted);
+    color: inherit;
+    font-weight: var(--ds-font-weight-semibold);
 }
 
-.no-results {
-    padding: 15px;
-    text-align: center;
-    color: #666;
-    font-style: italic;
+.search-more {
+    margin: 0;
+    padding: var(--ds-size-1) var(--ds-size-3);
+    color: var(--ds-color-neutral-text-subtle);
 }
 
-
-/* Modal styles */
-.info-modal {
-    display: none;
-    position: fixed;
-    z-index: 10000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    box-sizing: border-box;
+/* Aksel icons next to text */
+.ds-heading .ds-icon {
+    margin-inline-end: var(--ds-size-2);
+    vertical-align: -0.15em;
+    width: 1.1em;
+    height: 1.1em;
 }
 
-.info-modal.is-open {
-    display: flex;
+.ds-link .ds-icon {
+    width: 1em;
+    height: 1em;
+    margin-inline-start: var(--ds-size-1);
+    vertical-align: -0.1em;
 }
 
-.info-modal-content {
-    background-color: white;
-    padding: 30px;
-    border: 1px solid #888;
-    width: 100%;
-    max-width: 680px;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    max-height: calc(100vh - 32px);
-    overflow-y: auto;
-    box-sizing: border-box;
+.site-nav .ds-icon {
+    width: 1.25em;
+    height: 1.25em;
 }
 
-.info-modal-content h2 {
+/* ── Info pages (om-fargefordelingen, om-skolekrets, datakilder, tilbakemelding) ── */
+.page {
+    padding-block: var(--ds-size-6) var(--ds-size-10);
+}
+
+.page__container {
+    max-width: 48rem;
+}
+
+.page__back {
+    margin-inline-start: calc(-1 * var(--ds-size-3));
+    margin-bottom: var(--ds-size-4);
+}
+
+.page__content > .ds-heading:first-child {
     margin-top: 0;
-    color: #333;
 }
 
-.info-modal-content h3 {
-    color: #4285f4;
-    margin-top: 20px;
+.page__content .ds-heading,
+.page__content .ds-paragraph,
+.page__content .ds-list,
+.page__content .ds-card,
+.page__content .ds-table {
+    margin-block: 0 var(--ds-size-4);
 }
 
-.info-modal-close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    line-height: 20px;
+.page__content h2.ds-heading {
+    margin-top: var(--ds-size-8);
 }
 
-.info-modal-close:hover {
-    color: #000;
+.page__content .ds-card .ds-paragraph,
+.page__content .ds-card .ds-list {
+    margin-bottom: var(--ds-size-1);
 }
 
-.color-explanation {
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #f5f5f5;
-    border-radius: 5px;
+.page__content .feedback-form {
+    max-width: 32rem;
 }
 
-.color-row {
+.color-explanation li {
     display: flex;
     align-items: center;
-    margin: 8px 0;
+    gap: var(--ds-size-3);
 }
 
 .color-dot {
-    font-size: 20px;
-    margin-right: 10px;
-    width: 30px;
-}
-
-.stats-box {
-    background-color: #e8f0fe;
-    padding: 15px;
-    border-radius: 5px;
-    margin: 15px 0;
-}
-
-.official-link {
     display: inline-block;
-    margin-top: 15px;
-    padding: 10px 20px;
-    background-color: #4285f4;
-    color: white;
+    flex-shrink: 0;
+    width: 0.9em;
+    height: 0.9em;
+    margin-inline-end: var(--ds-size-2);
+    border-radius: 50%;
+    background: var(--score-bg);
+    vertical-align: -0.05em;
+}
+
+.color-explanation .color-dot {
+    width: 1.1em;
+    height: 1.1em;
+    margin-inline-end: 0;
+}
+
+.range-table {
+    width: 100%;
+}
+
+.ds-table .num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.sources-table td {
+    vertical-align: top;
+}
+
+.page__content .table-caption {
+    margin-top: calc(-1 * var(--ds-size-3));
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+/* Feedback form */
+.feedback-form {
+    display: grid;
+    gap: var(--ds-size-4);
+}
+
+.feedback-form .ds-label {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-size-2);
+}
+
+.ds-label-hint {
+    font-weight: var(--ds-font-weight-regular);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.feedback-form textarea {
+    resize: vertical;
+}
+
+/* ── School photo (popup and school page), always with credit ───────── */
+.popup-photo,
+.school-photo {
+    margin: 0 0 var(--ds-size-3);
+}
+
+.popup-photo img,
+.school-photo img {
+    display: block;
+    width: 100%;
+    height: 9rem;
+    object-fit: cover;
+    border-radius: var(--ds-border-radius-md);
+    background: var(--ds-color-neutral-surface-tinted);
+}
+
+.school-photo img {
+    height: auto;
+    max-height: 22rem;
+}
+
+.popup-photo figcaption,
+.school-photo figcaption {
+    margin-top: var(--ds-size-1);
+    font-size: var(--ds-font-size-1);
+    color: var(--ds-color-neutral-text-subtle);
+    overflow-wrap: anywhere;
+}
+
+.popup-photo figcaption a,
+.school-photo figcaption a {
+    color: inherit;
+}
+
+.popup-school .popup-more {
+    display: flex;
+    justify-content: flex-end;
+    margin: var(--ds-size-3) 0 0;
+}
+
+.popup-more__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-size-1);
+    font-weight: 500;
+}
+
+.popup-more__link .ds-icon {
+    width: 1.25em;
+    height: 1.25em;
+    transition: transform 0.15s ease;
+}
+
+.popup-more__link:hover .ds-icon {
+    transform: translateX(2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .popup-more__link .ds-icon { transition: none; }
+}
+
+/* ── School page ───────────────────────────────────────────────────── */
+.page__container--wide {
+    max-width: 76rem;
+}
+
+/* Main content: one centred column under the full-width banner (Designsystemet page layout) */
+.school-page__body {
+    max-width: 60rem;
+    margin-inline: auto;
+}
+
+.school-page__body > section {
+    scroll-margin-top: var(--ds-size-6);
+}
+
+.page__content .school-page__body > section > h2.ds-heading:first-child {
+    margin-top: var(--ds-size-10);
+}
+
+/* Banner: photo left, name, address and links right (layout from the
+   Røde Kors local association block, built with Designsystemet tokens) */
+.school-banner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+    gap: var(--ds-size-8);
+    align-items: start;
+    padding: var(--ds-size-10);
+    border-radius: var(--ds-border-radius-xl, 1.5rem);
+    background: var(--ds-color-neutral-surface-tinted);
+}
+
+.page__content .school-banner .ds-heading,
+.page__content .school-banner .ds-paragraph {
+    margin: 0;
+}
+
+.school-banner__kicker {
+    margin: 0 0 var(--ds-size-2);
+    font-size: var(--ds-font-size-2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.school-banner__title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ds-size-2) var(--ds-size-3);
+}
+
+/* Tags (owner, profile, hjertesone) in one row under the name */
+.school-banner__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-2);
+    margin: var(--ds-size-3) 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.school-banner__tags:empty {
+    display: none;
+}
+
+.school-banner__kicker .ds-link {
+    color: inherit;
+}
+
+/* Address, website and "Følg skolen" in columns, the buttons in a row under them
+   (as in the Røde Kors local association block) */
+.school-banner__info {
+    margin-top: var(--ds-size-6);
+}
+
+.school-banner__facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: var(--ds-size-5) var(--ds-size-6);
+    margin: 0;
+}
+
+.school-banner__facts dt {
+    margin-bottom: var(--ds-size-1);
+    font-size: var(--ds-font-size-3);
+    font-weight: 600;
+}
+
+.school-banner__facts dd {
+    margin: 0;
+    font-size: var(--ds-font-size-3);
+    overflow-wrap: anywhere;
+}
+
+.school-banner__facts dd + dd {
+    margin-top: var(--ds-size-1);
+}
+
+.school-banner__links {
+    display: grid;
+    gap: var(--ds-size-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--ds-font-size-3);
+    overflow-wrap: anywhere;
+}
+
+.school-banner__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-3);
+    margin-top: var(--ds-size-6);
+}
+
+/* Tertiary buttons in a row, as on the school cards on the map page */
+.school-banner__actions .ds-button {
+    padding-inline: var(--ds-size-2);
+}
+
+.school-banner__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--ds-size-2);
+    aspect-ratio: 4 / 3;
+    border-radius: var(--ds-border-radius-lg);
+    background: var(--ds-color-neutral-surface-default);
+    color: var(--ds-color-neutral-text-subtle);
+    font-size: var(--ds-font-size-3);
+}
+
+.school-banner__placeholder .ds-icon {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+/* Photo carousel (one photo at a time, buttons and arrow keys) */
+.carousel {
+    display: grid;
+    gap: var(--ds-size-2);
+    border-radius: var(--ds-border-radius-lg);
+}
+
+.carousel:focus-visible {
+    outline: 3px solid var(--ds-color-focus-outer, #000);
+    outline-offset: 4px;
+}
+
+.carousel__slide {
+    margin: 0;
+}
+
+.carousel__slide img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--ds-border-radius-lg);
+    background: var(--ds-color-neutral-background-default);
+}
+
+.carousel__slide figcaption {
+    margin-top: var(--ds-size-2);
+    font-size: var(--ds-font-size-1);
+    color: var(--ds-color-neutral-text-subtle);
+    overflow-wrap: anywhere;
+}
+
+.carousel__slide figcaption a {
+    color: inherit;
+}
+
+/* Arrows and counter sit on the photo (same 4:3 box as the image), not in a bar below it */
+.carousel {
+    position: relative;
+}
+
+.carousel__nav {
+    position: absolute;
+    inset: 0 0 auto 0;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: var(--ds-size-2);
+    pointer-events: none;
+}
+
+.carousel__arrow.ds-button {
+    pointer-events: auto;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--ds-color-neutral-background-default) 88%, transparent);
+    box-shadow: var(--ds-shadow-sm, 0 1px 3px rgb(0 0 0 / 0.25));
+}
+
+.carousel__count {
+    position: absolute;
+    right: var(--ds-size-2);
+    bottom: var(--ds-size-2);
+    padding: 0 var(--ds-size-2);
+    border-radius: 999px;
+    font-size: var(--ds-font-size-1);
+    color: #fff;
+    background: rgb(0 0 0 / 0.6);
+}
+
+/* Snarveier: jump links to each section */
+.snarveier {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--ds-size-3) var(--ds-size-6);
+    padding: var(--ds-size-6) var(--ds-size-4);
+    border-bottom: 1px solid var(--ds-color-neutral-border-subtle);
+}
+
+.page__content h2.snarveier__label {
+    margin: 0;
+    font-size: var(--ds-font-size-2);
+    font-weight: var(--ds-font-weight-regular);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.snarveier__list {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.snarveier__list li + li {
+    border-left: 1px solid var(--ds-color-neutral-border-default);
+}
+
+.snarveier__list li {
+    padding-inline: var(--ds-size-3);
+}
+
+.snarveier__list li:first-child {
+    padding-inline-start: 0;
+}
+
+.snarveier__list .ds-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-size-1);
+    font-size: var(--ds-font-size-4);
     text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    white-space: nowrap;
 }
 
-.official-link:hover {
-    background-color: #357ae8;
+.snarveier__list .ds-link:hover {
+    text-decoration: underline;
 }
 
-/* ── School popup styles ──────────────────────────────────────────────── */
+.snarveier__list .ds-link .ds-icon {
+    margin: 0;
+}
+
+.page__content .link-list {
+    display: grid;
+    gap: var(--ds-size-2);
+}
+
+.page__content .link-list li {
+    margin: 0;
+}
+
+.school-page__kicker {
+    margin: 0 0 var(--ds-size-1);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.page__content.school-page h1.ds-heading {
+    margin-bottom: var(--ds-size-2);
+}
+
+.school-page__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-2);
+    margin: 0 0 var(--ds-size-5);
+}
+
+.school-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: var(--ds-size-4);
+    margin-bottom: var(--ds-size-4);
+}
+
+.page__content .school-stat.ds-card {
+    --dsc-card-padding: var(--ds-size-5);
+    margin: 0;
+}
+
+.page__content .school-stat .ds-heading {
+    margin: 0 0 var(--ds-size-2);
+}
+
+.school-stat__value {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-size-2);
+    margin: 0 0 var(--ds-size-2);
+    font-size: var(--ds-heading-md-font-size);
+    font-weight: var(--ds-font-weight-semibold);
+    line-height: 1.1;
+}
+
+.school-stat__value span:not(.color-dot) {
+    white-space: nowrap;
+    font-size: var(--ds-font-size-4);
+    font-weight: var(--ds-font-weight-regular);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.page__content .school-stat__source {
+    margin: 0;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+/* The three cards are tabs: the chosen one decides which table shows below */
+.page__content .school-stats__hint {
+    margin: 0 0 var(--ds-size-3);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+button.school-stat.ds-card {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--ds-size-2);
+    width: 100%;
+    font: inherit;
+    text-align: left;
+    color: inherit;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+button.school-stat.ds-card:hover {
+    border-color: var(--ds-color-border-default);
+}
+
+button.school-stat.ds-card:focus-visible {
+    outline: 3px solid var(--ds-color-focus-outer, #000);
+    outline-offset: 2px;
+}
+
+button.school-stat.ds-card[aria-selected="true"] {
+    border-color: var(--ds-color-base-default);
+    box-shadow: inset 0 -4px 0 var(--ds-color-base-default);
+}
+
+.school-stat__title {
+    font-size: var(--ds-font-size-4);
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+button.school-stat .school-stat__value {
+    margin: 0;
+}
+
+.school-stat__text {
+    font-size: var(--ds-font-size-3);
+}
+
+.school-stat__source {
+    font-size: var(--ds-font-size-2);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+/* Facebook and Instagram as round icon buttons; greyed out when no official page was found */
+.school-banner__links.social-links {
+    display: flex;
+    gap: var(--ds-size-3);
+}
+
+.social-link {
+    display: inline-grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    /* The theme's contrast colour, so the icon stays readable on light brand colours (Portal) */
+    color: var(--ds-color-brand1-base-contrast-default);
+    background: var(--ds-color-brand1-base-default);
+}
+
+a.social-link:hover {
+    background: var(--ds-color-brand1-base-hover);
+}
+
+a.social-link:focus-visible {
+    outline: 3px solid var(--ds-color-focus-outer, #000);
+    outline-offset: 2px;
+}
+
+.social-link[aria-disabled="true"] {
+    color: var(--ds-color-neutral-text-subtle);
+    background: var(--ds-color-neutral-surface-default);
+    border: 1px dashed var(--ds-color-neutral-border-default);
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.social-link__icon {
+    width: 1.35rem;
+    height: 1.35rem;
+}
+
+/* "Om skolen": a small block of key facts first in the page body */
+.school-summary {
+    margin-top: var(--ds-size-8);
+    padding: var(--ds-size-5);
+    border-radius: var(--ds-border-radius-lg);
+    border: 1px solid var(--ds-color-neutral-border-subtle);
+}
+
+.page__content .school-page__body > section.school-summary > h2.ds-heading:first-child {
+    margin: 0 0 var(--ds-size-3);
+}
+
+.school-summary__facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+    gap: var(--ds-size-3) var(--ds-size-5);
+    margin: 0;
+}
+
+.school-summary__facts dt {
+    font-size: var(--ds-font-size-2);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.school-summary__facts dd {
+    margin: 0;
+    font-size: var(--ds-font-size-5);
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.page__content .school-summary__extra {
+    margin: var(--ds-size-3) 0 0;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.page__content .school-summary .school-page__sources {
+    margin: var(--ds-size-2) 0 0;
+}
+
+.register-details .school-facts {
+    margin: 0;
+}
+
+.school-banner__zone {
+    text-decoration: none;
+    cursor: help;
+}
+
+.school-banner__zone:hover {
+    text-decoration: underline;
+}
+
+.school-stat__more {
+    margin-top: auto;
+    padding-top: var(--ds-size-2);
+    font-size: var(--ds-font-size-3);
+    font-weight: var(--ds-font-weight-medium, 500);
+    color: var(--ds-color-brand1-text-subtle);
+    text-decoration: underline;
+}
+
+button.school-stat[aria-selected="true"] .school-stat__more {
+    color: var(--ds-color-text-default);
+    text-decoration: none;
+}
+
+.stat-panel {
+    padding-top: var(--ds-size-2);
+}
+
+.page__content .stat-panel > .ds-heading:first-child {
+    margin-top: var(--ds-size-4);
+}
+
+.stat-compare {
+    font-size: var(--ds-font-size-2);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.stat-compare[data-good="true"] {
+    color: var(--ds-color-success-text-default);
+}
+
+.stat-compare[data-good="false"] {
+    color: var(--ds-color-danger-text-default);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    button.school-stat.ds-card { transition: none; }
+}
+
+.school-history {
+    width: 100%;
+}
+
+.school-history td:first-child {
+    white-space: nowrap;
+}
+
+.page__content .map-caption {
+    margin: var(--ds-size-1) 0 var(--ds-size-4);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+/* Small map on the school page */
+.school-map {
+    height: 18rem;
+    margin-bottom: var(--ds-size-1);
+    border-radius: var(--ds-border-radius-lg);
+    border: 1px solid var(--ds-color-neutral-border-subtle);
+    overflow: hidden;
+}
+
+.school-facts {
+    display: grid;
+    gap: var(--ds-size-2);
+    margin: 0 0 var(--ds-size-5);
+}
+
+.school-facts > div {
+    display: grid;
+    grid-template-columns: minmax(8rem, 14rem) minmax(0, 1fr);
+    gap: var(--ds-size-3);
+    padding-bottom: var(--ds-size-2);
+    border-bottom: 1px solid var(--ds-color-neutral-border-subtle);
+}
+
+.school-facts dt {
+    font-weight: var(--ds-font-weight-semibold);
+    overflow-wrap: anywhere;
+}
+
+.school-facts dd {
+    margin: 0;
+}
+
+.page__content .school-page__sources {
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+/* ── School popup (inside the Leaflet popup) ─────────────────────────────── */
 .popup-school {
-    font-size: 13px;
-    line-height: 1.5;
     min-width: 220px;
+}
+
+.popup-school .ds-paragraph {
+    margin: 0 0 var(--ds-size-2);
 }
 
 .popup-header {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 2px;
+    gap: var(--ds-size-2);
+    margin-bottom: var(--ds-size-1);
 }
 
-.popup-name {
-    font-weight: bold;
-    font-size: 14px;
+.popup-header .ds-heading {
+    margin: 0;
 }
 
-.popup-year {
-    font-size: 12px;
-    color: #777;
-    white-space: nowrap;
+.popup-header .ds-tag {
     flex-shrink: 0;
 }
 
-.popup-kommune {
-    font-size: 12px;
-    color: #666;
-    margin-bottom: 6px;
+.popup-kommune,
+.popup-muted {
+    color: var(--ds-color-neutral-text-subtle);
 }
 
-.popup-current {
-    margin-bottom: 8px;
+.popup-school .popup-subjects {
+    margin-bottom: var(--ds-size-1);
 }
 
-.popup-history {
-    margin-top: 8px;
-    border-top: 1px solid #ddd;
-    padding-top: 6px;
+.popup-school .popup-stats small {
+    color: var(--ds-color-neutral-text-subtle);
 }
 
-.popup-history-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 12px;
-    margin-top: 4px;
+/* Collapsible Historikk (Designsystemet Details) */
+/* Subject scores with "Vis historikk" at the end of the line */
+.popup-subjects-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--ds-size-2);
+    margin-bottom: var(--ds-size-1);
 }
 
-.popup-history-table th,
-.popup-history-table td {
-    text-align: center;
-    padding: 2px 5px;
-    border-bottom: 1px solid #eee;
+.popup-school .popup-subjects-row .popup-subjects {
+    margin: 0;
 }
 
-.popup-history-table th {
-    background: #f5f5f5;
+.popup-history-toggle.ds-button {
+    --dsc-button-padding: 0 var(--ds-size-1);
+    min-height: 0;
+    gap: var(--ds-size-1);
+    margin-inline-start: auto;
+}
+
+.popup-history-toggle .ds-icon {
+    width: 1.2em;
+    height: 1.2em;
+    transition: transform 0.15s ease;
+}
+
+.popup-history-toggle[aria-expanded="true"] .ds-icon {
+    transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .popup-history-toggle .ds-icon { transition: none; }
+}
+
+/* Earlier years, one line each, in the same format as the current year */
+.popup-history-list {
+    display: grid;
+    gap: var(--ds-size-1);
+    margin: 0 0 var(--ds-size-2);
+    padding: var(--ds-size-2) 0 0;
+    list-style: none;
+    border-top: 1px solid var(--ds-color-neutral-border-subtle);
+    font-size: var(--ds-font-size-2);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.popup-history-list[hidden] {
+    display: none;
+}
+
+.popup-history-year {
+    display: inline-block;
+    min-width: 4.2em;
     font-weight: 600;
-    color: #444;
-}
-
-.popup-history-table td:first-child {
-    text-align: left;
-    font-weight: 500;
-    white-space: nowrap;
-}
-
-.popup-history-table tbody tr:last-child td {
-    border-bottom: none;
-}
-
-.popup-history-table tbody tr:hover {
-    background: #f9f9f9;
+    color: var(--ds-color-neutral-text-default);
 }
 
 /* Responsive styles for smaller screens */
-@media (max-width: 768px) {
-    .search-container {
-        /* viewport - left offset (50px) - feedback btn (44px) - legend btn (44px) - gaps (30px) */
-        width: calc(100vw - 168px);
+@media (max-width: 960px) {
+    .school-banner {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--ds-size-6);
+        padding: var(--ds-size-6);
     }
 
-    .info-modal-content {
-        padding: 20px;
+    .school-banner__media {
+        max-width: 28rem;
+    }
+
+    .snarveier {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-inline: 0;
+        gap: var(--ds-size-3);
+    }
+
+    .snarveier__list {
+        flex-direction: column;
+        gap: var(--ds-size-2);
+    }
+
+    .snarveier__list li,
+    .snarveier__list li + li,
+    .snarveier__list li:first-child {
+        padding-inline: 0;
+        border: 0;
+    }
+
+
+    .filter-group {
+        max-width: 100%;
+    }
+
+    .results-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* Map first, then the list */
+    .results-map {
+        order: -1;
+        position: relative;
+        top: 0;
+        height: 60vh;
+    }
+
+    .site-footer__grid {
+        grid-template-columns: minmax(0, 1fr);
     }
 }
 
-@media (max-width: 480px) {
-    .search-container {
-        width: calc(100vw - 168px);
+@media (max-width: 640px) {
+    .site-container {
+        padding-inline: var(--ds-size-4);
+    }
+
+    /* Header: logo and icon-only menu on one row; labels stay for screen readers */
+    .site-header__inner {
+        flex-wrap: nowrap;
+    }
+
+    .site-nav__label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+
+    .site-nav .ds-button {
+        --dsc-button-padding: var(--ds-size-2);
+    }
+
+
+    .search-panel {
+        padding-block: var(--ds-size-6) var(--ds-size-4);
+    }
+
+    /* "Søk på" and the two options on one line, the search field full width below */
+    .search-bar {
+        flex-wrap: wrap;
+    }
+
+    .search-bar__field {
+        flex-basis: 100%;
+        min-width: 0;
+    }
+
+    .filter-toggle,
+    .filter-reset {
+        flex: 1 1 0;
+    }
+
+    .school-stats {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .school-facts > div {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0;
+    }
+
+
+    .filter-bar {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .filter-group,
+    .filter-group select {
+        width: 100%;
+    }
+
+
+}
+
+/* ── Language (static/js/i18n.js) ─────────────────────────────────── */
+/* English: hide the page until the first translation pass (i18n.js removes it, max 1.5 s) */
+.i18n-pending body {
+    visibility: hidden;
+}
+
+.lang-switch.ds-button {
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+/* Notice that the English version is an AI translation */
+.lang-notice {
+    padding-block: var(--ds-size-2);
+    background: var(--ds-color-warning-surface-tinted);
+    border-bottom: 1px solid var(--ds-color-warning-border-subtle);
+}
+
+.lang-notice .ds-paragraph {
+    margin: 0;
+}
+
+/* Language menu: "NO ▾" opens a Designsystemet Dropdown with the languages in their own words */
+.lang-menu__item.ds-button {
+    justify-content: flex-start;
+    gap: var(--ds-size-3);
+}
+
+.lang-menu__code {
+    min-width: 2.25rem;
+    color: var(--ds-color-neutral-text-subtle);
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.lang-menu__item[aria-current="true"] {
+    background: var(--ds-color-brand1-surface-tinted);
+}
+
+@media (max-width: 640px) {
+    .site-nav {
+        flex-wrap: nowrap;
+        gap: 0;
+    }
+
+    .lang-switch.ds-button {
+        padding-inline: var(--ds-size-2);
+    }
+
+    /* "Søk på / Search by" and the two options may wrap on narrow screens */
+    .search-mode {
+        flex-shrink: 1;
+        min-width: 0;
+        max-width: 100%;
     }
 }
 
+/* "Om skolen" key figures: label, big number, short text in columns (Figma "nøkkeltall" block) */
+.key-figures {
+    margin-top: var(--ds-size-10);
+}
+
+.page__content .school-page__body > section.key-figures > h2.ds-heading:first-child {
+    margin: 0;
+}
+
+.page__content .key-figures__lead {
+    margin: var(--ds-size-1) 0 var(--ds-size-6);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.key-figures__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: var(--ds-size-6) var(--ds-size-8);
+    margin: 0;
+}
+
+.key-figures__label {
+    font-size: var(--ds-font-size-2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.key-figures__value {
+    margin: var(--ds-size-2) 0 var(--ds-size-2);
+    font-size: var(--ds-heading-lg-font-size, 2.5rem);
+    font-weight: var(--ds-font-weight-regular);
+    line-height: 1.1;
+}
+
+.key-figures__text {
+    margin: 0;
+    font-size: var(--ds-font-size-3);
+    color: var(--ds-color-neutral-text-default);
+}
+
+.page__content .key-figures__extra {
+    margin: var(--ds-size-5) 0 0;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.key-figures__more {
+    display: flex;
+    justify-content: flex-end;
+    margin: var(--ds-size-4) 0 0;
+}
+
+.key-figures__more .ds-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-size-1);
+}
+
+.key-figures__more .ds-icon {
+    margin: 0;
+}
+
+/* ── The address's own school (pilot), above the list ──────────────── */
+.results-pick {
+    margin-bottom: var(--ds-size-5);
+}
+
+.results-pick .results-note {
+    margin-bottom: 0;
+}
+
+.own-schools {
+    display: grid;
+    gap: var(--ds-size-3);
+}
+
+.own-schools__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-size-2);
+    margin: 0;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+/* The address's schools: grey cards; the one picked (shown on the map) is blue */
+.own-school.ds-card {
+    --dsc-card-padding: var(--ds-size-4);
+    display: grid;
+    gap: var(--ds-size-2);
+    width: 100%;
+    text-align: start;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+
+.own-school.ds-card:hover {
+    border-color: var(--ds-color-neutral-border-default);
+}
+
+.own-school.ds-card[aria-current="true"] {
+    border: 2px solid var(--ds-color-brand1-border-default);
+    background: var(--ds-color-brand1-surface-tinted);
+}
+
+.own-school-item {
+    position: relative;
+}
+
+.own-school__body {
+    display: grid;
+    gap: 2px;
+}
+
+.own-school__name {
+    font-weight: var(--ds-font-weight-semibold);
+    font-size: var(--ds-font-size-4);
+}
+
+.own-school__head {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--ds-size-3);
+}
+
+.own-school__head .school-marker {
+    flex-shrink: 0;
+    width: 2.25rem;
+    height: 2.25rem;
+}
+
+.own-school__body {
+    min-width: 0;
+}
+
+.own-school .ds-heading,
+.own-school .ds-paragraph {
+    margin: 0;
+}
+
+.own-school__meta {
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.own-schools__caveat {
+    margin: 0;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+/* The same school in the list: brand colour and a bookmark */
+.school-card.school-card--own {
+    border-color: var(--ds-color-base-default);
+}
+
+.school-card__krets {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-size-1);
+    font-size: var(--ds-font-size-2);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-color-text-default);
+}
+
+.school-card__heart {
+    width: 1.1em;
+    height: 1.1em;
+    color: var(--ds-color-brand1-text-subtle);
+}
+
+/* Small icon link to the source of the figures */
+.source-link {
+    display: inline-flex;
+    vertical-align: middle;
+    margin-inline-start: var(--ds-size-1);
+    color: var(--ds-color-brand1-text-subtle);
+}
+
+.source-link .ds-icon {
+    width: 1.2em;
+    height: 1.2em;
+    margin: 0;
+}
+
+.school-banner__muted {
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+/* ── Walking time from an address (school page) ───────────────────── */
+.walk__field {
+    max-width: 32rem;
+}
+
+.page__content .walk__address {
+    margin-bottom: var(--ds-size-2);
+}
+
+.walk__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-2);
+    margin-bottom: var(--ds-size-4);
+}
+
+.walk__figure {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--ds-size-2);
+    margin: 0 0 var(--ds-size-1);
+    color: var(--ds-color-brand1-text-default);
+}
+
+.walk__approx {
+    font-size: var(--ds-heading-sm-font-size, 1.5rem);
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.walk__number {
+    font-size: clamp(3rem, 8vw, 4.5rem);
+    font-weight: var(--ds-font-weight-bold, 700);
+    line-height: 1;
+}
+
+.walk__unit {
+    font-size: var(--ds-font-size-5);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-color-neutral-text-default);
+}
+
+.page__content .walk__distances {
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.walk__skyss {
+    margin-bottom: var(--ds-size-4);
+}
+
+.walk__skyss .ds-paragraph {
+    margin: 0;
+}
+
+.page__content .walk__how {
+    margin-bottom: var(--ds-size-4);
+}
+
+.walk__figure--far {
+    font-size: var(--ds-heading-md-font-size, 2rem);
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+/* Oslo: next school after year 7, or where the pupils come from */
+.next-school {
+    margin-top: var(--ds-size-6);
+    padding-top: var(--ds-size-5);
+    border-top: 1px solid var(--ds-color-neutral-border-subtle);
+}
+
+.page__content .next-school .ds-heading {
+    margin: 0 0 var(--ds-size-2);
+}
+
+.page__content .next-school .ds-paragraph {
+    margin-bottom: var(--ds-size-2);
+}
+
+/* ── Filters: one row, every filter the same height (label above, control below) ── */
+.filter-bar {
+    max-width: none;
+    gap: var(--ds-size-3) var(--ds-size-4);
+}
+
+.filter-bar .filter-group {
+    flex: 1 1 8rem;
+    min-width: 0;
+    max-width: 15rem;
+    margin: 0;
+}
+
+.filter-bar .filter-group select {
+    width: 100%;
+    min-width: 0;
+}
+
+.filter-dd {
+    display: grid;
+    gap: var(--ds-size-2);
+    align-content: start;
+}
+
+.filter-dd__button.ds-button {
+    justify-content: space-between;
+    width: 100%;
+    font-weight: var(--ds-font-weight-regular);
+    background: var(--ds-color-neutral-background-default);
+    color: var(--ds-color-neutral-text-default);
+    border-color: var(--ds-color-neutral-border-default);
+}
+
+/* A filter that is narrowed down stands out */
+.filter-dd__button.ds-button[data-active] {
+    border-color: var(--ds-color-brand1-base-default);
+    box-shadow: inset 0 0 0 1px var(--ds-color-brand1-base-default);
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.filter-dd__value {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.filter-dd__chevron {
+    display: inline-flex;
+    flex-shrink: 0;
+}
+
+.filter-dd__panel.ds-popover {
+    min-width: 15rem;
+    padding: var(--ds-size-4);
+}
+
+.filter-dd__panel .ds-fieldset {
+    margin: 0;
+}
+
+.filter-dd__panel .filter-option {
+    margin-top: var(--ds-size-2);
+}
+
+.filter-dd__panel .filter-option .ds-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-size-2);
+}
+
+@media (max-width: 640px) {
+    .filter-bar .filter-group {
+        flex-basis: calc(50% - var(--ds-size-3));
+        max-width: none;
+    }
+}
+
+/* Photo credit sits under the photo, right-aligned */
+.carousel__slide figcaption,
+.school-photo figcaption {
+    text-align: right;
+}
+
+/* Owner, profile and hjertesone tags: same height, one baseline */
+.school-banner__tags {
+    align-items: center;
+}
+
+.school-banner__tags li {
+    display: flex;
+}
+
+.school-banner__tags .ds-tag {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+    min-height: 1.75rem;
+    line-height: 1.2;
+}
+
+/* Address's own school: bookmark ("Lagre til senere") in the corner, data note behind a "?" */
+
+.own-school__fav.ds-button {
+    position: absolute;
+    top: var(--ds-size-2);
+    right: var(--ds-size-2);
+    color: var(--ds-color-brand1-text-subtle);
+}
+
+.own-school__fav.ds-button .ds-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.own-school__body {
+    padding-right: var(--ds-size-8);
+}
+
+.own-schools__eyebrow .filter-help.ds-button {
+    margin-block: 0;
+}
+
+.own-schools__info.ds-popover {
+    max-width: min(24rem, calc(100vw - 2rem));
+}
+
+.own-schools__info .ds-paragraph {
+    margin: 0 0 var(--ds-size-2);
+}
+
+.own-schools__info .ds-paragraph:last-child {
+    margin-bottom: 0;
+}
+
+/* Walking time as its own card (under the results) */
+.walk-card.ds-card {
+    --dsc-card-padding: var(--ds-size-5);
+}
+
+.walk-card__head {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-size-3);
+    margin-bottom: var(--ds-size-3);
+}
+
+.page__content .walk-card__head .ds-heading {
+    margin: 0;
+}
+
+.walk-card__icon,
+.map-walk__icon {
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    color: var(--ds-color-brand1-base-contrast-default, #fff);
+    background: var(--ds-color-brand1-base-default);
+}
+
+.walk-card__icon .ds-icon,
+.map-walk__icon .ds-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.page__content .school-page__body > section.walk > .walk-card:first-child {
+    margin-top: var(--ds-size-10);
+}
+
+/* The same walking time on the map, as a floating card (Figma map block) */
+.school-map-wrap {
+    position: relative;
+}
+
+.map-walk {
+    position: absolute;
+    left: var(--ds-size-3);
+    right: var(--ds-size-3);
+    bottom: var(--ds-size-6);
+    z-index: 1000;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--ds-size-3);
+    max-width: 24rem;
+    padding: var(--ds-size-4);
+    border-radius: var(--ds-border-radius-lg);
+    background: var(--ds-color-neutral-background-default);
+    box-shadow: var(--ds-shadow-md, 0 2px 8px rgb(0 0 0 / 0.2));
+}
+
+.map-walk[hidden] {
+    display: none;
+}
+
+.map-walk__body {
+    flex: 1;
+    min-width: 0;
+}
+
+.map-walk__time {
+    margin: 0;
+    font-size: var(--ds-font-size-5);
+}
+
+.map-walk__time strong {
+    font-size: var(--ds-heading-md-font-size, 2rem);
+    line-height: 1;
+}
+
+.map-walk__from {
+    margin: var(--ds-size-1) 0 var(--ds-size-3);
+    font-size: var(--ds-font-size-3);
+    color: var(--ds-color-neutral-text-subtle);
+    overflow-wrap: anywhere;
+}
+
+.map-walk__route.ds-button {
+    border-radius: 999px;
+}
+
+.map-walk__close.ds-button {
+    flex-shrink: 0;
+}
+
+/* The map needs more room for the card */
+.school-map-wrap .school-map {
+    height: 24rem;
+}
+
+/* Under the map: address with its buttons on one row, then notes and links */
+.walk-below {
+    margin-top: var(--ds-size-4);
+}
+
+
+.page__content .map-walk__from {
+    margin-bottom: 0;
+}
+
+/* Icon blocks (Figma "ikonblokk"): icon on top, label under it, centred.
+   3 tiles per row on desktop, 2 on tablet and phone */
+.icon-block__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--ds-size-4);
+    margin: var(--ds-size-4) 0 var(--ds-size-5);
+    padding: 0;
+    list-style: none;
+}
+
+.icon-block__grid li {
+    display: flex;
+}
+
+.icon-tile {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--ds-size-2);
+    padding: var(--ds-size-5) var(--ds-size-4);
+    border-radius: var(--ds-border-radius-lg);
+    background: var(--ds-color-neutral-surface-tinted);
+    color: var(--ds-color-neutral-text-default);
+    text-align: center;
+    text-decoration: none;
+}
+
+a.icon-tile:hover {
+    background: var(--ds-color-brand1-surface-hover);
+}
+
+a.icon-tile:hover .icon-tile__label {
+    text-decoration: underline;
+}
+
+a.icon-tile:focus-visible {
+    outline: 3px solid var(--ds-color-focus-outer, #000);
+    outline-offset: 2px;
+}
+
+.icon-tile__icon .ds-icon {
+    width: 3rem;
+    height: 3rem;
+    color: var(--ds-color-brand1-text-subtle);
+}
+
+.icon-tile__label {
+    font-size: var(--ds-font-size-4);
+    font-weight: 500;
+    overflow-wrap: anywhere;
+}
+
+a.icon-tile .icon-tile__label {
+    color: var(--ds-color-brand1-text-default);
+}
+
+.icon-tile__text {
+    font-size: var(--ds-font-size-3);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.icon-block__more {
+    display: flex;
+    justify-content: flex-end;
+    margin: var(--ds-size-2) 0;
+}
+
+@media (max-width: 960px) {
+    .icon-block__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 400px) {
+    .icon-block__grid {
+        gap: var(--ds-size-3);
+    }
+
+    .icon-tile {
+        padding: var(--ds-size-4) var(--ds-size-2);
+    }
+}
+
+/* Without an address the field opens at the top of the map, centred */
+.map-walk--search {
+    top: var(--ds-size-3);
+    bottom: auto;
+    left: 50%;
+    right: auto;
+    width: min(26rem, calc(100% - 2 * var(--ds-size-3)));
+    max-width: none;
+    padding: var(--ds-size-2);
+    transform: translateX(-50%);
+}
+
+.page__content .map-walk--search .ds-heading {
+    margin: 0 0 var(--ds-size-2);
+}
+
+.map-walk--search .walk__field {
+    max-width: none;
+}
+
+.map-walk .walk__actions {
+    margin: var(--ds-size-3) 0 0;
+}
+
+/* Kommune and country under the Trivsel and Mobbing cards */
+.school-stat__compare {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--ds-size-3);
+    font-size: var(--ds-font-size-3);
+    color: var(--ds-color-neutral-text-default);
+}
+
+.school-stat__compare:empty {
+    display: none;
+}
+
+/* National tests per subject: the school as a dot, country (solid) and kommune (dashed) as lines */
+.dot-plot {
+    margin: var(--ds-size-3) 0 var(--ds-size-4);
+}
+
+.dot-plot__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-1) var(--ds-size-5);
+    margin: 0 0 var(--ds-size-2);
+    padding: 0;
+    list-style: none;
+    font-size: var(--ds-font-size-3);
+}
+
+.dot-plot__legend li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-size-2);
+}
+
+.dot-plot__key {
+    display: inline-block;
+    width: 0.875rem;
+    height: 0.875rem;
+}
+
+.dot-plot__key--school {
+    border-radius: 50%;
+    background: var(--ds-color-brand1-base-default);
+}
+
+.dot-plot__key--national {
+    width: 0;
+    height: 1rem;
+    border-left: 2px solid var(--ds-color-neutral-text-default);
+}
+
+.dot-plot__key--kommune {
+    width: 0;
+    height: 1rem;
+    border-left: 2px dashed var(--ds-color-neutral-text-subtle);
+}
+
+.dot-plot__row {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr) 2.5rem;
+    align-items: center;
+    gap: var(--ds-size-3);
+}
+
+.dot-plot__label {
+    font-size: var(--ds-font-size-3);
+}
+
+.dot-plot__value {
+    font-size: var(--ds-font-size-4);
+    font-weight: 600;
+    text-align: right;
+}
+
+.dot-plot__track {
+    display: block;
+    overflow: visible;
+}
+
+.dot-plot__axis {
+    stroke: var(--ds-color-neutral-border-subtle);
+    stroke-width: 2;
+}
+
+.dot-plot__national {
+    stroke: var(--ds-color-neutral-text-default);
+    stroke-width: 2;
+}
+
+.dot-plot__kommune {
+    stroke: var(--ds-color-neutral-text-subtle);
+    stroke-width: 2;
+    stroke-dasharray: 4 3;
+}
+
+.dot-plot__school {
+    fill: var(--ds-color-brand1-base-default);
+    stroke: var(--ds-color-neutral-background-default);
+    stroke-width: 2;
+}
+
+.dot-plot__ticks {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--ds-font-size-2);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+/* Every Pupil Survey indicator with a small trend line */
+.survey-all {
+    margin-top: var(--ds-size-8);
+}
+
+.table-scroll {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.survey-table th[scope="row"] {
+    font-weight: 400;
+}
+
+.sparkline {
+    display: block;
+}
+
+.sparkline polyline {
+    fill: none;
+    stroke: var(--ds-color-brand1-base-default);
+    stroke-width: 1.5;
+}
+
+.sparkline circle {
+    fill: var(--ds-color-brand1-base-default);
+}
+
+/* Other schools nearby */
+.nearby {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: var(--ds-size-3);
+    margin: var(--ds-size-3) 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nearby__item {
+    display: grid;
+    gap: var(--ds-size-1);
+    padding: var(--ds-size-3) var(--ds-size-4);
+    border-radius: var(--ds-border-radius-md);
+    background: var(--ds-color-neutral-surface-tinted);
+}
+
+.nearby__meta {
+    font-size: var(--ds-font-size-3);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.survey-table thead th {
+    white-space: nowrap;
+}
+
+.map-walk {
+    box-sizing: border-box;
+}
+
+/* "Fant du det du lette etter?": a small tab docked at the bottom right of the screen, closed
+   until clicked (the pattern from oslo.kommune.no, in Designsystemet colours) */
+.page-feedback {
+    position: fixed;
+    right: var(--ds-size-6);
+    bottom: 0;
+    z-index: 1100;
+    width: min(22rem, calc(100% - 2 * var(--ds-size-4)));
+    border-radius: var(--ds-border-radius-lg) var(--ds-border-radius-lg) 0 0;
+    background: var(--ds-color-neutral-background-default);
+    color: var(--ds-color-neutral-text-default);
+    box-shadow: var(--ds-shadow-lg, 0 -2px 12px rgb(0 0 0 / 0.2));
+}
+
+/* Room under the footer so the tab never hides the last links */
+body.has-page-feedback {
+    padding-bottom: 3rem;
+}
+
+.page-feedback__title {
+    margin: 0;
+    font: inherit;
+}
+
+.page-feedback__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ds-size-3);
+    width: 100%;
+    padding: var(--ds-size-2) var(--ds-size-4);
+    border: 0;
+    border-radius: var(--ds-border-radius-lg) var(--ds-border-radius-lg) 0 0;
+    background: var(--ds-color-brand1-base-default);
+    color: var(--ds-color-brand1-base-contrast-default, #fff);
+    font: inherit;
+    font-size: var(--ds-font-size-3);
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+}
+
+.page-feedback__toggle:hover {
+    background: var(--ds-color-brand1-base-hover);
+}
+
+.page-feedback__toggle:focus-visible {
+    outline: 3px solid var(--ds-color-focus-outer, #000);
+    outline-offset: 2px;
+}
+
+.page-feedback__toggle .ds-icon {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    transform: rotate(180deg);
+    transition: transform 0.15s;
+}
+
+.page-feedback__toggle[aria-expanded="true"] .ds-icon {
+    transform: none;
+}
+
+.page-feedback__body {
+    max-height: min(70vh, 28rem);
+    overflow-y: auto;
+    padding: var(--ds-size-4);
+}
+
+.page-feedback .ds-fieldset {
+    margin: 0;
+}
+
+.page-feedback__heading {
+    margin: 0 0 var(--ds-size-3);
+}
+
+.page-feedback__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-2) var(--ds-size-6);
+}
+
+.page-feedback textarea.ds-input {
+    width: 100%;
+}
+
+.page-feedback__error {
+    margin-top: var(--ds-size-3);
+}
+
+.page-feedback__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-3);
+    margin-top: var(--ds-size-4);
+}
+
+@media (max-width: 600px) {
+    .page-feedback {
+        right: var(--ds-size-4);
+    }
+
+    .page-feedback__toggle {
+        font-size: var(--ds-font-size-2);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-feedback__toggle .ds-icon {
+        transition: none;
+    }
+}
+
+.page__content .own-schools__lookup,
+.own-schools__lookup.ds-paragraph {
+    margin: var(--ds-size-2) 0 0;
+}
+
+/* "Trygg skolevei" sits between the heading and the map */
+#skolevei {
+    margin-bottom: var(--ds-size-5);
+}
+
+/* Folded link lists (AKS) */
+.link-details-group {
+    margin: var(--ds-size-4) 0;
+}
+
+/* The school picked from the list; the list stays as it was while the map shows it */
+.school-card[aria-current="true"] {
+    border-color: var(--ds-color-brand1-border-default);
+    background: var(--ds-color-brand1-surface-tinted);
+}
+
+/* "Lagre til senere" bookmark in the top right corner of the banner, as on the school cards */
+.school-banner__save.ds-button {
+    position: absolute;
+    top: var(--ds-size-4);
+    right: var(--ds-size-4);
+    color: var(--ds-color-brand1-text-subtle);
+}
+
+.school-banner__save.ds-button .ds-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/* Address, email and phone with a small button each (Google Maps, email, call) */
+.school-contact {
+    display: grid;
+    gap: var(--ds-size-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.school-contact li {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-size-2);
+    min-width: 0;
+}
+
+.school-contact__text {
+    overflow-wrap: anywhere;
+}
+
+.school-contact__action.ds-button {
+    flex-shrink: 0;
+    margin-block: calc(-1 * var(--ds-size-1));
+}
+
+/* "Lagrede skoler (3)" above the results list */
+/* "‹ Vis alle skoler" on the left and the title on the right, both over the list column */
+.saved-bar {
+    display: grid;
+    grid-template-columns: minmax(20rem, 28rem) minmax(0, 1fr);
+    column-gap: var(--ds-size-6);
+    padding-top: var(--ds-size-4);
+}
+
+.saved-bar__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ds-size-3);
+}
+
+.page .saved-bar .ds-heading,
+.saved-bar .ds-heading {
+    margin: 0;
+}
+
+.saved-bar > .ds-paragraph {
+    grid-column: 1;
+    margin: var(--ds-size-2) 0 0;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+@media (max-width: 960px) {
+    .saved-bar {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.saved-bar[hidden] {
+    display: none;
+}
+
+/* With the way back above, the list and the map start together right under it */
+.saved-bar:not([hidden]) + .results-grid {
+    padding-top: var(--ds-size-3);
+}
+
+.saved-bar .ds-button .ds-icon {
+    color: var(--ds-color-brand1-text-subtle);
+}
+
+.saved-bar .ds-button[aria-pressed="true"] .ds-icon {
+    color: currentColor;
+}
+
+
+.school-banner__body {
+    padding-right: var(--ds-size-8);
+}
+
+/* Contact on the left; website and "Følg skolen" under each other on the right */
+.school-banner__facts {
+    grid-template-columns: minmax(0, 1fr) minmax(0, auto);
+}
+
+.school-banner__facts > div:first-child {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+}
+
+#bannerContact {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+#bannerFollow {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+/* Share and Google Maps under the text, from the start of the text column (near the middle of the banner) */
+.school-banner__actions {
+    justify-content: flex-start;
+}
+
+@media (max-width: 640px) {
+    .school-banner__facts {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .school-banner__facts > div:first-child,
+    #bannerContact,
+    #bannerFollow {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+}
+
+.school-banner__facts .school-contact__text {
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
+/* Colour themes (in the "Meny" dropdown) and light/dark mode (header button). The standard Digdir themes
+   set IBM Plex Mono as their font, so the site keeps Inter whatever the theme; only colours and corners
+   follow the theme. */
+:root {
+    --ds-font-family: Inter;
+}
+
+.theme-menu__item.ds-button {
+    justify-content: flex-start;
+    gap: var(--ds-size-3);
+}
+
+.theme-menu__item[aria-current="true"] {
+    background: var(--ds-color-brand1-surface-tinted);
+}
+
+/* Each theme's own brand1 colour, so the menu shows what the site will look like */
+.theme-menu__dot {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    border: 1px solid rgb(0 0 0 / 0.2);
+    border-radius: 50%;
+}
+
+.theme-menu__dot--designsystemet { background: #0d7a5f; }
+.theme-menu__dot--altinn { background: #0162ba; }
+
+
+/* Phones: the header has the logo, two page links, the theme and the language menu; without the
+   chevrons and with tighter buttons they fit in 375 px */
+@media (max-width: 640px) {
+    .site-nav .ds-button {
+        padding-inline: var(--ds-size-2);
+    }
+
+    .lang-switch .ds-icon {
+        display: none;
+    }
+}
+
+@media (max-width: 400px) {
+    .site-nav .ds-button {
+        padding-inline: var(--ds-size-1);
+    }
+}
+
+/* "Lagrede skoler" in the header: bookmark, label (hidden on phones) and a small count */
+.saved-link.ds-button {
+    gap: var(--ds-size-1);
+}
+
+.saved-link__count {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    padding-inline: var(--ds-size-1);
+    border-radius: 999px;
+    background: var(--ds-color-brand1-base-default);
+    color: var(--ds-color-brand1-base-contrast-default);
+    font-size: var(--ds-font-size-1);
+    font-weight: var(--ds-font-weight-semibold);
+    line-height: 1;
+}
+
+.saved-link__count[hidden] {
+    display: none;
+}
+
+
+/* The last part of the shortcuts: where the pupils go after this school */
+.page__content .snarveier__next {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--ds-size-2);
+    margin: 0;
+    padding-inline-start: var(--ds-size-6);
+    border-left: 1px solid var(--ds-color-neutral-border-default);
+    font-size: var(--ds-font-size-4);
+}
+
+.snarveier__next > .ds-icon {
+    flex-shrink: 0;
+    align-self: center;
+    color: var(--ds-color-brand1-text-subtle);
+}
+
+@media (max-width: 960px) {
+    .page__content .snarveier__next {
+        padding-inline-start: 0;
+        border-left: 0;
+    }
+}
+
+/* "Kilde" right under the heading of each block on the school page */
+.page__content h2 + .section-source,
+.page__content h3 + .section-source {
+    margin-top: calc(-1 * var(--ds-size-2));
+    margin-bottom: var(--ds-size-4);
+}
+
+/* "Se skolen i Nasjonalt skoleregister" under the register sections, with room above it */
+.page__content .register-link {
+    margin: var(--ds-size-5) 0 var(--ds-size-2);
+}
+
+.register-link .ds-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-size-1);
+}
+
+/* School cards in the list: the bookmark button in the top right corner, over the card */
+.school-list__item {
+    position: relative;
+}
+
+.school-card__save.ds-button {
+    position: absolute;
+    top: var(--ds-size-2);
+    right: var(--ds-size-2);
+    color: var(--ds-color-brand1-text-subtle);
+}
+
+.school-card__save.ds-button .ds-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/* Room for the bookmark next to the name */
+.school-list .school-card__body {
+    padding-right: var(--ds-size-8);
+}
+
+.page__content h1 + .section-source {
+    margin-top: calc(-1 * var(--ds-size-2));
+    margin-bottom: var(--ds-size-5);
+}
+
+/* "Meny": all pages grouped (Designsystemet Dropdown with group headings) */
+.site-menu.ds-dropdown {
+    min-width: 16rem;
+}
+
+.site-menu .site-menu__heading {
+    margin: var(--ds-size-2) 0 0;
+    padding-inline: var(--ds-size-3);
+    font-size: var(--ds-font-size-2);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.site-menu .ds-button {
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.site-menu .ds-button[aria-current="page"] {
+    background: var(--ds-color-brand1-surface-tinted);
+}
+
+/* The list heading is hidden on the saved schools page (its title is in the row above) */
+.results-head[hidden],
+.results-sort[hidden] {
+    display: none;
+}
+
+/* A school with 1.–10. trinn: one marker with the backpack (barnetrinn) and the hat (ungdomstrinn) side
+   by side, each in the colour of its own result */
+.school-marker-pair {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 100%;
+}
+
+.school-marker-pair .school-marker:first-child {
+    width: 30px;
+    height: 30px;
+}
+
+.school-marker-pair .school-marker:last-child {
+    width: 40px;
+    height: 40px;
+}
+
+/* The same two badges in the list card, slightly overlapping */
+.school-card__badge {
+    display: inline-flex;
+}
+
+.school-card__badge--pair {
+    width: calc(var(--ds-size-9) * 1.6);
+}
+
+.school-card__badge--pair .school-marker {
+    width: var(--ds-size-9);
+    height: var(--ds-size-9);
+    flex-shrink: 0;
+}
+
+.school-card__badge--pair .school-marker + .school-marker {
+    margin-left: calc(var(--ds-size-9) * -0.4);
+}
+
+/* In the popup: "5. trinn" / "Ungdomstrinnet" with a small badge before each level's numbers */
+.popup-school .popup-level {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-size-2);
+    margin: var(--ds-size-2) 0 0;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.popup-level .school-marker {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-width: 1px;
+}
+
+/* School with 1.–10. trinn: "Barnetrinnet (5. trinn) | Ungdomstrinnet" above the results */
+.level-switch {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-2);
+    margin: 0 0 var(--ds-size-4);
+}

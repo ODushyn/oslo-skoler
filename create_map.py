@@ -1,7 +1,11 @@
 import json
 import csv
 from pathlib import Path
-from datetime import date
+
+import elevundersokelsen
+import photos
+import school_locations
+from nsr import NsrMatcher, load_cache
 
 # ─────────────────────────────────────────────────────────────────────────────
 # UPDATE THIS SINGLE VALUE EACH YEAR when new data arrives.
@@ -125,7 +129,8 @@ def calculate_map_config(schools):
     }
 
 
-def prepare_school_data_for_export(schools, history=None):
+def prepare_school_data_for_export(schools, history=None, nsr_matcher=None, trivsel_cache=None, photo_cache=None,
+                                   mobbing_cache=None):
     """Prepare school data with all necessary computed fields for JSON export."""
     prepared_data = []
     if history is None:
@@ -159,6 +164,17 @@ def prepare_school_data_for_export(schools, history=None):
         key = (school['name'].lower(), school['kommune'].lower(), school_type)
         school_history = history.get(key, [])
 
+        # Owner type and profile from Udir's school register (NSR)
+        register = nsr_matcher.describe(school['name'], school['kommune'], school.get('orgnr')) if nsr_matcher else {}
+        orgnr = register.get('orgnr')
+
+        # Trivsel (Elevundersøkelsen) and an openly licensed photo, both looked up by orgnr
+        trivsel = elevundersokelsen.trivsel_for(trivsel_cache, orgnr, school_type) if trivsel_cache else None
+        mobbing = elevundersokelsen.mobbing_for(mobbing_cache, orgnr, school_type) if mobbing_cache else None
+        photo = dict(photo_cache[orgnr]) if photo_cache and orgnr in photo_cache else None
+        if photo and photo.get('thumb'):
+            photo['thumb'] = photo['thumb'].split('?', 1)[0]  # drop tracking parameters
+
         prepared_data.append({
             'name': school['name'],
             'kommune': school['kommune'],
@@ -173,6 +189,13 @@ def prepare_school_data_for_export(schools, history=None):
             'validScoresCount': len(valid_scores),
             'schoolType': school.get('school_type', 'unknown'),
             'history': school_history,
+            'orgnr': school.get('orgnr') or register.get('orgnr'),
+            'locationSource': school.get('location_source'),
+            'eierform': register.get('eierform'),
+            'profil': register.get('profil'),
+            'trivsel': trivsel,
+            'mobbing': mobbing,
+            'photo': photo,
         })
 
     return prepared_data
@@ -297,20 +320,38 @@ def create_norway_schools_map(input_files=None,
 
         file_schools = parse_csv_to_objects(input_file, school_type=school_type)
 
-        # Use (name, kommune) as key to handle duplicates
-        # If a school appears in both files, prioritize ungdomsskole (they serve both levels)
+        # Use (name, kommune, school_type) as key. A school with both levels
+        # (e.g. 1-10 skole) appears in both files and keeps one entry per level,
+        # so its 5th-grade results are not lost.
         for school in file_schools:
-            key = (school['name'], school['kommune'])
+            key = (school['name'], school['kommune'], school['school_type'])
             if key not in schools_dict:
-                schools_dict[key] = school
-            elif school['school_type'] == 'ungdomsskole':
-                # Replace barneskole entry with ungdomsskole if it exists in both
                 schools_dict[key] = school
 
         print(f"  - Found {len(file_schools)} schools with valid coordinates ({school_type})")
 
     schools = list(schools_dict.values())
-    print(f"\nTotal unique schools: {len(schools)}")
+    print(f"\nTotal school entries (one per school and level): {len(schools)}")
+
+    # Exact organisation number from the raw Udir files, and positions from open,
+    # official sources only (Geonorge/Udir, NSR, Kartverket, OpenStreetMap).
+    # The coordinates in the processed CSVs are not used: part of the old cache
+    # was filled with Google geocoding, which is not open data.
+    source_orgnr = school_locations.schools_in_source(f'source-data/{CURRENT_YEAR}_*.csv')
+    locations = school_locations.load_cache()
+    placed, dropped = [], []
+    for school in schools:
+        orgnr = source_orgnr.get((school['name'], school['kommune'], school['school_type']))
+        position = locations.get(orgnr) if orgnr else None
+        if not position:
+            dropped.append(f"{school['name']} ({school['kommune']})")
+            continue
+        school['orgnr'] = orgnr
+        school['lat'], school['lng'] = position['lat'], position['lng']
+        school['location_source'] = position['source']
+        placed.append(school)
+    schools = placed
+    print(f"  - Open position for {len(schools)} entries; left out {len(dropped)} without one: {', '.join(dropped[:8])}")
 
     if not schools:
         print("ERROR: No schools with valid coordinates found!")
@@ -327,7 +368,21 @@ def create_norway_schools_map(input_files=None,
     print(f"  - Loaded history for {len(history)} school/type entries")
 
     # Prepare school data with computed fields
-    prepared_schools = prepare_school_data_for_export(schools, history=history)
+    # Owner type (offentlig/privat) and profile from the NSR register cache
+    print("\nMatching schools to Udir's school register (NSR)...")
+    nsr_matcher = NsrMatcher(load_cache())
+    trivsel_cache = elevundersokelsen.load_cache()
+    mobbing_cache = elevundersokelsen.load_mobbing()
+    photo_cache = photos.load_cache()
+
+    prepared_schools = prepare_school_data_for_export(schools, history=history, nsr_matcher=nsr_matcher,
+                                                      trivsel_cache=trivsel_cache, photo_cache=photo_cache,
+                                                      mobbing_cache=mobbing_cache)
+    matched = sum(1 for s in prepared_schools if s['eierform'])
+    print(f"  - Owner type found for {matched} of {len(prepared_schools)} entries")
+    print(f"  - Trivsel for {sum(1 for s in prepared_schools if s['trivsel'])} entries, "
+          f"mobbing for {sum(1 for s in prepared_schools if s['mobbing'])} entries, "
+          f"photo for {sum(1 for s in prepared_schools if s['photo'])} entries")
 
     # Create output data structure
     output_data = {
@@ -337,7 +392,8 @@ def create_norway_schools_map(input_files=None,
             'totalSchools': len(schools),
             'title': map_title,
             'currentYear': CURRENT_YEAR,
-            'generated': date.today().isoformat()
+            # National share bullied, for the Mobbing tooltip on the map page (year and 7./10. trinn)
+            'mobbing': {'year': mobbing_cache['year'], 'national': mobbing_cache['national']} if mobbing_cache else None
         }
     }
 
@@ -380,6 +436,10 @@ if __name__ == "__main__":
     create_norway_schools_map(
         output_data_file='static/js/school-data.json',
     )
+
+    # National averages per year, shown next to each school's result on the school page
+    import national_averages
+    national_averages.main()
 
     print("\n[SUCCESS] Map data generation complete!")
     print("  Open index.html in a browser to view the map.")

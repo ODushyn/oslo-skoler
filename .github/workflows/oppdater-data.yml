@@ -1,0 +1,44 @@
+# Daily data refresh: checks Udir (Elevundersøkelsen) and Nasjonalt skoleregister, rebuilds the site
+# data when they have changed, and commits the result. GitHub Pages then publishes it.
+# What is checked, and why nasjonale prøver are not, is described in update_data.py.
+name: Oppdater data
+
+on:
+  schedule:
+    - cron: '17 3 * * *'   # every night at 03:17 UTC (04:17 or 05:17 Norwegian time)
+  workflow_dispatch:       # "Run workflow" button for a refresh by hand
+
+permissions:
+  contents: write
+
+concurrency:
+  group: oppdater-data
+  cancel-in-progress: false
+
+jobs:
+  oppdater:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # The refresh only uses Python's standard library, so there is nothing to install
+      - name: Check the sources and rebuild
+        run: python update_data.py
+
+      - name: Commit the new data
+        if: always()   # also keep what was refreshed when one source could not be reached
+        run: |
+          git add cached-data static/js/school-data.json static/js/landssnitt.json static/js/kommunesnitt.json static/data static/js/data-status.json
+          if git diff --cached --quiet; then
+            echo "Nothing changed"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Oppdater data $(date -u +%F)"
+          git push
