@@ -1857,9 +1857,25 @@ button.school-stat[aria-selected="true"] .school-stat__more {
         min-width: 0;
     }
 
+    /* Phones: the buttons under the field show only their icons (the words stay for screen readers) */
+    .search-bar .search-bar__label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+
+    .score-toggle,
     .filter-toggle,
     .filter-reset {
-        flex: 1 1 0;
+        flex: 0 0 auto;
+        padding-inline: var(--ds-size-3);
+    }
+
+    .score-toggle__dots .color-dot:last-child {
+        margin-inline-end: 0;
     }
 
     .school-stats {
