@@ -1919,8 +1919,9 @@ button.school-stat[aria-selected="true"] .school-stat__more {
     .site-nav .ds-button {
         --dsc-button-padding: var(--ds-size-1);
     }
+}
 
-
+@media (max-width: 640px) {
     .search-panel {
         padding-block: var(--ds-size-6) var(--ds-size-4);
     }
@@ -2013,8 +2014,6 @@ button.school-stat[aria-selected="true"] .school-stat__more {
     .filter-group select {
         width: 100%;
     }
-
-
 }
 
 /* ── Language (static/js/i18n.js) ─────────────────────────────────── */
