@@ -1,6 +1,6 @@
 // Language support: Norwegian (default), English and Ukrainian.
 //
-// The Norwegian text is the key. t('Vis filter') returns the English or Ukrainian text when that
+// The Norwegian text is the key. t('Nullstill') returns the English or Ukrainian text when that
 // language is chosen, otherwise the Norwegian text itself. Texts with values use placeholders:
 // t('Viser {shown} av {total}', { shown: 20, total: 300 }).
 // The English texts are below (EN). The Ukrainian texts are in i18n-uk.js (I18N_UK), which this
@@ -87,9 +87,6 @@ const I18N = (() => {
         'Viser {shown} av {total} treff. Skriv mer for å snevre inn.': 'Showing {shown} of {total} matches. Type more to narrow the search.',
 
         // ── Filters ───────────────────────────────────────────────────────
-        'Vis filter': 'Show filters',
-        'Skjul filter': 'Hide filters',
-        'Nullstill filter': 'Reset filters',
         'Filtrer skoler': 'Filter schools',
         'Alle': 'All',
         'Resultat': 'Result',
@@ -106,7 +103,6 @@ const I18N = (() => {
         'Alle kommuner': 'All municipalities',
         'Profil': 'Profile',
         'Alle profiler': 'All profiles',
-        'Resultat nasjonale prøver': 'National test results',
         'Snittet er gjennomsnittet av skolens skalapoeng i engelsk, lesing og regning på nasjonale prøver 2025–26. Fag uten publisert resultat telles ikke med. Skalaen er satt slik at landsgjennomsnittet var 50 i 2022.':
             'The average of the school’s scale points in English, reading and numeracy on the 2025–26 national tests. Subjects without a published result are not counted. The scale is set so that the national average was 50 in 2022.',
         'Under 45': 'Under 45',
@@ -270,6 +266,16 @@ const I18N = (() => {
         'AKS-sidene på skolens nettside, lest {date}': 'the after-school pages on the school’s website, read {date}',
         'Én gang i uken': 'Once a week',
         'Lagre til senere': 'Save for later',
+        "Fargene på kartet og i listen bygger på det siste skoleåret med publiserte resultater fra nasjonale prøver. Resultatene fra tidligere år ser du på siden til hver skole.": "The colours on the map and in the list are based on the latest school year with published national test results. Results from earlier years are on each school’s page.",
+        "Snitt nasjonale prøver": "National test average",
+        "Skolekartet er et privat, ikke-kommersielt prosjekt og har ansvaret for opplysningene som beskrives her. Spørsmål om personvern, eller ønske om å få slettet en tilbakemelding, kan sendes til": "Skolekartet is a private, non-commercial project and is responsible for the information described here. Questions about privacy, or a request to have feedback deleted, can be sent to",
+        "eller via": "or through",
+        "Lukk filter": "Close filters",
+        "Vis skolene": "Show the schools",
+        "Vis 1 skole": "Show 1 school",
+        "Vis {count} skoler": "Show {count} schools",
+        "Filter": "Filters",
+        "Nullstill": "Reset",
         "Sist oppdatert 4. november 2026.": "Last updated 4 November 2026.",
         "Adressen eller posisjonen du søkte på, for gangtid på skolesiden": "The address or location you searched from, for the walking time on the school page",
         "Leter du etter en skole?": "Looking for a school?",
@@ -339,7 +345,6 @@ const I18N = (() => {
         "Snittet er gjennomsnittet av skolens skalapoeng i engelsk, lesing og regning på nasjonale prøver {year}. Fag uten publisert resultat telles ikke med. Skalaen er satt slik at landsgjennomsnittet var 50 i 2022.": "The average of the school’s scale points in English, reading and numeracy on the {year} national tests. Subjects without a published result are not counted. The scale is set so that the national average was 50 in 2022.",
         "Andelen elever som svarer at de er blitt mobbet to eller tre ganger i måneden eller oftere, av andre elever, digitalt eller av voksne på skolen. Elevundersøkelsen {year}, 7. trinn for barneskoler og 10. trinn for ungdomsskoler. Landsgjennomsnittet er {barne} på 7. trinn og {ungdom} på 10. trinn. Små grupper er skjult av Udir.": "The share of pupils who say they have been bullied two or three times a month or more, by other pupils, online or by adults at school. Pupil Survey {year}, year 7 for primary schools and year 10 for lower secondary schools. The national average is {barne} in year 7 and {ungdom} in year 10. Small groups are hidden by Udir.",
         "Tallene ble sist sjekket mot kildene {date}.": "The figures were last checked against the sources on {date}.",
-        "Skolekartet er et privat, ikke-kommersielt prosjekt og har ansvaret for opplysningene som beskrives her. Spørsmål om personvern, eller ønske om å få slettet en tilbakemelding, kan sendes via": "Skolekartet is a private, non-commercial project and is responsible for the information described here. Questions about privacy, or a request to have feedback deleted, can be sent through",
         "Vi bruker tilbakemeldingene bare til å rette feil, forbedre Skolekartet og svare deg hvis du har oppgitt e-post. Grunnlaget er vår berettigede interesse i å drive en tjeneste som fungerer (personvernforordningen artikkel 6 nr. 1 bokstav f). Vi publiserer ikke tilbakemeldinger og deler dem ikke med andre. Vi beholder dem så lenge de er nyttige for å forbedre tjenesten, og sletter dem når de ikke lenger trengs. Du kan når som helst be oss slette en tilbakemelding du har sendt.": "We only use feedback to fix errors, improve Skolekartet and reply to you if you have given an email address. The legal basis is our legitimate interest in running a service that works (GDPR Article 6(1)(f)). We do not publish feedback or share it with others. We keep it as long as it is useful for improving the service, and delete it when it is no longer needed. You can ask us at any time to delete feedback you have sent.",
         "Grønn": "Green",
         "Blå": "Blue",
@@ -401,7 +406,7 @@ const I18N = (() => {
         "Skolekrets, pilot for Fredrikstad": "School district, pilot for Fredrikstad",
         "Inntakssoner for barne- og ungdomsskoler i Fredrikstad kommune (Geonorge)": "Intake zones for primary and lower secondary schools in Fredrikstad municipality (Geonorge)",
         "Åpne data, ingen vilkår for bruk (2018)": "Open data, no conditions of use (2018)",
-        "En skole med 1.–10. trinn har egne resultater for barnetrinnet (nasjonale prøver på 5. trinn, Elevundersøkelsen på 7. trinn) og ungdomstrinnet (8.–9. og 10. trinn). På kartet vises den som én skole. Når begge trinn er valgt i filteret, sorteres den etter gjennomsnittet av de to resultatene, og begge vises på kortet.": "A school with years 1–10 has separate results for the primary level (national tests in year 5, the Pupil Survey in year 7) and the lower secondary level (years 8–9 and 10). On the map it is shown as one school. When both levels are selected in the filter, it is sorted by the mean of the two results, and both are shown on the card.",
+        "En skole med 1.–10. trinn har egne resultater for barnetrinnet (nasjonale prøver på 5. trinn, Elevundersøkelsen på 7. trinn) og ungdomstrinnet (nasjonale prøver på 8. trinn, Elevundersøkelsen på 10. trinn). På kartet vises den som én skole. Når begge trinn er valgt i filteret, sorteres den etter gjennomsnittet av de to resultatene, og begge vises på kortet.": "A school with years 1–10 has separate results for the primary level (national tests in year 5, the Pupil Survey in year 7) and the lower secondary level (national tests in year 8, the Pupil Survey in year 10). On the map it is shown as one school. When both levels are selected in the filter, it is sorted by the mean of the two results, and both are shown on the card.",
         "Tilgjengelighetserklæring": "Accessibility statement",
         "Tilgjengelighetserklæring – Skolekartet": "Accessibility statement – Skolekartet",
         "Sist oppdatert 3. november 2026.": "Last updated 3 November 2026.",
@@ -880,7 +885,7 @@ const I18N = (() => {
         'Betydelig under landsgjennomsnitt (3,7% av skoler)': 'Well below the national average (3.7% of schools)',
         'Oransje (45 – 49,31):': 'Orange (45 – 49.31):',
         'Under landsgjennomsnitt (44,9% av skoler)': 'Below the national average (44.9% of schools)',
-        'Lysegrønn (49,31 – 54):': 'Light green (49.31 – 54):',
+        'Lysegrønn (49,31 – 55):': 'Light green (49.31 – 55):',
         'Over landsgjennomsnitt (48,2% av skoler)': 'Above the national average (48.2% of schools)',
         'Mørkegrønn (≥ 55):': 'Dark green (≥ 55):',
         'Betydelig over landsgjennomsnitt (3,2% av skoler)': 'Well above the national average (3.2% of schools)',

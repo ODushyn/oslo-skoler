@@ -80525,7 +80525,7 @@
 "navn": "Stranda voksenopplæring",
 "fulltNavn": "Stranda voksenopplæring",
 "kommunenummer": "5057",
-"aktiv": true,
+"aktiv": false,
 "grunnskole": false,
 "privat": false,
 "offentlig": true
@@ -98196,7 +98196,7 @@
 "fulltNavn": "Voksenopplæringen",
 "kommunenummer": "1832",
 "aktiv": true,
-"grunnskole": false,
+"grunnskole": true,
 "privat": false,
 "offentlig": true
 },

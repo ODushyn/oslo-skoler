@@ -153,7 +153,6 @@ const Finder = (() => {
             school: state.school,
             address: state.address ? { label: state.address.label, lat: state.address.lat, lng: state.address.lng, kommune: state.address.kommune } : null,
             schoolQuery: el('schoolSearch').value,
-            filtersOpen: el('filterToggle').getAttribute('aria-expanded') === 'true',
             scrollY: window.scrollY
         };
         try { sessionStorage.setItem(VIEW_KEY, JSON.stringify(view)); } catch (_) { /* storage blocked */ }
@@ -192,7 +191,6 @@ const Finder = (() => {
             writeUrlState();
         }
         if (view.schoolQuery) el('schoolSearch').value = view.schoolQuery;
-        if (view.filtersOpen) setFilterPanel(true);
         map.setView(view.center, view.zoom, { animate: false });
         state.shown = view.shown || PAGE_SIZE;
         if (view.listBounds) {
@@ -281,7 +279,7 @@ const Finder = (() => {
         document.querySelectorAll('input[name="owner"]').forEach(i => { i.checked = state.owners.has(i.value); });
         document.querySelectorAll('input[name="score"]').forEach(i => { i.checked = state.scores.has(i.value); });
         el('kommuneFilter').value = state.kommune;
-        el('profileFilter').value = state.profile;
+        document.querySelectorAll('input[name="profile"]').forEach(i => { i.checked = i.value === state.profile; });
         document.querySelectorAll('input[name="trivsel"]').forEach(i => { i.checked = state.trivsels.has(i.value); });
         document.querySelectorAll('input[name="mobbing"]').forEach(i => { i.checked = state.mobbings.has(i.value); });
         showSort(state.sort);
@@ -302,9 +300,12 @@ const Finder = (() => {
         entries.forEach(e => {
             if (e.school.profil) counts[e.school.profil] = (counts[e.school.profil] || 0) + 1;
         });
-        el('profileFilter').insertAdjacentHTML('beforeend', Object.keys(PROFILE_LABEL)
+        el('profileOptions').insertAdjacentHTML('beforeend', Object.keys(PROFILE_LABEL)
             .filter(p => counts[p])
-            .map(p => `<option value="${p}">${t(PROFILE_LABEL[p])} (${counts[p]})</option>`)
+            .map(p => `<ds-field class="ds-field filter-option">
+                    <input class="ds-input" type="radio" id="f-profile-${p}" name="profile" value="${p}" />
+                    <label class="ds-label" data-weight="regular" for="f-profile-${p}">${t(PROFILE_LABEL[p])} (${counts[p]})</label>
+                </ds-field>`)
             .join(''));
     }
 
@@ -321,11 +322,18 @@ const Finder = (() => {
                 applyFilters();
             });
         });
+        // The result choices are both in the "Nasjonale prøver" row and in the filter panel; keep them in step
         document.querySelectorAll('input[name="score"]').forEach(input => {
             input.addEventListener('change', () => {
                 toggle(state.scores, input.value, input.checked);
+                document.querySelectorAll('input[name="score"]').forEach(i => { i.checked = state.scores.has(i.value); });
                 applyFilters();
             });
+        });
+        el('scoreToggle').addEventListener('click', () => {
+            const open = el('scoreToggle').getAttribute('aria-expanded') !== 'true';
+            el('scoreToggle').setAttribute('aria-expanded', String(open));
+            el('scoreBar').hidden = !open;
         });
         document.querySelectorAll('input[name="trivsel"]').forEach(input => {
             input.addEventListener('change', () => {
@@ -340,6 +348,7 @@ const Finder = (() => {
             });
         });
         el('profileFilter').addEventListener('change', event => {
+            if (event.target.name !== 'profile') return;
             state.profile = event.target.value;
             applyFilters();
         });
@@ -363,16 +372,27 @@ const Finder = (() => {
         });
         el('resetFilters').addEventListener('click', resetFilters);
 
-        // Filters live in a panel that the "Vis filter" / "Skjul filter" button opens and closes
-        el('filterToggle').addEventListener('click', () => {
-            setFilterPanel(el('filterToggle').getAttribute('aria-expanded') !== 'true');
+        // Filters slide in from the right (a modal Designsystemet Dialog). The list and map update as you
+        // choose; "Vis N skoler", the close button, Esc or a click outside the panel closes it.
+        const dialog = el('filterPanel');
+        el('filterToggle').addEventListener('click', () => setFilterPanel(true));
+        el('filterClose').addEventListener('click', () => setFilterPanel(false));
+        el('filterDone').addEventListener('click', () => setFilterPanel(false));
+        el('filterResetDialog').addEventListener('click', resetFilters);
+        dialog.addEventListener('click', event => {
+            if (event.target === dialog) setFilterPanel(false); // the backdrop
+        });
+        dialog.addEventListener('close', () => {
+            el('filterToggle').setAttribute('aria-expanded', 'false');
+            el('filterToggle').focus();
         });
     }
 
     function setFilterPanel(open) {
+        const dialog = el('filterPanel');
         el('filterToggle').setAttribute('aria-expanded', String(open));
-        el('filterToggleLabel').textContent = open ? 'Skjul filter' : 'Vis filter';
-        el('filterPanel').hidden = !open;
+        if (open && !dialog.open) dialog.showModal();
+        else if (!open && dialog.open) dialog.close();
     }
 
     // Icons in the chips: the same as on the map markers and in the list
@@ -400,8 +420,11 @@ const Finder = (() => {
         badge.hidden = count === 0;
         badge.dataset.count = String(count);
         badge.setAttribute('aria-label', count === 1 ? t('1 aktivt filter') : t('{count} aktive filtre', { count }));
-        // Always visible next to the toggle; only usable when a filter is on
+        // "Nullstill" next to the Filter button and in the panel; only usable when a filter is on
         el('resetFilters').disabled = count === 0;
+        // The "Nasjonale prøver" button is marked while some results are left out
+        el('scoreToggle').toggleAttribute('data-active', state.scores.size !== ALL_SCORES.length);
+        el('filterResetDialog').disabled = count === 0;
         updateSummaries();
     }
 
@@ -489,6 +512,9 @@ const Finder = (() => {
         cluster.addLayers(filtered.map(e => e.marker));
         state.shown = PAGE_SIZE;
         updateFilterCount();
+        // The panel's main button says how many schools the filters leave, in all of Norway
+        el('filterDone').textContent = filtered.length === 1 ? t('Vis 1 skole')
+            : t('Vis {count} skoler', { count: countFormat.format(filtered.length) });
         renderList();
         writeUrlState();
     }
@@ -779,7 +805,7 @@ const Finder = (() => {
         Object.entries(SEARCH_MODES).forEach(([name, config]) => {
             el(config.field).hidden = name !== mode;
         });
-        el('locateError').hidden = true;
+        showLocateError(null);
         const config = SEARCH_MODES[mode] || SEARCH_MODES.address;
         state.mode = mode === 'school' ? 'school' : 'address';
         if (map) writeUrlState();
@@ -796,6 +822,7 @@ const Finder = (() => {
         // input events when it fills in or clears the selected value.
         input.addEventListener('input', event => {
             if (!event.isTrusted) return;
+            showLocateError(null); // typing an address answers the "Din posisjon" message
             const query = input.value.trim();
             clearTimeout(addressTimer);
             if (query.length === 0) {
@@ -879,8 +906,23 @@ const Finder = (() => {
         control.addTo(map);
     }
 
+    // Why "Din posisjon" did not work, as Designsystemet's validation message under the address field:
+    // <ds-field> links it to the input and marks the input invalid while it is there
+    function showLocateError(text) {
+        const field = el('addressField');
+        field.querySelectorAll(':scope > [data-field="validation"]').forEach(node => node.remove());
+        if (!text) return;
+        const message = document.createElement('p');
+        message.className = 'ds-validation-message';
+        message.dataset.field = 'validation';
+        message.dataset.size = 'sm';
+        message.setAttribute('role', 'status');
+        message.textContent = text;
+        field.append(message);
+    }
+
     function locate() {
-        el('locateError').hidden = true;
+        showLocateError(null);
         navigator.geolocation.getCurrentPosition(async position => {
             const result = { label: t('Din posisjon'), lat: position.coords.latitude, lng: position.coords.longitude };
             const data = await loadKretser();
@@ -888,10 +930,9 @@ const Finder = (() => {
             if (krets) result.kommune = krets.kommune;
             selectAddress(result);
         }, error => {
-            el('locateError').textContent = t(error.code === error.PERMISSION_DENIED
+            showLocateError(t(error.code === error.PERMISSION_DENIED
                 ? 'Nettleseren har ikke lov til å bruke posisjonen din. Skriv inn en adresse i stedet.'
-                : 'Fant ikke posisjonen din. Skriv inn en adresse i stedet.');
-            el('locateError').hidden = false;
+                : 'Fant ikke posisjonen din. Skriv inn en adresse i stedet.'));
         }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 });
     }
 

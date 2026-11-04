@@ -360,6 +360,55 @@ main:focus {
     gap: var(--ds-size-1);
 }
 
+/* "Om Skolekartet" and "Om fargefordelingen" in the exact middle of the header, whatever the width of the
+   logo and the buttons on each side */
+.site-header__inner {
+    position: relative;
+}
+
+.site-primary {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--ds-size-8);
+}
+
+/* Navigation links as on designsystemet.no: plain text, an underline on hover, and a thick underline in
+   the brand colour under the page you are on */
+.site-primary__link {
+    padding-block: var(--ds-size-2);
+    color: var(--ds-color-neutral-text-default);
+    font-weight: var(--ds-font-weight-medium);
+    text-decoration: none;
+    text-underline-offset: 0.45em;
+}
+
+.site-primary__link:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+}
+
+.site-primary__link[aria-current="page"] {
+    color: var(--ds-color-brand1-text-default);
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-decoration-color: var(--ds-color-brand1-base-default);
+}
+
+.site-primary__link:focus-visible {
+    outline: var(--dsc-focus-outline, 3px solid var(--ds-color-focus-outer));
+    outline-offset: 2px;
+    border-radius: var(--ds-border-radius-sm);
+}
+
+/* Below this width the links would run into the buttons on the right; they are in the menu as well */
+@media (max-width: 1279px) {
+    .site-primary {
+        display: none;
+    }
+}
+
 /* ── Search: one row, the select chooses what to search by ─────────── */
 .search-panel {
     background: var(--ds-color-brand1-background-tinted);
@@ -370,12 +419,13 @@ main:focus {
     margin: 0 0 var(--ds-size-4);
 }
 
+/* Everything lines up with the top of the input (48 px), so a message under the field ("Din posisjon"
+   did not work) only adds space below and nothing moves */
 .search-bar {
     display: flex;
     flex-wrap: wrap; /* buttons move to the next line when the row is too narrow */
-    align-items: center;
+    align-items: flex-start;
     gap: var(--ds-size-2) var(--ds-size-4);
-    max-width: 64rem;
 }
 
 /* "Søk på  (•) Adresse  ( ) Skolenavn" on one line */
@@ -400,13 +450,23 @@ main:focus {
     margin: 0;
 }
 
+/* Centre "Søk på (•) Adresse ( ) Skolenavn" on the 48 px input. A fieldset centres its content in an
+   inner box that does not grow with min-height, so the space goes in as padding instead. */
+.search-mode {
+    padding-block: calc((var(--ds-size-12) - 1lh) / 2);
+}
+
+/* The address field takes most of the row; its messages stack under it */
 .search-bar__field {
-    flex: 1 1 16rem;
+    display: flex;
+    flex-direction: column;
+    flex: 2 1 24rem;
     min-width: 0;
 }
 
 /* "Din posisjon": the target icon at the end of the empty address field (the clear button takes its
-   place once there is text), the first suggestion, and why it did not work when the browser said no */
+   place once there is text), the first suggestion, and why it did not work when the browser said no
+   (Designsystemet's validation message, added by finder.js) */
 .address-input {
     position: relative;
 }
@@ -438,14 +498,14 @@ main:focus {
     color: var(--ds-color-neutral-text-subtle);
 }
 
-.locate-error {
-    margin: var(--ds-size-1) 0 0;
-    color: var(--ds-color-danger-text-subtle);
+.search-bar__field .ds-validation-message {
+    margin-top: var(--ds-size-2);
 }
 
 /* Field adds space after its (visually hidden) label; drop it so the input
    lines up with the radio buttons and the Filtre button */
-.search-bar__field .ds-field > .ds-suggestion {
+.search-bar__field .ds-field > .ds-suggestion,
+.search-bar__field .ds-field > .address-input {
     margin-top: 0;
 }
 
@@ -2208,10 +2268,16 @@ button.school-stat[aria-selected="true"] .school-stat__more {
     margin-top: var(--ds-size-2);
 }
 
-.filter-dd__panel .filter-option .ds-label {
+/* Icon or colour dot centred on the text of each choice (filter panel and the "Nasjonale prøver" row) */
+.filter-option .ds-label {
     display: inline-flex;
     align-items: center;
     gap: var(--ds-size-2);
+}
+
+.filter-option .ds-label .chip-icon,
+.filter-option .ds-label .color-dot {
+    margin-inline-end: 0;
 }
 
 @media (max-width: 640px) {
@@ -2753,11 +2819,24 @@ body.has-page-feedback {
     margin-top: var(--ds-size-3);
 }
 
+/* The buttons sit at the right edge (the main one last); the Personvern link on the thank-you step stays left */
 .page-feedback__actions {
     display: flex;
     flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
     gap: var(--ds-size-3);
     margin-top: var(--ds-size-4);
+}
+
+.page-feedback__privacy {
+    margin-right: auto;
+    font-size: var(--ds-font-size-minus-1);
+}
+
+/* Each step's heading gets focus so screen readers read it; it is not a control, so no focus ring */
+.page-feedback [data-step-heading]:focus {
+    outline: none;
 }
 
 @media (max-width: 600px) {
@@ -3041,6 +3120,11 @@ body.has-page-feedback {
     margin: var(--ds-size-5) 0 var(--ds-size-2);
 }
 
+/* Text right after a folded block (Details) gets the same space everywhere, as the register link has */
+.page__content .ds-details + .ds-paragraph {
+    margin-top: var(--ds-size-5);
+}
+
 .register-link .ds-link {
     display: inline-flex;
     align-items: center;
@@ -3161,4 +3245,128 @@ body.has-page-feedback {
     flex-wrap: wrap;
     gap: var(--ds-size-2);
     margin: 0 0 var(--ds-size-4);
+}
+
+/* Filter panel: slides in from the right (Designsystemet Dialog, data-placement="right"); the header and
+   the buttons stay put while the filters scroll. On phones it takes the whole width. */
+.filter-dialog[open] {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 28rem;
+    padding: 0;
+}
+
+.filter-dialog__head,
+.filter-dialog__foot {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-size-3);
+    padding: var(--ds-size-4) var(--ds-size-6);
+}
+
+.filter-dialog__head {
+    justify-content: space-between;
+    border-bottom: 1px solid var(--ds-color-neutral-border-subtle);
+}
+
+.filter-dialog__foot {
+    border-top: 1px solid var(--ds-color-neutral-border-subtle);
+}
+
+.filter-dialog .filter-bar {
+    flex: 1;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: var(--ds-size-5);
+    max-width: none;
+    margin: 0;
+    padding: var(--ds-size-5) var(--ds-size-6);
+    overflow-y: auto;
+}
+
+.filter-dialog .filter-bar .filter-group {
+    flex: none;
+    width: 100%;
+    max-width: none;
+}
+
+.filter-dialog .filter-dd__button {
+    width: 100%;
+    justify-content: space-between;
+}
+
+/* In the filter panel every group shows its choices straight away (no dropdowns); two or three short
+   choices share a line, longer lists wrap */
+.filter-checks__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-2) var(--ds-size-5);
+}
+
+.filter-checks .filter-option {
+    margin: 0;
+}
+
+.filter-checks > legend {
+    margin-bottom: var(--ds-size-2);
+}
+
+/* "Nasjonale prøver": a button before "Filter" that opens a row with the result colours under the search */
+.score-toggle__dots {
+    display: inline-flex;
+}
+
+.score-toggle__dots .color-dot {
+    width: 0.6em;
+    height: 0.6em;
+    margin-inline-end: 2px;
+}
+
+.score-toggle__dots .color-dot:last-child {
+    margin-inline-end: var(--ds-size-1);
+}
+
+.score-toggle[aria-expanded="true"],
+.score-toggle[data-active] {
+    background: var(--ds-color-brand1-surface-tinted);
+}
+
+.score-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ds-size-2) var(--ds-size-5);
+    margin: var(--ds-size-6) 0 0;
+    padding: 0;
+    border: 0;
+}
+
+.score-bar[hidden] {
+    display: none;
+}
+
+.score-bar > legend {
+    float: left;
+    margin: 0;
+    padding: 0;
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--ds-color-brand1-text-subtle); /* the same colour as the sort button ("Nærmest") */
+}
+
+.ds-fieldset.score-bar > * + * {
+    margin: 0;
+}
+
+/* "Snitt nasjonale prøver ↗": the same external-link icon as on other links; the page that explains the
+   colours opens in a new tab, so the filters stay as they are */
+.score-bar > legend {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-size-1);
+}
+
+.score-bar__info.ds-button {
+    margin-block: calc(-1 * var(--ds-size-2));
+    color: inherit;
 }

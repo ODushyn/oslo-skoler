@@ -46,13 +46,18 @@
     }
     const localHref = href => (typeof I18N !== 'undefined' ? I18N.href(href) : href);
     const menuHtml = `
-        <button type="button" class="ds-button site-menu__button" data-variant="tertiary" data-size="sm" popovertarget="siteMenu">${ICON_MENU}<span class="site-nav__label">Meny</span></button>
+        <button type="button" class="ds-button site-menu__button" data-variant="secondary" data-size="sm" popovertarget="siteMenu">${ICON_MENU}<span class="site-nav__label">Meny</span></button>
         <div class="ds-dropdown site-menu" popover id="siteMenu" data-placement="bottom-end">
             ${MENU.map(group => `<h2 class="site-menu__heading">${group.heading}</h2>
             <ul>${group.links.map(l => `<li><a class="ds-button" data-variant="tertiary" data-size="sm" href="${localHref(l.href)}"${ariaCurrentMenu(l.href)}>${l.label}</a></li>`).join('')}</ul>`).join('')}
             ${typeof THEME !== 'undefined' ? THEME.menuItemsHtml() : ''}
         </div>`;
 
+
+    const PRIMARY = [
+        { href: 'om-skolekartet.html', label: 'Om Skolekartet' },
+        { href: 'om-fargefordelingen.html', label: 'Om fargefordelingen' }
+    ];
 
     const header = `
         <header class="site-header">
@@ -61,11 +66,16 @@
                     <span class="site-logo__mark" aria-hidden="true">${ICONS.logo}</span>
                     Skolekartet
                 </a>
+                <!-- The two pages most people need, in the middle as on Digdir's own sites; on narrow screens they
+                     are only in the menu -->
+                <nav class="site-primary" aria-label="Om tjenesten">
+                    ${PRIMARY.map(l => `<a class="site-primary__link" href="${localHref(l.href)}"${ariaCurrent(l.href)}>${l.label}</a>`).join('')}
+                </nav>
                 <nav class="site-nav" aria-label="Hovedmeny">
                     <a class="ds-button saved-link" data-variant="tertiary" data-size="sm" href="${typeof I18N !== 'undefined' ? I18N.href('./?lagrede=1') : './?lagrede=1'}"
                        aria-label="Lagrede skoler">${ICONS.bookmark}<span class="site-nav__label">Lagrede skoler</span><span class="saved-link__count" aria-hidden="true" hidden></span></a>
-                    ${typeof THEME !== 'undefined' ? THEME.schemeButtonHtml() : ''}
                     ${typeof I18N !== 'undefined' ? I18N.switchLink() : ''}
+                    ${typeof THEME !== 'undefined' ? THEME.schemeButtonHtml() : ''}
                     ${menuHtml}
                 </nav>
             </div>
@@ -147,7 +157,7 @@
         if (slot && current !== 'tilbakemelding.html') {
             slot.insertAdjacentHTML('beforebegin', '<div id="page-feedback"></div>');
             const script = document.createElement('script');
-            script.src = 'static/js/page-feedback.js?v=3';
+            script.src = 'static/js/page-feedback.js?v=4';
             document.body.appendChild(script);
         }
         if (slot) slot.outerHTML = footer;

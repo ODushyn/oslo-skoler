@@ -33,7 +33,8 @@ def detect_encoding_and_delimiter(file_path):
                     encoding_used = encoding
                     delimiter_used = delimiter
                     print(f"\n✅ Detected encoding: {encoding}")
-                    print(f"✅ Detected delimiter: {'TAB' if delimiter == '\t' else repr(delimiter)}")
+                    delimiter_name = 'TAB' if delimiter == '\t' else repr(delimiter)  # no backslash inside the f-string (Python < 3.12)
+                    print(f"✅ Detected delimiter: {delimiter_name}")
                     csvfile.close()
                     break
             except Exception:
