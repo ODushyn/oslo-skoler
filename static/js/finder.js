@@ -853,12 +853,22 @@ const Finder = (() => {
         if (keepPlace) window.scrollBy(0, anchor.getBoundingClientRect().top - before);
 
         const school = entry.school;
-        miniMap = L.map(slot.firstElementChild, { scrollWheelZoom: false }).setView([school.lat, school.lng], 15);
+        // Zoom buttons at the bottom right, stacked above the attribution, so the open popup does not cover them
+        miniMap = L.map(slot.firstElementChild, { scrollWheelZoom: false, zoomControl: false }).setView([school.lat, school.lng], 15);
+        L.control.zoom({ position: 'bottomright' }).addTo(miniMap);
         L.maplibreGL({ style: THEME.mapStyle(), attributionControl: { customAttribution: MAP_ATTRIBUTION } }).addTo(miniMap);
+        // The school's popup (with "Les mer om skolen") is open from the start, like a tapped marker on the big map
         L.marker([school.lat, school.lng], { icon: entry.marker.options.icon, keyboard: false })
             .addTo(miniMap)
-            // The card above already shows the numbers; the popup (with "Les mer om skolen") opens on a tap
-            .bindPopup(createPopupContent(entry.marker.schoolLevels || [school]), { maxWidth: 320 });
+            // Popup sized to the small map (its frame adds about 50 px). The bottom padding keeps the marker
+            // under the popup clear of the attribution; a school with two levels scrolls inside the popup.
+            .bindPopup(createPopupContent(entry.marker.schoolLevels || [school]), {
+                maxWidth: Math.min(320, slot.clientWidth - 74),
+                maxHeight: slot.clientHeight - 170,
+                autoPanPaddingTopLeft: [12, 12],
+                autoPanPaddingBottomRight: [12, 100]
+            })
+            .openPopup();
         miniKey = entry.key;
 
         if (keepPlace) {
