@@ -3312,6 +3312,33 @@ body.has-page-feedback {
     flex: 1 1 auto;
 }
 
+/* Pages under skoler/ (site_pages.py): "Skolekartet › Skoler › Oslo › Skolen" above the heading */
+.breadcrumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-1) var(--ds-size-2);
+    margin: 0 0 var(--ds-size-4);
+    padding: 0;
+    list-style: none;
+    font-size: var(--ds-font-size-minus-1);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.breadcrumbs li + li::before {
+    content: "›";
+    margin-inline-end: var(--ds-size-2);
+}
+
+/* All kommuner: a few columns on wide screens */
+.kommune-list {
+    columns: 16rem auto;
+    column-gap: var(--ds-size-8);
+}
+
+.kommune-list li {
+    break-inside: avoid;
+}
+
 /* School cards in the list: the bookmark button in the top right corner, over the card */
 .school-list__item {
     position: relative;

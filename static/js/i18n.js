@@ -24,6 +24,19 @@ const I18N = (() => {
     const TRANSLATED_PAGES = ['', 'index.html', 'om-skolekartet.html', 'skole.html', 'datakilder.html', 'om-fargefordelingen.html', 'om-skolekrets.html', 'tilbakemelding.html',
                               'ny-i-norge.html', 'skolefritid.html', 'skolehverdag.html', 'tilgjengelighet.html', 'personvern.html'];
 
+    // The site's root, from this file's own address (static/js/i18n.js), so links and data work the same
+    // on the pages at the top and on the school and kommune pages under skoler/
+    const ROOT = new URL('../../', (document.currentScript && document.currentScript.src) || location.href);
+    // The page's path from the root: "", "skole.html", "skoler/oslo/", "skoler/oslo/majorstuen-skole.html"
+    const PAGE = location.pathname.startsWith(ROOT.pathname) ? location.pathname.slice(ROOT.pathname.length) : location.pathname.split('/').pop();
+    // A school page under skoler/<kommune>/ is drawn by school-page.js with translations, like skole.html
+    const SCHOOL_PAGE = /^skoler\/[^/]+\/[^/]+\.html$/.test(PAGE);
+
+    // A file or page of this site, as a path from the site's root ("static/js/x.json" → "/static/js/x.json")
+    function url(path) {
+        return new URL(path, ROOT).pathname;
+    }
+
     let lang = 'no';
     try {
         const fromUrl = new URLSearchParams(location.search).get('lang');
@@ -44,7 +57,7 @@ const I18N = (() => {
     if (lang === 'uk') {
         const self = document.currentScript && document.currentScript.src;
         const version = self ? (self.match(/[?&]v=(\d+)/) || [])[1] : null;
-        document.write(`<script src="static/js/i18n-uk.js${version ? `?v=${version}` : ''}"><\/script>`);
+        document.write(`<script src="${url('static/js/i18n-uk.js')}${version ? `?v=${version}` : ''}"><\/script>`);
     }
 
     const EN = {
@@ -65,7 +78,7 @@ const I18N = (() => {
         'Kjennetegn': 'Features',
         'Tilbake til kartet': 'Back to the map',
         'Tilbake': 'Back',
-        'Skolekartet – Nasjonale prøver visualisert på kart': 'Skolekartet – National test results on a map',
+        'Skolekartet – finn skole og se nasjonale prøver på kart': 'Skolekartet – find a school and see national test results on a map',
         'Skole – Skolekartet': 'School – Skolekartet',
         'Laster skole…': 'Loading school…',
 
@@ -266,6 +279,7 @@ const I18N = (() => {
         'AKS-sidene på skolens nettside, lest {date}': 'the after-school pages on the school’s website, read {date}',
         'Én gang i uken': 'Once a week',
         'Lagre til senere': 'Save for later',
+        'Skoler etter kommune': 'Schools by municipality',
         'Nasjonale prøver {year}': 'National tests {year}',
         'Skjul kartet': 'Hide the map',
         "Skolekartet er et privat, ikke-kommersielt prosjekt og har ansvaret for opplysningene som beskrives her. Spørsmål om personvern, eller ønske om å få slettet en tilbakemelding, kan sendes via": "Skolekartet is a private, non-commercial project and is responsible for the information described here. Questions about privacy, or a request to have feedback deleted, can be sent through",
@@ -985,16 +999,19 @@ const I18N = (() => {
         return values ? text.replace(/\{(\w+)\}/g, (match, name) => (name in values ? values[name] : match)) : text;
     }
 
-    // Internal links keep the language, so it also works when the browser blocks storage
-    function href(url) {
-        if (!translated || !url) return url;
+    // Internal links: from the site's root, so links built in code work at any depth ("skole.html" is the
+    // same page from skoler/oslo/), and with the language, so it also works when the browser blocks storage.
+    // `base`: what a relative link is read from; links already in the page use the page's own address.
+    // Anchors on the page, e-mail and phone links stay as they are.
+    function href(link, base = ROOT) {
+        if (!link || /^(#|mailto:|tel:)/.test(link)) return link;
         try {
-            const target = new URL(url, location.href);
-            if (target.origin !== location.origin || /^(#|mailto:|tel:)/.test(url)) return url;
-            target.searchParams.set('lang', lang);
+            const target = new URL(link, base);
+            if (target.origin !== location.origin) return link;
+            if (translated) target.searchParams.set('lang', lang);
             return target.pathname + target.search + target.hash;
         } catch (error) {
-            return url;
+            return link;
         }
     }
 
@@ -1022,7 +1039,7 @@ const I18N = (() => {
         });
         if (element.tagName === 'A' && element.hasAttribute('href') && !element.hasAttribute('data-lang-keep')) {
             const original = element.getAttribute('href');
-            const localized = href(original);
+            const localized = href(original, location.href);
             if (localized !== original) element.setAttribute('href', localized);
         }
     }
@@ -1096,8 +1113,7 @@ const I18N = (() => {
     function noticeHtml() {
         if (!translated) return '';
         const text = NOTICE[lang];
-        const page = location.pathname.split('/').pop();
-        const onlyNorwegian = TRANSLATED_PAGES.includes(page) ? '' : ` ${text.onlyNorwegian}`;
+        const onlyNorwegian = TRANSLATED_PAGES.includes(PAGE) || SCHOOL_PAGE ? '' : ` ${text.onlyNorwegian}`;
         return `<div class="lang-notice" role="note"><div class="site-container">
                     <p class="ds-paragraph" data-size="sm">${REVIEWED[lang] ? text.reviewed : text.draft} ${text.applies}${onlyNorwegian}
                     <a class="ds-link" href="${switchUrl('no')}" lang="no" hreflang="no" data-lang-keep>Norsk versjon</a></p>
@@ -1124,7 +1140,7 @@ const I18N = (() => {
         });
     }
 
-    return { lang, isEnglish, translated, locale, t, href, translate, switchLink, noticeHtml };
+    return { lang, isEnglish, translated, locale, page: PAGE, t, href, url, translate, switchLink, noticeHtml };
 })();
 
 const t = I18N.t;

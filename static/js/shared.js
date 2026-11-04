@@ -11,6 +11,12 @@ function schoolKey(school) {
     return `${school.name}|${school.kommune}|${school.schoolType}`;
 }
 
+// The school's own page: the page under skoler/ that search engines read (school.page, set by
+// create_map.py and built by site_pages.py), or skole.html?id= for a school without one
+function schoolUrl(school) {
+    return I18N.href(school.page || `skole.html?id=${encodeURIComponent(schoolKey(school))}`);
+}
+
 function formatDecimal(value) {
     return new Intl.NumberFormat(I18N.locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(value);
 }
@@ -200,8 +206,9 @@ function updateSaveButton(button, on) {
 }
 
 // Share a school page: the system share sheet where there is one, else copy the link
-async function shareSchoolPage(name, key, button) {
-    const url = new URL(I18N.href(`skole.html?id=${encodeURIComponent(key)}`), location.href).href;
+async function shareSchoolPage(school, button) {
+    const name = school.name;
+    const url = new URL(schoolUrl(school), location.href).href;
     try {
         if (navigator.share) {
             await navigator.share({ title: name, url });

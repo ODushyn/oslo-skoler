@@ -1,4 +1,6 @@
-// School page (skole.html?id=<name|kommune|type>): everything we know about one school.
+// School page: everything we know about one school. Two addresses: the page under skoler/<kommune>/ that
+// site_pages.py builds for search engines (the school's key in <body data-school-id>; this script draws over
+// its static text), and skole.html?id=<name|kommune|type> for old links and the other level of a 1–10 school.
 // Results, Trivsel and photo come from school-data.json. Register data (address, pupils,
 // relations ...) is read live from Udir's Nasjonalt skoleregister (NSR, NLOD), the same
 // source as nsr.udir.no. A small map shows where the school is.
@@ -16,7 +18,8 @@
     const AKS_PAGE = 'https://www.oslo.kommune.no/skole-og-utdanning/aktivitetsskolen-aks/hva-er-aktivitetsskolen/';
     const outLink = (href, label) => `<a class="ds-link" href="${escapeHtml(href)}" target="_blank" rel="noopener">${label}${icon('externalLink')}</a>`;
     const root = document.getElementById('schoolPage');
-    const id = new URLSearchParams(location.search).get('id');
+    const id = new URLSearchParams(location.search).get('id') || document.body.dataset.schoolId;
+    const staticPage = Boolean(document.body.dataset.schoolId);
 
     const PROFILE_LABEL = {
         montessori: 'Montessori', steiner: 'Steiner', kristen: 'Kristen',
@@ -39,11 +42,11 @@
 
     let data;
     // National averages on the national tests (no "out of": the scale has no maximum)
-    const nationalRequest = fetch('static/js/landssnitt.json', { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}));
+    const nationalRequest = fetch(I18N.url('static/js/landssnitt.json'), { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}));
     // Kommune averages on the national tests, newest year (same Udir files, rows for the whole kommune)
-    const kommuneRequest = fetch('static/js/kommunesnitt.json', { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}));
+    const kommuneRequest = fetch(I18N.url('static/js/kommunesnitt.json'), { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}));
     try {
-        data = await fetch('static/js/school-data.json', { cache: 'no-cache' }).then(r => r.json());
+        data = await fetch(I18N.url('static/js/school-data.json'), { cache: 'no-cache' }).then(r => r.json());
     } catch (error) {
         root.innerHTML = '<p class="ds-paragraph">Kunne ikke laste skoledata. Prøv igjen senere.</p>';
         return;
@@ -71,11 +74,21 @@
     // Pupil Survey results shown for this level, and when "N svar" is worth saying
     const trinnShown = school.schoolType === 'barneskole' ? '7' : '10';
     const FEW_ANSWERS = 30;
-    document.title = `${school.name} – Skolekartet`;
+    // The static page keeps its own (Norwegian) title for search engines, except in another language.
+    // On skole.html?id= the canonical address is the school's static page, so search engines count the two as one.
+    if (!staticPage || I18N.translated) document.title = `${school.name} – Skolekartet`;
+    if (!staticPage) {
+        if (school.page) {
+            const canonical = document.createElement('link');
+            canonical.rel = 'canonical';
+            canonical.href = new URL(I18N.url(school.page), location.origin).href;
+            document.head.appendChild(canonical);
+        }
+    }
 
     // Detail file (photos, links, AKS, hjertesone) and the register entry load in parallel
     const detailsRequest = school.orgnr
-        ? fetch(`static/data/skoler/${encodeURIComponent(school.orgnr)}.json`, { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}))
+        ? fetch(I18N.url(`static/data/skoler/${encodeURIComponent(school.orgnr)}.json`), { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}))
         : Promise.resolve({});
     const unitRequest = school.orgnr
         ? fetch(NSR_URL + encodeURIComponent(school.orgnr)).then(r => (r.ok ? r.json() : null)).catch(() => null)
@@ -273,7 +286,7 @@
                 <div id="registerSections"></div>
             </section>
 
-            <p class="ds-paragraph school-page__sources" data-size="xs">Kilder: nasjonale prøver, Elevundersøkelsen og Nasjonalt skoleregister fra Utdanningsdirektoratet (NLOD). Foto fra Wikimedia Commons med fotografens lisens. Lenker til nettside og sosiale medier er hentet fra skolens egen nettside. <a class="ds-link" href="datakilder.html">Om datakildene</a>.</p>
+            <p class="ds-paragraph school-page__sources" data-size="xs">Kilder: nasjonale prøver, Elevundersøkelsen og Nasjonalt skoleregister fra Utdanningsdirektoratet (NLOD). Foto fra Wikimedia Commons med fotografens lisens. Lenker til nettside og sosiale medier er hentet fra skolens egen nettside. <a class="ds-link" href="${I18N.href('datakilder.html')}">Om datakildene</a>.</p>
         </div>`;
 
     showMap(school);
@@ -282,7 +295,7 @@
     root.querySelector('.school-banner__save').addEventListener('click', event => {
         updateSaveButton(event.currentTarget, toggleSaved(schoolKey(school)));
     });
-    document.getElementById('bannerShare').addEventListener('click', event => shareSchoolPage(school.name, schoolKey(school), event.currentTarget));
+    document.getElementById('bannerShare').addEventListener('click', event => shareSchoolPage(school, event.currentTarget));
     const [details, unit] = await Promise.all([detailsRequest, unitRequest]);
     showSurveyHistory(details.survey || {});
     showComparisons(details.elevundersokelsen);
@@ -641,7 +654,7 @@
         const list = nearby.length
             ? `<ul class="nearby">${nearby.map(({ s, km: d }) => `
                 <li class="nearby__item">
-                    <a class="ds-link" href="${I18N.href(`skole.html?id=${encodeURIComponent(schoolKey(s))}`)}">${escapeHtml(s.name)}</a>
+                    <a class="ds-link" href="${schoolUrl(s)}">${escapeHtml(s.name)}</a>
                     <span class="nearby__meta">${t('{km} km i luftlinje', { km: km(d) })}${s.kommune !== school.kommune ? ` · ${escapeHtml(s.kommune)}` : ''}${s.eierform === 'privat' ? ` · ${t('Privat')}` : ''}</span>
                 </li>`).join('')}</ul>`
             : `<p class="ds-paragraph">${t('Ingen andre skoler av samme type innen 3 km.')}</p>`;
@@ -817,7 +830,7 @@
         const pageFor = name => data.schools.find(s => s.name === name && s.kommune === school.kommune && s.schoolType === 'ungdomsskole');
         const barnePageFor = name => data.schools.find(s => s.name === name && s.kommune === school.kommune && s.schoolType === 'barneskole');
         const link = (entry, name) => entry
-            ? `<a class="ds-link" href="${I18N.href(`skole.html?id=${encodeURIComponent(schoolKey(entry))}`)}">${escapeHtml(name)}</a>`
+            ? `<a class="ds-link" href="${schoolUrl(entry)}">${escapeHtml(name)}</a>`
             : escapeHtml(name);
         const source = info => `<p class="ds-paragraph school-page__sources section-source" data-size="xs">${t('Kilde: Oslo kommune, Skolekrets ungdomsskole, hentet {date}.', { date: date(info.fetched) })}
             <a class="source-link" href="${escapeHtml(info.source)}" target="_blank" rel="noopener" aria-label="${t('Kilde:')} Oslo kommune" data-tooltip="Oslo kommune">${icon('externalLink')}</a></p>`;

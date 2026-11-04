@@ -99,8 +99,8 @@ with "Run workflow". It checks the sources whose numbers can change during the y
   `OppdatertDatoTid` for table 148 or 150 is newer than at the last check.
 - **Nasjonalt skoleregister**: downloaded every night (`nsr.py --refresh`).
 
-When a source has changed, it runs `create_map.py` and `school_details.py`. The workflow commits the changed
-data, and GitHub Pages publishes it. `static/js/data-status.json` holds the day the sources were last checked
+When a source has changed, it runs `create_map.py`, `school_details.py` and `site_pages.py`. The workflow
+commits the changed data and pages, and GitHub Pages publishes them. `static/js/data-status.json` holds the day the sources were last checked
 (shown in the footer: "Tallene ble sist sjekket mot kildene …") and the day each source last changed. If a
 source cannot be reached, the old data stays, the check date is not moved, and the workflow run fails.
 Rebuilds are stable: `school-data.json` has no build date, and each school's `updated` date only moves when
@@ -109,6 +109,38 @@ its details change, so a night with nothing new only changes `data-status.json`.
 Nasjonale prøver are not in Udir's open API. They are published once a year and imported by hand with
 `import_exam_result.py`. The same goes for the numbers on `om-fargefordelingen.html`. Facts read from school
 websites (links, AKS, læringsbrett) are refreshed by hand with their own scripts, not every night.
+
+### Pages for search engines (`site_pages.py`, `skoler/`, `sitemap.xml`)
+
+The map and `skole.html?id=` are drawn in the browser, so search engines see little of them. `site_pages.py`
+writes plain HTML pages from the same data:
+
+- `skoler/<kommune>/<skole>.html`: one page per school (both levels of a 1–10 school on one page), with the
+  national tests per subject next to the national average, earlier years, trivsel and mobbing next to the
+  whole country, links to the school's website, its kommune and the six nearest schools, schema.org `School`
+  and `BreadcrumbList`. `<body data-school-id>` tells `school-page.js` which school it is; in the browser it
+  draws the full school page over the static text, as on `skole.html`.
+- `skoler/<kommune>/` (`index.html`): the kommune's schools in Norwegian alphabetical order (not a ranking),
+  the kommune's average next to the country's, and a link to the map filtered on the kommune.
+- `skoler/`: all kommuner. The footer links to it from every page.
+- `sitemap.xml`: the pages at the top as they were, then the kommune and school pages. `lastmod` is the
+  school's `updated` date, so it only moves when the school's data changes.
+
+`create_map.py` gives every school its page path (`page` in `school-data.json`, from `site_pages.assign_pages`);
+the popup, the list and the school page link there, and `skole.html?id=` sets the static page as canonical.
+Titles and descriptions say what the page is about without numbers, so a search result never shows a
+mobbing share without its context. A file is written only when it changes, and pages of schools no longer in
+the data are removed. The pages copy `skole.html`'s head, so a new `?v=` on a script or style there rewrites
+all of them once.
+
+Paths work at any depth: `i18n.js` finds the site's root from its own address. `I18N.url('static/…')` gives a
+file from the root and `I18N.href('page.html')` a link from the root (with `?lang=` in English and Ukrainian);
+links already in the page keep being read from the page's own address.
+
+The home page has schema.org `Organization` and `WebSite`. Every page has Open Graph and X/Twitter tags with
+one shared image (`static/img/og-skolekartet.png`, 1200×630). "Lagrede skoler" (`?lagrede=1`) gets
+`noindex`, since it is the visitor's own list. Not done yet (see IDEAS.md): address and number of pupils on
+the static page, English and Ukrainian addresses with `hreflang`, Google Search Console and Bing Webmaster Tools.
 
 ### School Page Details (photos, links, AKS)
 
@@ -169,19 +201,17 @@ consent. The site sets no cookies; language, theme, saved schools (localStorage)
 for the walking time (sessionStorage, this tab only) stay in the browser. If statistics are needed again,
 add a consent banner first and say so under Personvern on datakilder.html.
 
-### Themes and dark mode (`static/js/theme.js`)
+### Themes (`static/js/theme.js`)
 
-The header has a light/dark button (Aksel Sun/Moon icons). Dark mode is Designsystemet's own
-`data-color-scheme="dark"`, and the maps switch to OpenFreeMap's `dark` style (`THEME.mapStyle()`, and the
-`colorscheme` event that `map-init.js` and `school-page.js` listen for). Leaflet popups, zoom buttons and the
-attribution line use Designsystemet tokens, so they follow the mode. Light is the default.
+The site is always light (`data-color-scheme="light"` on `<html>`), and the maps use OpenFreeMap's `liberty`
+style (`THEME.mapStyle()`). There is no dark mode; a dark choice saved while there was one is cleared.
 
 The theme is chosen under "Tema" at the bottom of the "Meny" dropdown, so it does not take room in the header:
 Grønn (the Designsystemet theme, the default; also in each page's `<link id="dsTheme">`) and Blå
 (Altinn's brand theme). The menu names them by colour, not by the agencies, so the site does not look as if it
 belongs to them. The site uses the theme's `brand1` colour (`data-color="brand1"` on `<html>`,
 `--ds-color-brand1-*` in `styles.css`). The brand themes set IBM Plex Mono as font; `styles.css` keeps Inter.
-Both choices are kept in localStorage (`skolekartet.tema`, `skolekartet.modus`). Score colours
+The choice is kept in localStorage (`skolekartet.tema`). Score colours
 (red/yellow/green) do not change.
 
 ### Ny i Norge (newly arrived families)

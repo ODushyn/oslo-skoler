@@ -595,6 +595,16 @@ const Finder = (() => {
     function setSavedOnly(on) {
         state.savedOnly = on;
         state.shown = PAGE_SIZE;
+        // The saved schools are this browser's own list: not a page for search engines
+        let robots = document.querySelector('meta[name="robots"]');
+        if (on && !robots) {
+            robots = document.createElement('meta');
+            robots.name = 'robots';
+            robots.content = 'noindex';
+            document.head.appendChild(robots);
+        } else if (!on && robots) {
+            robots.remove();
+        }
         if (on) {
             const saved = savedSchools();
             const points = entries.filter(e => e.keys.some(k => saved.has(k)) && e.school.lat).map(e => [e.school.lat, e.school.lng]);
@@ -798,7 +808,7 @@ const Finder = (() => {
                 ${schoolPhotoHtml(entry.school, 'popup-photo school-card__photo')}
                 <div class="school-card__actions">
                     <button type="button" class="ds-button school-card__map" data-variant="secondary" data-size="sm" aria-expanded="false">${icon('locationPin')}<span>${t('Vis på kartet')}</span></button>
-                    <a class="ds-button" data-variant="primary" data-size="sm" href="${I18N.href(`skole.html?id=${encodeURIComponent(schoolKey(entry.school))}`)}"><span>${t('Les mer om skolen')}</span>${icon('arrowRight')}</a>
+                    <a class="ds-button" data-variant="primary" data-size="sm" href="${schoolUrl(entry.school)}"><span>${t('Les mer om skolen')}</span>${icon('arrowRight')}</a>
                 </div>
             </div>`;
     }

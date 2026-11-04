@@ -191,7 +191,7 @@ function createPopupContent(levels) {
             ${levels.map(levelHtml).join('')}
             ${schoolPhotoHtml(school, 'popup-photo')}
             <p class="ds-paragraph popup-more" data-size="sm">
-                <a class="ds-link popup-more__link" href="${I18N.href(`skole.html?id=${encodeURIComponent(schoolKey(school))}`)}">Les mer om skolen${icon('arrowRight')}</a>
+                <a class="ds-link popup-more__link" href="${schoolUrl(school)}">Les mer om skolen${icon('arrowRight')}</a>
             </p>
         </div>`;
 }
