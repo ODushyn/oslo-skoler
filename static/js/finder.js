@@ -71,7 +71,7 @@ const Finder = (() => {
         bindSaved();
         bindAddressSearch();
         bindLocate();
-        bindMapToggle();
+        bindPhoneMap();
         bindSearchMode();
 
         el('showMore').addEventListener('click', () => {
@@ -669,6 +669,8 @@ const Finder = (() => {
         }
 
         renderKretsNote();
+        const reopen = mapSlot() && mapSlot().parentElement === el('schoolList') && miniKey ? entryFor(miniKey) : null;
+        if (mapSlot() && mapSlot().parentElement === el('schoolList')) closeMiniMap();
         el('schoolList').innerHTML = visible.map(e => schoolCard(e, ref)).join('');
         el('schoolList').querySelectorAll('.school-card__save').forEach(button => {
             button.addEventListener('click', () => {
@@ -678,11 +680,34 @@ const Finder = (() => {
         });
         el('schoolList').querySelectorAll('.school-card').forEach(card => {
             card.addEventListener('click', () => {
+                const entry = entryFor(card.dataset.key);
+                // Phones: the school's own small map under the card; the same school again closes it
+                if (phoneLayout.matches) {
+                    const open = miniKey === entry.key && mapSlot();
+                    document.querySelectorAll('.school-card[aria-current], .own-school[aria-current]').forEach(c => c.removeAttribute('aria-current'));
+                    if (open) {
+                        const before = card.getBoundingClientRect().top;
+                        closeMiniMap();
+                        window.scrollBy(0, card.getBoundingClientRect().top - before);
+                    } else {
+                        card.setAttribute('aria-current', 'true');
+                        openMiniMap(card.closest('li'), entry);
+                    }
+                    return;
+                }
                 document.querySelectorAll('.school-card[aria-current], .own-school[aria-current]').forEach(c => c.removeAttribute('aria-current'));
                 card.setAttribute('aria-current', 'true');
                 showSchool(card.dataset.key, true);
             });
         });
+        // A small map that was open under a school comes back under it when the list is drawn again
+        if (phoneLayout.matches && reopen) {
+            const card = [...el('schoolList').querySelectorAll('.school-card')].find(c => entryFor(c.dataset.key) === reopen);
+            if (card) {
+                card.setAttribute('aria-current', 'true');
+                openMiniMap(card.closest('li'), reopen, false);
+            }
+        }
 
         el('showMore').hidden = inView.length <= visible.length;
     }
@@ -780,27 +805,69 @@ const Finder = (() => {
         keepList = fromList;
         zoomToMarker(entry.marker, map, cluster);
 
-        // On small screens the map is closed until it is needed, and then sits above the list
-        if (phoneLayout.matches) setMapOpen(true);
-        const mapBox = document.querySelector('.results-map').getBoundingClientRect();
-        if (mapBox.top < 0 || mapBox.bottom > window.innerHeight) {
-            document.querySelector('.results-map').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        // Phones: a pick from the name search opens a small map at the top of the list (list cards open
+        // it under themselves, see the card click)
+        if (phoneLayout.matches && !fromList) openMiniMap(document.querySelector('.results-head'), entry);
     }
 
-    // ── Phones: list first, map on demand ─────────────────────────────────
+    // ── Phones: only the list; a tapped school opens a small map right under itself ──
+    // The big map stays out of sight (it still decides which schools the list shows). A tapped school
+    // gets its own small map under its card with its marker (tap it for the popup), as on the school page. Tapping
+    // another school closes it and opens one there; tapping the same school closes it. The tapped card
+    // keeps its place on the screen (no jump when a map above it closes), and the page only scrolls when
+    // the new map does not fit below.
     const phoneLayout = window.matchMedia('(max-width: 640px)');
+    const MAP_ATTRIBUTION = '<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> '
+        + '<a href="https://www.openmaptiles.org/" target="_blank" rel="noopener">&copy; OpenMapTiles</a> '
+        + 'Data from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
+    let miniMap = null;
+    let miniKey = null;
 
-    function bindMapToggle() {
-        el('mapToggle').addEventListener('click', () => setMapOpen(!el('resultsGrid').hasAttribute('data-map-open')));
+    function bindPhoneMap() {
+        phoneLayout.addEventListener('change', () => {
+            if (!phoneLayout.matches) closeMiniMap();
+        });
     }
 
-    function setMapOpen(open) {
-        el('resultsGrid').toggleAttribute('data-map-open', open);
-        el('mapToggle').setAttribute('aria-expanded', String(open));
-        el('mapToggleLabel').textContent = t(open ? 'Skjul kart' : 'Vis kart');
-        // The map was drawn while hidden; let Leaflet (and the base map) measure it again
-        if (open) requestAnimationFrame(() => map.invalidateSize());
+    function mapSlot() {
+        return document.getElementById('mapSlot');
+    }
+
+    function closeMiniMap() {
+        if (miniMap) miniMap.remove();
+        miniMap = null;
+        miniKey = null;
+        if (mapSlot()) mapSlot().remove();
+    }
+
+    // A small map with one school, right after `anchor` (a list item, a krets card or the top of the list)
+    function openMiniMap(anchor, entry, keepPlace = true) {
+        if (!anchor || !entry) return;
+        const before = anchor.getBoundingClientRect().top;
+        closeMiniMap();
+        const slot = document.createElement(anchor.tagName === 'LI' ? 'li' : 'div');
+        slot.id = 'mapSlot';
+        slot.className = 'map-slot';
+        slot.innerHTML = '<div class="mini-map"></div>';
+        anchor.after(slot);
+        if (keepPlace) window.scrollBy(0, anchor.getBoundingClientRect().top - before);
+
+        const school = entry.school;
+        miniMap = L.map(slot.firstElementChild, { scrollWheelZoom: false }).setView([school.lat, school.lng], 15);
+        L.maplibreGL({ style: THEME.mapStyle(), attributionControl: { customAttribution: MAP_ATTRIBUTION } }).addTo(miniMap);
+        L.marker([school.lat, school.lng], { icon: entry.marker.options.icon, keyboard: false })
+            .addTo(miniMap)
+            // The card above already shows the numbers; the popup (with "Les mer om skolen") opens on a tap
+            .bindPopup(createPopupContent(entry.marker.schoolLevels || [school]), { maxWidth: 320 });
+        miniKey = entry.key;
+
+        if (keepPlace) {
+            requestAnimationFrame(() => {
+                if (slot.isConnected && slot.getBoundingClientRect().bottom > window.innerHeight) {
+                    slot.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                }
+            });
+        }
     }
 
     // ── Search mode: one search row, the select decides what we search by ─
@@ -1216,6 +1283,18 @@ const Finder = (() => {
             }
             const card = event.target.closest('button[data-show]');
             if (!card) return;
+            const entry = entryFor(card.dataset.show);
+            if (phoneLayout.matches && entry) {
+                const open = miniKey === entry.key && mapSlot();
+                document.querySelectorAll('.own-school[aria-current], .school-card[aria-current]').forEach(c => c.removeAttribute('aria-current'));
+                if (open) {
+                    closeMiniMap();
+                } else {
+                    card.setAttribute('aria-current', 'true');
+                    openMiniMap(card, entry);
+                }
+                return;
+            }
             document.querySelectorAll('.own-school[aria-current], .school-card[aria-current]').forEach(c => c.removeAttribute('aria-current'));
             card.setAttribute('aria-current', 'true');
             showSchool(card.dataset.show, true);

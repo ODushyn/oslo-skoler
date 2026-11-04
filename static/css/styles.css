@@ -1806,27 +1806,29 @@ button.school-stat[aria-selected="true"] .school-stat__more {
         grid-template-columns: minmax(0, 1fr);
     }
 
-    /* List first; "Vis kart" opens the map above it */
-    .map-toggle.ds-button {
-        display: inline-flex;
-        order: -2;
-        justify-self: start;
-    }
-
-    .results-map {
-        order: -1;
-        position: relative;
-        top: 0;
-        height: 60vh;
-    }
-
-    /* Closed map: kept at its real size but out of sight, because the list shows the schools inside the
-       map's view (a map with no size would leave the list empty) */
-    .results-grid:not([data-map-open]) .results-map {
+    /* Phones: only the list. The big map waits out of sight at its real size (the list shows the schools
+       in its view, so a map with no size would leave the list empty); a tapped school opens a small map
+       of its own under the card (.mini-map, finder.js) */
+    .results-grid > .results-map {
         position: absolute;
+        top: 0;
         left: -200vw;
         width: calc(100vw - 2 * var(--ds-size-4));
+        height: 22rem;
+        min-height: 0;
         visibility: hidden;
+    }
+
+    .map-slot {
+        list-style: none;
+    }
+
+    .mini-map {
+        height: 22rem;
+        margin-block: var(--ds-size-2) var(--ds-size-1);
+        border: 1px solid var(--ds-color-neutral-border-subtle);
+        border-radius: var(--ds-border-radius-lg);
+        overflow: hidden;
     }
 
     .site-footer__grid {
@@ -3446,9 +3448,3 @@ body.has-page-feedback {
     color: inherit;
 }
 
-/* "Vis kart" is only for phones (see the 640 px rules) */
-@media (min-width: 641px) {
-    .map-toggle.ds-button {
-        display: none;
-    }
-}
