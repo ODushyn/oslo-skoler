@@ -447,7 +447,8 @@ main:focus {
 }
 
 /* "Din posisjon": the target icon at the end of the empty address field (the clear button takes its
-   place once there is text), the first suggestion, and why it did not work when the browser said no */
+   place once there is text), the first suggestion, and why it did not work when the browser said no
+   (Designsystemet's validation message, added by finder.js) */
 .address-input {
     position: relative;
 }
@@ -479,9 +480,8 @@ main:focus {
     color: var(--ds-color-neutral-text-subtle);
 }
 
-.locate-error {
-    margin: var(--ds-size-1) 0 0;
-    color: var(--ds-color-danger-text-subtle);
+.search-bar__field .ds-validation-message {
+    margin-top: var(--ds-size-2);
 }
 
 /* Field adds space after its (visually hidden) label; drop it so the input

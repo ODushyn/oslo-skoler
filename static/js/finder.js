@@ -792,7 +792,7 @@ const Finder = (() => {
         Object.entries(SEARCH_MODES).forEach(([name, config]) => {
             el(config.field).hidden = name !== mode;
         });
-        el('locateError').hidden = true;
+        showLocateError(null);
         const config = SEARCH_MODES[mode] || SEARCH_MODES.address;
         state.mode = mode === 'school' ? 'school' : 'address';
         if (map) writeUrlState();
@@ -809,6 +809,7 @@ const Finder = (() => {
         // input events when it fills in or clears the selected value.
         input.addEventListener('input', event => {
             if (!event.isTrusted) return;
+            showLocateError(null); // typing an address answers the "Din posisjon" message
             const query = input.value.trim();
             clearTimeout(addressTimer);
             if (query.length === 0) {
@@ -892,8 +893,23 @@ const Finder = (() => {
         control.addTo(map);
     }
 
+    // Why "Din posisjon" did not work, as Designsystemet's validation message under the address field:
+    // <ds-field> links it to the input and marks the input invalid while it is there
+    function showLocateError(text) {
+        const field = el('addressField');
+        field.querySelectorAll(':scope > [data-field="validation"]').forEach(node => node.remove());
+        if (!text) return;
+        const message = document.createElement('p');
+        message.className = 'ds-validation-message';
+        message.dataset.field = 'validation';
+        message.dataset.size = 'sm';
+        message.setAttribute('role', 'status');
+        message.textContent = text;
+        field.append(message);
+    }
+
     function locate() {
-        el('locateError').hidden = true;
+        showLocateError(null);
         navigator.geolocation.getCurrentPosition(async position => {
             const result = { label: t('Din posisjon'), lat: position.coords.latitude, lng: position.coords.longitude };
             const data = await loadKretser();
@@ -901,10 +917,9 @@ const Finder = (() => {
             if (krets) result.kommune = krets.kommune;
             selectAddress(result);
         }, error => {
-            el('locateError').textContent = t(error.code === error.PERMISSION_DENIED
+            showLocateError(t(error.code === error.PERMISSION_DENIED
                 ? 'Nettleseren har ikke lov til å bruke posisjonen din. Skriv inn en adresse i stedet.'
-                : 'Fant ikke posisjonen din. Skriv inn en adresse i stedet.');
-            el('locateError').hidden = false;
+                : 'Fant ikke posisjonen din. Skriv inn en adresse i stedet.'));
         }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 });
     }
 
