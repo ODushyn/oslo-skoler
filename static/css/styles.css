@@ -370,12 +370,14 @@ main:focus {
     margin: 0 0 var(--ds-size-4);
 }
 
+/* Everything lines up with the top of the input (48 px), so a message under the field ("Din posisjon"
+   did not work) only adds space below and nothing moves */
 .search-bar {
     display: flex;
     flex-wrap: wrap; /* buttons move to the next line when the row is too narrow */
-    align-items: center;
+    align-items: flex-start;
     gap: var(--ds-size-2) var(--ds-size-4);
-    max-width: 64rem;
+    max-width: 72rem;
 }
 
 /* "Søk på  (•) Adresse  ( ) Skolenavn" on one line */
@@ -400,8 +402,15 @@ main:focus {
     margin: 0;
 }
 
+.search-mode {
+    min-height: var(--ds-size-12);
+}
+
+/* The address field takes most of the row; its messages stack under it */
 .search-bar__field {
-    flex: 1 1 16rem;
+    display: flex;
+    flex-direction: column;
+    flex: 2 1 32rem;
     min-width: 0;
 }
 
@@ -445,7 +454,8 @@ main:focus {
 
 /* Field adds space after its (visually hidden) label; drop it so the input
    lines up with the radio buttons and the Filtre button */
-.search-bar__field .ds-field > .ds-suggestion {
+.search-bar__field .ds-field > .ds-suggestion,
+.search-bar__field .ds-field > .address-input {
     margin-top: 0;
 }
 

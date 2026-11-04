@@ -363,7 +363,7 @@ const Finder = (() => {
         });
         el('resetFilters').addEventListener('click', resetFilters);
 
-        // Filters live in a panel that the "Vis filter" / "Skjul filter" button opens and closes
+        // Filters live in a panel that the "Filter" button opens and closes (aria-expanded says which)
         el('filterToggle').addEventListener('click', () => {
             setFilterPanel(el('filterToggle').getAttribute('aria-expanded') !== 'true');
         });
@@ -371,7 +371,6 @@ const Finder = (() => {
 
     function setFilterPanel(open) {
         el('filterToggle').setAttribute('aria-expanded', String(open));
-        el('filterToggleLabel').textContent = open ? 'Skjul filter' : 'Vis filter';
         el('filterPanel').hidden = !open;
     }
 
@@ -400,8 +399,8 @@ const Finder = (() => {
         badge.hidden = count === 0;
         badge.dataset.count = String(count);
         badge.setAttribute('aria-label', count === 1 ? t('1 aktivt filter') : t('{count} aktive filtre', { count }));
-        // Always visible next to the toggle; only usable when a filter is on
-        el('resetFilters').disabled = count === 0;
+        // "Nullstill" only shows when a filter is on (no greyed-out button in the search row)
+        el('resetFilters').hidden = count === 0;
         updateSummaries();
     }
 

@@ -1,6 +1,6 @@
 // Language support: Norwegian (default), English and Ukrainian.
 //
-// The Norwegian text is the key. t('Vis filter') returns the English or Ukrainian text when that
+// The Norwegian text is the key. t('Nullstill') returns the English or Ukrainian text when that
 // language is chosen, otherwise the Norwegian text itself. Texts with values use placeholders:
 // t('Viser {shown} av {total}', { shown: 20, total: 300 }).
 // The English texts are below (EN). The Ukrainian texts are in i18n-uk.js (I18N_UK), which this
@@ -87,9 +87,6 @@ const I18N = (() => {
         'Viser {shown} av {total} treff. Skriv mer for å snevre inn.': 'Showing {shown} of {total} matches. Type more to narrow the search.',
 
         // ── Filters ───────────────────────────────────────────────────────
-        'Vis filter': 'Show filters',
-        'Skjul filter': 'Hide filters',
-        'Nullstill filter': 'Reset filters',
         'Filtrer skoler': 'Filter schools',
         'Alle': 'All',
         'Resultat': 'Result',
@@ -270,6 +267,8 @@ const I18N = (() => {
         'AKS-sidene på skolens nettside, lest {date}': 'the after-school pages on the school’s website, read {date}',
         'Én gang i uken': 'Once a week',
         'Lagre til senere': 'Save for later',
+        "Filter": "Filters",
+        "Nullstill": "Reset",
         "Sist oppdatert 4. november 2026.": "Last updated 4 November 2026.",
         "Adressen eller posisjonen du søkte på, for gangtid på skolesiden": "The address or location you searched from, for the walking time on the school page",
         "Leter du etter en skole?": "Looking for a school?",
