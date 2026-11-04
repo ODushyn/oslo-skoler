@@ -3271,3 +3271,19 @@ body.has-page-feedback {
     width: 100%;
     justify-content: space-between;
 }
+
+/* In the filter panel every group shows its choices straight away (no dropdowns); two or three short
+   choices share a line, longer lists wrap */
+.filter-checks__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-2) var(--ds-size-5);
+}
+
+.filter-checks .filter-option {
+    margin: 0;
+}
+
+.filter-checks > legend {
+    margin-bottom: var(--ds-size-2);
+}

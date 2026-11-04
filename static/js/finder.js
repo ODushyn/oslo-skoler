@@ -279,7 +279,7 @@ const Finder = (() => {
         document.querySelectorAll('input[name="owner"]').forEach(i => { i.checked = state.owners.has(i.value); });
         document.querySelectorAll('input[name="score"]').forEach(i => { i.checked = state.scores.has(i.value); });
         el('kommuneFilter').value = state.kommune;
-        el('profileFilter').value = state.profile;
+        document.querySelectorAll('input[name="profile"]').forEach(i => { i.checked = i.value === state.profile; });
         document.querySelectorAll('input[name="trivsel"]').forEach(i => { i.checked = state.trivsels.has(i.value); });
         document.querySelectorAll('input[name="mobbing"]').forEach(i => { i.checked = state.mobbings.has(i.value); });
         showSort(state.sort);
@@ -300,9 +300,12 @@ const Finder = (() => {
         entries.forEach(e => {
             if (e.school.profil) counts[e.school.profil] = (counts[e.school.profil] || 0) + 1;
         });
-        el('profileFilter').insertAdjacentHTML('beforeend', Object.keys(PROFILE_LABEL)
+        el('profileOptions').insertAdjacentHTML('beforeend', Object.keys(PROFILE_LABEL)
             .filter(p => counts[p])
-            .map(p => `<option value="${p}">${t(PROFILE_LABEL[p])} (${counts[p]})</option>`)
+            .map(p => `<ds-field class="ds-field filter-option">
+                    <input class="ds-input" type="radio" id="f-profile-${p}" name="profile" value="${p}" />
+                    <label class="ds-label" data-weight="regular" for="f-profile-${p}">${t(PROFILE_LABEL[p])} (${counts[p]})</label>
+                </ds-field>`)
             .join(''));
     }
 
@@ -338,6 +341,7 @@ const Finder = (() => {
             });
         });
         el('profileFilter').addEventListener('change', event => {
+            if (event.target.name !== 'profile') return;
             state.profile = event.target.value;
             applyFilters();
         });
