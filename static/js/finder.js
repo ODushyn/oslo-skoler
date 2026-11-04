@@ -153,7 +153,6 @@ const Finder = (() => {
             school: state.school,
             address: state.address ? { label: state.address.label, lat: state.address.lat, lng: state.address.lng, kommune: state.address.kommune } : null,
             schoolQuery: el('schoolSearch').value,
-            filtersOpen: el('filterToggle').getAttribute('aria-expanded') === 'true',
             scrollY: window.scrollY
         };
         try { sessionStorage.setItem(VIEW_KEY, JSON.stringify(view)); } catch (_) { /* storage blocked */ }
@@ -192,7 +191,6 @@ const Finder = (() => {
             writeUrlState();
         }
         if (view.schoolQuery) el('schoolSearch').value = view.schoolQuery;
-        if (view.filtersOpen) setFilterPanel(true);
         map.setView(view.center, view.zoom, { animate: false });
         state.shown = view.shown || PAGE_SIZE;
         if (view.listBounds) {
@@ -363,15 +361,27 @@ const Finder = (() => {
         });
         el('resetFilters').addEventListener('click', resetFilters);
 
-        // Filters live in a panel that the "Filter" button opens and closes (aria-expanded says which)
-        el('filterToggle').addEventListener('click', () => {
-            setFilterPanel(el('filterToggle').getAttribute('aria-expanded') !== 'true');
+        // Filters slide in from the right (a modal Designsystemet Dialog). The list and map update as you
+        // choose; "Vis N skoler", the close button, Esc or a click outside the panel closes it.
+        const dialog = el('filterPanel');
+        el('filterToggle').addEventListener('click', () => setFilterPanel(true));
+        el('filterClose').addEventListener('click', () => setFilterPanel(false));
+        el('filterDone').addEventListener('click', () => setFilterPanel(false));
+        el('filterResetDialog').addEventListener('click', resetFilters);
+        dialog.addEventListener('click', event => {
+            if (event.target === dialog) setFilterPanel(false); // the backdrop
+        });
+        dialog.addEventListener('close', () => {
+            el('filterToggle').setAttribute('aria-expanded', 'false');
+            el('filterToggle').focus();
         });
     }
 
     function setFilterPanel(open) {
+        const dialog = el('filterPanel');
         el('filterToggle').setAttribute('aria-expanded', String(open));
-        el('filterPanel').hidden = !open;
+        if (open && !dialog.open) dialog.showModal();
+        else if (!open && dialog.open) dialog.close();
     }
 
     // Icons in the chips: the same as on the map markers and in the list
@@ -399,8 +409,9 @@ const Finder = (() => {
         badge.hidden = count === 0;
         badge.dataset.count = String(count);
         badge.setAttribute('aria-label', count === 1 ? t('1 aktivt filter') : t('{count} aktive filtre', { count }));
-        // "Nullstill" only shows when a filter is on (no greyed-out button in the search row)
-        el('resetFilters').hidden = count === 0;
+        // "Nullstill" next to the Filter button and in the panel; only usable when a filter is on
+        el('resetFilters').disabled = count === 0;
+        el('filterResetDialog').disabled = count === 0;
         updateSummaries();
     }
 
@@ -488,6 +499,9 @@ const Finder = (() => {
         cluster.addLayers(filtered.map(e => e.marker));
         state.shown = PAGE_SIZE;
         updateFilterCount();
+        // The panel's main button says how many schools the filters leave, in all of Norway
+        el('filterDone').textContent = filtered.length === 1 ? t('Vis 1 skole')
+            : t('Vis {count} skoler', { count: countFormat.format(filtered.length) });
         renderList();
         writeUrlState();
     }

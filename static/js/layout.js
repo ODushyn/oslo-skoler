@@ -54,6 +54,11 @@
         </div>`;
 
 
+    const PRIMARY = [
+        { href: 'om-skolekartet.html', label: 'Om Skolekartet' },
+        { href: 'om-fargefordelingen.html', label: 'Om fargefordelingen' }
+    ];
+
     const header = `
         <header class="site-header">
             <div class="site-container site-header__inner">
@@ -61,11 +66,16 @@
                     <span class="site-logo__mark" aria-hidden="true">${ICONS.logo}</span>
                     Skolekartet
                 </a>
+                <!-- The two pages most people need, in the middle as on Digdir's own sites; on narrow screens they
+                     are only in the menu -->
+                <nav class="site-primary" aria-label="Om tjenesten">
+                    ${PRIMARY.map(l => `<a class="ds-button" data-variant="tertiary" data-size="sm" href="${localHref(l.href)}"${ariaCurrent(l.href)}>${l.label}</a>`).join('')}
+                </nav>
                 <nav class="site-nav" aria-label="Hovedmeny">
                     <a class="ds-button saved-link" data-variant="tertiary" data-size="sm" href="${typeof I18N !== 'undefined' ? I18N.href('./?lagrede=1') : './?lagrede=1'}"
                        aria-label="Lagrede skoler">${ICONS.bookmark}<span class="site-nav__label">Lagrede skoler</span><span class="saved-link__count" aria-hidden="true" hidden></span></a>
-                    ${typeof THEME !== 'undefined' ? THEME.schemeButtonHtml() : ''}
                     ${typeof I18N !== 'undefined' ? I18N.switchLink() : ''}
+                    ${typeof THEME !== 'undefined' ? THEME.schemeButtonHtml() : ''}
                     ${menuHtml}
                 </nav>
             </div>

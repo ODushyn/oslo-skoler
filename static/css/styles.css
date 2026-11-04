@@ -360,6 +360,38 @@ main:focus {
     gap: var(--ds-size-1);
 }
 
+/* "Om Skolekartet" and "Om fargefordelingen" in the exact middle of the header, whatever the width of the
+   logo and the buttons on each side */
+.site-header__inner {
+    position: relative;
+}
+
+.site-primary {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--ds-size-2);
+}
+
+.site-primary .ds-button {
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--ds-color-neutral-text-default);
+}
+
+.site-primary .ds-button[aria-current="page"] {
+    color: var(--ds-color-brand1-text-default);
+    text-decoration: underline;
+    text-underline-offset: 0.35em;
+}
+
+/* Below this width the links would run into the buttons on the right; they are in the menu as well */
+@media (max-width: 1279px) {
+    .site-primary {
+        display: none;
+    }
+}
+
 /* ── Search: one row, the select chooses what to search by ─────────── */
 .search-panel {
     background: var(--ds-color-brand1-background-tinted);
@@ -3189,4 +3221,53 @@ body.has-page-feedback {
     flex-wrap: wrap;
     gap: var(--ds-size-2);
     margin: 0 0 var(--ds-size-4);
+}
+
+/* Filter panel: slides in from the right (Designsystemet Dialog, data-placement="right"); the header and
+   the buttons stay put while the filters scroll. On phones it takes the whole width. */
+.filter-dialog[open] {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 28rem;
+    padding: 0;
+}
+
+.filter-dialog__head,
+.filter-dialog__foot {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-size-3);
+    padding: var(--ds-size-4) var(--ds-size-6);
+}
+
+.filter-dialog__head {
+    justify-content: space-between;
+    border-bottom: 1px solid var(--ds-color-neutral-border-subtle);
+}
+
+.filter-dialog__foot {
+    border-top: 1px solid var(--ds-color-neutral-border-subtle);
+}
+
+.filter-dialog .filter-bar {
+    flex: 1;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: var(--ds-size-5);
+    max-width: none;
+    margin: 0;
+    padding: var(--ds-size-5) var(--ds-size-6);
+    overflow-y: auto;
+}
+
+.filter-dialog .filter-bar .filter-group {
+    flex: none;
+    width: 100%;
+    max-width: none;
+}
+
+.filter-dialog .filter-dd__button {
+    width: 100%;
+    justify-content: space-between;
 }
