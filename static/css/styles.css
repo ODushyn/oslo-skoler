@@ -3358,7 +3358,8 @@ body.has-page-feedback {
     margin: 0;
 }
 
-/* "Snitt nasjonale prøver →": the arrow opens the page that explains the colours, like "Les mer om skolen →" */
+/* "Snitt nasjonale prøver ↗": the same external-link icon as on other links; the page that explains the
+   colours opens in a new tab, so the filters stay as they are */
 .score-bar > legend {
     display: inline-flex;
     align-items: center;
