@@ -324,6 +324,15 @@ All school data is compiled once into `static/js/school-data.json` by the Python
 
 ## 3. Technical Details (for developers)
 
+### Running locally
+
+```
+python3 dev_server.py
+```
+
+Opens the site on http://localhost:8000. Unlike `python3 -m http.server`, it tells the browser not to cache
+(`Cache-Control: no-store`), so a reload always shows the latest version.
+
 ### Prerequisites
 
 - Python 3.7+
