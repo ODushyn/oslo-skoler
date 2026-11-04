@@ -354,6 +354,31 @@ main:focus {
     padding: 0;
 }
 
+/* "Kom i kontakt med oss": an icon before each link */
+.footer-contact li {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-size-2);
+}
+
+.footer-contact .ds-icon {
+    flex-shrink: 0;
+    width: 1.25em;
+    height: 1.25em;
+}
+
+/* "© 2026 Skolekartet" on its own row under a line, as in Designsystemet's footer */
+.site-footer__bottom {
+    margin-top: var(--ds-size-6);
+    padding-top: var(--ds-size-4);
+    border-top: 1px solid var(--ds-color-neutral-border-subtle);
+}
+
+.site-footer__bottom .ds-paragraph {
+    margin: 0;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
 .site-nav {
     display: flex;
     flex-wrap: wrap;
@@ -527,6 +552,19 @@ main:focus {
 /* Filter toggle at the end of the search row */
 .filter-toggle {
     flex-shrink: 0;
+}
+
+/* "Nasjonale prøver", "Filter" and "Nullstill" as one group in the search row */
+.search-bar__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-size-4);
+    min-width: 0;
+    max-width: 100%;
+}
+
+.search-bar__actions .score-toggle {
+    min-width: 0;
 }
 
 .filter-toggle .ds-badge {
@@ -1806,12 +1844,29 @@ button.school-stat[aria-selected="true"] .school-stat__more {
         grid-template-columns: minmax(0, 1fr);
     }
 
-    /* Map first, then the list */
-    .results-map {
-        order: -1;
-        position: relative;
+    /* Phones: only the list. The big map waits out of sight at its real size (the list shows the schools
+       in its view, so a map with no size would leave the list empty); a tapped school opens a small map
+       of its own under the card (.mini-map, finder.js) */
+    .results-grid > .results-map {
+        position: absolute;
         top: 0;
-        height: 60vh;
+        left: -200vw;
+        width: calc(100vw - 2 * var(--ds-size-4));
+        height: 22rem;
+        min-height: 0;
+        visibility: hidden;
+    }
+
+    .map-slot {
+        list-style: none;
+    }
+
+    .mini-map {
+        height: 22rem;
+        margin-block: var(--ds-size-2) var(--ds-size-1);
+        border: 1px solid var(--ds-color-neutral-border-subtle);
+        border-radius: var(--ds-border-radius-lg);
+        overflow: hidden;
     }
 
     .site-footer__grid {
@@ -1842,6 +1897,29 @@ button.school-stat[aria-selected="true"] .school-stat__more {
         --dsc-button-padding: var(--ds-size-2);
     }
 
+    .site-header__inner {
+        column-gap: var(--ds-size-2);
+    }
+}
+
+/* Narrow phones (under 400 px): a smaller logo and tighter icon buttons, so the header never gets wider
+   than the screen */
+@media (max-width: 400px) {
+    .site-logo {
+        gap: var(--ds-size-1);
+        font-size: var(--ds-font-size-4);
+    }
+
+    .site-logo__mark svg,
+    .site-logo__mark {
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+
+    .site-nav .ds-button {
+        --dsc-button-padding: var(--ds-size-1);
+    }
+
 
     .search-panel {
         padding-block: var(--ds-size-6) var(--ds-size-4);
@@ -1857,9 +1935,64 @@ button.school-stat[aria-selected="true"] .school-stat__more {
         min-width: 0;
     }
 
+    /* Phones: "(•) Adresse ( ) Skolenavn" always on one line; "Søk på" is read by screen readers only,
+       the heading above already says what the search is for */
+    .search-mode {
+        flex-wrap: nowrap;
+        column-gap: var(--ds-size-4);
+    }
+
+    .search-mode > legend {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+
+    .search-mode .ds-label {
+        white-space: nowrap;
+    }
+
+    /* Phones: Filter and Nullstill show only their icons (the words stay for screen readers);
+       "Nasjonale prøver" keeps its words */
+    .search-bar :is(.filter-toggle, .filter-reset) .search-bar__label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+
+    .score-toggle,
     .filter-toggle,
     .filter-reset {
-        flex: 1 1 0;
+        flex: 0 0 auto;
+        padding-inline: var(--ds-size-2);
+    }
+
+    /* Phones: the three buttons share one row under the field, at its right edge; a long
+       "Nasjonale prøver" (Ukrainian) is cut with "…" rather than pushing "Nullstill" to a new line */
+    .search-bar__actions {
+        gap: var(--ds-size-2);
+        margin-left: auto;
+    }
+
+    .search-bar__actions .score-toggle {
+        flex: 0 1 auto;
+    }
+
+    .score-toggle .search-bar__label {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .score-toggle__dots .color-dot:last-child {
+        margin-inline-end: 0;
     }
 
     .school-stats {
@@ -3370,3 +3503,4 @@ body.has-page-feedback {
     margin-block: calc(-1 * var(--ds-size-2));
     color: inherit;
 }
+
