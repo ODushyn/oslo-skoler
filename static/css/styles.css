@@ -409,6 +409,12 @@ main:focus {
     text-underline-offset: 0.45em;
 }
 
+/* The score colours before "Om fargefordelingen" */
+.site-primary__dots {
+    margin-inline-end: var(--ds-size-2);
+    vertical-align: middle;
+}
+
 .site-primary__link:hover {
     text-decoration: underline;
     text-decoration-thickness: 1px;

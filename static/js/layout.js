@@ -55,9 +55,12 @@
         </div>`;
 
 
+    // The four score colours, as on the "Nasjonale prøver" button, before "Om fargefordelingen"
+    const SCORE_DOTS = '<span class="score-toggle__dots site-primary__dots" aria-hidden="true">'
+        + ['very-high', 'high', 'low', 'very-low'].map(c => `<span class="color-dot score-${c}"></span>`).join('') + '</span>';
     const PRIMARY = [
         { href: 'om-skolekartet.html', label: 'Om Skolekartet' },
-        { href: 'om-fargefordelingen.html', label: 'Om fargefordelingen' }
+        { href: 'om-fargefordelingen.html', label: 'Om fargefordelingen', dots: true }
     ];
 
     const header = `
@@ -70,7 +73,7 @@
                 <!-- The two pages most people need, in the middle as on Digdir's own sites; on narrow screens they
                      are only in the menu -->
                 <nav class="site-primary" aria-label="Om tjenesten">
-                    ${PRIMARY.map(l => `<a class="site-primary__link" href="${localHref(l.href)}"${ariaCurrent(l.href)}>${l.label}</a>`).join('')}
+                    ${PRIMARY.map(l => `<a class="site-primary__link" href="${localHref(l.href)}"${ariaCurrent(l.href)}>${l.dots ? SCORE_DOTS : ''}${l.label}</a>`).join('')}
                 </nav>
                 <nav class="site-nav" aria-label="Hovedmeny">
                     <a class="ds-button saved-link" data-variant="tertiary" data-size="sm" href="${typeof I18N !== 'undefined' ? I18N.href('./?lagrede=1') : './?lagrede=1'}"
