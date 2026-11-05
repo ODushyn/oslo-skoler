@@ -1,6 +1,6 @@
 // Ukrainian texts for static/js/i18n.js, loaded only when Ukrainian is chosen (?lang=uk).
-// The key is the Norwegian text, as in the EN dictionary in i18n.js. Translated with AI and not yet
-// reviewed by a person: set REVIEWED.uk in i18n.js when that is done. Check with: python check_i18n.py
+// The key is the Norwegian text, as in the EN dictionary in i18n.js. Not yet checked by a person.
+// Check the keys with: python check_i18n.py
 window.I18N_UK = {
     "Hovedmeny": "Головне меню",
     "Om fargefordelingen": "Про кольори",
@@ -16,7 +16,7 @@ window.I18N_UK = {
     "Kjennetegn": "Особливості",
     "Tilbake til kartet": "Назад до карти",
     "Tilbake": "Назад",
-    "Skolekartet – Nasjonale prøver visualisert på kart": "Skolekartet – національні тести на карті",
+    "Skolekartet – finn skole og se nasjonale prøver på kart": "Skolekartet – знайдіть школу й перегляньте результати національних тестів на карті",
     "Skole – Skolekartet": "Школа – Skolekartet",
     "Laster skole…": "Завантаження школи…",
     "Søk på": "Шукати за",
@@ -142,7 +142,11 @@ window.I18N_UK = {
     "Les mer om skolen": "Докладніше про школу",
     "Foto av {name}": "Фото {name}",
     "Foto:": "Фото:",
-    "Kunne ikke laste skoledata. Prøv igjen senere.": "Не вдалося завантажити дані школи. Спробуйте пізніше.",
+    "Kunne ikke laste skolen": "Не вдалося завантажити школу",
+    "Kunne ikke laste skolene": "Не вдалося завантажити школи",
+    "Sjekk nettforbindelsen og prøv igjen.": "Перевірте з’єднання з інтернетом і спробуйте ще раз.",
+    "Prøv igjen": "Спробувати ще раз",
+    "Laster skoler…": "Завантаження шкіл…",
     "Fant ikke skolen": "Школу не знайдено",
     "Lenken peker ikke til en skole vi har data for.": "Посилання не веде до школи, про яку ми маємо дані.",
     "Gå til kartet": "Перейти до карти",
@@ -195,6 +199,12 @@ window.I18N_UK = {
     "AKS-sidene på skolens nettside, lest {date}": "сторінки AKS на вебсайті школи, прочитано {date}",
     "Én gang i uken": "Раз на тиждень",
     "Lagre til senere": "Зберегти на потім",
+    "lavere enn landsgjennomsnittet": "нижче за середнє по країні",
+    "høyere enn landsgjennomsnittet": "вище за середнє по країні",
+    "Rødt betyr lavere enn landsgjennomsnittet.": "Червоним позначено значення, нижчі за середнє по країні.",
+    "Rødt betyr høyere enn landsgjennomsnittet.": "Червоним позначено значення, вищі за середнє по країні.",
+    "Rødt betyr lavere enn landsgjennomsnittet, for mobbing høyere.": "Червоним позначено значення, нижчі за середнє по країні, а для булінгу — вищі.",
+    "Skoler etter kommune": "Школи за комунами",
     "Nasjonale prøver {year}": "Національні тести {year}",
     "Skjul kartet": "Сховати карту",
     "Skolekartet er et privat, ikke-kommersielt prosjekt og har ansvaret for opplysningene som beskrives her. Spørsmål om personvern, eller ønske om å få slettet en tilbakemelding, kan sendes via": "Skolekartet — приватний некомерційний проєкт, який відповідає за інформацію, описану тут. Питання про захист даних або прохання видалити відгук можна надіслати через",
@@ -349,7 +359,7 @@ window.I18N_UK = {
     "Dette fungerer ikke godt nok ennå": "Що поки працює недостатньо добре",
     "Kartet er vanskelig å bruke med skjermleser. Listen ved siden av kartet har de samme skolene.": "Мапою важко користуватися з екранним читачем. Список поруч із мапою має ті самі школи.",
     "Fargene på resultatene (rød, gul og grønn) kan være vanskelige å skille for personer med fargesvakhet. Tallene står alltid også i tekst.": "Кольори результатів (червоний, жовтий і зелений) людям із порушенням кольорового зору важко розрізнити. Числа завжди подано й текстом.",
-    "Den engelske og den ukrainske versjonen er oversatt med KI og er ikke kontrollert av en person ennå.": "Англійську та українську версії перекладено за допомогою ШІ, і їх ще не перевірила людина.",
+    "Den engelske og den ukrainske versjonen er ikke kontrollert av en person ennå.": "Англійську та українську версії ще не перевірила людина.",
     "Vi har ikke ansvar for skolenes og kommunenes egne nettsider som vi lenker til.": "Ми не відповідаємо за власні сайти шкіл і комун, на які посилаємося.",
     "Gi oss beskjed": "Повідомте нас",
     "Opplever du problemer, eller trenger du innholdet i en annen form?": "Виникли труднощі або потрібен вміст в іншій формі?",
@@ -823,5 +833,5 @@ window.I18N_UK = {
     "Sender...": "Надсилання...",
     "Takk! Meldingen din er sendt.": "Дякуємо! Ваше повідомлення надіслано.",
     "Sendt!": "Надіслано!",
-    "Noe gikk galt. Prøv igjen eller send e-post direkte.": "Щось пішло не так. Спробуйте ще раз або напишіть нам електронною поштою напряму."
+    "Noe gikk galt. Prøv igjen litt senere.": "Щось пішло не так. Спробуйте ще раз трохи пізніше."
 };

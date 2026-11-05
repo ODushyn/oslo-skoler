@@ -30,10 +30,13 @@ async function handleFeedbackSubmit(event) {
         }
     } catch (_) {
         status.dataset.color = 'danger';
-        status.textContent = 'Noe gikk galt. Prøv igjen eller send e-post direkte.';
+        status.textContent = 'Noe gikk galt. Prøv igjen litt senere.';
         status.hidden = false;
         btn.disabled = false;
         btn.removeAttribute('aria-busy');
         btn.textContent = 'Send melding';
     }
 }
+
+// Bound here rather than in an onsubmit attribute, so the page needs no inline script
+document.getElementById('feedbackForm').addEventListener('submit', handleFeedbackSubmit);

@@ -20,9 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      # Actions pinned to a commit (the job may push), the tag it was in the comment
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5.6.0
         with:
           python-version: '3.12'
 
@@ -33,7 +34,7 @@ jobs:
       - name: Commit the new data
         if: always()   # also keep what was refreshed when one source could not be reached
         run: |
-          git add cached-data static/js/school-data.json static/js/landssnitt.json static/js/kommunesnitt.json static/data static/js/data-status.json
+          git add cached-data static/js/school-data.json static/js/landssnitt.json static/js/kommunesnitt.json static/data static/js/data-status.json skoler sitemap.xml
           if git diff --cached --quiet; then
             echo "Nothing changed"
             exit 0

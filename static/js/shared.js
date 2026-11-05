@@ -7,8 +7,21 @@ const SCHOOL_TYPE_LABEL = {
     ungdomsskole: t('Ungdomsskole')
 };
 
+// The map's attribution, as short as the licences allow: OpenFreeMap's terms and the OpenStreetMap
+// licence (ODbL) ask for OpenFreeMap, OpenMapTiles and OpenStreetMap, each with a link. Leaflet's own
+// "Leaflet" credit is optional, so the maps leave it out (setPrefix(false)) to keep the line short.
+const MAP_ATTRIBUTION = '<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> '
+    + '<a href="https://www.openmaptiles.org/" target="_blank" rel="noopener">&copy; OpenMapTiles</a> '
+    + '<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">&copy; OpenStreetMap</a>';
+
 function schoolKey(school) {
     return `${school.name}|${school.kommune}|${school.schoolType}`;
+}
+
+// The school's own page: the page under skoler/ that search engines read (school.page, set by
+// create_map.py and built by site_pages.py), or skole.html?id= for a school without one
+function schoolUrl(school) {
+    return I18N.href(school.page || `skole.html?id=${encodeURIComponent(schoolKey(school))}`);
 }
 
 function formatDecimal(value) {
@@ -25,21 +38,28 @@ function schoolPhotoHtml(school, className) {
     const photo = school.photo;
     if (!photo || !photo.thumb) return '';
     const license = photo.licenseUrl
-        ? `<a href="${escapeHtml(photo.licenseUrl)}" target="_blank" rel="noopener">${escapeHtml(photo.license)}</a>`
+        ? `<a href="${escapeHtml(safeUrl(photo.licenseUrl))}" target="_blank" rel="noopener">${escapeHtml(photo.license)}</a>`
         : escapeHtml(photo.license);
     return `
         <figure class="${className}">
-            <img src="${escapeHtml(photo.thumb)}" alt="${t('Foto av {name}', { name: escapeHtml(school.name) })}" loading="lazy" decoding="async">
+            <img src="${escapeHtml(safeUrl(photo.thumb))}" alt="${t('Foto av {name}', { name: escapeHtml(school.name) })}" loading="lazy" decoding="async">
             <figcaption>${t('Foto:')} ${escapeHtml(photo.author)} · ${license} ·
-                <a href="${escapeHtml(photo.page)}" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption>
+                <a href="${escapeHtml(safeUrl(photo.page))}" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption>
         </figure>`;
 }
 
-// Escape HTML special characters
+// Escape HTML special characters, quotes too, so the result is safe both as text and inside an attribute
 function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+    return String(text ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+// A link from the data (school websites, Wikimedia, Wikidata, registers) only as a web, e-mail or phone
+// link: a "javascript:" or "data:" address becomes "#". Browsers ignore spaces and control characters in
+// the scheme, so they are left out of the check. Relative links (no scheme) stay as they are.
+function safeUrl(url) {
+    const text = String(url ?? '').trim();
+    const scheme = text.replace(/[\u0000-\u0020]/g, '').match(/^([a-z][a-z0-9+.-]*):/i);
+    return !scheme || /^(https?|mailto|tel)$/i.test(scheme[1]) ? text : '#';
 }
 
 // Escape special regex characters
@@ -200,8 +220,9 @@ function updateSaveButton(button, on) {
 }
 
 // Share a school page: the system share sheet where there is one, else copy the link
-async function shareSchoolPage(name, key, button) {
-    const url = new URL(I18N.href(`skole.html?id=${encodeURIComponent(key)}`), location.href).href;
+async function shareSchoolPage(school, button) {
+    const name = school.name;
+    const url = new URL(schoolUrl(school), location.href).href;
     try {
         if (navigator.share) {
             await navigator.share({ title: name, url });

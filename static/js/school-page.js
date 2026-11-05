@@ -1,4 +1,6 @@
-// School page (skole.html?id=<name|kommune|type>): everything we know about one school.
+// School page: everything we know about one school. Two addresses: the page under skoler/<kommune>/ that
+// site_pages.py builds for search engines (the school's key in <body data-school-id>; this script draws over
+// its static text), and skole.html?id=<name|kommune|type> for old links and the other level of a 1–10 school.
 // Results, Trivsel and photo come from school-data.json. Register data (address, pupils,
 // relations ...) is read live from Udir's Nasjonalt skoleregister (NSR, NLOD), the same
 // source as nsr.udir.no. A small map shows where the school is.
@@ -14,9 +16,28 @@
     // Oslo facts in the icon blocks were checked on oslo.kommune.no on this date
     const OSLO_CHECKED = '2026-11-02';
     const AKS_PAGE = 'https://www.oslo.kommune.no/skole-og-utdanning/aktivitetsskolen-aks/hva-er-aktivitetsskolen/';
-    const outLink = (href, label) => `<a class="ds-link" href="${escapeHtml(href)}" target="_blank" rel="noopener">${label}${icon('externalLink')}</a>`;
+    const outLink = (href, label) => `<a class="ds-link" href="${escapeHtml(safeUrl(href))}" target="_blank" rel="noopener">${label}${icon('externalLink')}</a>`;
     const root = document.getElementById('schoolPage');
-    const id = new URLSearchParams(location.search).get('id');
+    const id = new URLSearchParams(location.search).get('id') || document.body.dataset.schoolId;
+    const staticPage = Boolean(document.body.dataset.schoolId);
+
+    // The data could not be loaded: a message with "Prøv igjen", in place of the loading placeholder. On the
+    // pages under skoler/ the static text about the school comes back under it.
+    function showLoadError() {
+        const message = `<div class="ds-alert load-error" data-color="danger" role="alert">
+                <h2 class="ds-heading" data-size="xs">${t('Kunne ikke laste skolen')}</h2>
+                <p class="ds-paragraph">${t('Sjekk nettforbindelsen og prøv igjen.')}</p>
+                <button type="button" class="ds-button" data-variant="secondary" data-size="sm" id="retryLoad">${t('Prøv igjen')}</button>
+            </div>`;
+        root.removeAttribute('aria-busy');
+        if (staticPage) {
+            root.classList.add('is-fallback');
+            root.insertAdjacentHTML('afterbegin', message);
+        } else {
+            root.innerHTML = message;
+        }
+        document.getElementById('retryLoad').addEventListener('click', () => location.reload());
+    }
 
     const PROFILE_LABEL = {
         montessori: 'Montessori', steiner: 'Steiner', kristen: 'Kristen',
@@ -29,6 +50,23 @@
         'osm-nominatim': 'OpenStreetMap'
     };
     const score = v => (v === null || v === undefined ? '*' : v);
+    // A value worse than the whole country (as shown, to one decimal): red and bold in the tables, with the
+    // words for screen readers, since colour alone does not say it. `better`: 'higher' or 'lower' (mobbing).
+    const isWorse = (v, n, better = 'higher') => {
+        if (v === null || v === undefined || n === null || n === undefined) return false;
+        const [a, b] = [Math.round(v * 10), Math.round(n * 10)];
+        return better === 'higher' ? a < b : a > b;
+    };
+    const worse = (text, bad, better = 'higher') => (bad
+        ? `<span class="stat-worse">${text}<span class="ds-sr-only"> (${t(better === 'higher' ? 'lavere enn landsgjennomsnittet' : 'høyere enn landsgjennomsnittet')})</span></span>`
+        : text);
+    // The legend under a table: what red means there (`better`: 'higher', 'lower' for mobbing, 'both' for the survey table)
+    const LEGEND = {
+        higher: 'Rødt betyr lavere enn landsgjennomsnittet.',
+        lower: 'Rødt betyr høyere enn landsgjennomsnittet.',
+        both: 'Rødt betyr lavere enn landsgjennomsnittet, for mobbing høyere.'
+    };
+    const worseLegend = (better = 'higher') => `<p class="ds-paragraph table-caption stat-worse-legend" data-size="xs"><span class="stat-worse-legend__dot" aria-hidden="true"></span>${t(LEGEND[better])}</p>`;
     const average = values => {
         const valid = values.filter(v => v !== null && v !== undefined);
         return valid.length ? valid.reduce((a, b) => a + b, 0) / valid.length : null;
@@ -39,18 +77,22 @@
 
     let data;
     // National averages on the national tests (no "out of": the scale has no maximum)
-    const nationalRequest = fetch('static/js/landssnitt.json', { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}));
+    const nationalRequest = fetch(I18N.url('static/js/landssnitt.json'), { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}));
     // Kommune averages on the national tests, newest year (same Udir files, rows for the whole kommune)
-    const kommuneRequest = fetch('static/js/kommunesnitt.json', { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}));
+    const kommuneRequest = fetch(I18N.url('static/js/kommunesnitt.json'), { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}));
     try {
-        data = await fetch('static/js/school-data.json', { cache: 'no-cache' }).then(r => r.json());
+        data = await fetch(I18N.url('static/js/school-data.json'), { cache: 'no-cache' }).then(r => {
+            if (!r.ok) throw new Error(`HTTP ${r.status}`);
+            return r.json();
+        });
     } catch (error) {
-        root.innerHTML = '<p class="ds-paragraph">Kunne ikke laste skoledata. Prøv igjen senere.</p>';
+        showLoadError();
         return;
     }
 
     const school = data.schools.find(s => schoolKey(s) === id);
     if (!school) {
+        root.removeAttribute('aria-busy');
         root.innerHTML = `
             <h1 class="ds-heading" data-size="md">Fant ikke skolen</h1>
             <p class="ds-paragraph">${t('Lenken peker ikke til en skole vi har data for.')} <a class="ds-link" href="${I18N.href('./')}">${t('Gå til kartet')}</a>.</p>`;
@@ -71,14 +113,28 @@
     // Pupil Survey results shown for this level, and when "N svar" is worth saying
     const trinnShown = school.schoolType === 'barneskole' ? '7' : '10';
     const FEW_ANSWERS = 30;
-    document.title = `${school.name} – Skolekartet`;
+    // The static page keeps its own (Norwegian) title for search engines, except in another language.
+    // On skole.html?id= the canonical address is the school's static page, so search engines count the two as one.
+    if (!staticPage || I18N.translated) document.title = `${school.name} – Skolekartet`;
+    if (!staticPage) {
+        if (school.page) {
+            const canonical = document.createElement('link');
+            canonical.rel = 'canonical';
+            canonical.href = new URL(I18N.url(school.page), location.origin).href;
+            document.head.appendChild(canonical);
+        }
+    }
 
     // Detail file (photos, links, AKS, hjertesone) and the register entry load in parallel
     const detailsRequest = school.orgnr
-        ? fetch(`static/data/skoler/${encodeURIComponent(school.orgnr)}.json`, { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}))
+        ? fetch(I18N.url(`static/data/skoler/${encodeURIComponent(school.orgnr)}.json`), { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}))
         : Promise.resolve({});
+    // The register is Udir's own server: after 6 seconds the page shows without it (and says so) rather than wait
     const unitRequest = school.orgnr
-        ? fetch(NSR_URL + encodeURIComponent(school.orgnr)).then(r => (r.ok ? r.json() : null)).catch(() => null)
+        ? Promise.race([
+            fetch(NSR_URL + encodeURIComponent(school.orgnr)).then(r => (r.ok ? r.json() : null)).catch(() => null),
+            new Promise(resolve => setTimeout(() => resolve(null), 6000))
+        ])
         : Promise.resolve(null);
 
     const tags = [];
@@ -115,7 +171,7 @@
             const avg = average([r.engelsk, r.lesing, r.regning]);
             const national = (nationalByYear[r.year] || {}).snitt;
             return `<tr><td>${escapeHtml(r.year)}</td><td class="num">${score(r.engelsk)}</td><td class="num">${score(r.lesing)}</td>
-                    <td class="num">${score(r.regning)}</td><td class="num"><strong>${avg === null ? '*' : formatDecimal(avg)}</strong></td>
+                    <td class="num">${score(r.regning)}</td><td class="num"><strong>${avg === null ? '*' : worse(formatDecimal(avg), isWorse(avg, national))}</strong></td>
                     <td class="num">${national === undefined || national === null ? '–' : formatDecimal(national)}</td></tr>`;
         }).join('');
 
@@ -135,6 +191,10 @@
         showNew ? ['ny-i-norge', 'Ny i Norge'] : null
     ].filter(Boolean);
 
+    // Everything the top of the page needs is loaded first, and the page is drawn once, so the banner does not
+    // grow when the address and links arrive (the loading placeholder holds the place until then)
+    const [details, unit] = await Promise.all([detailsRequest, unitRequest]);
+    root.removeAttribute('aria-busy');
     root.innerHTML = `
         <section class="school-banner" aria-labelledby="schoolName">
             ${saveButtonHtml(schoolKey(school), 'school-banner__save')}
@@ -212,6 +272,7 @@
                         </table>
                     </div>
                     <p class="ds-paragraph table-caption" data-size="xs">${t('Skalapoeng, {type}. Landsgjennomsnittet var 50 i 2022. * betyr at resultatet ikke er publisert. Resultater for 2026–27 kommer når Udir publiserer dem.', { type: typeLabel.toLowerCase() })}</p>
+                    ${worseLegend()}
                 </div>
                 <div class="stat-panel" role="tabpanel" id="panel-trivsel" aria-labelledby="tab-trivsel" tabindex="0" hidden>
                     <p class="ds-paragraph">Henter tall…</p>
@@ -272,8 +333,6 @@
                 <h2 class="ds-heading" data-size="sm" id="registerHeading">Mer fra skoleregisteret</h2>
                 <div id="registerSections"></div>
             </section>
-
-            <p class="ds-paragraph school-page__sources" data-size="xs">Kilder: nasjonale prøver, Elevundersøkelsen og Nasjonalt skoleregister fra Utdanningsdirektoratet (NLOD). Foto fra Wikimedia Commons med fotografens lisens. Lenker til nettside og sosiale medier er hentet fra skolens egen nettside. <a class="ds-link" href="datakilder.html">Om datakildene</a>.</p>
         </div>`;
 
     showMap(school);
@@ -282,8 +341,7 @@
     root.querySelector('.school-banner__save').addEventListener('click', event => {
         updateSaveButton(event.currentTarget, toggleSaved(schoolKey(school)));
     });
-    document.getElementById('bannerShare').addEventListener('click', event => shareSchoolPage(school.name, schoolKey(school), event.currentTarget));
-    const [details, unit] = await Promise.all([detailsRequest, unitRequest]);
+    document.getElementById('bannerShare').addEventListener('click', event => shareSchoolPage(school, event.currentTarget));
     showSurveyHistory(details.survey || {});
     showComparisons(details.elevundersokelsen);
     document.getElementById('surveyAll').innerHTML = surveyTableHtml(details.elevundersokelsen);
@@ -308,30 +366,80 @@
 
     // Small icon link to where the figures come from
 
-    // ── Statistics as tabs: the cards choose which table shows below ─────
+    // ── Statistics: the cards choose which table and chart show ──────────
+    // Wider screens: tabs, the chosen card's details below the row of cards. Phones: each card opens its details
+    // right under itself (an arrow shows open or closed); tapping it again closes them, tapping another card
+    // opens that one and closes the first.
     function statTab(id, title, content, selected) {
         return `<button type="button" class="ds-card school-stat" data-variant="tinted" data-color="${selected ? 'brand1' : 'neutral'}" role="tab" id="tab-${id}"
                     aria-selected="${selected}" aria-controls="panel-${id}" tabindex="${selected ? 0 : -1}">
                     <span class="school-stat__title">${title}</span>
                     ${content}
+                    <span class="school-stat__chevron" aria-hidden="true">${icon('chevronDown')}</span>
                 </button>`;
     }
 
     function bindStatTabs() {
-        const tabs = [...document.querySelectorAll('.school-stats [role="tab"]')];
-        const select = tab => {
-            tabs.forEach(t => {
-                const on = t === tab;
-                t.setAttribute('aria-selected', String(on));
-                t.dataset.color = on ? 'brand1' : 'neutral';
-                t.tabIndex = on ? 0 : -1;
-                document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
-            });
+        const list = document.querySelector('.school-stats');
+        const tabs = [...list.querySelectorAll('.school-stat')];
+        const panelOf = tab => document.getElementById(tab.getAttribute('aria-controls'));
+        const phone = window.matchMedia('(max-width: 640px)');
+        const show = (tab, on) => {
+            tab.dataset.color = on ? 'brand1' : 'neutral';
+            panelOf(tab).hidden = !on;
+            if (phone.matches) {
+                tab.setAttribute('aria-expanded', String(on));
+            } else {
+                tab.setAttribute('aria-selected', String(on));
+                tab.tabIndex = on ? 0 : -1;
+            }
         };
+        const select = tab => tabs.forEach(other => show(other, other === tab));
+
+        // Tabs with the details after the row of cards, or (phones) each card with its details under it
+        const layout = () => {
+            const open = tabs.find(tab => !panelOf(tab).hidden) || (phone.matches ? null : tabs[0]);
+            if (phone.matches) {
+                list.removeAttribute('role');
+                tabs.forEach(tab => {
+                    const panel = panelOf(tab);
+                    tab.after(panel);
+                    tab.removeAttribute('role');
+                    tab.removeAttribute('aria-selected');
+                    tab.tabIndex = 0;
+                    panel.setAttribute('role', 'region');
+                });
+            } else {
+                list.setAttribute('role', 'tablist');
+                let after = list;
+                tabs.forEach(tab => {
+                    const panel = panelOf(tab);
+                    after.after(panel);
+                    after = panel;
+                    tab.setAttribute('role', 'tab');
+                    tab.removeAttribute('aria-expanded');
+                    panel.setAttribute('role', 'tabpanel');
+                });
+            }
+            tabs.forEach(tab => show(tab, tab === open));
+        };
+        layout();
+        phone.addEventListener('change', layout);
+
         tabs.forEach((tab, i) => {
-            tab.addEventListener('click', () => select(tab));
-            // Arrow keys move between the cards, as in a tab list
+            tab.addEventListener('click', () => {
+                if (phone.matches && !panelOf(tab).hidden) {
+                    show(tab, false);
+                    return;
+                }
+                const before = tab.getBoundingClientRect().top;
+                select(tab);
+                // Phones: the tapped card keeps its place when the details of a card above it close
+                if (phone.matches) window.scrollBy(0, tab.getBoundingClientRect().top - before);
+            });
+            // Arrow keys move between the cards, as in a tab list (wider screens)
             tab.addEventListener('keydown', event => {
+                if (phone.matches) return;
                 const next = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[event.key];
                 if (next === undefined) return;
                 event.preventDefault();
@@ -353,14 +461,17 @@
             const fmt = v => (v === null || v === undefined ? '*' : `${formatDecimal(v)}${unit}`);
             const compare = (v, n) => {
                 if (n === null || n === undefined || v === n) return '<span class="stat-compare">Som landet</span>';
-                const good = better === 'higher' ? v > n : v < n;
-                return `<span class="stat-compare" data-good="${good}">${v > n ? 'Over' : 'Under'} landet</span>`;
+                const word = `${v > n ? 'Over' : 'Under'} landet`;
+                // Worse than the country: a red Designsystemet tag; better: green text
+                return isWorse(v, n, better)
+                    ? `<span class="ds-tag stat-compare-tag" data-color="danger" data-size="sm">${word}</span>`
+                    : `<span class="stat-compare" data-good="true">${word}</span>`;
             };
             return `
                 <div class="table-scroll">
                     <table class="ds-table school-history" data-size="sm" data-border>
                         <thead><tr><th>År</th><th class="num">Skolen</th><th class="num">Hele landet</th><th>Sammenlignet</th></tr></thead>
-                        <tbody>${rows.map(r => `<tr><td>${escapeHtml(r.year)}</td><td class="num"><strong>${fmt(r.value)}</strong></td>
+                        <tbody>${rows.map(r => `<tr><td>${escapeHtml(r.year)}</td><td class="num"><strong>${worse(fmt(r.value), isWorse(r.value, r.national, better), better)}</strong></td>
                             <td class="num">${fmt(r.national)}</td><td>${compare(r.value, r.national)}</td></tr>`).join('')}</tbody>
                     </table>
                 </div>`;
@@ -368,11 +479,13 @@
         document.getElementById('panel-trivsel').innerHTML = `
             <h3 class="ds-heading" data-size="xs">Trivsel over tid</h3>
             ${table('trivsel', 'Trivsel', '', 'higher')}
-            <p class="ds-paragraph table-caption" data-size="xs">${t('Gjennomsnittlig svar på «Trives du på skolen?» på en skala fra 1 til 5, {trinn}. trinn. År som mangler, er ikke publisert av Udir.', { trinn })}</p>`;
+            <p class="ds-paragraph table-caption" data-size="xs">${t('Gjennomsnittlig svar på «Trives du på skolen?» på en skala fra 1 til 5, {trinn}. trinn. År som mangler, er ikke publisert av Udir.', { trinn })}</p>
+            ${worseLegend()}`;
         document.getElementById('panel-mobbing').innerHTML = `
             <h3 class="ds-heading" data-size="xs">Mobbing over tid</h3>
             ${table('mobbing', 'Mobbing', I18N.isEnglish ? '%' : '&nbsp;%', 'lower')}
-            <p class="ds-paragraph table-caption" data-size="xs">${t('Andel elever på {trinn}. trinn som er blitt mobbet to eller tre ganger i måneden eller oftere. År som mangler, er ikke publisert av Udir, ofte fordi for få svarte. Landsgjennomsnittet steg mye fra 2022–23 til 2023–24, og fra 2023–24 publiserer Udir tall for langt flere skoler. Sammenlign derfor helst år fra 2023–24 og senere.', { trinn })}</p>`;
+            <p class="ds-paragraph table-caption" data-size="xs">${t('Andel elever på {trinn}. trinn som er blitt mobbet to eller tre ganger i måneden eller oftere. År som mangler, er ikke publisert av Udir, ofte fordi for få svarte. Landsgjennomsnittet steg mye fra 2022–23 til 2023–24, og fra 2023–24 publiserer Udir tall for langt flere skoler. Sammenlign derfor helst år fra 2023–24 og senere.', { trinn })}</p>
+            ${worseLegend('lower')}`;
     }
 
     // ── Banner: photos, address and links ──────────────────────────────
@@ -382,9 +495,9 @@
 
     function credit(photo) {
         const license = photo.licenseUrl
-            ? `<a href="${escapeHtml(photo.licenseUrl)}" target="_blank" rel="noopener">${escapeHtml(photo.license)}</a>`
+            ? `<a href="${escapeHtml(safeUrl(photo.licenseUrl))}" target="_blank" rel="noopener">${escapeHtml(photo.license)}</a>`
             : escapeHtml(photo.license);
-        return `${t('Foto:')} ${escapeHtml(photo.author)} · ${license} · <a href="${escapeHtml(photo.page)}" target="_blank" rel="noopener">Wikimedia Commons</a>`;
+        return `${t('Foto:')} ${escapeHtml(photo.author)} · ${license} · <a href="${escapeHtml(safeUrl(photo.page))}" target="_blank" rel="noopener">Wikimedia Commons</a>`;
     }
 
     function showMedia(gallery) {
@@ -392,7 +505,7 @@
         if (!gallery.length) return;
         const slides = gallery.map((photo, i) => `
             <figure class="carousel__slide" ${i ? 'hidden' : ''} aria-roledescription="bilde" aria-label="${t('{current} av {total}', { current: i + 1, total: gallery.length })}">
-                <img src="${escapeHtml(photo.thumb)}" alt="${t('Foto av {name}', { name: escapeHtml(school.name) })}${photo.title ? `: ${escapeHtml(photo.title)}` : ''}" ${i ? 'loading="lazy"' : ''} decoding="async">
+                <img src="${escapeHtml(safeUrl(photo.thumb))}" alt="${t('Foto av {name}', { name: escapeHtml(school.name) })}${photo.title ? `: ${escapeHtml(photo.title)}` : ''}" ${i ? 'loading="lazy"' : ''} decoding="async">
                 <figcaption>${credit(photo)}</figcaption>
             </figure>`).join('');
         target.innerHTML = gallery.length === 1 ? `<div class="carousel">${slides}</div>` : `
@@ -433,14 +546,14 @@
         const google = googleMapsUrl(addressText || `${school.name}, ${school.kommune}`);
         document.getElementById('bannerGoogle').href = google;
         const action = (href, label, iconName, external) => `<a class="ds-button school-contact__action" data-variant="tertiary" data-size="sm" data-icon="true"
-                href="${escapeHtml(href)}" aria-label="${label}" data-tooltip="${label}"${external ? ' target="_blank" rel="noopener"' : ''}>${icon(iconName)}</a>`;
+                href="${escapeHtml(safeUrl(href))}" aria-label="${label}" data-tooltip="${label}"${external ? ' target="_blank" rel="noopener"' : ''}>${icon(iconName)}</a>`;
         const list = document.getElementById('bannerContactList');
         if (addressText) {
             list.firstElementChild.insertAdjacentHTML('beforeend', action(google, t('Åpne i Google Maps'), 'externalLink', true));
         }
         const reach = details.contact || {};
         if (reach.email) {
-            list.insertAdjacentHTML('beforeend', `<li><span class="school-contact__text">${escapeHtml(reach.email)}</span>${action(`mailto:${reach.email}`, t('Send e-post til skolen'), 'envelopeClosed')}</li>`);
+            list.insertAdjacentHTML('beforeend', `<li><span class="school-contact__text">${escapeHtml(reach.email).replace('@', '@<wbr>')}</span>${action(`mailto:${reach.email}`, t('Send e-post til skolen'), 'envelopeClosed')}</li>`);
         }
         if (reach.phone) {
             const spaced = reach.phone.replace(/^(\d{2})(\d{2})(\d{2})(\d{2})$/, '$1 $2 $3 $4');
@@ -453,7 +566,7 @@
 
         // The website once, as its address; a registered website that does not answer is named, but not linked
         const contact = website
-            ? `<a class="ds-link" href="${escapeHtml(website)}" target="_blank" rel="noopener">${escapeHtml(website.replace(/^https?:\/\/(www\.)?/i, '').replace(/\/$/, ''))}${icon('externalLink')}</a>`
+            ? `<a class="ds-link" href="${escapeHtml(safeUrl(website))}" target="_blank" rel="noopener">${escapeHtml(website.replace(/^https?:\/\/(www\.)?/i, '').replace(/\/$/, ''))}${icon('externalLink')}</a>`
             : details.websiteBroken ? `<span class="school-banner__muted">${t('Nettsiden svarer ikke')}</span>` : '';
         if (contact) {
             document.getElementById('bannerContactLinks').innerHTML = contact;
@@ -463,7 +576,7 @@
         // Always show Facebook and Instagram, one without an official page as unavailable;
         // Wikipedia only when there is an article
         const social = (url, name, missing) => url
-            ? `<li><a class="social-link" href="${escapeHtml(url)}" target="_blank" rel="noopener"
+            ? `<li><a class="social-link" href="${escapeHtml(safeUrl(url))}" target="_blank" rel="noopener"
                    aria-label="${name}: ${escapeHtml(school.name)}" data-tooltip="${name}">${icon(name.toLowerCase(), 'social-link__icon')}</a></li>`
             // Focusable, so keyboard users also reach the tooltip that says why the icon is greyed out
             : `<li><span class="social-link" tabindex="0" aria-disabled="true" role="img" aria-label="${t('{name}: fant ingen offisiell side', { name })}"
@@ -477,7 +590,7 @@
     // ── Before and after school: AKS in Oslo, SFO elsewhere ─────────────
     function careHtml(details) {
         const website = details.website;
-        const out = (href, label) => `<a class="ds-link" href="${escapeHtml(href)}" target="_blank" rel="noopener">${escapeHtml(label)}${icon('externalLink')}</a>`;
+        const out = (href, label) => `<a class="ds-link" href="${escapeHtml(safeUrl(href))}" target="_blank" rel="noopener">${escapeHtml(label)}${icon('externalLink')}</a>`;
         const general = `<p class="ds-paragraph"><a class="ds-link" href="${I18N.href('skolefritid.html#aks')}">${t('Om AKS i Oslo: søknad, plass og pris')}</a></p>`;
         const aks = details.aks;
         // Long link lists fold away (Designsystemet Details) and open when needed
@@ -607,7 +720,9 @@
             const last = byYear[latest] || entries[entries.length - 1];
             return `<tr>
                 <th scope="row">${t(survey.labels[key])}</th>
-                ${years.map(y => `<td class="num">${y in byYear ? fmt(key, byYear[y].value) : '–'}</td>`).join('')}
+                ${years.map(y => `<td class="num">${y in byYear
+                    ? worse(fmt(key, byYear[y].value), isWorse(byYear[y].value, byYear[y].national, key === 'mobbing' ? 'lower' : 'higher'), key === 'mobbing' ? 'lower' : 'higher')
+                    : '–'}</td>`).join('')}
                 <td>${sparkline(years.map(y => (byYear[y] ? byYear[y].value : null)))}</td>
                 <td class="num">${fmt(key, last.kommune)}</td>
                 <td class="num">${fmt(key, last.national)}</td>
@@ -626,6 +741,7 @@
                     </table>
                 </div>
                 <p class="ds-paragraph table-caption" data-size="xs">${t('* betyr at Udir har skjult tallet, ofte fordi for få elever svarte. – betyr at skolen ikke har tall det året.')}</p>
+                ${worseLegend('both')}
             </div>`;
     }
 
@@ -641,7 +757,7 @@
         const list = nearby.length
             ? `<ul class="nearby">${nearby.map(({ s, km: d }) => `
                 <li class="nearby__item">
-                    <a class="ds-link" href="${I18N.href(`skole.html?id=${encodeURIComponent(schoolKey(s))}`)}">${escapeHtml(s.name)}</a>
+                    <a class="ds-link" href="${schoolUrl(s)}">${escapeHtml(s.name)}</a>
                     <span class="nearby__meta">${t('{km} km i luftlinje', { km: km(d) })}${s.kommune !== school.kommune ? ` · ${escapeHtml(s.kommune)}` : ''}${s.eierform === 'privat' ? ` · ${t('Privat')}` : ''}</span>
                 </li>`).join('')}</ul>`
             : `<p class="ds-paragraph">${t('Ingen andre skoler av samme type innen 3 km.')}</p>`;
@@ -658,7 +774,7 @@
                 <span class="icon-tile__label">${tile.label}</span>
                 ${tile.text ? `<span class="icon-tile__text">${tile.text}</span>` : ''}`;
             return `<li>${tile.href
-                ? `<a class="icon-tile" href="${escapeHtml(tile.href)}" target="_blank" rel="noopener">${inner}</a>`
+                ? `<a class="icon-tile" href="${escapeHtml(safeUrl(tile.href))}" target="_blank" rel="noopener">${inner}</a>`
                 : `<div class="icon-tile">${inner}</div>`}</li>`;
         }).join('')}</ul>`;
     }
@@ -668,7 +784,7 @@
         return `
             ${tiles.length ? tilesHtml(tiles) : `<p class="ds-paragraph">${empty}</p>`}
             ${notes.map(note => `<p class="ds-paragraph" data-size="sm">${note}</p>`).join('')}
-            ${more ? `<p class="icon-block__more"><a class="ds-link" href="${escapeHtml(more)}" target="_blank" rel="noopener">${t('Les mer')}${icon('chevronRight')}</a></p>` : ''}
+            ${more ? `<p class="icon-block__more"><a class="ds-link" href="${escapeHtml(safeUrl(more))}" target="_blank" rel="noopener">${t('Les mer')}${icon('chevronRight')}</a></p>` : ''}
             <p class="ds-paragraph school-page__sources section-source" data-size="xs">${t('Kilde:')} ${sources.join('; ')}.</p>`;
     }
 
@@ -778,7 +894,7 @@
             <h3 class="ds-heading" data-size="xs">Trygg skolevei</h3>
             <p class="ds-paragraph">${status}</p>
             <p class="ds-paragraph" data-size="sm">Hjertesone er et samarbeid mellom skolen, FAU, Bymiljøetaten og Trygg Trafikk.
-               <a class="ds-link" href="${escapeHtml(source.source)}" target="_blank" rel="noopener">Les om hjertesoner${icon('externalLink')}</a></p>
+               <a class="ds-link" href="${escapeHtml(safeUrl(source.source))}" target="_blank" rel="noopener">Les om hjertesoner${icon('externalLink')}</a></p>
             ${zone ? `<p class="ds-paragraph school-page__sources section-source" data-size="xs">${t('Kilde: Oslo kommune, liste over hjertesoneskoler, hentet {date}.', { date: date(zone.fetched) })}</p>` : ''}`;
     }
 
@@ -817,10 +933,10 @@
         const pageFor = name => data.schools.find(s => s.name === name && s.kommune === school.kommune && s.schoolType === 'ungdomsskole');
         const barnePageFor = name => data.schools.find(s => s.name === name && s.kommune === school.kommune && s.schoolType === 'barneskole');
         const link = (entry, name) => entry
-            ? `<a class="ds-link" href="${I18N.href(`skole.html?id=${encodeURIComponent(schoolKey(entry))}`)}">${escapeHtml(name)}</a>`
+            ? `<a class="ds-link" href="${schoolUrl(entry)}">${escapeHtml(name)}</a>`
             : escapeHtml(name);
         const source = info => `<p class="ds-paragraph school-page__sources section-source" data-size="xs">${t('Kilde: Oslo kommune, Skolekrets ungdomsskole, hentet {date}.', { date: date(info.fetched) })}
-            <a class="source-link" href="${escapeHtml(info.source)}" target="_blank" rel="noopener" aria-label="${t('Kilde:')} Oslo kommune" data-tooltip="Oslo kommune">${icon('externalLink')}</a></p>`;
+            <a class="source-link" href="${escapeHtml(safeUrl(info.source))}" target="_blank" rel="noopener" aria-label="${t('Kilde:')} Oslo kommune" data-tooltip="Oslo kommune">${icon('externalLink')}</a></p>`;
 
         const next = details.nextSchool;
         if (school.schoolType === 'barneskole' && next && !(otherLevel && next.same)) {
@@ -831,7 +947,7 @@
                     ? t('Etter 7. trinn går elevene videre til {first} eller {second}. Det avhenger av hvor eleven bor.', { first: schools.slice(0, -1).join(', '), second: schools[schools.length - 1] })
                     : t('Etter 7. trinn går elevene videre til {school}.', { school: schools[0] });
             showNext('Videre', `<p class="ds-paragraph">${sentence}</p>
-                ${next.boundaryMap ? `<p class="ds-paragraph" data-size="sm"><a class="ds-link" href="${escapeHtml(next.boundaryMap)}" target="_blank" rel="noopener">${t('Se grensekartet')}${icon('externalLink')}</a></p>` : ''}
+                ${next.boundaryMap ? `<p class="ds-paragraph" data-size="sm"><a class="ds-link" href="${escapeHtml(safeUrl(next.boundaryMap))}" target="_blank" rel="noopener">${t('Se grensekartet')}${icon('externalLink')}</a></p>` : ''}
                 ${source(next)}`);
             return;
         }
@@ -1053,7 +1169,7 @@
         if (!walkLayer) drawWalk(null);
         const caption = document.getElementById('kretsCaption');
         caption.innerHTML = `${t('Den stiplede linjen viser skolekretsen ({name}). Pilot på åpne data, kan avvike fra kommunens gjeldende grenser.', { name: escapeHtml(own[0].name) })}
-            ${t('Kilde:')} <a class="ds-link" href="${escapeHtml(info.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(t(info.source))}</a>.
+            ${t('Kilde:')} <a class="ds-link" href="${escapeHtml(safeUrl(info.sourceUrl))}" target="_blank" rel="noopener">${escapeHtml(t(info.source))}</a>.
             <a class="ds-link" href="${I18N.href('om-skolekrets.html')}#pilot">${t('Om skolekretsdataene')}</a>`;
         caption.hidden = false;
     }
@@ -1065,11 +1181,10 @@
         L.maplibreGL({
             style: typeof THEME !== 'undefined' ? THEME.mapStyle() : 'https://tiles.openfreemap.org/styles/liberty',
             attributionControl: {
-                customAttribution: '<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> ' +
-                    '<a href="https://www.openmaptiles.org/" target="_blank" rel="noopener">&copy; OpenMapTiles</a> ' +
-                    'Data from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
+                customAttribution: MAP_ATTRIBUTION
             }
         }).addTo(map);
+        map.attributionControl.setPrefix(false);
         const size = s.schoolType === 'ungdomsskole' ? 40 : 30;
         L.marker([s.lat, s.lng], {
             icon: L.divIcon({
@@ -1125,31 +1240,29 @@
         const relations = (unit.ForeldreRelasjoner || []).map(r => [escapeHtml(r.Relasjonstype.Navn), link(r.Enhet.Organisasjonsnummer, r.Enhet.Navn)])
             .concat((unit.BarnRelasjoner || []).map(r => [`${escapeHtml(r.Relasjonstype.Navn)} ${t('(underenhet)')}`, link(r.Enhet.Organisasjonsnummer, r.Enhet.Navn)]));
 
-        // "Om skolen" is a small block of key facts at the top of the page
-        // "Om skolen": key figures in columns (label, big number, short text), as in the Røde Kors
-        // "nøkkeltall" block, built with Designsystemet type and spacing
-        const grades = [unit.SkoletrinnGSFra && { value: `${unit.SkoletrinnGSFra}.–${unit.SkoletrinnGSTil}.`,
-                                                  text: t('Skolen har elever på {from}. til {to}. trinn.', { from: unit.SkoletrinnGSFra, to: unit.SkoletrinnGSTil }) },
-                        unit.SkoletrinnVGSFra && { value: `VGS ${unit.SkoletrinnVGSFra}.–${unit.SkoletrinnVGSTil}.`, text: t('Videregående trinn.') }]
+        // "Om skolen": key figures in columns (label and big number), as in the Røde Kors "nøkkeltall" block,
+        // built with Designsystemet type and spacing. The label says what the number is, so there is no line
+        // under it repeating that; the register's categories ("Grunnskole, Offentlig skole …") repeat the tags
+        // and are in "Mer fra skoleregisteret".
+        const grades = [unit.SkoletrinnGSFra && `${unit.SkoletrinnGSFra}.–${unit.SkoletrinnGSTil}.`,
+                        unit.SkoletrinnVGSFra && `VGS ${unit.SkoletrinnVGSFra}.–${unit.SkoletrinnVGSTil}.`]
             .filter(Boolean);
         const figures = [
-            grades.length ? { label: 'Trinn', value: grades.map(g => g.value).join(', '), text: grades.map(g => g.text).join(' ') } : null,
-            unit.Elevtall ? { label: 'Elever', value: new Intl.NumberFormat(I18N.locale).format(unit.Elevtall), text: t('Elever registrert ved skolen.') } : null,
-            unit.AntallAnsatte ? { label: 'Ansatte', value: new Intl.NumberFormat(I18N.locale).format(unit.AntallAnsatte), text: t('Ansatte registrert ved skolen.') } : null,
-            unit.Maalform ? { label: 'Målform', value: escapeHtml(unit.Maalform.Navn), text: t('Skolens hovedmålform.') } : null
+            grades.length ? { label: 'Trinn', value: grades.join(', ') } : null,
+            unit.Elevtall ? { label: 'Elever', value: new Intl.NumberFormat(I18N.locale).format(unit.Elevtall) } : null,
+            unit.AntallAnsatte ? { label: 'Ansatte', value: new Intl.NumberFormat(I18N.locale).format(unit.AntallAnsatte) } : null,
+            unit.Maalform ? { label: 'Målform', value: escapeHtml(unit.Maalform.Navn) } : null
         ].filter(Boolean);
         const extra = [
             unit.ErSpesialskole ? t('Spesialskole') : null,
             godkjenning,
-            unit.Karakteristikk ? escapeHtml(unit.Karakteristikk) : null,
-            (unit.Skolekategorier || []).map(k => escapeHtml(k.Navn)).join(', ') || null
+            unit.Karakteristikk ? escapeHtml(unit.Karakteristikk) : null
         ].filter(Boolean);
         summary.innerHTML = `
             <dl class="key-figures__grid">${figures.map(f => `
                 <div class="key-figures__item">
                     <dt class="key-figures__label">${t(f.label)}</dt>
                     <dd class="key-figures__value">${f.value}</dd>
-                    <dd class="key-figures__text">${f.text}</dd>
                 </div>`).join('')}
             </dl>
             ${extra.length ? `<p class="ds-paragraph key-figures__extra" data-size="sm">${extra.join(' · ')}</p>` : ''}

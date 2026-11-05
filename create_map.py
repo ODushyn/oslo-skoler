@@ -5,6 +5,7 @@ from pathlib import Path
 import elevundersokelsen
 import photos
 import school_locations
+import site_pages
 from nsr import NsrMatcher, load_cache
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -383,6 +384,9 @@ def create_norway_schools_map(input_files=None,
     print(f"  - Trivsel for {sum(1 for s in prepared_schools if s['trivsel'])} entries, "
           f"mobbing for {sum(1 for s in prepared_schools if s['mobbing'])} entries, "
           f"photo for {sum(1 for s in prepared_schools if s['photo'])} entries")
+
+    # Each school's page for search engines (skoler/<kommune>/<skole>.html, built by site_pages.py)
+    site_pages.assign_pages(prepared_schools)
 
     # Create output data structure
     output_data = {

@@ -595,6 +595,16 @@ const Finder = (() => {
     function setSavedOnly(on) {
         state.savedOnly = on;
         state.shown = PAGE_SIZE;
+        // The saved schools are this browser's own list: not a page for search engines
+        let robots = document.querySelector('meta[name="robots"]');
+        if (on && !robots) {
+            robots = document.createElement('meta');
+            robots.name = 'robots';
+            robots.content = 'noindex';
+            document.head.appendChild(robots);
+        } else if (!on && robots) {
+            robots.remove();
+        }
         if (on) {
             const saved = savedSchools();
             const points = entries.filter(e => e.keys.some(k => saved.has(k)) && e.school.lat).map(e => [e.school.lat, e.school.lng]);
@@ -668,36 +678,30 @@ const Finder = (() => {
             el('savedText').textContent = t('Du har ikke lagret noen skoler ennå. Trykk på bokmerket ved en skole for å lagre den til senere.');
         }
 
-        renderKretsNote();
-        // Phones: an open card (and its small map) stays open when the list is drawn again
-        const reopen = phoneLayout.matches && openKey ? entryFor(openKey) : null;
-        const reopenMap = Boolean(reopen) && miniKey === openKey && mapSlot() && mapSlot().parentElement === el('schoolList');
-        if (mapSlot() && mapSlot().parentElement === el('schoolList')) closeMiniMap();
+        // Phones: an open card (and its small map), in the list or among the address's schools, stays open
+        // when they are drawn again
+        const reopen = phoneLayout.matches && openKey ? { key: openKey, where: openWhere } : null;
+        const inCards = slot => slot && (el('schoolList').contains(slot) || el('kretsNote').contains(slot));
+        const reopenMap = Boolean(reopen) && miniKey === openKey && inCards(mapSlot());
+        if (inCards(mapSlot())) closeMiniMap();
         openKey = null;
+        renderKretsNote();
         el('schoolList').innerHTML = visible.map((e, i) => schoolCard(e, ref, i)).join('');
+        // The first list replaces the loading placeholders
+        el('schoolList').removeAttribute('aria-busy');
+        if (el('listLoading')) el('listLoading').remove();
         el('schoolList').querySelectorAll('.school-card__save').forEach(button => {
             button.addEventListener('click', () => {
                 updateSaveButton(button, toggleSaved(button.dataset.save));
                 if (state.savedOnly) refreshList();
             });
         });
+        markExpandable(el('schoolList'));
+        markExpandable(el('kretsNote'));
         el('schoolList').querySelectorAll('.school-card').forEach(card => {
-            // Phones: the card opens and closes the details under it
-            if (phoneLayout.matches) {
-                card.setAttribute('aria-expanded', 'false');
-                card.setAttribute('aria-controls', card.closest('li').querySelector('.school-card__details').id);
-            }
             card.addEventListener('click', () => {
-                // Phones: the tapped card opens (the open one closes); the same card again closes it.
-                // The tapped card keeps its place on the screen when a card above it closes.
                 if (phoneLayout.matches) {
-                    const item = card.closest('li');
-                    const wasOpen = item.classList.contains('is-open');
-                    const before = card.getBoundingClientRect().top;
-                    closeCards();
-                    if (!wasOpen) openCard(item);
-                    window.scrollBy(0, card.getBoundingClientRect().top - before);
-                    if (!wasOpen) scrollIntoViewIfCut(item);
+                    toggleCard(card);
                     return;
                 }
                 document.querySelectorAll('.school-card[aria-current], .own-school[aria-current]').forEach(c => c.removeAttribute('aria-current'));
@@ -705,26 +709,17 @@ const Finder = (() => {
                 showSchool(card.dataset.key, true);
             });
         });
-        // "Vis på kartet" in an open card: the school's small map under the card, and "Skjul kartet" again
         el('schoolList').querySelectorAll('.school-card__map').forEach(button => {
-            button.addEventListener('click', () => {
-                const item = button.closest('li');
-                const entry = entryFor(item.querySelector('.school-card').dataset.key);
-                if (miniKey === entry.key && mapSlot()) {
-                    closeMiniMap();
-                } else {
-                    openMiniMap(item, entry);
-                    setMapButton(button, true);
-                }
-            });
+            button.addEventListener('click', () => toggleCardMap(button));
         });
         if (reopen) {
-            const card = [...el('schoolList').querySelectorAll('.school-card')].find(c => entryFor(c.dataset.key) === reopen);
+            const container = el(reopen.where === 'krets' ? 'kretsNote' : 'schoolList');
+            const card = [...container.querySelectorAll(CARD)].find(c => cardKey(c) === reopen.key);
             if (card) {
-                openCard(card.closest('li'));
+                openCard(card.closest(ITEM));
                 if (reopenMap) {
-                    openMiniMap(card.closest('li'), reopen, { keepPlace: false });
-                    setMapButton(card.closest('li').querySelector('.school-card__map'), true);
+                    openMiniMap(card.closest(ITEM), entryFor(reopen.key), { keepPlace: false });
+                    setMapButton(card.closest(ITEM).querySelector('.school-card__map'), true);
                 }
             }
         }
@@ -798,7 +793,7 @@ const Finder = (() => {
                 ${schoolPhotoHtml(entry.school, 'popup-photo school-card__photo')}
                 <div class="school-card__actions">
                     <button type="button" class="ds-button school-card__map" data-variant="secondary" data-size="sm" aria-expanded="false">${icon('locationPin')}<span>${t('Vis på kartet')}</span></button>
-                    <a class="ds-button" data-variant="primary" data-size="sm" href="${I18N.href(`skole.html?id=${encodeURIComponent(schoolKey(entry.school))}`)}"><span>${t('Les mer om skolen')}</span>${icon('arrowRight')}</a>
+                    <a class="ds-button" data-variant="primary" data-size="sm" href="${schoolUrl(entry.school)}"><span>${t('Les mer om skolen')}</span>${icon('arrowRight')}</a>
                 </div>
             </div>`;
     }
@@ -869,15 +864,13 @@ const Finder = (() => {
 
     // ── Phones: only the list; a tapped school opens under itself ──
     // The big map stays out of sight (it still decides which schools the list shows). A tapped card opens
-    // with what the map popup would show and two buttons: "Vis på kartet" (a small map with the school's
-    // marker under the card, no popup since the card already says it all) and "Les mer om skolen". One
+    // with what the map popup would show and two buttons in one row: "Vis på kartet" (a small map inside the card,
+    // above the buttons, centred on the school without its popup since the card already says it all, with the other
+    // schools around it as on the big map) and "Les mer om skolen". One
     // card is open at a time: tapping another opens that one and closes the first, tapping the same card
     // closes it. The tapped card keeps its place on the screen (no jump when a card above it closes), and
     // the page only scrolls when the opened part does not fit below.
     const phoneLayout = window.matchMedia('(max-width: 640px)');
-    const MAP_ATTRIBUTION = '<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> '
-        + '<a href="https://www.openmaptiles.org/" target="_blank" rel="noopener">&copy; OpenMapTiles</a> '
-        + 'Data from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
     let miniMap = null;
     let miniKey = null;
     let openKey = null;
@@ -890,22 +883,64 @@ const Finder = (() => {
         });
     }
 
+    // The cards that open on phones: the list's and the address's schools ("Trolig skolekrets for adressen")
+    const CARD = '.school-card, .own-school';
+    const ITEM = '.school-list__item, .own-school-item';
+    const cardKey = card => card.dataset.key || card.dataset.show;
+    let openWhere = null;
+
+    // Phones: each card says that it opens the details under it
+    function markExpandable(container) {
+        if (!phoneLayout.matches) return;
+        container.querySelectorAll(CARD).forEach(card => {
+            const details = card.closest(ITEM).querySelector('.school-card__details');
+            if (!details) return;
+            card.setAttribute('aria-expanded', 'false');
+            card.setAttribute('aria-controls', details.id);
+        });
+    }
+
+    // Phones: the tapped card opens (the open one closes, wherever it is); the same card again closes it.
+    // The tapped card keeps its place on the screen when a card above it closes.
+    function toggleCard(card) {
+        const item = card.closest(ITEM);
+        const wasOpen = item.classList.contains('is-open');
+        const before = card.getBoundingClientRect().top;
+        closeCards();
+        if (!wasOpen) openCard(item);
+        window.scrollBy(0, card.getBoundingClientRect().top - before);
+        if (!wasOpen) scrollIntoViewIfCut(item);
+    }
+
+    // "Vis på kartet" in an open card: the school's small map inside the card, and "Skjul kartet" again
+    function toggleCardMap(button) {
+        const item = button.closest(ITEM);
+        const entry = entryFor(cardKey(item.querySelector(CARD)));
+        if (miniKey === entry.key && mapSlot()) {
+            closeMiniMap();
+        } else {
+            openMiniMap(item, entry);
+            setMapButton(button, true);
+        }
+    }
+
     function openCard(item) {
-        const card = item.querySelector('.school-card');
+        const card = item.querySelector(CARD);
         item.classList.add('is-open');
         item.querySelector('.school-card__details').hidden = false;
         card.setAttribute('aria-expanded', 'true');
         card.setAttribute('aria-current', 'true');
-        openKey = card.dataset.key;
+        openKey = cardKey(card);
+        openWhere = el('kretsNote').contains(item) ? 'krets' : 'list';
     }
 
     // Close the open card and any small map (also one under an address's school)
     function closeCards() {
         closeMiniMap();
-        document.querySelectorAll('.school-list__item.is-open').forEach(item => {
+        document.querySelectorAll('.school-list__item.is-open, .own-school-item.is-open').forEach(item => {
             item.classList.remove('is-open');
             item.querySelector('.school-card__details').hidden = true;
-            item.querySelector('.school-card').setAttribute('aria-expanded', 'false');
+            item.querySelector(CARD).setAttribute('aria-expanded', 'false');
         });
         document.querySelectorAll('.school-card[aria-current], .own-school[aria-current]').forEach(c => c.removeAttribute('aria-current'));
         openKey = null;
@@ -944,30 +979,45 @@ const Finder = (() => {
         if (!anchor || !entry) return;
         const before = anchor.getBoundingClientRect().top;
         closeMiniMap();
-        const slot = document.createElement(anchor.tagName === 'LI' ? 'li' : 'div');
+        // An open card: the map opens inside it, above the row of buttons ("Skjul kartet" right under the map);
+        // elsewhere right after `anchor`
+        const actions = anchor.matches(ITEM) ? anchor.querySelector('.school-card__actions') : null;
+        const slot = document.createElement(!actions && anchor.tagName === 'LI' ? 'li' : 'div');
         slot.id = 'mapSlot';
         slot.className = 'map-slot';
         slot.innerHTML = '<div class="mini-map"></div>';
-        anchor.after(slot);
+        if (actions) actions.before(slot);
+        else anchor.after(slot);
         if (keepPlace) window.scrollBy(0, anchor.getBoundingClientRect().top - before);
 
         const school = entry.school;
         // Zoom buttons at the bottom right, stacked above the attribution, so the open popup does not cover them
-        miniMap = L.map(slot.firstElementChild, { scrollWheelZoom: false, zoomControl: false }).setView([school.lat, school.lng], 15);
+        // maxZoom: the marker cluster needs one, as on the big map. Without zoom animation: in this small map the
+        // cluster did not redraw after an animated zoom, so "−" showed no other schools.
+        miniMap = L.map(slot.firstElementChild, { scrollWheelZoom: false, zoomControl: false, maxZoom: 19, zoomAnimation: false })
+            .setView([school.lat, school.lng], 15);
         L.control.zoom({ position: 'bottomright' }).addTo(miniMap);
         L.maplibreGL({ style: THEME.mapStyle(), attributionControl: { customAttribution: MAP_ATTRIBUTION } }).addTo(miniMap);
-        const marker = L.marker([school.lat, school.lng], { icon: entry.marker.options.icon, keyboard: false, interactive: popup })
+        miniMap.attributionControl.setPrefix(false);
+        // Popups sized to the small map (their frame adds about 50 px). The bottom padding keeps the marker
+        // under a popup clear of the attribution; a school with two levels scrolls inside its popup.
+        const popupOptions = {
+            maxWidth: Math.min(320, slot.clientWidth - 74),
+            maxHeight: Math.max(120, slot.clientHeight - 150),
+            autoPanPaddingTopLeft: [12, 12],
+            autoPanPaddingBottomRight: [12, 80]
+        };
+        // The school itself, above the others; tappable only where no card above shows it already
+        const marker = L.marker([school.lat, school.lng], { ...entry.marker.options, keyboard: false, interactive: popup, zIndexOffset: 1000 })
             .addTo(miniMap);
-        if (popup) {
-            // Popup sized to the small map (its frame adds about 50 px). The bottom padding keeps the marker
-            // under the popup clear of the attribution; a school with two levels scrolls inside the popup.
-            marker.bindPopup(createPopupContent(entry.marker.schoolLevels || [school]), {
-                maxWidth: Math.min(320, slot.clientWidth - 74),
-                maxHeight: slot.clientHeight - 170,
-                autoPanPaddingTopLeft: [12, 12],
-                autoPanPaddingBottomRight: [12, 100]
-            }).openPopup();
-        }
+        if (popup) marker.bindPopup(createPopupContent(entry.marker.schoolLevels || [school]), popupOptions).openPopup();
+        // The other schools that pass the filters, grouped as on the big map, so zooming out shows what is around.
+        // A tap opens the school's popup (made only then).
+        const others = L.markerClusterGroup(cluster.options);
+        others.addLayers(filtered.filter(other => other !== entry && other.school.lat != null).map(other =>
+            L.marker([other.school.lat, other.school.lng], { ...other.marker.options, keyboard: false })
+                .bindPopup(() => createPopupContent(other.marker.schoolLevels || [other.school]), popupOptions)));
+        others.addTo(miniMap);
         miniKey = entry.key;
 
         if (keepPlace) scrollIntoViewIfCut(slot);
@@ -1294,7 +1344,7 @@ const Finder = (() => {
         // No skolekrets data for this address (Oslo and most kommuner): show the nearest public
         // barneskole and ungdomsskole in the same cards, clearly named as the nearest, not the krets
         if (!own.length) {
-            const out = (href, label) => `<a class="ds-link" href="${href}" target="_blank" rel="noopener">${t(label)}${icon('externalLink')}</a>`;
+            const out = (href, label) => `<a class="ds-link" href="${escapeHtml(safeUrl(href))}" target="_blank" rel="noopener">${t(label)}${icon('externalLink')}</a>`;
             // In the info popover: where to look up the real krets, and which kommuner we can show it for
             const osloLookup = kommune === 'Oslo'
                 ? `<p class="ds-paragraph" data-size="sm">${t('Slå opp skolekretsen hos Oslo kommune:')}
@@ -1340,7 +1390,7 @@ const Finder = (() => {
                             popovertarget="ownInfo" aria-label="${t('Om skolekretsdataene')}">${icon('questionmarkCircle')}</button></p>
                 <div class="ds-popover own-schools__info" popover id="ownInfo" data-placement="bottom-start">
                     <p class="ds-paragraph" data-size="sm">${t('Dette er en pilot på åpne data og kan avvike fra kommunens gjeldende grenser.')} ${escapeHtml(t(krets.info.caveat))}</p>
-                    <p class="ds-paragraph" data-size="sm">${t('Kilde:')} <a class="ds-link" href="${escapeHtml(krets.info.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(t(krets.info.source))}</a>.</p>
+                    <p class="ds-paragraph" data-size="sm">${t('Kilde:')} <a class="ds-link" href="${escapeHtml(safeUrl(krets.info.sourceUrl))}" target="_blank" rel="noopener">${escapeHtml(t(krets.info.source))}</a>.</p>
                     <p class="ds-paragraph" data-size="sm">${check}</p>
                     <p class="ds-paragraph" data-size="sm"><a class="ds-link" href="${I18N.href('om-skolekrets.html')}#pilot">${t('Se hvilke kommuner vi kan vise skolekretsen for, og hvor dataene kommer fra')}</a></p>
                 </div>
@@ -1349,7 +1399,7 @@ const Finder = (() => {
         }
 
         // A card for one school: the krets name only when it comes from skolekrets data
-        function card({ krets: k, entry, level }) {
+        function card({ krets: k, entry, level }, index) {
             const school = level || entry.school;
             const key = schoolKey(school);
             const meta = [SCHOOL_TYPE_LABEL[school.schoolType] || school.schoolType,
@@ -1370,6 +1420,7 @@ const Finder = (() => {
                         </span>
                     </button>
                     ${saveButtonHtml(key, 'own-school__fav')}
+                    ${cardDetails({ levels: [school], school }, `ownDetails${index}`)}
                 </div>`;
         }
     }
@@ -1384,16 +1435,16 @@ const Finder = (() => {
                 refreshList();
                 return;
             }
+            const mapButton = event.target.closest('.school-card__map');
+            if (mapButton) {
+                toggleCardMap(mapButton);
+                return;
+            }
             const card = event.target.closest('button[data-show]');
             if (!card) return;
-            const entry = entryFor(card.dataset.show);
-            if (phoneLayout.matches && entry) {
-                const open = miniKey === entry.key && mapSlot() && mapSlot().previousElementSibling === card;
-                closeCards();
-                if (!open) {
-                    card.setAttribute('aria-current', 'true');
-                    openMiniMap(card, entry, { popup: true });
-                }
+            // Phones: the card opens under itself, as in the list
+            if (phoneLayout.matches) {
+                toggleCard(card);
                 return;
             }
             document.querySelectorAll('.own-school[aria-current], .school-card[aria-current]').forEach(c => c.removeAttribute('aria-current'));

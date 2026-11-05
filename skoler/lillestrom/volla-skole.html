@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="no" data-color-scheme="light" data-color="brand1">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <!-- Content Security Policy: scripts only from this site and the two CDNs (pinned, with integrity hashes),
+         data only from the services the pages use. GitHub Pages cannot send it as a header. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: blob: https://thumb.wikimedia.org https://upload.wikimedia.org https://tiles.openfreemap.org; font-src 'self' data:; connect-src 'self' https://tiles.openfreemap.org https://ws.geonorge.no https://data-nsr.udir.no https://api.entur.io https://formspree.io; worker-src 'self' blob:; child-src blob:; form-action https://formspree.io; base-uri 'self'; object-src 'none'" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Volla skole, Lillestrøm – nasjonale prøver og trivsel | Skolekartet</title>
+    <meta name="description" content="Volla skole er en offentlig barneskole i Lillestrøm. Se resultater fra nasjonale prøver, trivsel og mobbing fra Elevundersøkelsen, og andre skoler i nærheten." />
+    <link rel="canonical" href="https://skolekartet.no/skoler/lillestrom/volla-skole.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Skolekartet" />
+    <meta property="og:url" content="https://skolekartet.no/skoler/lillestrom/volla-skole.html" />
+    <meta property="og:title" content="Volla skole, Lillestrøm – nasjonale prøver og trivsel | Skolekartet" />
+    <meta property="og:description" content="Volla skole er en offentlig barneskole i Lillestrøm. Se resultater fra nasjonale prøver, trivsel og mobbing fra Elevundersøkelsen, og andre skoler i nærheten." />
+    <meta property="og:image" content="https://skolekartet.no/static/img/og-skolekartet.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="nb_NO" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"School","@id":"https://skolekartet.no/skoler/lillestrom/volla-skole.html#skole","name":"Volla skole","url":"https://skolekartet.no/skoler/lillestrom/volla-skole.html","address":{"@type":"PostalAddress","addressLocality":"Lillestrøm","addressCountry":"NO"},"geo":{"@type":"GeoCoordinates","latitude":59.9585,"longitude":11.04081},"sameAs":["https://www.lillestrom.kommune.no/vollaskole"],"image":{"@type":"ImageObject","contentUrl":"https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/Volla_skole_%E2%80%93_Lillestr%C3%B8m.jpg/960px-Volla_skole_%E2%80%93_Lillestr%C3%B8m.jpg","creditText":"Tommy Gildseth, CC BY-SA 4.0, via Wikimedia Commons","license":"https://creativecommons.org/licenses/by-sa/4.0","acquireLicensePage":"https://commons.wikimedia.org/wiki/File:Volla_skole_%E2%80%93_Lillestr%C3%B8m.jpg"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Skolekartet","item":"https://skolekartet.no/"},{"@type":"ListItem","position":2,"name":"Skoler","item":"https://skolekartet.no/skoler/"},{"@type":"ListItem","position":3,"name":"Lillestrøm","item":"https://skolekartet.no/skoler/lillestrom/"},{"@type":"ListItem","position":4,"name":"Volla skole"}]}]}</script>
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
+    
+
+    <!-- Map for the school position (same libraries as the main map) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css" integrity="sha384-o/2yZuJZWGJ4s/adjxVW71R+EO/LyCwdQfP5UWSgX/w87iiTXuvDZaejd3TsN7mf" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.css" integrity="sha384-uTttxo/aOKbdE5RlD/SPzSDoDmNvGlUYPjONi2MN/b7c9HPSvW07OIuyP7uL6jxK" crossorigin="anonymous"/>
+    <!-- Deferred: the map libraries (MapLibre is large) load without holding up the page; they run in this
+         order before school-page.js, which is deferred too -->
+    <script defer src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js" integrity="sha384-okbbMvvx/qfQkmiQKfd5VifbKZ/W8p1qIsWvE1ROPUfHWsDcC8/BnHohF7vPg2T6" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.js" integrity="sha384-5+cfbwT0iiub6VsQAdn6yz16nr6sDiQoHx6tm4O8OVYXHYOxcffFmCJBL0dgdvGp" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@maplibre/maplibre-gl-leaflet@0.1.4/leaflet-maplibre-gl.js" integrity="sha384-tXYNKOHx4T02jMP7YYCtBxPIv1B5gaA5mcVPBzqMp6d7VzWzxJgI2aWF/nJLrQdS" crossorigin="anonymous"></script>
+
+    <!-- Designsystemet (Digdir): font, theme and component CSS -->
+    <link rel="stylesheet" id="dsTheme" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/theme/designsystemet.css" integrity="sha384-IT4guVJwkq1uL/GwNWhv2zk3uUZ18gRVe1qOVMWTTjaEkDut+i02gT9l/cnPrDSm" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/src/index.css" integrity="sha384-CAE1Qe2Yp1euTdmOujy77VIT0GR/Yu8V+3taPP8Oo7GGV9hrQKrVigMB51hyUKYD" crossorigin="anonymous" />
+
+
+    <link rel="stylesheet" href="../../static/css/styles.css?v=177"/>
+
+    <script src="../../static/js/i18n.js?v=87"></script>
+    <script src="../../static/js/theme.js?v=9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-web@1.23.0/dist/umd/index.js" integrity="sha384-gB8nQDA1vTT5N2EUrwILb4EmNquufjYcGqx5Cmce63dC5l/zyDRlxPjzv4/pG6mE" crossorigin="anonymous"></script>
+</head>
+<body data-school-id="Volla skole|Lillestrøm|barneskole">
+    <a class="ds-skip-link" href="#main">Hopp til hovedinnhold</a>
+
+    <!-- Header (shared, see static/js/layout.js) -->
+    <div id="site-header"></div>
+    <script src="../../static/js/layout.js?v=26"></script>
+
+    <main id="main" tabindex="-1" class="page">
+        <div class="site-container page__container page__container--wide">
+            <a class="ds-button page__back" data-variant="tertiary" data-size="sm" href="../../" data-back>Tilbake</a>
+            <article class="page__content school-page" id="schoolPage" aria-live="polite" aria-busy="true">
+                <!-- Shown while the school's data loads (school-page.js replaces it), in the banner's own shape,
+                     so the page does not jump when the school appears -->
+                <div class="page-skeleton">
+                    <p class="ds-sr-only" role="status">Laster skole…</p>
+                    <div class="school-banner school-banner--skeleton" aria-hidden="true">
+                        <div class="skeleton skeleton--media"></div>
+                        <div class="skeleton-lines">
+                            <span class="skeleton skeleton--kicker"></span>
+                            <span class="skeleton skeleton--title"></span>
+                            <span class="skeleton skeleton--tag"></span>
+                            <span class="skeleton skeleton--text"></span>
+                            <span class="skeleton skeleton--text"></span>
+                            <span class="skeleton skeleton--text skeleton--short"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="school-static">
+                <nav class="breadcrumbs" aria-label="Brødsmulesti"><ol><li><a class="ds-link" href="../../">Skolekartet</a></li><li><a class="ds-link" href="../../skoler/">Skoler</a></li><li><a class="ds-link" href="../../skoler/lillestrom/">Lillestrøm</a></li><li aria-current="page">Volla skole</li></ol></nav>
+                <h1 class="ds-heading" data-size="lg">Volla skole</h1>
+                <p class="ds-paragraph" data-size="lg">Barneskole · Lillestrøm · Offentlig</p>
+                <p class="ds-paragraph">Resultater fra nasjonale prøver og Elevundersøkelsen for skoleåret 2025-26, sammenlignet med hele landet.</p>
+                
+            <section>
+                <h2 class="ds-heading" data-size="sm">Nasjonale prøver</h2>
+                
+                <table class="ds-table" data-size="sm">
+                    <caption>Skalapoeng 2025-26. Skalaen har ingen makspoeng; derfor står landsgjennomsnittet ved siden av. * betyr ikke publisert.</caption>
+                    <thead><tr><th scope="col">Fag</th><th scope="col">Skolen</th><th scope="col">Hele landet</th></tr></thead>
+                    <tbody><tr><th scope="row">Engelsk</th><td>51</td><td>50</td></tr><tr><th scope="row">Lesing</th><td>47</td><td>49</td></tr><tr><th scope="row">Regning</th><td>46</td><td>49</td></tr><tr><th scope="row">Snitt (3 fag)</th><td>48,0</td><td>49,3</td></tr></tbody>
+                </table>
+                <table class="ds-table" data-size="sm">
+                    <caption>Tidligere år</caption>
+                    <thead><tr><th scope="col">Skoleår</th><th scope="col">Engelsk</th><th scope="col">Lesing</th><th scope="col">Regning</th></tr></thead>
+                    <tbody><tr><th scope="row">2024-25</th><td>52</td><td>52</td><td>53</td></tr></tbody>
+                </table>
+                <h3 class="ds-heading" data-size="xs">Elevundersøkelsen</h3>
+                <ul class="ds-list"><li><strong>Trivsel:</strong> 4,0 av 5 (7. trinn, 2025-26). Hele landet: 4,1.</li><li><strong>Mobbing:</strong> 19,2 % av elevene ble mobbet to eller tre ganger i måneden eller oftere (7. trinn, 2025-26). Hele landet: 11,3 %.</li></ul>
+            </section>
+            <section>
+                <h2 class="ds-heading" data-size="sm">Mer om skolen</h2>
+                <ul class="ds-list"><li><a class="ds-link" href="../../?skole=Volla%20skole%7CLillestr%C3%B8m%7Cbarneskole">Se skolen på kartet</a></li><li><a class="ds-link" href="https://www.lillestrom.kommune.no/vollaskole" rel="noopener">Skolens nettside</a></li><li><a class="ds-link" href="../../skoler/lillestrom/">Alle skoler i Lillestrøm</a></li></ul>
+            </section>
+            <section>
+                <h2 class="ds-heading" data-size="sm">Andre skoler i nærheten</h2>
+                <ul class="ds-list"><li><a class="ds-link" href="../../skoler/lillestrom/kjellervolla-skole.html">Kjellervolla skole</a> (barneskole, Lillestrøm, 0,7 km)</li><li><a class="ds-link" href="../../skoler/lillestrom/sophie-radich-skole.html">Sophie Radich skole</a> (ungdomsskole, Lillestrøm, 0,9 km)</li><li><a class="ds-link" href="../../skoler/raelingen/rud-skole.html">Rud skole</a> (barneskole, Rælingen, 1,5 km)</li><li><a class="ds-link" href="../../skoler/lillestrom/kjeller-skole.html">Kjeller skole</a> (barne- og ungdomsskole, Lillestrøm, 1,7 km)</li><li><a class="ds-link" href="../../skoler/lillestrom/sagdalen-skole.html">Sagdalen skole</a> (barneskole, Lillestrøm, 1,7 km)</li><li><a class="ds-link" href="../../skoler/lillestrom/frydenlund-skole-og-ressurssenter.html">Frydenlund skole og ressurssenter</a> (barne- og ungdomsskole, Lillestrøm, 1,7 km)</li></ul>
+            </section>
+            <p class="ds-paragraph school-page__sources" data-size="xs">Kilder: nasjonale prøver og Elevundersøkelsen fra
+                Utdanningsdirektoratet, Nasjonalt skoleregister (NLOD). Avstanden er målt i luftlinje.
+                <a class="ds-link" href="../../datakilder.html">Om datakildene</a>.</p>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <!-- Footer (shared, see static/js/layout.js) -->
+    <div id="site-footer"></div>
+    <script defer src="../../static/js/score-colors.js?v=2"></script>
+    <script defer src="../../static/js/shared.js?v=23"></script>
+    <script defer src="../../static/js/school-page.js?v=66"></script>
+</body>
+</html>

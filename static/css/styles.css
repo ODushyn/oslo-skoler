@@ -1638,6 +1638,51 @@ button.school-stat[aria-selected="true"] .school-stat__more {
     padding-top: var(--ds-size-2);
 }
 
+/* The open/close arrow on the result cards: phones only, where each card opens its details under itself */
+.school-stat__chevron {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    button.school-stat.ds-card {
+        position: relative;
+    }
+
+    .school-stat__chevron {
+        display: flex;
+        position: absolute;
+        top: var(--ds-size-4);
+        right: var(--ds-size-4);
+        color: var(--ds-color-brand1-text-subtle);
+        transition: transform 0.2s ease;
+    }
+
+    .school-stat__chevron .ds-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    button.school-stat[aria-expanded="true"] .school-stat__chevron {
+        transform: rotate(180deg);
+    }
+
+    /* The open card in the same frame as on the wider screens */
+    button.school-stat.ds-card[aria-expanded="true"] {
+        border-color: var(--ds-color-base-default);
+        box-shadow: inset 0 -4px 0 var(--ds-color-base-default);
+    }
+
+    .school-stats > .stat-panel {
+        padding-top: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .school-stat__chevron {
+        transition: none;
+    }
+}
+
 .page__content .stat-panel > .ds-heading:first-child {
     margin-top: var(--ds-size-4);
 }
@@ -1653,6 +1698,33 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 
 .stat-compare[data-good="false"] {
     color: var(--ds-color-danger-text-default);
+}
+
+/* Worse than the whole country, in the tables on the school page: Designsystemet's danger colour, bold, and
+   (Trivsel and Mobbing) a red "Under landet" tag; a short legend under each table says what red means there
+   (lower than the national average; for mobbing higher) */
+.stat-worse {
+    color: var(--ds-color-danger-text-default);
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.stat-compare-tag.ds-tag {
+    font-weight: var(--ds-font-weight-medium, 500);
+    white-space: nowrap;
+}
+
+.stat-worse-legend {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-size-2);
+}
+
+.stat-worse-legend__dot {
+    flex: none;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background: var(--ds-color-danger-base-default);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2027,7 +2099,7 @@ button.school-stat[aria-selected="true"] .school-stat__more {
     font-weight: var(--ds-font-weight-semibold);
 }
 
-/* Notice that the English version is an AI translation */
+/* Notice under the header on the English and Ukrainian pages: the Norwegian version applies */
 .lang-notice {
     padding-block: var(--ds-size-2);
     background: var(--ds-color-warning-surface-tinted);
@@ -3139,11 +3211,50 @@ body.has-page-feedback {
         grid-row: auto;
     }
 
+    /* Address, e-mail and phone: the texts on the left, the action icons in one column on their right, right
+       after the longest text (the rows share the list's two columns through subgrid) */
+    .school-contact {
+        grid-template-columns: minmax(0, max-content) auto;
+        column-gap: var(--ds-size-2);
+    }
+
+    .school-contact li {
+        display: grid;
+        grid-column: 1 / -1;
+        grid-template-columns: subgrid;
+    }
+
+    /* "Følg skolen" and "Del · Google Maps" centred under the contact details */
+    #bannerFollow {
+        text-align: center;
+    }
+
+    #bannerFollow .social-links,
+    .school-banner__actions {
+        justify-content: center;
+    }
+
+    .school-banner__actions {
+        gap: var(--ds-size-2);
+    }
+
+    /* Shortcuts: one wrapping row of links instead of a long column */
+    .snarveier__list {
+        flex-direction: row;
+        gap: var(--ds-size-2) var(--ds-size-5);
+    }
 }
 
 .school-banner__facts .school-contact__text {
     overflow-wrap: normal;
     word-break: normal;
+}
+
+/* Phones: a long e-mail address breaks rather than running under its icon */
+@media (max-width: 640px) {
+    .school-banner__facts .school-contact__text {
+        overflow-wrap: anywhere;
+    }
 }
 
 /* Colour themes (in the "Meny" dropdown) and light/dark mode (header button). The standard Digdir themes
@@ -3266,7 +3377,8 @@ body.has-page-feedback {
 
 /* Phones: a tapped card opens into the details under it (finder.js cardDetails), in the same frame as
    the picked card, using its whole width */
-.school-list__item.is-open > .school-card.ds-card {
+.school-list__item.is-open > .school-card.ds-card,
+.own-school-item.is-open > .own-school.ds-card {
     border-bottom-color: transparent;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
@@ -3287,6 +3399,25 @@ body.has-page-feedback {
     display: none;
 }
 
+/* The small map inside an open card, above the buttons, with a smaller attribution line so it does not
+   cover the map */
+.school-card__details .mini-map {
+    height: 16rem;
+    margin: var(--ds-size-2) 0 0;
+}
+
+.mini-map .leaflet-control-attribution {
+    font-size: var(--ds-font-size-1);
+    line-height: 1.3;
+}
+
+/* Under an address's school the picked card has a 2 px frame, so the details follow it */
+.own-school-item > .school-card__details {
+    margin-top: -2px;
+    border-width: 2px;
+    border-top: 0;
+}
+
 .school-card__details .ds-paragraph {
     margin: 0;
 }
@@ -3300,16 +3431,125 @@ body.has-page-feedback {
     margin: var(--ds-size-2) 0 0;
 }
 
-/* Side by side when they fit, otherwise one full-width button per row */
+/* One row: each button as wide as its words, sharing what is left of the row. A long label (Ukrainian)
+   wraps inside its button rather than pushing the other off the row. */
 .school-card__actions {
     display: flex;
-    flex-wrap: wrap;
     gap: var(--ds-size-2);
     margin-top: var(--ds-size-2);
 }
 
 .school-card__actions > .ds-button {
+    --dsc-button-padding: var(--ds-size-2);
     flex: 1 1 auto;
+    min-width: 0;
+    white-space: normal;
+    text-align: center;
+}
+
+/* Narrow phones: "Les mer om skolen" without its arrow, so both labels fit on one line */
+@media (max-width: 480px) {
+    .school-card__actions > a.ds-button .ds-icon {
+        display: none;
+    }
+}
+
+/* ── Loading placeholders and error messages ─────────────────────────── */
+/* Grey blocks in the shape of what is coming (the school banner, the school cards), so nothing jumps when
+   the data arrives. They pulse gently, and stand still for those who ask for less motion. */
+.skeleton {
+    display: block;
+    border-radius: var(--ds-border-radius-md);
+    background: var(--ds-color-neutral-surface-active);
+    animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+    50% { opacity: 0.5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .skeleton {
+        animation: none;
+    }
+}
+
+.skeleton--media {
+    aspect-ratio: 4 / 3;
+}
+
+.skeleton-lines {
+    display: grid;
+    gap: var(--ds-size-3);
+}
+
+.skeleton--kicker { width: 45%; height: 0.9rem; }
+.skeleton--title { width: 70%; height: 2.5rem; }
+.skeleton--tag { width: 6rem; height: 1.5rem; }
+.skeleton--text { width: 85%; height: 1rem; }
+.skeleton--short { width: 55%; }
+
+/* The school page: the placeholder while scripts load the data; without scripts (search engines) the static
+   text under skoler/ shows instead. If the data cannot be loaded, the static text comes back (.is-fallback). */
+.page-skeleton,
+.school-page.is-fallback .page-skeleton {
+    display: none;
+}
+
+/* At least a screen tall, so the footer is not in view while loading and then pushed down */
+.js .page-skeleton {
+    display: block;
+    min-height: 100svh;
+}
+
+.js .school-static {
+    display: none;
+}
+
+.js .school-page.is-fallback .school-static {
+    display: block;
+}
+
+/* A card-sized placeholder per school in the list while the schools load */
+.school-list__skeleton {
+    height: 7.5rem;
+    border-radius: var(--ds-border-radius-lg);
+}
+
+/* "Kunne ikke laste …" with "Prøv igjen" */
+.load-error {
+    margin-bottom: var(--ds-size-4);
+}
+
+.load-error .ds-paragraph {
+    margin: var(--ds-size-1) 0 var(--ds-size-3);
+}
+
+/* Pages under skoler/ (site_pages.py): "Skolekartet › Skoler › Oslo › Skolen" above the heading */
+.breadcrumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-1) var(--ds-size-2);
+    margin: 0 0 var(--ds-size-4);
+    padding: 0;
+    list-style: none;
+    font-size: var(--ds-font-size-minus-1);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.breadcrumbs li + li::before {
+    content: "›";
+    margin-inline-end: var(--ds-size-2);
+}
+
+/* All kommuner: a few columns on wide screens */
+.kommune-list {
+    columns: 16rem auto;
+    column-gap: var(--ds-size-8);
+}
+
+.kommune-list li {
+    break-inside: avoid;
 }
 
 /* School cards in the list: the bookmark button in the top right corner, over the card */

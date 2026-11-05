@@ -10,7 +10,8 @@ Checks the open sources whose numbers can change during the school year:
   tables every day.
 - Nasjonalt skoleregister (NSR, NLOD): downloaded every day. It is small and changes often
   (new and closed schools, owner type).
-When a source has changed, create_map.py and school_details.py rebuild the site data.
+When a source has changed, create_map.py and school_details.py rebuild the site data, and site_pages.py
+the pages for search engines under skoler/ and sitemap.xml.
 
 Nasjonale prøver are not in Udir's open API. They are published once a year and imported by hand
 with import_exam_result.py (see README).
@@ -87,6 +88,7 @@ def main():
     if changed or args.rebuild:
         run('create_map.py')
         run('school_details.py')
+        run('site_pages.py')
 
     if not failed:
         status['checked'] = today

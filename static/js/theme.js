@@ -6,12 +6,17 @@
 // The site is always light (data-color-scheme="light" on <html>), with OpenFreeMap's light base map.
 // The choice is kept in this browser (localStorage). Loaded right after the theme stylesheet in <head>,
 // so it is in place before first paint.
+// Scripts run: the school page shows its loading placeholder instead of the static text it replaces (styles.css)
+document.documentElement.classList.add('js');
+
 const THEME = (() => {
     const STORAGE_KEY = 'skolekartet.tema';
     const DEFAULT = 'designsystemet';
     const THEMES = [
-        { id: 'designsystemet', name: 'Grønn', href: 'https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/theme/designsystemet.css' },
-        { id: 'altinn', name: 'Blå', href: 'https://cdn.jsdelivr.net/npm/@digdir/designsystemet-theme@1.11.0/brand/altinn.css' }
+        { id: 'designsystemet', name: 'Grønn', href: 'https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/theme/designsystemet.css',
+          integrity: 'sha384-IT4guVJwkq1uL/GwNWhv2zk3uUZ18gRVe1qOVMWTTjaEkDut+i02gT9l/cnPrDSm' },
+        { id: 'altinn', name: 'Blå', href: 'https://cdn.jsdelivr.net/npm/@digdir/designsystemet-theme@1.11.0/brand/altinn.css',
+          integrity: 'sha384-10JjCex1jGBJLom9HfIfF8Ymoqd40FK4QYr1oKBDmIIlqsqB2lVYLfzDw6KTCuve' }
     ];
     const MAP_STYLE = 'https://tiles.openfreemap.org/styles/liberty';
     const link = document.getElementById('dsTheme');
@@ -44,7 +49,12 @@ const THEME = (() => {
     function apply(id) {
         const theme = THEMES.find(item => item.id === id) || THEMES.find(item => item.id === DEFAULT);
         current = theme.id;
-        if (link && link.getAttribute('href') !== theme.href) link.setAttribute('href', theme.href);
+        // Subresource Integrity: the browser only uses the file if it is exactly the one we checked
+        if (link && link.getAttribute('href') !== theme.href) {
+            link.setAttribute('integrity', theme.integrity);
+            link.setAttribute('crossorigin', 'anonymous');
+            link.setAttribute('href', theme.href);
+        }
         document.documentElement.dataset.theme = theme.id;
     }
 

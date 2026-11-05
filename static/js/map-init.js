@@ -22,12 +22,11 @@ function initMap() {
     L.maplibreGL({
         style: typeof THEME !== 'undefined' ? THEME.mapStyle() : 'https://tiles.openfreemap.org/styles/liberty',
         attributionControl: {
-            customAttribution: '<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> ' +
-                '<a href="https://www.openmaptiles.org/" target="_blank" rel="noopener">&copy; OpenMapTiles</a> ' +
-                'Data from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
+            customAttribution: MAP_ATTRIBUTION
         }
     }).addTo(map_a50579ea0c01426b15ce2ac53c4f579f);
 
+    map_a50579ea0c01426b15ce2ac53c4f579f.attributionControl.setPrefix(false);
     L.control.zoom({ position: 'topright' }).addTo(map_a50579ea0c01426b15ce2ac53c4f579f);
 
     // Initialize marker cluster

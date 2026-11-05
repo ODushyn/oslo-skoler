@@ -10,12 +10,11 @@
 // translated automatically when their whole text matches a key, so most code needs no
 // changes. Only texts with values in them call t() directly.
 //
-// The English and Ukrainian texts were translated with AI and must be reviewed by a person before
-// they are published. Set REVIEWED for the language when that is done; the notice on the page follows it.
+// The English and Ukrainian texts must be checked by a person. A notice under the header says that the
+// Norwegian version applies if anything differs.
 // Choose language with ?lang=en, ?lang=uk or ?lang=no; the choice is remembered in this browser.
 
 const I18N = (() => {
-    const REVIEWED = { en: false, uk: false };
     const SUPPORTED = ['no', 'en', 'uk'];
     // Each language in its own words, for the switch: [long name, short name]
     const NAMES = { no: ['Norsk', 'NO'], en: ['English', 'EN'], uk: ['Українська', 'УКР'] };
@@ -23,6 +22,19 @@ const I18N = (() => {
     // Pages whose own content is translated; on the others only the header and footer are
     const TRANSLATED_PAGES = ['', 'index.html', 'om-skolekartet.html', 'skole.html', 'datakilder.html', 'om-fargefordelingen.html', 'om-skolekrets.html', 'tilbakemelding.html',
                               'ny-i-norge.html', 'skolefritid.html', 'skolehverdag.html', 'tilgjengelighet.html', 'personvern.html'];
+
+    // The site's root, from this file's own address (static/js/i18n.js), so links and data work the same
+    // on the pages at the top and on the school and kommune pages under skoler/
+    const ROOT = new URL('../../', (document.currentScript && document.currentScript.src) || location.href);
+    // The page's path from the root: "", "skole.html", "skoler/oslo/", "skoler/oslo/majorstuen-skole.html"
+    const PAGE = location.pathname.startsWith(ROOT.pathname) ? location.pathname.slice(ROOT.pathname.length) : location.pathname.split('/').pop();
+    // A school page under skoler/<kommune>/ is drawn by school-page.js with translations, like skole.html
+    const SCHOOL_PAGE = /^skoler\/[^/]+\/[^/]+\.html$/.test(PAGE);
+
+    // A file or page of this site, as a path from the site's root ("static/js/x.json" → "/static/js/x.json")
+    function url(path) {
+        return new URL(path, ROOT).pathname;
+    }
 
     let lang = 'no';
     try {
@@ -44,7 +56,7 @@ const I18N = (() => {
     if (lang === 'uk') {
         const self = document.currentScript && document.currentScript.src;
         const version = self ? (self.match(/[?&]v=(\d+)/) || [])[1] : null;
-        document.write(`<script src="static/js/i18n-uk.js${version ? `?v=${version}` : ''}"><\/script>`);
+        document.write(`<script src="${url('static/js/i18n-uk.js')}${version ? `?v=${version}` : ''}"><\/script>`);
     }
 
     const EN = {
@@ -65,7 +77,7 @@ const I18N = (() => {
         'Kjennetegn': 'Features',
         'Tilbake til kartet': 'Back to the map',
         'Tilbake': 'Back',
-        'Skolekartet – Nasjonale prøver visualisert på kart': 'Skolekartet – National test results on a map',
+        'Skolekartet – finn skole og se nasjonale prøver på kart': 'Skolekartet – find a school and see national test results on a map',
         'Skole – Skolekartet': 'School – Skolekartet',
         'Laster skole…': 'Loading school…',
 
@@ -211,7 +223,11 @@ const I18N = (() => {
         'Foto:': 'Photo:',
 
         // ── School page ───────────────────────────────────────────────────
-        'Kunne ikke laste skoledata. Prøv igjen senere.': 'Could not load the school data. Please try again later.',
+        'Kunne ikke laste skolen': 'Could not load the school',
+        'Kunne ikke laste skolene': 'Could not load the schools',
+        'Sjekk nettforbindelsen og prøv igjen.': 'Check your internet connection and try again.',
+        'Prøv igjen': 'Try again',
+        'Laster skoler…': 'Loading schools…',
         'Fant ikke skolen': 'School not found',
         'Lenken peker ikke til en skole vi har data for.': 'The link does not point to a school we have data for.',
         'Gå til kartet': 'Go to the map',
@@ -266,6 +282,12 @@ const I18N = (() => {
         'AKS-sidene på skolens nettside, lest {date}': 'the after-school pages on the school’s website, read {date}',
         'Én gang i uken': 'Once a week',
         'Lagre til senere': 'Save for later',
+        'lavere enn landsgjennomsnittet': 'lower than the national average',
+        'høyere enn landsgjennomsnittet': 'higher than the national average',
+        'Rødt betyr lavere enn landsgjennomsnittet.': 'Red means lower than the national average.',
+        'Rødt betyr høyere enn landsgjennomsnittet.': 'Red means higher than the national average.',
+        'Rødt betyr lavere enn landsgjennomsnittet, for mobbing høyere.': 'Red means lower than the national average; for bullying, higher.',
+        'Skoler etter kommune': 'Schools by municipality',
         'Nasjonale prøver {year}': 'National tests {year}',
         'Skjul kartet': 'Hide the map',
         "Skolekartet er et privat, ikke-kommersielt prosjekt og har ansvaret for opplysningene som beskrives her. Spørsmål om personvern, eller ønske om å få slettet en tilbakemelding, kan sendes via": "Skolekartet is a private, non-commercial project and is responsible for the information described here. Questions about privacy, or a request to have feedback deleted, can be sent through",
@@ -420,7 +442,7 @@ const I18N = (() => {
         "Dette fungerer ikke godt nok ennå": "What does not work well enough yet",
         "Kartet er vanskelig å bruke med skjermleser. Listen ved siden av kartet har de samme skolene.": "The map is hard to use with a screen reader. The list next to the map has the same schools.",
         "Fargene på resultatene (rød, gul og grønn) kan være vanskelige å skille for personer med fargesvakhet. Tallene står alltid også i tekst.": "The colours of the results (red, yellow and green) can be hard to tell apart for people with colour vision deficiency. The numbers are always also given as text.",
-        "Den engelske og den ukrainske versjonen er oversatt med KI og er ikke kontrollert av en person ennå.": "The English and the Ukrainian version are translated with AI and have not yet been checked by a person.",
+        "Den engelske og den ukrainske versjonen er ikke kontrollert av en person ennå.": "The English and the Ukrainian version have not yet been checked by a person.",
         "Vi har ikke ansvar for skolenes og kommunenes egne nettsider som vi lenker til.": "We are not responsible for the schools’ and municipalities’ own websites that we link to.",
         "Gi oss beskjed": "Let us know",
         "Opplever du problemer, eller trenger du innholdet i en annen form?": "Do you have problems, or do you need the content in another form?",
@@ -967,7 +989,7 @@ const I18N = (() => {
         'Sender...': 'Sending...',
         'Takk! Meldingen din er sendt.': 'Thank you! Your message has been sent.',
         'Sendt!': 'Sent!',
-        'Noe gikk galt. Prøv igjen eller send e-post direkte.': 'Something went wrong. Please try again or send an e-mail directly.'
+        'Noe gikk galt. Prøv igjen litt senere.': 'Something went wrong. Please try again a little later.'
     };
 
     // The dictionary for the chosen language (null for Norwegian)
@@ -985,16 +1007,19 @@ const I18N = (() => {
         return values ? text.replace(/\{(\w+)\}/g, (match, name) => (name in values ? values[name] : match)) : text;
     }
 
-    // Internal links keep the language, so it also works when the browser blocks storage
-    function href(url) {
-        if (!translated || !url) return url;
+    // Internal links: from the site's root, so links built in code work at any depth ("skole.html" is the
+    // same page from skoler/oslo/), and with the language, so it also works when the browser blocks storage.
+    // `base`: what a relative link is read from; links already in the page use the page's own address.
+    // Anchors on the page, e-mail and phone links stay as they are.
+    function href(link, base = ROOT) {
+        if (!link || /^(#|mailto:|tel:)/.test(link)) return link;
         try {
-            const target = new URL(url, location.href);
-            if (target.origin !== location.origin || /^(#|mailto:|tel:)/.test(url)) return url;
-            target.searchParams.set('lang', lang);
+            const target = new URL(link, base);
+            if (target.origin !== location.origin) return link;
+            if (translated) target.searchParams.set('lang', lang);
             return target.pathname + target.search + target.hash;
         } catch (error) {
-            return url;
+            return link;
         }
     }
 
@@ -1022,7 +1047,7 @@ const I18N = (() => {
         });
         if (element.tagName === 'A' && element.hasAttribute('href') && !element.hasAttribute('data-lang-keep')) {
             const original = element.getAttribute('href');
-            const localized = href(original);
+            const localized = href(original, location.href);
             if (localized !== original) element.setAttribute('href', localized);
         }
     }
@@ -1052,7 +1077,7 @@ const I18N = (() => {
         }
     }
 
-    // ── Language switch and AI notice ──────────────────────────────────────
+    // ── Language switch and language notice ────────────────────────────────
     function switchUrl(target) {
         const url = new URL(location.href);
         url.searchParams.set('lang', target);
@@ -1077,17 +1102,13 @@ const I18N = (() => {
     }
 
 
-    // The AI notice, in the chosen language, with a link back to Norwegian
+    // The language notice, in the chosen language, with a link back to Norwegian
     const NOTICE = {
         en: {
-            reviewed: 'This English version was translated with the help of AI and reviewed by people.',
-            draft: 'This English version was translated with the help of AI (artificial intelligence) and has not yet been checked by a person.',
             applies: 'If anything differs, the Norwegian version applies.',
             onlyNorwegian: 'The main text on this page is only available in Norwegian.'
         },
         uk: {
-            reviewed: 'Українську версію перекладено за допомогою ШІ та перевірено людьми.',
-            draft: 'Українську версію перекладено за допомогою ШІ (штучного інтелекту), і її ще не перевірила людина.',
             applies: 'Якщо щось відрізняється, чинною є норвезька версія.',
             onlyNorwegian: 'Основний текст цієї сторінки доступний лише норвезькою.'
         }
@@ -1096,10 +1117,9 @@ const I18N = (() => {
     function noticeHtml() {
         if (!translated) return '';
         const text = NOTICE[lang];
-        const page = location.pathname.split('/').pop();
-        const onlyNorwegian = TRANSLATED_PAGES.includes(page) ? '' : ` ${text.onlyNorwegian}`;
+        const onlyNorwegian = TRANSLATED_PAGES.includes(PAGE) || SCHOOL_PAGE ? '' : ` ${text.onlyNorwegian}`;
         return `<div class="lang-notice" role="note"><div class="site-container">
-                    <p class="ds-paragraph" data-size="sm">${REVIEWED[lang] ? text.reviewed : text.draft} ${text.applies}${onlyNorwegian}
+                    <p class="ds-paragraph" data-size="sm">${text.applies}${onlyNorwegian}
                     <a class="ds-link" href="${switchUrl('no')}" lang="no" hreflang="no" data-lang-keep>Norsk versjon</a></p>
                 </div></div>`;
     }
@@ -1124,7 +1144,7 @@ const I18N = (() => {
         });
     }
 
-    return { lang, isEnglish, translated, locale, t, href, translate, switchLink, noticeHtml };
+    return { lang, isEnglish, translated, locale, page: PAGE, t, href, url, translate, switchLink, noticeHtml };
 })();
 
 const t = I18N.t;
