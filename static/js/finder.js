@@ -364,7 +364,6 @@ const Finder = (() => {
             renderList();
             writeUrlState();
         });
-        el('resetFilters').addEventListener('click', resetFilters);
 
         // Filters slide in from the right (a modal Designsystemet Dialog). The list and map update as you
         // choose; "Vis N skoler", the close button, Esc or a click outside the panel closes it.
@@ -446,8 +445,7 @@ const Finder = (() => {
             badge.setAttribute('aria-label', count === 1 ? t('1 aktivt filter') : t('{count} aktive filtre', { count }));
         });
         renderActiveFilters();
-        // "Nullstill" next to the Filter button and in the panel; only usable when a filter is on
-        el('resetFilters').disabled = count === 0;
+        // "Nullstill" in the panel; only usable when a filter is on
         el('filterResetDialog').disabled = count === 0;
         updateSummaries();
     }
@@ -497,7 +495,9 @@ const Finder = (() => {
         const chips = activeFilterChips();
         list.hidden = chips.length === 0;
         list.innerHTML = chips.map(chip => `<li><button type="button" class="ds-chip" data-removable="true" data-size="sm"
-                data-filter="${chip.id}" aria-label="${escapeHtml(t('Fjern filter: {label}', { label: chip.label }))}">${chip.dots || ''}${escapeHtml(chip.text)}</button></li>`).join('');
+                data-filter="${chip.id}" aria-label="${escapeHtml(t('Fjern filter: {label}', { label: chip.label }))}">${chip.dots || ''}${escapeHtml(chip.text)}</button></li>`).join('')
+            // With two or more filters on, one link at the end removes them all (as on most search sites)
+            + (chips.length > 1 ? `<li><button type="button" class="ds-button active-filters__clear" data-variant="tertiary" data-size="sm" data-clear>${t('Fjern alle')}</button></li>` : '');
     }
 
     function removeFilter(id) {
@@ -513,6 +513,11 @@ const Finder = (() => {
 
     function bindActiveFilters() {
         el('activeFilters').addEventListener('click', event => {
+            if (event.target.closest('[data-clear]')) {
+                resetFilters();
+                el('filterToggle').focus();
+                return;
+            }
             const chip = event.target.closest('[data-filter]');
             if (!chip) return;
             const index = [...el('activeFilters').querySelectorAll('[data-filter]')].indexOf(chip);

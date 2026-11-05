@@ -443,8 +443,9 @@ main:focus {
 }
 
 /* ── Search: one row, the select chooses what to search by ─────────── */
+/* The same light green as the national tests group in the filter panel */
 .search-panel {
-    background: var(--ds-color-brand1-background-tinted);
+    background: var(--ds-color-brand1-surface-tinted);
     padding-block: var(--ds-size-8) var(--ds-size-6);
 }
 
@@ -658,16 +659,6 @@ main:focus {
 
 .filter-group select {
     min-width: 13rem;
-}
-
-/* "Nullstill filter" sits next to the toggle; it is disabled while no filter is on */
-.filter-reset {
-    flex-shrink: 0;
-}
-
-.filter-reset .ds-icon {
-    width: 1.2em;
-    height: 1.2em;
 }
 
 /* ── Results: list next to the map ──────────────────────────────────── */
@@ -2034,9 +2025,8 @@ button.school-stat[aria-selected="true"] .school-stat__more {
         white-space: nowrap;
     }
 
-    /* Phones: Filter and Nullstill show only their icons (the words stay for screen readers);
-       "Nasjonale prøver" keeps its words */
-    .search-bar :is(.filter-toggle, .filter-reset) .search-bar__label {
+    /* Phones: Filter shows only its icon and count (the word stays for screen readers) */
+    .search-bar .filter-toggle .search-bar__label {
         position: absolute;
         width: 1px;
         height: 1px;
@@ -2045,13 +2035,12 @@ button.school-stat[aria-selected="true"] .school-stat__more {
         white-space: nowrap;
     }
 
-    .filter-toggle,
-    .filter-reset {
+    .filter-toggle {
         flex: 0 0 auto;
         padding-inline: var(--ds-size-2);
     }
 
-    /* Phones: Filter and Nullstill share one row under the field, at its right edge */
+    /* Phones: the filter button under the field, at its right edge */
     .search-bar__actions {
         gap: var(--ds-size-2);
         margin-left: auto;
@@ -3457,6 +3446,14 @@ body.has-page-feedback {
     display: none;
 }
 
+/* "Fjern alle" after the chips: a quiet text button the height of a chip */
+.active-filters__clear.ds-button {
+    --dsc-button-padding: 0 var(--ds-size-2);
+    min-height: 0;
+    height: 100%;
+    text-decoration: underline;
+}
+
 /* The score chip: the chosen colours before the words */
 .active-filters .ds-chip .color-dot {
     margin-inline-end: 2px;
@@ -3762,6 +3759,18 @@ body.has-page-feedback {
     border-top: 1px solid var(--ds-color-neutral-border-subtle);
 }
 
+/* "Nullstill" and "Vis N skoler" share the row; long words (Ukrainian, narrow phones) wrap inside the buttons
+   instead of making the panel wider than the screen */
+.filter-dialog__foot > .ds-button {
+    min-width: 0;
+    white-space: normal;
+    text-align: center;
+}
+
+#filterDone {
+    flex: 1 1 auto;
+}
+
 .filter-dialog .filter-bar {
     flex: 1;
     flex-direction: column;
@@ -3813,6 +3822,14 @@ body.has-page-feedback {
 
 .score-toggle__dots .color-dot:last-child {
     margin-inline-end: var(--ds-size-1);
+}
+
+/* The national tests group in the filter panel: the site's main measure, on the theme's light green */
+.filter-group--main.ds-fieldset {
+    box-sizing: border-box; /* the padding inside its width, so the panel does not scroll sideways on phones */
+    padding: var(--ds-size-4);
+    border-radius: var(--ds-border-radius-lg);
+    background: var(--ds-color-brand1-surface-tinted);
 }
 
 /* "Om fargefordelingen ↗" under the national tests choices in the filter panel */

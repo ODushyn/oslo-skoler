@@ -199,6 +199,7 @@ window.I18N_UK = {
     "AKS-sidene på skolens nettside, lest {date}": "сторінки AKS на вебсайті школи, прочитано {date}",
     "Én gang i uken": "Раз на тиждень",
     "Lagre til senere": "Зберегти на потім",
+    "Fjern alle": "Прибрати всі",
     "Aktive filtre": "Активні фільтри",
     "Fjern filter: {label}": "Прибрати фільтр: {label}",
     "lavere enn landsgjennomsnittet": "нижче за середнє по країні",
