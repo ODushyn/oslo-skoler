@@ -271,7 +271,7 @@ const Finder = (() => {
         if (I18N.translated) params.set('lang', I18N.lang);   // a shared link keeps the language
 
         const query = params.toString();
-        history.replaceState(null, '', query ? `?${query}` : location.pathname);
+        history.replaceState(history.state, '', query ? `?${query}` : location.pathname);
     }
 
     // Put the controls in line with the state (after reading the URL or resetting)
@@ -377,23 +377,53 @@ const Finder = (() => {
         // choose; "Vis N skoler", the close button, Esc or a click outside the panel closes it.
         const dialog = el('filterPanel');
         el('filterToggle').addEventListener('click', () => setFilterPanel(true));
+        el('filterToggleSticky').addEventListener('click', () => setFilterPanel(true));
         el('filterClose').addEventListener('click', () => setFilterPanel(false));
         el('filterDone').addEventListener('click', () => setFilterPanel(false));
         el('filterResetDialog').addEventListener('click', resetFilters);
         dialog.addEventListener('click', event => {
             if (event.target === dialog) setFilterPanel(false); // the backdrop
         });
-        dialog.addEventListener('close', () => {
+        // The panel is a step in the browser's history, so the phone's back button (or gesture) closes it
+        // instead of leaving the page. Closing it any other way (button, Esc, backdrop) takes that step back.
+        // Watched through the dialog's "open" attribute: the "close" event did not always come.
+        let wasOpen = false;
+        new MutationObserver(() => {
+            if (dialog.open === wasOpen) return;
+            wasOpen = dialog.open;
+            if (dialog.open) return;
             el('filterToggle').setAttribute('aria-expanded', 'false');
-            el('filterToggle').focus();
+            el('filterToggleSticky').setAttribute('aria-expanded', 'false');
+            if (history.state && history.state.filterPanel) history.back();
+            (el('filterToggleSticky').hidden ? el('filterToggle') : el('filterToggleSticky')).focus();
+        }).observe(dialog, { attributes: true, attributeFilter: ['open'] });
+        window.addEventListener('popstate', () => {
+            if (dialog.open && !(history.state && history.state.filterPanel)) dialog.close();
         });
+        bindActiveFilters();
+        bindStickyFilter();
     }
 
     function setFilterPanel(open) {
         const dialog = el('filterPanel');
         el('filterToggle').setAttribute('aria-expanded', String(open));
-        if (open && !dialog.open) dialog.showModal();
-        else if (!open && dialog.open) dialog.close();
+        el('filterToggleSticky').setAttribute('aria-expanded', String(open));
+        if (open && !dialog.open) {
+            dialog.showModal();
+            history.pushState({ ...(history.state || {}), filterPanel: true }, '');
+        } else if (!open && dialog.open) {
+            dialog.close();
+        }
+    }
+
+    // Phones: the list head (title, sort) stays at the top while the list scrolls, and shows the filter button
+    // once the search row with its own filter button has scrolled out of view
+    function bindStickyFilter() {
+        const actions = document.querySelector('.search-bar__actions');
+        if (!actions || !('IntersectionObserver' in window)) return;
+        new IntersectionObserver(([entry]) => {
+            el('filterToggleSticky').hidden = entry.isIntersecting || !phoneLayout.matches;
+        }).observe(actions);
     }
 
     // Icons in the chips: the same as on the map markers and in the list
@@ -417,16 +447,82 @@ const Finder = (() => {
 
     function updateFilterCount() {
         const count = activeFilterCount();
-        const badge = el('filterCount');
-        badge.hidden = count === 0;
-        badge.dataset.count = String(count);
-        badge.setAttribute('aria-label', count === 1 ? t('1 aktivt filter') : t('{count} aktive filtre', { count }));
+        [el('filterCount'), el('filterCountSticky')].forEach(badge => {
+            badge.hidden = count === 0;
+            badge.dataset.count = String(count);
+            badge.setAttribute('aria-label', count === 1 ? t('1 aktivt filter') : t('{count} aktive filtre', { count }));
+        });
+        renderActiveFilters();
         // "Nullstill" next to the Filter button and in the panel; only usable when a filter is on
         el('resetFilters').disabled = count === 0;
         // The "Nasjonale prøver" button is marked while some results are left out
         el('scoreToggle').toggleAttribute('data-active', state.scores.size !== ALL_SCORES.length);
         el('filterResetDialog').disabled = count === 0;
         updateSummaries();
+    }
+
+    // ── Active filters as chips under the search ──────────────────────────
+    // One chip per filter group that is not at its default ("Eierform: Offentlig", "Trivsel: 2 av 5",
+    // "Kommune: Oslo"), so you see why the list is short; the chip's ✕ sets that group back.
+    const FILTER_GROUPS = [
+        { name: 'type', label: 'Skoletype', key: 'types', all: () => ALL_TYPES },
+        { name: 'owner', label: 'Eierform', key: 'owners', all: () => ALL_OWNERS },
+        { name: 'score', label: 'Nasjonale prøver', key: 'scores', all: () => ALL_SCORES },
+        { name: 'trivsel', label: 'Trivsel', key: 'trivsels', all: () => ALL_TRIVSEL },
+        { name: 'mobbing', label: 'Mobbing', key: 'mobbings', all: () => ALL_MOBBING }
+    ];
+
+    function activeFilterChips() {
+        const optionLabel = input => document.querySelector(`#filterPanel label[for="${input.id}"]`).textContent.trim();
+        const chips = [];
+        if (state.kommune) chips.push({ id: 'kommune', text: `${t('Kommune')}: ${state.kommune}` });
+        FILTER_GROUPS.forEach(group => {
+            const all = group.all();
+            if (state[group.key].size === all.length) return;
+            const inputs = [...document.querySelectorAll(`#filterPanel input[name="${group.name}"]`)];
+            const checked = inputs.filter(i => i.checked);
+            const value = checked.length === 0 ? t('Ingen')
+                : checked.length === 1 ? optionLabel(checked[0])
+                : t('{current} av {total}', { current: checked.length, total: inputs.length });
+            chips.push({ id: group.name, text: `${t(group.label)}: ${value}` });
+        });
+        if (state.profile) {
+            const input = document.querySelector(`#filterPanel input[name="profile"][value="${CSS.escape(state.profile)}"]`);
+            // The label has the number of schools in brackets; the chip only the profile
+            chips.push({ id: 'profile', text: `${t('Profil')}: ${input ? optionLabel(input).replace(/\s*\(\d+\)$/, '') : state.profile}` });
+        }
+        return chips;
+    }
+
+    function renderActiveFilters() {
+        const list = el('activeFilters');
+        const chips = activeFilterChips();
+        list.hidden = chips.length === 0;
+        list.innerHTML = chips.map(chip => `<li><button type="button" class="ds-chip" data-removable="true" data-size="sm"
+                data-filter="${chip.id}" aria-label="${escapeHtml(t('Fjern filter: {label}', { label: chip.text }))}">${escapeHtml(chip.text)}</button></li>`).join('');
+    }
+
+    function removeFilter(id) {
+        if (id === 'kommune') state.kommune = '';
+        else if (id === 'profile') state.profile = '';
+        else {
+            const group = FILTER_GROUPS.find(g => g.name === id);
+            state[group.key] = new Set(group.all());
+        }
+        syncControls();
+        applyFilters();
+    }
+
+    function bindActiveFilters() {
+        el('activeFilters').addEventListener('click', event => {
+            const chip = event.target.closest('[data-filter]');
+            if (!chip) return;
+            const index = [...el('activeFilters').querySelectorAll('[data-filter]')].indexOf(chip);
+            removeFilter(chip.dataset.filter);
+            // Focus moves to the chip that took its place, or to the filter button when none is left
+            const rest = el('activeFilters').querySelectorAll('[data-filter]');
+            (rest[Math.min(index, rest.length - 1)] || el('filterToggle')).focus();
+        });
     }
 
     // The dropdown buttons say what is chosen: "Alle", the one option, or "2 av 5"
@@ -660,9 +756,8 @@ const Finder = (() => {
 
         // With an address, "Skoler i nærheten (12)" is set like "Trolig skolekrets for adressen" above it
         el('resultsTitle').classList.toggle('results-title--nearby', Boolean(state.address) && !state.savedOnly && total > 0);
-        const context = [];
-        if (filtersActive()) context.push(t('filtrert'));
-        const contextText = context.join(' · ');
+        // That the list is filtered is said by the chips under the search, not again here
+        const contextText = '';
         el('resultCount').textContent = state.savedOnly
             ? (total === 0 ? t('Du har ikke lagret noen skoler ennå. Trykk på bokmerket ved en skole for å lagre den til senere.')
                            : t('Lagret i denne nettleseren. Bare du ser dem.'))

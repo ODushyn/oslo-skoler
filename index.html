@@ -51,8 +51,8 @@
 
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="static/css/styles.css?v=177"/>
-    <script src="static/js/i18n.js?v=87"></script>
+    <link rel="stylesheet" href="static/css/styles.css?v=179"/>
+    <script src="static/js/i18n.js?v=88"></script>
     <script src="static/js/theme.js?v=9"></script>
 
     <!-- Leaflet JS -->
@@ -161,6 +161,9 @@
                         </ds-field>
                         </div>
                 </fieldset>
+
+                <!-- The filters that are on, as chips: each removes its filter (finder.js) -->
+                <ul class="active-filters" id="activeFilters" aria-label="Aktive filtre" hidden></ul>
 
                 <!-- Filters slide in from the right (Designsystemet Dialog, data-placement="right"), as on many
                      search pages; on phones the panel takes the whole width. The results update as you choose. -->
@@ -334,6 +337,12 @@
                         </div>
                         <!-- Sort: a small "⇅ Nærmest ▾" button (Aksel ArrowsUpDown, MIT) with a Designsystemet Dropdown, like the
                              language menu; "Sorter:" is there for screen readers only -->
+                        <!-- Phones: the list head stays at the top while the list scrolls, with the filter button once
+                             the search row is out of view (finder.js) -->
+                        <button type="button" class="ds-button filter-toggle filter-toggle--sticky" data-variant="tertiary" data-size="sm"
+                                id="filterToggleSticky" aria-controls="filterPanel" aria-expanded="false" hidden>
+                            <svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M3.25 7C3.25 6.58579 3.58579 6.25 4 6.25H20C20.4142 6.25 20.75 6.58579 20.75 7C20.75 7.41421 20.4142 7.75 20 7.75L4 7.75C3.58579 7.75 3.25 7.41421 3.25 7ZM6.25 12C6.25 11.5858 6.58579 11.25 7 11.25H17C17.4142 11.25 17.75 11.5858 17.75 12C17.75 12.4142 17.4142 12.75 17 12.75H7C6.58579 12.75 6.25 12.4142 6.25 12ZM10 16.25C9.58579 16.25 9.25 16.5858 9.25 17C9.25 17.4142 9.58579 17.75 10 17.75H14C14.4142 17.75 14.75 17.4142 14.75 17C14.75 16.5858 14.4142 16.25 14 16.25H10Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg><span>Filter</span><span class="ds-badge" data-size="sm" id="filterCountSticky" hidden></span>
+                        </button>
                         <div class="results-sort">
                             <button type="button" class="ds-button sort-switch" data-variant="tertiary" data-size="sm" popovertarget="sortMenu" id="sortButton">
                                 <svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.4697 21.0303C16.7626 21.3232 17.2374 21.3232 17.5303 21.0303L21.0303 17.5303C21.3232 17.2374 21.3232 16.7626 21.0303 16.4697C20.7374 16.1768 20.2626 16.1768 19.9697 16.4697L17.75 18.6893L17.75 9.5C17.75 9.08579 17.4142 8.75 17 8.75C16.5858 8.75 16.25 9.08579 16.25 9.5L16.25 18.6893L14.0303 16.4697C13.7374 16.1768 13.2626 16.1768 12.9697 16.4697C12.6768 16.7626 12.6768 17.2374 12.9697 17.5303L16.4697 21.0303ZM4.03033 7.53033L6.25 5.31066L6.25 14.5C6.25 14.9142 6.58579 15.25 7 15.25C7.41421 15.25 7.75 14.9142 7.75 14.5L7.75 5.31066L9.96967 7.53033C10.2626 7.82322 10.7374 7.82322 11.0303 7.53033C11.3232 7.23744 11.3232 6.76256 11.0303 6.46967L7.53033 2.96967C7.23744 2.67678 6.76256 2.67678 6.46967 2.96967L2.96967 6.46967C2.67678 6.76256 2.67678 7.23744 2.96967 7.53033C3.26256 7.82322 3.73744 7.82322 4.03033 7.53033Z" fill="currentColor"/></svg><span class="sort-switch__prefix">Sorter: </span><span id="sortLabel">Nærmest</span><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5.96967 9.46967C6.26256 9.17678 6.73744 9.17678 7.03033 9.46967L12 14.4393L16.9697 9.46967C17.2626 9.17678 17.7374 9.17678 18.0303 9.46967C18.3232 9.76256 18.3232 10.2374 18.0303 10.5303L12.5303 16.0303C12.2374 16.3232 11.7626 16.3232 11.4697 16.0303L5.96967 10.5303C5.67678 10.2374 5.67678 9.76256 5.96967 9.46967Z" fill="currentColor"/></svg></button>
@@ -375,7 +384,7 @@
     <script src="static/js/score-colors.js?v=2"></script>
     <script src="static/js/shared.js?v=23"></script>
     <script src="static/js/map-init.js?v=13"></script>
-    <script src="static/js/finder.js?v=92"></script>
+    <script src="static/js/finder.js?v=95"></script>
     <script src="static/js/main.js?v=39"></script>
 </body>
 </html>

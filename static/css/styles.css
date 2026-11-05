@@ -3454,6 +3454,71 @@ body.has-page-feedback {
     }
 }
 
+/* ── Active filters as chips under the search (finder.js renderActiveFilters) ── */
+.active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-2);
+    margin: var(--ds-size-3) 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.active-filters[hidden] {
+    display: none;
+}
+
+/* The filter button in the list head: only on phones, while the search row is out of view */
+.filter-toggle--sticky[hidden] {
+    display: none;
+}
+
+.filter-toggle--sticky .ds-badge {
+    margin-inline-start: var(--ds-size-1);
+}
+
+@media (max-width: 640px) {
+    /* The list head (title, filter, sort) stays at the top of the screen while the list scrolls */
+    .results-head {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        margin-inline: calc(-1 * var(--ds-size-4));
+        padding: var(--ds-size-2) var(--ds-size-4);
+        background: var(--ds-color-neutral-background-default);
+        box-shadow: 0 1px 0 var(--ds-color-neutral-border-subtle);
+        align-items: center;
+    }
+
+    /* One compact row: the title (it may wrap) on the left, the filter icon and sort on the right */
+    .results-head {
+        flex-wrap: nowrap;
+        column-gap: var(--ds-size-1);
+    }
+
+    .results-head > div:first-child {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    .results-head #resultsTitle {
+        font-size: var(--ds-font-size-4);
+    }
+
+    .results-head .filter-toggle--sticky > span:not(.ds-badge) {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+
+    .results-head .results-sort {
+        flex: none;
+    }
+}
+
 /* ── Loading placeholders and error messages ─────────────────────────── */
 /* Grey blocks in the shape of what is coming (the school banner, the school cards), so nothing jumps when
    the data arrives. They pulse gently, and stand still for those who ask for less motion. */

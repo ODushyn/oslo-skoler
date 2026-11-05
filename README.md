@@ -354,6 +354,14 @@ page draws it on its map with the source.
 The address search shows the krets, outlines it on the map and marks the school as "Skolekrets (pilot)".
 A check in the script confirms every matched school lies inside its own krets.
 
+### Filters on phones and the active-filter chips
+
+The filters are a Designsystemet Dialog (full width on phones) with "Vis N skoler", which counts as you choose.
+The filters that are on show as removable chips under the search ("Kommune: Oslo ✕", "Trivsel: 2 av 5 ✕");
+a chip's ✕ sets that group back. The open panel is a step in the browser's history (`history.pushState`), so the
+phone's back button closes it; closing it any other way takes that step back. On phones the list head (title,
+sort) sticks to the top while the list scrolls, and shows a filter button once the search row is out of view.
+
 ### Missing Data Handling
 
 UDIR marks unavailable scores as `*` (typically for very small schools where publishing results would compromise student privacy).
