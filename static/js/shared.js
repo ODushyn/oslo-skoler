@@ -7,6 +7,13 @@ const SCHOOL_TYPE_LABEL = {
     ungdomsskole: t('Ungdomsskole')
 };
 
+// The map's attribution, as short as the licences allow: OpenFreeMap's terms and the OpenStreetMap
+// licence (ODbL) ask for OpenFreeMap, OpenMapTiles and OpenStreetMap, each with a link. Leaflet's own
+// "Leaflet" credit is optional, so the maps leave it out (setPrefix(false)) to keep the line short.
+const MAP_ATTRIBUTION = '<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> '
+    + '<a href="https://www.openmaptiles.org/" target="_blank" rel="noopener">&copy; OpenMapTiles</a> '
+    + '<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">&copy; OpenStreetMap</a>';
+
 function schoolKey(school) {
     return `${school.name}|${school.kommune}|${school.schoolType}`;
 }

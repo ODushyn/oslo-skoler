@@ -1105,11 +1105,10 @@
         L.maplibreGL({
             style: typeof THEME !== 'undefined' ? THEME.mapStyle() : 'https://tiles.openfreemap.org/styles/liberty',
             attributionControl: {
-                customAttribution: '<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> ' +
-                    '<a href="https://www.openmaptiles.org/" target="_blank" rel="noopener">&copy; OpenMapTiles</a> ' +
-                    'Data from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
+                customAttribution: MAP_ATTRIBUTION
             }
         }).addTo(map);
+        map.attributionControl.setPrefix(false);
         const size = s.schoolType === 'ungdomsskole' ? 40 : 30;
         L.marker([s.lat, s.lng], {
             icon: L.divIcon({
