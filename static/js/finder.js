@@ -462,36 +462,43 @@ const Finder = (() => {
     }
 
     // ── Active filters as chips under the search ──────────────────────────
-    // One chip per filter group that is not at its default ("Eierform: Offentlig", "Trivsel: 2 av 5",
-    // "Kommune: Oslo"), so you see why the list is short; the chip's ✕ sets that group back.
+    // One chip per filter group that is not at its default, so you see why the list is short; the chip's ✕
+    // sets that group back. The chip shows the chosen values ("Offentlig", "Oslo", "Barneskole"), the score
+    // chip the chosen colours. Trivsel and Mobbing are number ranges, so their chips keep the word.
+    // `named`: the group's name goes before the values (and is always in the label for screen readers).
+    // In the panel's order: national tests first, then school type, owner, (kommune, profile,) trivsel, mobbing
     const FILTER_GROUPS = [
-        { name: 'type', label: 'Skoletype', key: 'types', all: () => ALL_TYPES },
-        { name: 'owner', label: 'Eierform', key: 'owners', all: () => ALL_OWNERS },
-        { name: 'score', label: 'Nasjonale prøver', key: 'scores', all: () => ALL_SCORES },
-        { name: 'trivsel', label: 'Trivsel', key: 'trivsels', all: () => ALL_TRIVSEL },
-        { name: 'mobbing', label: 'Mobbing', key: 'mobbings', all: () => ALL_MOBBING }
+        { name: 'score', label: 'Nasjonale prøver', key: 'scores', all: () => ALL_SCORES, named: false, dots: true },
+        { name: 'type', label: 'Skoletype', key: 'types', all: () => ALL_TYPES, named: false },
+        { name: 'owner', label: 'Eierform', key: 'owners', all: () => ALL_OWNERS, named: false },
+        { name: 'trivsel', label: 'Trivsel', key: 'trivsels', all: () => ALL_TRIVSEL, named: true },
+        { name: 'mobbing', label: 'Mobbing', key: 'mobbings', all: () => ALL_MOBBING, named: true }
     ];
 
     function activeFilterChips() {
         const optionLabel = input => document.querySelector(`#filterPanel label[for="${input.id}"]`).textContent.trim();
         const chips = [];
-        if (state.kommune) chips.push({ id: 'kommune', text: `${t('Kommune')}: ${state.kommune}` });
         FILTER_GROUPS.forEach(group => {
             const all = group.all();
             if (state[group.key].size === all.length) return;
             const inputs = [...document.querySelectorAll(`#filterPanel input[name="${group.name}"]`)];
             const checked = inputs.filter(i => i.checked);
             const value = checked.length === 0 ? t('Ingen')
-                : checked.length === 1 ? optionLabel(checked[0])
+                : checked.length <= 2 ? checked.map(optionLabel).join(', ')
                 : t('{current} av {total}', { current: checked.length, total: inputs.length });
-            chips.push({ id: group.name, text: `${t(group.label)}: ${value}` });
+            const dots = group.dots ? checked.map(i => `<span class="color-dot score-${escapeHtml(i.value)}" aria-hidden="true"></span>`).join('') : '';
+            chips.push({ id: group.name, dots, text: group.named ? `${t(group.label)} ${value}` : value, label: `${t(group.label)}: ${value}` });
         });
+        if (state.kommune) chips.push({ id: 'kommune', text: state.kommune, label: `${t('Kommune')}: ${state.kommune}` });
         if (state.profile) {
             const input = document.querySelector(`#filterPanel input[name="profile"][value="${CSS.escape(state.profile)}"]`);
             // The label has the number of schools in brackets; the chip only the profile
-            chips.push({ id: 'profile', text: `${t('Profil')}: ${input ? optionLabel(input).replace(/\s*\(\d+\)$/, '') : state.profile}` });
+            const name = input ? optionLabel(input).replace(/\s*\(\d+\)$/, '') : state.profile;
+            chips.push({ id: 'profile', text: name, label: `${t('Profil')}: ${name}` });
         }
-        return chips;
+        // In the panel's order
+        const ORDER = ['score', 'type', 'owner', 'kommune', 'profile', 'trivsel', 'mobbing'];
+        return chips.sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id));
     }
 
     function renderActiveFilters() {
@@ -499,7 +506,7 @@ const Finder = (() => {
         const chips = activeFilterChips();
         list.hidden = chips.length === 0;
         list.innerHTML = chips.map(chip => `<li><button type="button" class="ds-chip" data-removable="true" data-size="sm"
-                data-filter="${chip.id}" aria-label="${escapeHtml(t('Fjern filter: {label}', { label: chip.text }))}">${escapeHtml(chip.text)}</button></li>`).join('');
+                data-filter="${chip.id}" aria-label="${escapeHtml(t('Fjern filter: {label}', { label: chip.label }))}">${chip.dots || ''}${escapeHtml(chip.text)}</button></li>`).join('');
     }
 
     function removeFilter(id) {

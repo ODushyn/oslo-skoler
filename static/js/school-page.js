@@ -1176,7 +1176,10 @@
 
     // ── Small map with the school (same map style as the main map) ─────
     function showMap(s) {
-        const map = L.map('schoolMap', { center: [s.lat, s.lng], zoom: 15, scrollWheelZoom: false, zoomControl: true });
+        // Zoom buttons at the bottom right, above the attribution: the address field and the walking-time card
+        // sit in the top left corner and would cover them there
+        const map = L.map('schoolMap', { center: [s.lat, s.lng], zoom: 15, scrollWheelZoom: false, zoomControl: false });
+        L.control.zoom({ position: 'bottomright' }).addTo(map);
         schoolMap = map;
         L.maplibreGL({
             style: typeof THEME !== 'undefined' ? THEME.mapStyle() : 'https://tiles.openfreemap.org/styles/liberty',
