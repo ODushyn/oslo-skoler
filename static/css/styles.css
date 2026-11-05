@@ -442,6 +442,22 @@ main:focus {
     }
 }
 
+/* Below 1280 px the centred links are hidden: "Om fargefordelingen" stays in the header as its four colour
+   dots (the words are its label and tooltip) */
+.colors-link.ds-button {
+    display: none;
+}
+
+@media (max-width: 1279px) {
+    .colors-link.ds-button {
+        display: inline-flex;
+    }
+
+    .colors-link .score-toggle__dots .color-dot:last-child {
+        margin-inline-end: 0;
+    }
+}
+
 /* ── Search: one row, the select chooses what to search by ─────────── */
 /* The same light green as the national tests group in the filter panel */
 .search-panel {
@@ -570,6 +586,12 @@ main:focus {
     gap: var(--ds-size-4);
     min-width: 0;
     max-width: 100%;
+}
+
+/* The number of filters on: only on the sticky filter button in the list head (phones), where the chips under
+   the search are out of view; next to the search the chips say it already */
+#filterToggle .ds-badge {
+    display: none;
 }
 
 .filter-toggle .ds-badge {
@@ -1975,13 +1997,27 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 @media (max-width: 400px) {
     .site-logo {
         gap: var(--ds-size-1);
-        font-size: var(--ds-font-size-4);
+        font-size: var(--ds-font-size-3);
+    }
+
+    /* Room for the colour dots ("Om fargefordelingen") next to the other header buttons */
+    .site-header .site-nav {
+        gap: var(--ds-size-1);
+    }
+
+    .site-nav .colors-link.ds-button {
+        padding-inline: 2px;
+    }
+
+    /* The list title a step smaller, so it stays on one line next to the filter and sort */
+    .results-head #resultsTitle {
+        font-size: var(--ds-font-size-2);
     }
 
     .site-logo__mark svg,
     .site-logo__mark {
-        width: 1.75rem;
-        height: 1.75rem;
+        width: 1.5rem;
+        height: 1.5rem;
     }
 
     .site-nav .ds-button {
@@ -1999,8 +2035,13 @@ button.school-stat[aria-selected="true"] .school-stat__more {
         flex-wrap: wrap;
     }
 
-    .search-bar__field {
+    /* "Søk på" on its own row; the search field and the filter button share the next one */
+    .search-mode {
         flex-basis: 100%;
+    }
+
+    .search-bar__field {
+        flex: 1 1 0;
         min-width: 0;
     }
 
@@ -2040,10 +2081,14 @@ button.school-stat[aria-selected="true"] .school-stat__more {
         padding-inline: var(--ds-size-2);
     }
 
-    /* Phones: the filter button under the field, at its right edge */
+    /* Phones: the filter button right of the search field, the same height */
     .search-bar__actions {
+        flex: none;
         gap: var(--ds-size-2);
-        margin-left: auto;
+    }
+
+    .search-bar__actions .filter-toggle {
+        min-height: var(--ds-size-12);
     }
 
     .school-stats {
@@ -3498,8 +3543,9 @@ body.has-page-feedback {
         min-width: 0;
     }
 
+    /* Small enough that "Viser 10 av 2 564 skoler" fits on one line next to the filter and sort */
     .results-head #resultsTitle {
-        font-size: var(--ds-font-size-4);
+        font-size: var(--ds-font-size-3);
     }
 
     .results-head .filter-toggle--sticky > span:not(.ds-badge) {
@@ -3830,6 +3876,18 @@ body.has-page-feedback {
     padding: var(--ds-size-4);
     border-radius: var(--ds-border-radius-lg);
     background: var(--ds-color-brand1-surface-tinted);
+}
+
+/* A fieldset draws its legend on its top edge, so the green would start halfway down the heading; floated,
+   the legend sits inside the green box like the rest */
+.filter-group--main.ds-fieldset > legend {
+    float: left;
+    width: 100%;
+    margin-bottom: var(--ds-size-2);
+}
+
+.filter-group--main.ds-fieldset > legend + * {
+    clear: both;
 }
 
 /* "Om fargefordelingen ↗" under the national tests choices in the filter panel */

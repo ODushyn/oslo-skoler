@@ -76,6 +76,8 @@
                     ${PRIMARY.map(l => `<a class="site-primary__link" href="${localHref(l.href)}"${ariaCurrent(l.href)}>${l.dots ? SCORE_DOTS : ''}${l.label}</a>`).join('')}
                 </nav>
                 <nav class="site-nav" aria-label="Hovedmeny">
+                    <a class="ds-button colors-link" data-variant="tertiary" data-size="sm" href="${localHref('om-fargefordelingen.html')}"
+                       aria-label="Om fargefordelingen" data-tooltip="Om fargefordelingen"${ariaCurrent('om-fargefordelingen.html')}>${SCORE_DOTS.replace(' site-primary__dots', '')}</a>
                     <a class="ds-button saved-link" data-variant="tertiary" data-size="sm" href="${typeof I18N !== 'undefined' ? I18N.href('./?lagrede=1') : './?lagrede=1'}"
                        aria-label="Lagrede skoler">${ICONS.bookmark}<span class="site-nav__label">Lagrede skoler</span><span class="saved-link__count" aria-hidden="true" hidden></span></a>
                     ${typeof I18N !== 'undefined' ? I18N.switchLink() : ''}
