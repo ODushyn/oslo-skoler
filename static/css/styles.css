@@ -379,10 +379,12 @@ main:focus {
     color: var(--ds-color-neutral-text-subtle);
 }
 
+/* "Lagrede skoler", the language and "Meny" with the same space between them */
 .site-nav {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--ds-size-1);
+    align-items: center;
+    gap: var(--ds-size-3);
 }
 
 /* "Om Skolekartet" and "Om fargefordelingen" in the exact middle of the header, whatever the width of the
@@ -567,10 +569,6 @@ main:focus {
     gap: var(--ds-size-4);
     min-width: 0;
     max-width: 100%;
-}
-
-.search-bar__actions .score-toggle {
-    min-width: 0;
 }
 
 .filter-toggle .ds-badge {
@@ -2047,33 +2045,16 @@ button.school-stat[aria-selected="true"] .school-stat__more {
         white-space: nowrap;
     }
 
-    .score-toggle,
     .filter-toggle,
     .filter-reset {
         flex: 0 0 auto;
         padding-inline: var(--ds-size-2);
     }
 
-    /* Phones: the three buttons share one row under the field, at its right edge; a long
-       "Nasjonale prøver" (Ukrainian) is cut with "…" rather than pushing "Nullstill" to a new line */
+    /* Phones: Filter and Nullstill share one row under the field, at its right edge */
     .search-bar__actions {
         gap: var(--ds-size-2);
         margin-left: auto;
-    }
-
-    .search-bar__actions .score-toggle {
-        flex: 0 1 auto;
-    }
-
-    .score-toggle .search-bar__label {
-        min-width: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    .score-toggle__dots .color-dot:last-child {
-        margin-inline-end: 0;
     }
 
     .school-stats {
@@ -2136,7 +2117,7 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 @media (max-width: 640px) {
     .site-nav {
         flex-wrap: nowrap;
-        gap: 0;
+        gap: var(--ds-size-2);
     }
 
     .lang-switch.ds-button {
@@ -3313,7 +3294,7 @@ body.has-page-feedback {
 
 /* "Lagrede skoler" in the header: bookmark, label (hidden on phones) and a small count */
 .saved-link.ds-button {
-    gap: var(--ds-size-1);
+    gap: var(--ds-size-2);
 }
 
 .saved-link__count {
@@ -3819,7 +3800,7 @@ body.has-page-feedback {
     margin-bottom: var(--ds-size-2);
 }
 
-/* "Nasjonale prøver": a button before "Filter" that opens a row with the result colours under the search */
+/* The four score colours as small dots in a row (before "Om fargefordelingen" in the header) */
 .score-toggle__dots {
     display: inline-flex;
 }
@@ -3834,47 +3815,14 @@ body.has-page-feedback {
     margin-inline-end: var(--ds-size-1);
 }
 
-.score-toggle[aria-expanded="true"],
-.score-toggle[data-active] {
-    background: var(--ds-color-brand1-surface-tinted);
+/* "Om fargefordelingen ↗" under the national tests choices in the filter panel */
+.filter-more {
+    margin: var(--ds-size-2) 0 0;
 }
 
-.score-bar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--ds-size-2) var(--ds-size-5);
-    margin: var(--ds-size-6) 0 0;
-    padding: 0;
-    border: 0;
-}
-
-.score-bar[hidden] {
-    display: none;
-}
-
-.score-bar > legend {
-    float: left;
-    margin: 0;
-    padding: 0;
-    font-weight: var(--ds-font-weight-medium);
-    color: var(--ds-color-brand1-text-subtle); /* the same colour as the sort button ("Nærmest") */
-}
-
-.ds-fieldset.score-bar > * + * {
-    margin: 0;
-}
-
-/* "Snitt nasjonale prøver ↗": the same external-link icon as on other links; the page that explains the
-   colours opens in a new tab, so the filters stay as they are */
-.score-bar > legend {
+.filter-more .ds-link {
     display: inline-flex;
     align-items: center;
     gap: var(--ds-size-1);
-}
-
-.score-bar__info.ds-button {
-    margin-block: calc(-1 * var(--ds-size-2));
-    color: inherit;
 }
 

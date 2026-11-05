@@ -55,7 +55,7 @@
         </div>`;
 
 
-    // The four score colours, as on the "Nasjonale prøver" button, before "Om fargefordelingen"
+    // The four score colours (the map markers' colours) before "Om fargefordelingen"
     const SCORE_DOTS = '<span class="score-toggle__dots site-primary__dots" aria-hidden="true">'
         + ['very-high', 'high', 'low', 'very-low'].map(c => `<span class="color-dot score-${c}"></span>`).join('') + '</span>';
     const PRIMARY = [

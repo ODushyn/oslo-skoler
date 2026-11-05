@@ -323,18 +323,11 @@ const Finder = (() => {
                 applyFilters();
             });
         });
-        // The result choices are both in the "Nasjonale prøver" row and in the filter panel; keep them in step
         document.querySelectorAll('input[name="score"]').forEach(input => {
             input.addEventListener('change', () => {
                 toggle(state.scores, input.value, input.checked);
-                document.querySelectorAll('input[name="score"]').forEach(i => { i.checked = state.scores.has(i.value); });
                 applyFilters();
             });
-        });
-        el('scoreToggle').addEventListener('click', () => {
-            const open = el('scoreToggle').getAttribute('aria-expanded') !== 'true';
-            el('scoreToggle').setAttribute('aria-expanded', String(open));
-            el('scoreBar').hidden = !open;
         });
         document.querySelectorAll('input[name="trivsel"]').forEach(input => {
             input.addEventListener('change', () => {
@@ -455,8 +448,6 @@ const Finder = (() => {
         renderActiveFilters();
         // "Nullstill" next to the Filter button and in the panel; only usable when a filter is on
         el('resetFilters').disabled = count === 0;
-        // The "Nasjonale prøver" button is marked while some results are left out
-        el('scoreToggle').toggleAttribute('data-active', state.scores.size !== ALL_SCORES.length);
         el('filterResetDialog').disabled = count === 0;
         updateSummaries();
     }
