@@ -480,7 +480,7 @@
         }
         const reach = details.contact || {};
         if (reach.email) {
-            list.insertAdjacentHTML('beforeend', `<li><span class="school-contact__text">${escapeHtml(reach.email)}</span>${action(`mailto:${reach.email}`, t('Send e-post til skolen'), 'envelopeClosed')}</li>`);
+            list.insertAdjacentHTML('beforeend', `<li><span class="school-contact__text">${escapeHtml(reach.email).replace('@', '@<wbr>')}</span>${action(`mailto:${reach.email}`, t('Send e-post til skolen'), 'envelopeClosed')}</li>`);
         }
         if (reach.phone) {
             const spaced = reach.phone.replace(/^(\d{2})(\d{2})(\d{2})(\d{2})$/, '$1 $2 $3 $4');

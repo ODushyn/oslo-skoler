@@ -3139,11 +3139,36 @@ body.has-page-feedback {
         grid-row: auto;
     }
 
+    /* Address, e-mail and phone: the text on the left, the action icons in one column at the right edge */
+    .school-contact li {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        column-gap: var(--ds-size-3);
+    }
+
+    /* "Del" and "Google Maps": their icons line up with the text above (the buttons' own padding pulled back) */
+    .school-banner__actions {
+        margin-inline-start: calc(-1 * var(--ds-size-2));
+        gap: var(--ds-size-2);
+    }
+
+    /* Shortcuts: one wrapping row of links instead of a long column */
+    .snarveier__list {
+        flex-direction: row;
+        gap: var(--ds-size-2) var(--ds-size-5);
+    }
 }
 
 .school-banner__facts .school-contact__text {
     overflow-wrap: normal;
     word-break: normal;
+}
+
+/* Phones: a long e-mail address breaks rather than running under its icon */
+@media (max-width: 640px) {
+    .school-banner__facts .school-contact__text {
+        overflow-wrap: anywhere;
+    }
 }
 
 /* Colour themes (in the "Meny" dropdown) and light/dark mode (header button). The standard Digdir themes
@@ -3320,27 +3345,25 @@ body.has-page-feedback {
     margin: var(--ds-size-2) 0 0;
 }
 
-/* One row: "Vis på kartet" a third of the width, "Les mer om skolen" two thirds. A long label wraps
-   inside its button rather than pushing the other off the row. */
+/* One row: each button as wide as its words, sharing what is left of the row. A long label (Ukrainian)
+   wraps inside its button rather than pushing the other off the row. */
 .school-card__actions {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    display: flex;
     gap: var(--ds-size-2);
     margin-top: var(--ds-size-2);
 }
 
 .school-card__actions > .ds-button {
     --dsc-button-padding: var(--ds-size-2);
-    width: 100%;
-    height: 100%;
+    flex: 1 1 auto;
     min-width: 0;
     white-space: normal;
     text-align: center;
 }
 
-/* Narrow phones: the map button without its pin, so its words have the whole third */
+/* Narrow phones: "Les mer om skolen" without its arrow, so both labels fit on one line */
 @media (max-width: 480px) {
-    .school-card__map .ds-icon {
+    .school-card__actions > a.ds-button .ds-icon {
         display: none;
     }
 }
