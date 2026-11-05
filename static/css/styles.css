@@ -1638,6 +1638,51 @@ button.school-stat[aria-selected="true"] .school-stat__more {
     padding-top: var(--ds-size-2);
 }
 
+/* The open/close arrow on the result cards: phones only, where each card opens its details under itself */
+.school-stat__chevron {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    button.school-stat.ds-card {
+        position: relative;
+    }
+
+    .school-stat__chevron {
+        display: flex;
+        position: absolute;
+        top: var(--ds-size-4);
+        right: var(--ds-size-4);
+        color: var(--ds-color-brand1-text-subtle);
+        transition: transform 0.2s ease;
+    }
+
+    .school-stat__chevron .ds-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    button.school-stat[aria-expanded="true"] .school-stat__chevron {
+        transform: rotate(180deg);
+    }
+
+    /* The open card in the same frame as on the wider screens */
+    button.school-stat.ds-card[aria-expanded="true"] {
+        border-color: var(--ds-color-base-default);
+        box-shadow: inset 0 -4px 0 var(--ds-color-base-default);
+    }
+
+    .school-stats > .stat-panel {
+        padding-top: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .school-stat__chevron {
+        transition: none;
+    }
+}
+
 .page__content .stat-panel > .ds-heading:first-child {
     margin-top: var(--ds-size-4);
 }

@@ -348,30 +348,80 @@
 
     // Small icon link to where the figures come from
 
-    // ── Statistics as tabs: the cards choose which table shows below ─────
+    // ── Statistics: the cards choose which table and chart show ──────────
+    // Wider screens: tabs, the chosen card's details below the row of cards. Phones: each card opens its details
+    // right under itself (an arrow shows open or closed); tapping it again closes them, tapping another card
+    // opens that one and closes the first.
     function statTab(id, title, content, selected) {
         return `<button type="button" class="ds-card school-stat" data-variant="tinted" data-color="${selected ? 'brand1' : 'neutral'}" role="tab" id="tab-${id}"
                     aria-selected="${selected}" aria-controls="panel-${id}" tabindex="${selected ? 0 : -1}">
                     <span class="school-stat__title">${title}</span>
                     ${content}
+                    <span class="school-stat__chevron" aria-hidden="true">${icon('chevronDown')}</span>
                 </button>`;
     }
 
     function bindStatTabs() {
-        const tabs = [...document.querySelectorAll('.school-stats [role="tab"]')];
-        const select = tab => {
-            tabs.forEach(t => {
-                const on = t === tab;
-                t.setAttribute('aria-selected', String(on));
-                t.dataset.color = on ? 'brand1' : 'neutral';
-                t.tabIndex = on ? 0 : -1;
-                document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
-            });
+        const list = document.querySelector('.school-stats');
+        const tabs = [...list.querySelectorAll('.school-stat')];
+        const panelOf = tab => document.getElementById(tab.getAttribute('aria-controls'));
+        const phone = window.matchMedia('(max-width: 640px)');
+        const show = (tab, on) => {
+            tab.dataset.color = on ? 'brand1' : 'neutral';
+            panelOf(tab).hidden = !on;
+            if (phone.matches) {
+                tab.setAttribute('aria-expanded', String(on));
+            } else {
+                tab.setAttribute('aria-selected', String(on));
+                tab.tabIndex = on ? 0 : -1;
+            }
         };
+        const select = tab => tabs.forEach(other => show(other, other === tab));
+
+        // Tabs with the details after the row of cards, or (phones) each card with its details under it
+        const layout = () => {
+            const open = tabs.find(tab => !panelOf(tab).hidden) || (phone.matches ? null : tabs[0]);
+            if (phone.matches) {
+                list.removeAttribute('role');
+                tabs.forEach(tab => {
+                    const panel = panelOf(tab);
+                    tab.after(panel);
+                    tab.removeAttribute('role');
+                    tab.removeAttribute('aria-selected');
+                    tab.tabIndex = 0;
+                    panel.setAttribute('role', 'region');
+                });
+            } else {
+                list.setAttribute('role', 'tablist');
+                let after = list;
+                tabs.forEach(tab => {
+                    const panel = panelOf(tab);
+                    after.after(panel);
+                    after = panel;
+                    tab.setAttribute('role', 'tab');
+                    tab.removeAttribute('aria-expanded');
+                    panel.setAttribute('role', 'tabpanel');
+                });
+            }
+            tabs.forEach(tab => show(tab, tab === open));
+        };
+        layout();
+        phone.addEventListener('change', layout);
+
         tabs.forEach((tab, i) => {
-            tab.addEventListener('click', () => select(tab));
-            // Arrow keys move between the cards, as in a tab list
+            tab.addEventListener('click', () => {
+                if (phone.matches && !panelOf(tab).hidden) {
+                    show(tab, false);
+                    return;
+                }
+                const before = tab.getBoundingClientRect().top;
+                select(tab);
+                // Phones: the tapped card keeps its place when the details of a card above it close
+                if (phone.matches) window.scrollBy(0, tab.getBoundingClientRect().top - before);
+            });
+            // Arrow keys move between the cards, as in a tab list (wider screens)
             tab.addEventListener('keydown', event => {
+                if (phone.matches) return;
                 const next = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[event.key];
                 if (next === undefined) return;
                 event.preventDefault();
