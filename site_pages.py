@@ -87,6 +87,11 @@ def esc(text):
     return html.escape(str(text), quote=True)
 
 
+def web_url(url):
+    """A link from the data (school website, Wikimedia) only when it is a plain web address."""
+    return url if isinstance(url, str) and re.fullmatch(r'https?://[^\s"<>]+', url) else None
+
+
 def decimal(value, digits=1):
     return f'{value:.{digits}f}'.replace('.', ',')
 
@@ -137,6 +142,8 @@ def page_frame(depth, title, description, canonical, json_ld, body_attrs, main_h
                   lambda m: f'{m.group(1)}{prefix}{"" if m.group(2) == "./" else m.group(2)}"', page)
     page = page.replace('<title>Skole – Skolekartet</title>', f'<title>{esc(title)}</title>')
     page = re.sub(r'<meta name="description" content="[^"]*" />', f'<meta name="description" content="{esc(description)}" />', page)
+    # "<" written as \u003c, so a name with "</script>" in it cannot end the block early
+    ld_text = json.dumps(json_ld, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')
     head = f"""<link rel="canonical" href="{canonical}" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Skolekartet" />
@@ -148,15 +155,20 @@ def page_frame(depth, title, description, canonical, json_ld, body_attrs, main_h
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="nb_NO" />
     <meta name="twitter:card" content="summary_large_image" />
-    <script type="application/ld+json">{json.dumps(json_ld, ensure_ascii=False, separators=(',', ':'))}</script>"""
+    <script type="application/ld+json">{ld_text}</script>"""
     page = page.replace('<link rel="icon" type="image/svg+xml"', head + '\n    <link rel="icon" type="image/svg+xml"', 1)
     page = page.replace('<body>', f'<body{body_attrs}>', 1)
-    page = re.sub(r'(<article class="page__content school-page" id="schoolPage" aria-live="polite">).*?(</article>)',
-                  lambda m: m.group(1) + main_html + '\n            ' + m.group(2), page, flags=re.S)
+    if school_page:
+        # The template's loading placeholder stays (shown while scripts load the data), the static text follows
+        page = re.sub(r'(<article class="page__content school-page"[^>]*>.*?)(\s*</article>)',
+                      lambda m: f'{m.group(1)}\n                <div class="school-static">{main_html}\n                </div>{m.group(2)}', page, flags=re.S)
+    else:
+        page = re.sub(r'(<article class="page__content school-page"[^>]*>).*?(</article>)',
+                      lambda m: m.group(1) + main_html + '\n            ' + m.group(2), page, flags=re.S)
     if not school_page:
         page = re.sub(r'\n\s*<!-- Map for the school position.*?leaflet-maplibre-gl\.js"></script>', '', page, flags=re.S)
-        page = re.sub(r'\n\s*<script src="[^"]*(?:score-colors|school-page)\.js[^"]*"></script>', '', page)
-        page = page.replace(' school-page" id="schoolPage" aria-live="polite"', '"')
+        page = re.sub(r'\n\s*<script (?:defer )?src="[^"]*(?:score-colors|school-page)\.js[^"]*"></script>', '', page)
+        page = page.replace(' school-page" id="schoolPage" aria-live="polite" aria-busy="true"', '"')
     return page
 
 
@@ -258,8 +270,9 @@ def school_page(levels, details, nearby, data, national_all):
             </section>""")
 
     links = [f'<li><a class="ds-link" href="../../?skole={esc(_url_quote(school["name"] + "|" + kommune + "|" + school["schoolType"]))}">Se skolen på kartet</a></li>']
-    if details.get('website'):
-        links.append(f'<li><a class="ds-link" href="{esc(details["website"])}" rel="noopener">Skolens nettside</a></li>')
+    website = web_url(details.get('website'))
+    if website:
+        links.append(f'<li><a class="ds-link" href="{esc(website)}" rel="noopener">Skolens nettside</a></li>')
     links.append(f'<li><a class="ds-link" href="../../{kommune_path(kommune)}">Alle skoler i {esc(kommune)}</a></li>')
     near = ''.join(f'<li><a class="ds-link" href="../../{other["page"]}">{esc(other["name"])}</a> '
                    f'({esc(short_type(other_levels))}, {esc(other["kommune"])}, {decimal(km)} km)</li>'
@@ -286,14 +299,14 @@ def school_page(levels, details, nearby, data, national_all):
     school_ld = {'@type': 'School', '@id': canonical + '#skole', 'name': name, 'url': canonical,
                  'address': {'@type': 'PostalAddress', 'addressLocality': re.sub(r'\s*\(.*\)$', '', kommune), 'addressCountry': 'NO'},
                  'geo': {'@type': 'GeoCoordinates', 'latitude': school['lat'], 'longitude': school['lng']}}
-    if details.get('website'):
-        school_ld['sameAs'] = [details['website']]
-    photo = school.get('photo')
-    if photo and photo.get('thumb'):
+    if website:
+        school_ld['sameAs'] = [website]
+    photo = school.get('photo') or {}
+    if web_url(photo.get('thumb')):
         school_ld['image'] = {'@type': 'ImageObject', 'contentUrl': photo['thumb'],
                               'creditText': f"{photo.get('author', '')}, {photo.get('license', '')}, via Wikimedia Commons",
-                              **({'license': photo['licenseUrl']} if photo.get('licenseUrl') else {}),
-                              **({'acquireLicensePage': photo['page']} if photo.get('page') else {})}
+                              **({'license': photo['licenseUrl']} if web_url(photo.get('licenseUrl')) else {}),
+                              **({'acquireLicensePage': photo['page']} if web_url(photo.get('page')) else {})}
     json_ld = {'@context': 'https://schema.org', '@graph': [
         school_ld, breadcrumbs_ld([(n, SITE + p if p is not None else None) for n, p in crumbs])]}
     body = f' data-school-id="{esc(school["name"] + "|" + kommune + "|" + school["schoolType"])}"'

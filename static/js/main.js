@@ -6,8 +6,6 @@ let schoolsData = [];
 let schoolMarkers = new Map(); // Map of school unique key (name + kommune) -> marker
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Initializing map application...');
-
     // Initialize the map
     const { map, markerCluster } = initMap();
 
@@ -25,8 +23,6 @@ function loadSchoolData(map, markerCluster) {
             return response.json();
         })
         .then(data => {
-            console.log(`Loaded data for ${data.schools.length} schools`);
-
             // Store the current year globally so popups can display it
             if (data.metadata && data.metadata.currentYear) {
                 window.SCHOOL_DATA_YEAR = data.metadata.currentYear;
@@ -52,13 +48,25 @@ function loadSchoolData(map, markerCluster) {
 
             // School name search
             initializeSearch(map, markerCluster);
-
-            console.log('✓ Map initialized successfully!');
         })
         .catch(error => {
-            console.error('Error loading school data:', error);
-            alert('Failed to load school data. Please ensure school-data.json exists.');
+            console.error('Could not load school-data.json:', error);
+            showLoadError();
         });
+}
+
+// The schools could not be loaded: a message with "Prøv igjen" where the list would be
+function showLoadError() {
+    const list = document.getElementById('schoolList');
+    document.getElementById('listLoading')?.remove();
+    list.removeAttribute('aria-busy');
+    list.innerHTML = '';
+    list.insertAdjacentHTML('beforebegin', `<div class="ds-alert load-error" data-color="danger" role="alert">
+            <h2 class="ds-heading" data-size="xs">${t('Kunne ikke laste skolene')}</h2>
+            <p class="ds-paragraph">${t('Sjekk nettforbindelsen og prøv igjen.')}</p>
+            <button type="button" class="ds-button" data-variant="secondary" data-size="sm" id="retryLoad">${t('Prøv igjen')}</button>
+        </div>`);
+    document.getElementById('retryLoad').addEventListener('click', () => location.reload());
 }
 
 // Create markers for all schools (not added to the map here).

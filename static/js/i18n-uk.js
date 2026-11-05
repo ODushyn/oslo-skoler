@@ -142,7 +142,11 @@ window.I18N_UK = {
     "Les mer om skolen": "Докладніше про школу",
     "Foto av {name}": "Фото {name}",
     "Foto:": "Фото:",
-    "Kunne ikke laste skoledata. Prøv igjen senere.": "Не вдалося завантажити дані школи. Спробуйте пізніше.",
+    "Kunne ikke laste skolen": "Не вдалося завантажити школу",
+    "Kunne ikke laste skolene": "Не вдалося завантажити школи",
+    "Sjekk nettforbindelsen og prøv igjen.": "Перевірте з’єднання з інтернетом і спробуйте ще раз.",
+    "Prøv igjen": "Спробувати ще раз",
+    "Laster skoler…": "Завантаження шкіл…",
     "Fant ikke skolen": "Школу не знайдено",
     "Lenken peker ikke til en skole vi har data for.": "Посилання не веде до школи, про яку ми маємо дані.",
     "Gå til kartet": "Перейти до карти",
@@ -824,5 +828,5 @@ window.I18N_UK = {
     "Sender...": "Надсилання...",
     "Takk! Meldingen din er sendt.": "Дякуємо! Ваше повідомлення надіслано.",
     "Sendt!": "Надіслано!",
-    "Noe gikk galt. Prøv igjen eller send e-post direkte.": "Щось пішло не так. Спробуйте ще раз або напишіть нам електронною поштою напряму."
+    "Noe gikk galt. Prøv igjen litt senere.": "Щось пішло не так. Спробуйте ще раз трохи пізніше."
 };

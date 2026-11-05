@@ -685,6 +685,9 @@ const Finder = (() => {
         if (mapSlot() && mapSlot().parentElement === el('schoolList')) closeMiniMap();
         openKey = null;
         el('schoolList').innerHTML = visible.map((e, i) => schoolCard(e, ref, i)).join('');
+        // The first list replaces the loading placeholders
+        el('schoolList').removeAttribute('aria-busy');
+        if (el('listLoading')) el('listLoading').remove();
         el('schoolList').querySelectorAll('.school-card__save').forEach(button => {
             button.addEventListener('click', () => {
                 updateSaveButton(button, toggleSaved(button.dataset.save));
@@ -1304,7 +1307,7 @@ const Finder = (() => {
         // No skolekrets data for this address (Oslo and most kommuner): show the nearest public
         // barneskole and ungdomsskole in the same cards, clearly named as the nearest, not the krets
         if (!own.length) {
-            const out = (href, label) => `<a class="ds-link" href="${href}" target="_blank" rel="noopener">${t(label)}${icon('externalLink')}</a>`;
+            const out = (href, label) => `<a class="ds-link" href="${escapeHtml(safeUrl(href))}" target="_blank" rel="noopener">${t(label)}${icon('externalLink')}</a>`;
             // In the info popover: where to look up the real krets, and which kommuner we can show it for
             const osloLookup = kommune === 'Oslo'
                 ? `<p class="ds-paragraph" data-size="sm">${t('Slå opp skolekretsen hos Oslo kommune:')}
@@ -1350,7 +1353,7 @@ const Finder = (() => {
                             popovertarget="ownInfo" aria-label="${t('Om skolekretsdataene')}">${icon('questionmarkCircle')}</button></p>
                 <div class="ds-popover own-schools__info" popover id="ownInfo" data-placement="bottom-start">
                     <p class="ds-paragraph" data-size="sm">${t('Dette er en pilot på åpne data og kan avvike fra kommunens gjeldende grenser.')} ${escapeHtml(t(krets.info.caveat))}</p>
-                    <p class="ds-paragraph" data-size="sm">${t('Kilde:')} <a class="ds-link" href="${escapeHtml(krets.info.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(t(krets.info.source))}</a>.</p>
+                    <p class="ds-paragraph" data-size="sm">${t('Kilde:')} <a class="ds-link" href="${escapeHtml(safeUrl(krets.info.sourceUrl))}" target="_blank" rel="noopener">${escapeHtml(t(krets.info.source))}</a>.</p>
                     <p class="ds-paragraph" data-size="sm">${check}</p>
                     <p class="ds-paragraph" data-size="sm"><a class="ds-link" href="${I18N.href('om-skolekrets.html')}#pilot">${t('Se hvilke kommuner vi kan vise skolekretsen for, og hvor dataene kommer fra')}</a></p>
                 </div>

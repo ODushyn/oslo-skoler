@@ -2,6 +2,9 @@
 <html lang="no" data-color-scheme="light" data-color="brand1">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <!-- Content Security Policy: scripts only from this site and the two CDNs (pinned, with integrity hashes),
+         data only from the services the pages use. GitHub Pages cannot send it as a header. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: blob: https://thumb.wikimedia.org https://upload.wikimedia.org https://tiles.openfreemap.org; font-src 'self' data:; connect-src 'self' https://tiles.openfreemap.org https://ws.geonorge.no https://data-nsr.udir.no https://api.entur.io https://formspree.io; worker-src 'self' blob:; child-src blob:; form-action https://formspree.io; base-uri 'self'; object-src 'none'" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Skoler i Farsund – barneskoler og ungdomsskoler | Skolekartet</title>
@@ -19,17 +22,27 @@
     <meta name="twitter:card" content="summary_large_image" />
     <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"CollectionPage","@id":"https://skolekartet.no/skoler/farsund/","name":"Skoler i Farsund","url":"https://skolekartet.no/skoler/farsund/","description":"Oversikt over 5 grunnskoler i Farsund: resultater fra nasjonale prøver 2025-26, trivsel og mobbing fra Elevundersøkelsen, og skolene på kart.","mainEntity":{"@type":"ItemList","numberOfItems":5,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://skolekartet.no/skoler/farsund/borhaug-skole.html","name":"Borhaug skole"},{"@type":"ListItem","position":2,"url":"https://skolekartet.no/skoler/farsund/farsund-barneskole.html","name":"Farsund barneskole"},{"@type":"ListItem","position":3,"url":"https://skolekartet.no/skoler/farsund/farsund-ungdomsskole.html","name":"Farsund ungdomsskole"},{"@type":"ListItem","position":4,"url":"https://skolekartet.no/skoler/farsund/lista-ungdomsskole.html","name":"Lista ungdomsskole"},{"@type":"ListItem","position":5,"url":"https://skolekartet.no/skoler/farsund/vanse-skole.html","name":"Vanse skole"}]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Skolekartet","item":"https://skolekartet.no/"},{"@type":"ListItem","position":2,"name":"Skoler","item":"https://skolekartet.no/skoler/"},{"@type":"ListItem","position":3,"name":"Farsund"}]}]}</script>
     <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
+    
+
+    <!-- Map for the school position (same libraries as the main map) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css" integrity="sha384-o/2yZuJZWGJ4s/adjxVW71R+EO/LyCwdQfP5UWSgX/w87iiTXuvDZaejd3TsN7mf" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.css" integrity="sha384-uTttxo/aOKbdE5RlD/SPzSDoDmNvGlUYPjONi2MN/b7c9HPSvW07OIuyP7uL6jxK" crossorigin="anonymous"/>
+    <!-- Deferred: the map libraries (MapLibre is large) load without holding up the page; they run in this
+         order before school-page.js, which is deferred too -->
+    <script defer src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js" integrity="sha384-okbbMvvx/qfQkmiQKfd5VifbKZ/W8p1qIsWvE1ROPUfHWsDcC8/BnHohF7vPg2T6" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.js" integrity="sha384-5+cfbwT0iiub6VsQAdn6yz16nr6sDiQoHx6tm4O8OVYXHYOxcffFmCJBL0dgdvGp" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@maplibre/maplibre-gl-leaflet@0.1.4/leaflet-maplibre-gl.js" integrity="sha384-tXYNKOHx4T02jMP7YYCtBxPIv1B5gaA5mcVPBzqMp6d7VzWzxJgI2aWF/nJLrQdS" crossorigin="anonymous"></script>
 
     <!-- Designsystemet (Digdir): font, theme and component CSS -->
-    <link rel="stylesheet" id="dsTheme" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/theme/designsystemet.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/src/index.css" />
+    <link rel="stylesheet" id="dsTheme" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/theme/designsystemet.css" integrity="sha384-IT4guVJwkq1uL/GwNWhv2zk3uUZ18gRVe1qOVMWTTjaEkDut+i02gT9l/cnPrDSm" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/src/index.css" integrity="sha384-CAE1Qe2Yp1euTdmOujy77VIT0GR/Yu8V+3taPP8Oo7GGV9hrQKrVigMB51hyUKYD" crossorigin="anonymous" />
 
 
-    <link rel="stylesheet" href="../../static/css/styles.css?v=163"/>
+    <link rel="stylesheet" href="../../static/css/styles.css?v=164"/>
 
-    <script src="../../static/js/i18n.js?v=83"></script>
-    <script src="../../static/js/theme.js?v=8"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-web@1.23.0/dist/umd/index.js"></script>
+    <script src="../../static/js/i18n.js?v=84"></script>
+    <script src="../../static/js/theme.js?v=9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-web@1.23.0/dist/umd/index.js" integrity="sha384-gB8nQDA1vTT5N2EUrwILb4EmNquufjYcGqx5Cmce63dC5l/zyDRlxPjzv4/pG6mE" crossorigin="anonymous"></script>
 </head>
 <body>
     <a class="ds-skip-link" href="#main">Hopp til hovedinnhold</a>
@@ -68,6 +81,6 @@
 
     <!-- Footer (shared, see static/js/layout.js) -->
     <div id="site-footer"></div>
-    <script src="../../static/js/shared.js?v=21"></script>
+    <script defer src="../../static/js/shared.js?v=22"></script>
 </body>
 </html>

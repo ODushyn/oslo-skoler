@@ -16,10 +16,28 @@
     // Oslo facts in the icon blocks were checked on oslo.kommune.no on this date
     const OSLO_CHECKED = '2026-11-02';
     const AKS_PAGE = 'https://www.oslo.kommune.no/skole-og-utdanning/aktivitetsskolen-aks/hva-er-aktivitetsskolen/';
-    const outLink = (href, label) => `<a class="ds-link" href="${escapeHtml(href)}" target="_blank" rel="noopener">${label}${icon('externalLink')}</a>`;
+    const outLink = (href, label) => `<a class="ds-link" href="${escapeHtml(safeUrl(href))}" target="_blank" rel="noopener">${label}${icon('externalLink')}</a>`;
     const root = document.getElementById('schoolPage');
     const id = new URLSearchParams(location.search).get('id') || document.body.dataset.schoolId;
     const staticPage = Boolean(document.body.dataset.schoolId);
+
+    // The data could not be loaded: a message with "Prøv igjen", in place of the loading placeholder. On the
+    // pages under skoler/ the static text about the school comes back under it.
+    function showLoadError() {
+        const message = `<div class="ds-alert load-error" data-color="danger" role="alert">
+                <h2 class="ds-heading" data-size="xs">${t('Kunne ikke laste skolen')}</h2>
+                <p class="ds-paragraph">${t('Sjekk nettforbindelsen og prøv igjen.')}</p>
+                <button type="button" class="ds-button" data-variant="secondary" data-size="sm" id="retryLoad">${t('Prøv igjen')}</button>
+            </div>`;
+        root.removeAttribute('aria-busy');
+        if (staticPage) {
+            root.classList.add('is-fallback');
+            root.insertAdjacentHTML('afterbegin', message);
+        } else {
+            root.innerHTML = message;
+        }
+        document.getElementById('retryLoad').addEventListener('click', () => location.reload());
+    }
 
     const PROFILE_LABEL = {
         montessori: 'Montessori', steiner: 'Steiner', kristen: 'Kristen',
@@ -46,14 +64,18 @@
     // Kommune averages on the national tests, newest year (same Udir files, rows for the whole kommune)
     const kommuneRequest = fetch(I18N.url('static/js/kommunesnitt.json'), { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}));
     try {
-        data = await fetch(I18N.url('static/js/school-data.json'), { cache: 'no-cache' }).then(r => r.json());
+        data = await fetch(I18N.url('static/js/school-data.json'), { cache: 'no-cache' }).then(r => {
+            if (!r.ok) throw new Error(`HTTP ${r.status}`);
+            return r.json();
+        });
     } catch (error) {
-        root.innerHTML = '<p class="ds-paragraph">Kunne ikke laste skoledata. Prøv igjen senere.</p>';
+        showLoadError();
         return;
     }
 
     const school = data.schools.find(s => schoolKey(s) === id);
     if (!school) {
+        root.removeAttribute('aria-busy');
         root.innerHTML = `
             <h1 class="ds-heading" data-size="md">Fant ikke skolen</h1>
             <p class="ds-paragraph">${t('Lenken peker ikke til en skole vi har data for.')} <a class="ds-link" href="${I18N.href('./')}">${t('Gå til kartet')}</a>.</p>`;
@@ -90,8 +112,12 @@
     const detailsRequest = school.orgnr
         ? fetch(I18N.url(`static/data/skoler/${encodeURIComponent(school.orgnr)}.json`), { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({}))
         : Promise.resolve({});
+    // The register is Udir's own server: after 6 seconds the page shows without it (and says so) rather than wait
     const unitRequest = school.orgnr
-        ? fetch(NSR_URL + encodeURIComponent(school.orgnr)).then(r => (r.ok ? r.json() : null)).catch(() => null)
+        ? Promise.race([
+            fetch(NSR_URL + encodeURIComponent(school.orgnr)).then(r => (r.ok ? r.json() : null)).catch(() => null),
+            new Promise(resolve => setTimeout(() => resolve(null), 6000))
+        ])
         : Promise.resolve(null);
 
     const tags = [];
@@ -148,6 +174,10 @@
         showNew ? ['ny-i-norge', 'Ny i Norge'] : null
     ].filter(Boolean);
 
+    // Everything the top of the page needs is loaded first, and the page is drawn once, so the banner does not
+    // grow when the address and links arrive (the loading placeholder holds the place until then)
+    const [details, unit] = await Promise.all([detailsRequest, unitRequest]);
+    root.removeAttribute('aria-busy');
     root.innerHTML = `
         <section class="school-banner" aria-labelledby="schoolName">
             ${saveButtonHtml(schoolKey(school), 'school-banner__save')}
@@ -285,8 +315,6 @@
                 <h2 class="ds-heading" data-size="sm" id="registerHeading">Mer fra skoleregisteret</h2>
                 <div id="registerSections"></div>
             </section>
-
-            <p class="ds-paragraph school-page__sources" data-size="xs">Kilder: nasjonale prøver, Elevundersøkelsen og Nasjonalt skoleregister fra Utdanningsdirektoratet (NLOD). Foto fra Wikimedia Commons med fotografens lisens. Lenker til nettside og sosiale medier er hentet fra skolens egen nettside. <a class="ds-link" href="${I18N.href('datakilder.html')}">Om datakildene</a>.</p>
         </div>`;
 
     showMap(school);
@@ -296,7 +324,6 @@
         updateSaveButton(event.currentTarget, toggleSaved(schoolKey(school)));
     });
     document.getElementById('bannerShare').addEventListener('click', event => shareSchoolPage(school, event.currentTarget));
-    const [details, unit] = await Promise.all([detailsRequest, unitRequest]);
     showSurveyHistory(details.survey || {});
     showComparisons(details.elevundersokelsen);
     document.getElementById('surveyAll').innerHTML = surveyTableHtml(details.elevundersokelsen);
@@ -395,9 +422,9 @@
 
     function credit(photo) {
         const license = photo.licenseUrl
-            ? `<a href="${escapeHtml(photo.licenseUrl)}" target="_blank" rel="noopener">${escapeHtml(photo.license)}</a>`
+            ? `<a href="${escapeHtml(safeUrl(photo.licenseUrl))}" target="_blank" rel="noopener">${escapeHtml(photo.license)}</a>`
             : escapeHtml(photo.license);
-        return `${t('Foto:')} ${escapeHtml(photo.author)} · ${license} · <a href="${escapeHtml(photo.page)}" target="_blank" rel="noopener">Wikimedia Commons</a>`;
+        return `${t('Foto:')} ${escapeHtml(photo.author)} · ${license} · <a href="${escapeHtml(safeUrl(photo.page))}" target="_blank" rel="noopener">Wikimedia Commons</a>`;
     }
 
     function showMedia(gallery) {
@@ -405,7 +432,7 @@
         if (!gallery.length) return;
         const slides = gallery.map((photo, i) => `
             <figure class="carousel__slide" ${i ? 'hidden' : ''} aria-roledescription="bilde" aria-label="${t('{current} av {total}', { current: i + 1, total: gallery.length })}">
-                <img src="${escapeHtml(photo.thumb)}" alt="${t('Foto av {name}', { name: escapeHtml(school.name) })}${photo.title ? `: ${escapeHtml(photo.title)}` : ''}" ${i ? 'loading="lazy"' : ''} decoding="async">
+                <img src="${escapeHtml(safeUrl(photo.thumb))}" alt="${t('Foto av {name}', { name: escapeHtml(school.name) })}${photo.title ? `: ${escapeHtml(photo.title)}` : ''}" ${i ? 'loading="lazy"' : ''} decoding="async">
                 <figcaption>${credit(photo)}</figcaption>
             </figure>`).join('');
         target.innerHTML = gallery.length === 1 ? `<div class="carousel">${slides}</div>` : `
@@ -446,7 +473,7 @@
         const google = googleMapsUrl(addressText || `${school.name}, ${school.kommune}`);
         document.getElementById('bannerGoogle').href = google;
         const action = (href, label, iconName, external) => `<a class="ds-button school-contact__action" data-variant="tertiary" data-size="sm" data-icon="true"
-                href="${escapeHtml(href)}" aria-label="${label}" data-tooltip="${label}"${external ? ' target="_blank" rel="noopener"' : ''}>${icon(iconName)}</a>`;
+                href="${escapeHtml(safeUrl(href))}" aria-label="${label}" data-tooltip="${label}"${external ? ' target="_blank" rel="noopener"' : ''}>${icon(iconName)}</a>`;
         const list = document.getElementById('bannerContactList');
         if (addressText) {
             list.firstElementChild.insertAdjacentHTML('beforeend', action(google, t('Åpne i Google Maps'), 'externalLink', true));
@@ -466,7 +493,7 @@
 
         // The website once, as its address; a registered website that does not answer is named, but not linked
         const contact = website
-            ? `<a class="ds-link" href="${escapeHtml(website)}" target="_blank" rel="noopener">${escapeHtml(website.replace(/^https?:\/\/(www\.)?/i, '').replace(/\/$/, ''))}${icon('externalLink')}</a>`
+            ? `<a class="ds-link" href="${escapeHtml(safeUrl(website))}" target="_blank" rel="noopener">${escapeHtml(website.replace(/^https?:\/\/(www\.)?/i, '').replace(/\/$/, ''))}${icon('externalLink')}</a>`
             : details.websiteBroken ? `<span class="school-banner__muted">${t('Nettsiden svarer ikke')}</span>` : '';
         if (contact) {
             document.getElementById('bannerContactLinks').innerHTML = contact;
@@ -476,7 +503,7 @@
         // Always show Facebook and Instagram, one without an official page as unavailable;
         // Wikipedia only when there is an article
         const social = (url, name, missing) => url
-            ? `<li><a class="social-link" href="${escapeHtml(url)}" target="_blank" rel="noopener"
+            ? `<li><a class="social-link" href="${escapeHtml(safeUrl(url))}" target="_blank" rel="noopener"
                    aria-label="${name}: ${escapeHtml(school.name)}" data-tooltip="${name}">${icon(name.toLowerCase(), 'social-link__icon')}</a></li>`
             // Focusable, so keyboard users also reach the tooltip that says why the icon is greyed out
             : `<li><span class="social-link" tabindex="0" aria-disabled="true" role="img" aria-label="${t('{name}: fant ingen offisiell side', { name })}"
@@ -490,7 +517,7 @@
     // ── Before and after school: AKS in Oslo, SFO elsewhere ─────────────
     function careHtml(details) {
         const website = details.website;
-        const out = (href, label) => `<a class="ds-link" href="${escapeHtml(href)}" target="_blank" rel="noopener">${escapeHtml(label)}${icon('externalLink')}</a>`;
+        const out = (href, label) => `<a class="ds-link" href="${escapeHtml(safeUrl(href))}" target="_blank" rel="noopener">${escapeHtml(label)}${icon('externalLink')}</a>`;
         const general = `<p class="ds-paragraph"><a class="ds-link" href="${I18N.href('skolefritid.html#aks')}">${t('Om AKS i Oslo: søknad, plass og pris')}</a></p>`;
         const aks = details.aks;
         // Long link lists fold away (Designsystemet Details) and open when needed
@@ -671,7 +698,7 @@
                 <span class="icon-tile__label">${tile.label}</span>
                 ${tile.text ? `<span class="icon-tile__text">${tile.text}</span>` : ''}`;
             return `<li>${tile.href
-                ? `<a class="icon-tile" href="${escapeHtml(tile.href)}" target="_blank" rel="noopener">${inner}</a>`
+                ? `<a class="icon-tile" href="${escapeHtml(safeUrl(tile.href))}" target="_blank" rel="noopener">${inner}</a>`
                 : `<div class="icon-tile">${inner}</div>`}</li>`;
         }).join('')}</ul>`;
     }
@@ -681,7 +708,7 @@
         return `
             ${tiles.length ? tilesHtml(tiles) : `<p class="ds-paragraph">${empty}</p>`}
             ${notes.map(note => `<p class="ds-paragraph" data-size="sm">${note}</p>`).join('')}
-            ${more ? `<p class="icon-block__more"><a class="ds-link" href="${escapeHtml(more)}" target="_blank" rel="noopener">${t('Les mer')}${icon('chevronRight')}</a></p>` : ''}
+            ${more ? `<p class="icon-block__more"><a class="ds-link" href="${escapeHtml(safeUrl(more))}" target="_blank" rel="noopener">${t('Les mer')}${icon('chevronRight')}</a></p>` : ''}
             <p class="ds-paragraph school-page__sources section-source" data-size="xs">${t('Kilde:')} ${sources.join('; ')}.</p>`;
     }
 
@@ -791,7 +818,7 @@
             <h3 class="ds-heading" data-size="xs">Trygg skolevei</h3>
             <p class="ds-paragraph">${status}</p>
             <p class="ds-paragraph" data-size="sm">Hjertesone er et samarbeid mellom skolen, FAU, Bymiljøetaten og Trygg Trafikk.
-               <a class="ds-link" href="${escapeHtml(source.source)}" target="_blank" rel="noopener">Les om hjertesoner${icon('externalLink')}</a></p>
+               <a class="ds-link" href="${escapeHtml(safeUrl(source.source))}" target="_blank" rel="noopener">Les om hjertesoner${icon('externalLink')}</a></p>
             ${zone ? `<p class="ds-paragraph school-page__sources section-source" data-size="xs">${t('Kilde: Oslo kommune, liste over hjertesoneskoler, hentet {date}.', { date: date(zone.fetched) })}</p>` : ''}`;
     }
 
@@ -833,7 +860,7 @@
             ? `<a class="ds-link" href="${schoolUrl(entry)}">${escapeHtml(name)}</a>`
             : escapeHtml(name);
         const source = info => `<p class="ds-paragraph school-page__sources section-source" data-size="xs">${t('Kilde: Oslo kommune, Skolekrets ungdomsskole, hentet {date}.', { date: date(info.fetched) })}
-            <a class="source-link" href="${escapeHtml(info.source)}" target="_blank" rel="noopener" aria-label="${t('Kilde:')} Oslo kommune" data-tooltip="Oslo kommune">${icon('externalLink')}</a></p>`;
+            <a class="source-link" href="${escapeHtml(safeUrl(info.source))}" target="_blank" rel="noopener" aria-label="${t('Kilde:')} Oslo kommune" data-tooltip="Oslo kommune">${icon('externalLink')}</a></p>`;
 
         const next = details.nextSchool;
         if (school.schoolType === 'barneskole' && next && !(otherLevel && next.same)) {
@@ -844,7 +871,7 @@
                     ? t('Etter 7. trinn går elevene videre til {first} eller {second}. Det avhenger av hvor eleven bor.', { first: schools.slice(0, -1).join(', '), second: schools[schools.length - 1] })
                     : t('Etter 7. trinn går elevene videre til {school}.', { school: schools[0] });
             showNext('Videre', `<p class="ds-paragraph">${sentence}</p>
-                ${next.boundaryMap ? `<p class="ds-paragraph" data-size="sm"><a class="ds-link" href="${escapeHtml(next.boundaryMap)}" target="_blank" rel="noopener">${t('Se grensekartet')}${icon('externalLink')}</a></p>` : ''}
+                ${next.boundaryMap ? `<p class="ds-paragraph" data-size="sm"><a class="ds-link" href="${escapeHtml(safeUrl(next.boundaryMap))}" target="_blank" rel="noopener">${t('Se grensekartet')}${icon('externalLink')}</a></p>` : ''}
                 ${source(next)}`);
             return;
         }
@@ -1066,7 +1093,7 @@
         if (!walkLayer) drawWalk(null);
         const caption = document.getElementById('kretsCaption');
         caption.innerHTML = `${t('Den stiplede linjen viser skolekretsen ({name}). Pilot på åpne data, kan avvike fra kommunens gjeldende grenser.', { name: escapeHtml(own[0].name) })}
-            ${t('Kilde:')} <a class="ds-link" href="${escapeHtml(info.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(t(info.source))}</a>.
+            ${t('Kilde:')} <a class="ds-link" href="${escapeHtml(safeUrl(info.sourceUrl))}" target="_blank" rel="noopener">${escapeHtml(t(info.source))}</a>.
             <a class="ds-link" href="${I18N.href('om-skolekrets.html')}#pilot">${t('Om skolekretsdataene')}</a>`;
         caption.hidden = false;
     }
@@ -1138,31 +1165,29 @@
         const relations = (unit.ForeldreRelasjoner || []).map(r => [escapeHtml(r.Relasjonstype.Navn), link(r.Enhet.Organisasjonsnummer, r.Enhet.Navn)])
             .concat((unit.BarnRelasjoner || []).map(r => [`${escapeHtml(r.Relasjonstype.Navn)} ${t('(underenhet)')}`, link(r.Enhet.Organisasjonsnummer, r.Enhet.Navn)]));
 
-        // "Om skolen" is a small block of key facts at the top of the page
-        // "Om skolen": key figures in columns (label, big number, short text), as in the Røde Kors
-        // "nøkkeltall" block, built with Designsystemet type and spacing
-        const grades = [unit.SkoletrinnGSFra && { value: `${unit.SkoletrinnGSFra}.–${unit.SkoletrinnGSTil}.`,
-                                                  text: t('Skolen har elever på {from}. til {to}. trinn.', { from: unit.SkoletrinnGSFra, to: unit.SkoletrinnGSTil }) },
-                        unit.SkoletrinnVGSFra && { value: `VGS ${unit.SkoletrinnVGSFra}.–${unit.SkoletrinnVGSTil}.`, text: t('Videregående trinn.') }]
+        // "Om skolen": key figures in columns (label and big number), as in the Røde Kors "nøkkeltall" block,
+        // built with Designsystemet type and spacing. The label says what the number is, so there is no line
+        // under it repeating that; the register's categories ("Grunnskole, Offentlig skole …") repeat the tags
+        // and are in "Mer fra skoleregisteret".
+        const grades = [unit.SkoletrinnGSFra && `${unit.SkoletrinnGSFra}.–${unit.SkoletrinnGSTil}.`,
+                        unit.SkoletrinnVGSFra && `VGS ${unit.SkoletrinnVGSFra}.–${unit.SkoletrinnVGSTil}.`]
             .filter(Boolean);
         const figures = [
-            grades.length ? { label: 'Trinn', value: grades.map(g => g.value).join(', '), text: grades.map(g => g.text).join(' ') } : null,
-            unit.Elevtall ? { label: 'Elever', value: new Intl.NumberFormat(I18N.locale).format(unit.Elevtall), text: t('Elever registrert ved skolen.') } : null,
-            unit.AntallAnsatte ? { label: 'Ansatte', value: new Intl.NumberFormat(I18N.locale).format(unit.AntallAnsatte), text: t('Ansatte registrert ved skolen.') } : null,
-            unit.Maalform ? { label: 'Målform', value: escapeHtml(unit.Maalform.Navn), text: t('Skolens hovedmålform.') } : null
+            grades.length ? { label: 'Trinn', value: grades.join(', ') } : null,
+            unit.Elevtall ? { label: 'Elever', value: new Intl.NumberFormat(I18N.locale).format(unit.Elevtall) } : null,
+            unit.AntallAnsatte ? { label: 'Ansatte', value: new Intl.NumberFormat(I18N.locale).format(unit.AntallAnsatte) } : null,
+            unit.Maalform ? { label: 'Målform', value: escapeHtml(unit.Maalform.Navn) } : null
         ].filter(Boolean);
         const extra = [
             unit.ErSpesialskole ? t('Spesialskole') : null,
             godkjenning,
-            unit.Karakteristikk ? escapeHtml(unit.Karakteristikk) : null,
-            (unit.Skolekategorier || []).map(k => escapeHtml(k.Navn)).join(', ') || null
+            unit.Karakteristikk ? escapeHtml(unit.Karakteristikk) : null
         ].filter(Boolean);
         summary.innerHTML = `
             <dl class="key-figures__grid">${figures.map(f => `
                 <div class="key-figures__item">
                     <dt class="key-figures__label">${t(f.label)}</dt>
                     <dd class="key-figures__value">${f.value}</dd>
-                    <dd class="key-figures__text">${f.text}</dd>
                 </div>`).join('')}
             </dl>
             ${extra.length ? `<p class="ds-paragraph key-figures__extra" data-size="sm">${extra.join(' · ')}</p>` : ''}

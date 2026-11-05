@@ -2,6 +2,9 @@
 <html lang="no" data-color-scheme="light" data-color="brand1">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <!-- Content Security Policy: scripts only from this site and the two CDNs (pinned, with integrity hashes),
+         data only from the services the pages use. GitHub Pages cannot send it as a header. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: blob: https://thumb.wikimedia.org https://upload.wikimedia.org https://tiles.openfreemap.org; font-src 'self' data:; connect-src 'self' https://tiles.openfreemap.org https://ws.geonorge.no https://data-nsr.udir.no https://api.entur.io https://formspree.io; worker-src 'self' blob:; child-src blob:; form-action https://formspree.io; base-uri 'self'; object-src 'none'" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Skoler i Moss – barneskoler og ungdomsskoler | Skolekartet</title>
@@ -19,17 +22,27 @@
     <meta name="twitter:card" content="summary_large_image" />
     <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"CollectionPage","@id":"https://skolekartet.no/skoler/moss/","name":"Skoler i Moss","url":"https://skolekartet.no/skoler/moss/","description":"Oversikt over 20 grunnskoler i Moss: resultater fra nasjonale prøver 2025-26, trivsel og mobbing fra Elevundersøkelsen, og skolene på kart.","mainEntity":{"@type":"ItemList","numberOfItems":20,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://skolekartet.no/skoler/moss/buen-barne-og-ungdomsskole.html","name":"Buen barne- og ungdomsskole"},{"@type":"ListItem","position":2,"url":"https://skolekartet.no/skoler/moss/bytarnet-skole.html","name":"Bytårnet skole"},{"@type":"ListItem","position":3,"url":"https://skolekartet.no/skoler/moss/children-s-international-school-moss-as.html","name":"Children's International School Moss AS"},{"@type":"ListItem","position":4,"url":"https://skolekartet.no/skoler/moss/ekholt-skole.html","name":"Ekholt skole"},{"@type":"ListItem","position":5,"url":"https://skolekartet.no/skoler/moss/halmstad-skole.html","name":"Halmstad skole"},{"@type":"ListItem","position":6,"url":"https://skolekartet.no/skoler/moss/hoppern-skole.html","name":"Hoppern skole"},{"@type":"ListItem","position":7,"url":"https://skolekartet.no/skoler/moss/krapfoss-skole.html","name":"Krapfoss skole"},{"@type":"ListItem","position":8,"url":"https://skolekartet.no/skoler/moss/larkollen-skole.html","name":"Larkollen skole"},{"@type":"ListItem","position":9,"url":"https://skolekartet.no/skoler/moss/mellos-skole.html","name":"Melløs skole"},{"@type":"ListItem","position":10,"url":"https://skolekartet.no/skoler/moss/nokkeland-skole.html","name":"Nøkkeland skole"},{"@type":"ListItem","position":11,"url":"https://skolekartet.no/skoler/moss/ramberg-skole.html","name":"Ramberg skole"},{"@type":"ListItem","position":12,"url":"https://skolekartet.no/skoler/moss/refsnes-skole.html","name":"Refsnes skole"},{"@type":"ListItem","position":13,"url":"https://skolekartet.no/skoler/moss/reier-skole.html","name":"Reier skole"},{"@type":"ListItem","position":14,"url":"https://skolekartet.no/skoler/moss/rygge-ungdomsskole.html","name":"Rygge ungdomsskole"},{"@type":"ListItem","position":15,"url":"https://skolekartet.no/skoler/moss/steinerskolen-i-moss-grunnskole-adm.html","name":"Steinerskolen i Moss Grunnskole/Adm"},{"@type":"ListItem","position":16,"url":"https://skolekartet.no/skoler/moss/torderod-skole-adventistkirkens-grunnskole.html","name":"Torderød skole Adventistkirkens grunnskole"},{"@type":"ListItem","position":17,"url":"https://skolekartet.no/skoler/moss/vang-skole-og-ressurssenter.html","name":"Vang skole og ressurssenter"},{"@type":"ListItem","position":18,"url":"https://skolekartet.no/skoler/moss/verket-skole.html","name":"Verket skole"},{"@type":"ListItem","position":19,"url":"https://skolekartet.no/skoler/moss/oreasen-skole.html","name":"Øreåsen skole"},{"@type":"ListItem","position":20,"url":"https://skolekartet.no/skoler/moss/avangen-skole.html","name":"Åvangen skole"}]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Skolekartet","item":"https://skolekartet.no/"},{"@type":"ListItem","position":2,"name":"Skoler","item":"https://skolekartet.no/skoler/"},{"@type":"ListItem","position":3,"name":"Moss"}]}]}</script>
     <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
+    
+
+    <!-- Map for the school position (same libraries as the main map) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css" integrity="sha384-o/2yZuJZWGJ4s/adjxVW71R+EO/LyCwdQfP5UWSgX/w87iiTXuvDZaejd3TsN7mf" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.css" integrity="sha384-uTttxo/aOKbdE5RlD/SPzSDoDmNvGlUYPjONi2MN/b7c9HPSvW07OIuyP7uL6jxK" crossorigin="anonymous"/>
+    <!-- Deferred: the map libraries (MapLibre is large) load without holding up the page; they run in this
+         order before school-page.js, which is deferred too -->
+    <script defer src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js" integrity="sha384-okbbMvvx/qfQkmiQKfd5VifbKZ/W8p1qIsWvE1ROPUfHWsDcC8/BnHohF7vPg2T6" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.js" integrity="sha384-5+cfbwT0iiub6VsQAdn6yz16nr6sDiQoHx6tm4O8OVYXHYOxcffFmCJBL0dgdvGp" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@maplibre/maplibre-gl-leaflet@0.1.4/leaflet-maplibre-gl.js" integrity="sha384-tXYNKOHx4T02jMP7YYCtBxPIv1B5gaA5mcVPBzqMp6d7VzWzxJgI2aWF/nJLrQdS" crossorigin="anonymous"></script>
 
     <!-- Designsystemet (Digdir): font, theme and component CSS -->
-    <link rel="stylesheet" id="dsTheme" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/theme/designsystemet.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/src/index.css" />
+    <link rel="stylesheet" id="dsTheme" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/theme/designsystemet.css" integrity="sha384-IT4guVJwkq1uL/GwNWhv2zk3uUZ18gRVe1qOVMWTTjaEkDut+i02gT9l/cnPrDSm" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/src/index.css" integrity="sha384-CAE1Qe2Yp1euTdmOujy77VIT0GR/Yu8V+3taPP8Oo7GGV9hrQKrVigMB51hyUKYD" crossorigin="anonymous" />
 
 
-    <link rel="stylesheet" href="../../static/css/styles.css?v=163"/>
+    <link rel="stylesheet" href="../../static/css/styles.css?v=164"/>
 
-    <script src="../../static/js/i18n.js?v=83"></script>
-    <script src="../../static/js/theme.js?v=8"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-web@1.23.0/dist/umd/index.js"></script>
+    <script src="../../static/js/i18n.js?v=84"></script>
+    <script src="../../static/js/theme.js?v=9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-web@1.23.0/dist/umd/index.js" integrity="sha384-gB8nQDA1vTT5N2EUrwILb4EmNquufjYcGqx5Cmce63dC5l/zyDRlxPjzv4/pG6mE" crossorigin="anonymous"></script>
 </head>
 <body>
     <a class="ds-skip-link" href="#main">Hopp til hovedinnhold</a>
@@ -68,6 +81,6 @@
 
     <!-- Footer (shared, see static/js/layout.js) -->
     <div id="site-footer"></div>
-    <script src="../../static/js/shared.js?v=21"></script>
+    <script defer src="../../static/js/shared.js?v=22"></script>
 </body>
 </html>

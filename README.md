@@ -194,6 +194,28 @@ national average), and the card shows each level's snitt under the mean. Each le
 the page says "Barne- og ungdomsskole (1.–10. trinn)" and has a switch between the two levels' results,
 and has no "Videre" for the same school. Missing numbers are shown as "–".
 
+### Security (`Content-Security-Policy`, integrity hashes)
+
+GitHub Pages cannot send security headers, so every page has a `Content-Security-Policy` meta tag: scripts
+only from the site, cdn.jsdelivr.net and cdnjs.cloudflare.com; data only from the services the pages use
+(OpenFreeMap, Geonorge, NSR, Entur, Formspree); images also from Wikimedia. There are no inline scripts or
+`on…=` attributes (JSON-LD blocks are data, not scripts). Every CDN file has an exact version and an
+`integrity` hash (`theme.js` sets the hash of the theme it swaps in). When a CDN version changes, compute the
+new hash, for example `curl -sL <url> | openssl dgst -sha384 -binary | openssl base64 -A`, and update the tags.
+
+Data from outside (school websites, Wikimedia, Wikidata, registers) is put into the page with `escapeHtml`
+(also quotes) and links with `safeUrl` (only http, https, mailto and tel). `site_pages.py` keeps only plain
+web addresses and writes `<` in JSON-LD as `\u003c`. The feedback form has a hidden `_gotcha` field for bots.
+
+### Loading and error states
+
+While the data loads, the map page shows card-sized placeholders in the list and the school page a placeholder
+in the banner's shape (`.skeleton` in `styles.css`), so nothing jumps when the data arrives. The school page is
+drawn once, after the school's detail file and the register entry (at most 6 seconds) have arrived. If the
+data cannot be loaded, a message with "Prøv igjen" shows; on the pages under `skoler/` the static text about
+the school comes back under it. `theme.js` sets `class="js"` on `<html>`, which hides that static text while
+scripts run.
+
 ### Privacy: no analytics, no cookies
 
 Google Analytics (G-HHMNN59GDS) was removed from all pages in November 2026: it set cookies without
@@ -387,7 +409,6 @@ oslo-skoler/
 │   │   ├── school-data.json       # Generated map data (commit this file)
 │   │   ├── main.js                # App logic (search, modals, feedback form)
 │   │   ├── map-init.js            # Leaflet map initialisation
-│   │   └── school-markers.js      # Marker rendering logic
 │   ├── css/styles.css
 │   └── templates/info-modal.html  # Legend, modals, feedback form HTML
 │

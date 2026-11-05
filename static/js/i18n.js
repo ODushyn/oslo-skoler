@@ -224,7 +224,11 @@ const I18N = (() => {
         'Foto:': 'Photo:',
 
         // ── School page ───────────────────────────────────────────────────
-        'Kunne ikke laste skoledata. Prøv igjen senere.': 'Could not load the school data. Please try again later.',
+        'Kunne ikke laste skolen': 'Could not load the school',
+        'Kunne ikke laste skolene': 'Could not load the schools',
+        'Sjekk nettforbindelsen og prøv igjen.': 'Check your internet connection and try again.',
+        'Prøv igjen': 'Try again',
+        'Laster skoler…': 'Loading schools…',
         'Fant ikke skolen': 'School not found',
         'Lenken peker ikke til en skole vi har data for.': 'The link does not point to a school we have data for.',
         'Gå til kartet': 'Go to the map',
@@ -981,7 +985,7 @@ const I18N = (() => {
         'Sender...': 'Sending...',
         'Takk! Meldingen din er sendt.': 'Thank you! Your message has been sent.',
         'Sendt!': 'Sent!',
-        'Noe gikk galt. Prøv igjen eller send e-post direkte.': 'Something went wrong. Please try again or send an e-mail directly.'
+        'Noe gikk galt. Prøv igjen litt senere.': 'Something went wrong. Please try again a little later.'
     };
 
     // The dictionary for the chosen language (null for Norwegian)

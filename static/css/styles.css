@@ -3312,6 +3312,77 @@ body.has-page-feedback {
     flex: 1 1 auto;
 }
 
+/* ── Loading placeholders and error messages ─────────────────────────── */
+/* Grey blocks in the shape of what is coming (the school banner, the school cards), so nothing jumps when
+   the data arrives. They pulse gently, and stand still for those who ask for less motion. */
+.skeleton {
+    display: block;
+    border-radius: var(--ds-border-radius-md);
+    background: var(--ds-color-neutral-surface-active);
+    animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+    50% { opacity: 0.5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .skeleton {
+        animation: none;
+    }
+}
+
+.skeleton--media {
+    aspect-ratio: 4 / 3;
+}
+
+.skeleton-lines {
+    display: grid;
+    gap: var(--ds-size-3);
+}
+
+.skeleton--kicker { width: 45%; height: 0.9rem; }
+.skeleton--title { width: 70%; height: 2.5rem; }
+.skeleton--tag { width: 6rem; height: 1.5rem; }
+.skeleton--text { width: 85%; height: 1rem; }
+.skeleton--short { width: 55%; }
+
+/* The school page: the placeholder while scripts load the data; without scripts (search engines) the static
+   text under skoler/ shows instead. If the data cannot be loaded, the static text comes back (.is-fallback). */
+.page-skeleton,
+.school-page.is-fallback .page-skeleton {
+    display: none;
+}
+
+/* At least a screen tall, so the footer is not in view while loading and then pushed down */
+.js .page-skeleton {
+    display: block;
+    min-height: 100svh;
+}
+
+.js .school-static {
+    display: none;
+}
+
+.js .school-page.is-fallback .school-static {
+    display: block;
+}
+
+/* A card-sized placeholder per school in the list while the schools load */
+.school-list__skeleton {
+    height: 7.5rem;
+    border-radius: var(--ds-border-radius-lg);
+}
+
+/* "Kunne ikke laste …" with "Prøv igjen" */
+.load-error {
+    margin-bottom: var(--ds-size-4);
+}
+
+.load-error .ds-paragraph {
+    margin: var(--ds-size-1) 0 var(--ds-size-3);
+}
+
 /* Pages under skoler/ (site_pages.py): "Skolekartet › Skoler › Oslo › Skolen" above the heading */
 .breadcrumbs ol {
     display: flex;
