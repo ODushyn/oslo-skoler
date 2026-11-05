@@ -196,7 +196,8 @@ and has no "Videre" for the same school. Missing numbers are shown as "–".
 
 GitHub Pages cannot send security headers, so every page has a `Content-Security-Policy` meta tag: scripts
 only from the site, cdn.jsdelivr.net and cdnjs.cloudflare.com; data only from the services the pages use
-(OpenFreeMap, Geonorge, NSR, Entur, Formspree); images also from Wikimedia. There are no inline scripts or
+(OpenFreeMap, Geonorge, NSR, Entur, Formspree) and the two CDNs (browser tools load the scripts' source maps
+from there); images also from Wikimedia. There are no inline scripts or
 `on…=` attributes (JSON-LD blocks are data, not scripts). Every CDN file has an exact version and an
 `integrity` hash (`theme.js` sets the hash of the theme it swaps in). When a CDN version changes, compute the
 new hash, for example `curl -sL <url> | openssl dgst -sha384 -binary | openssl base64 -A`, and update the tags.
@@ -353,6 +354,18 @@ page draws it on its map with the source.
   On phones the header keeps logo, saved schools, theme and language; the info pages are in the footer.
 The address search shows the krets, outlines it on the map and marks the school as "Skolekrets (pilot)".
 A check in the script confirms every matched school lies inside its own krets.
+
+### Filters on phones and the active-filter chips
+
+The filters are a Designsystemet Dialog (full width on phones) with "Vis N skoler", which counts as you choose.
+The filters that are on show as removable chips under the search ("Oslo ✕", "Offentlig ✕", the chosen score
+colours; Trivsel and Mobbing keep their word); a chip's ✕ sets that group back, and with two or more filters
+on, "Fjern alle" after the chips removes them all. The national tests are only in the panel (first, on a
+light green background, with a link to "Om fargefordelingen"); there is no separate button for them. The open panel is a step in the browser's history (`history.pushState`), so the
+phone's back button closes it; closing it any other way takes that step back. On phones the list head (title,
+sort) sticks to the top while the list scrolls, and shows a filter button with the number of filters on once
+the search row (and its chips) is out of view. Below 1280 px "Om fargefordelingen" is in the header as its four
+colour dots.
 
 ### Missing Data Handling
 

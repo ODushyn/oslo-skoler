@@ -379,10 +379,12 @@ main:focus {
     color: var(--ds-color-neutral-text-subtle);
 }
 
+/* "Lagrede skoler", the language and "Meny" with the same space between them */
 .site-nav {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--ds-size-1);
+    align-items: center;
+    gap: var(--ds-size-3);
 }
 
 /* "Om Skolekartet" and "Om fargefordelingen" in the exact middle of the header, whatever the width of the
@@ -407,6 +409,12 @@ main:focus {
     font-weight: var(--ds-font-weight-medium);
     text-decoration: none;
     text-underline-offset: 0.45em;
+}
+
+/* The score colours before "Om fargefordelingen" */
+.site-primary__dots {
+    margin-inline-end: var(--ds-size-2);
+    vertical-align: middle;
 }
 
 .site-primary__link:hover {
@@ -434,9 +442,26 @@ main:focus {
     }
 }
 
+/* Below 1280 px the centred links are hidden: "Om fargefordelingen" stays in the header as its four colour
+   dots (the words are its label and tooltip) */
+.colors-link.ds-button {
+    display: none;
+}
+
+@media (max-width: 1279px) {
+    .colors-link.ds-button {
+        display: inline-flex;
+    }
+
+    .colors-link .score-toggle__dots .color-dot:last-child {
+        margin-inline-end: 0;
+    }
+}
+
 /* ── Search: one row, the select chooses what to search by ─────────── */
+/* The same light green as the national tests group in the filter panel */
 .search-panel {
-    background: var(--ds-color-brand1-background-tinted);
+    background: var(--ds-color-brand1-surface-tinted);
     padding-block: var(--ds-size-8) var(--ds-size-6);
 }
 
@@ -563,8 +588,10 @@ main:focus {
     max-width: 100%;
 }
 
-.search-bar__actions .score-toggle {
-    min-width: 0;
+/* The number of filters on: only on the sticky filter button in the list head (phones), where the chips under
+   the search are out of view; next to the search the chips say it already */
+#filterToggle .ds-badge {
+    display: none;
 }
 
 .filter-toggle .ds-badge {
@@ -654,16 +681,6 @@ main:focus {
 
 .filter-group select {
     min-width: 13rem;
-}
-
-/* "Nullstill filter" sits next to the toggle; it is disabled while no filter is on */
-.filter-reset {
-    flex-shrink: 0;
-}
-
-.filter-reset .ds-icon {
-    width: 1.2em;
-    height: 1.2em;
 }
 
 /* ── Results: list next to the map ──────────────────────────────────── */
@@ -1980,13 +1997,27 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 @media (max-width: 400px) {
     .site-logo {
         gap: var(--ds-size-1);
-        font-size: var(--ds-font-size-4);
+        font-size: var(--ds-font-size-3);
+    }
+
+    /* Room for the colour dots ("Om fargefordelingen") next to the other header buttons */
+    .site-header .site-nav {
+        gap: var(--ds-size-1);
+    }
+
+    .site-nav .colors-link.ds-button {
+        padding-inline: 2px;
+    }
+
+    /* The list title a step smaller, so it stays on one line next to the filter and sort */
+    .results-head #resultsTitle {
+        font-size: var(--ds-font-size-2);
     }
 
     .site-logo__mark svg,
     .site-logo__mark {
-        width: 1.75rem;
-        height: 1.75rem;
+        width: 1.5rem;
+        height: 1.5rem;
     }
 
     .site-nav .ds-button {
@@ -1996,7 +2027,7 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 
 @media (max-width: 640px) {
     .search-panel {
-        padding-block: var(--ds-size-6) var(--ds-size-4);
+        padding-block: var(--ds-size-5) var(--ds-size-4);
     }
 
     /* "Søk på" and the two options on one line, the search field full width below */
@@ -2004,34 +2035,39 @@ button.school-stat[aria-selected="true"] .school-stat__more {
         flex-wrap: wrap;
     }
 
-    .search-bar__field {
+    /* "Søk på" on its own row; the search field and the filter button share the next one */
+    .search-mode {
         flex-basis: 100%;
+    }
+
+    .search-bar__field {
+        flex: 1 1 0;
         min-width: 0;
     }
 
-    /* Phones: "(•) Adresse ( ) Skolenavn" always on one line; "Søk på" is read by screen readers only,
-       the heading above already says what the search is for */
+    /* Phones: "Søk på (•) Adresse ( ) Skolenavn" on one line, close under the heading and above the field;
+       where the words are too long for the screen (Ukrainian on a narrow phone) the options wrap */
     .search-mode {
-        flex-wrap: nowrap;
-        column-gap: var(--ds-size-4);
+        flex-wrap: wrap;
+        gap: var(--ds-size-1) var(--ds-size-3);
+        padding-block: 0;
     }
 
     .search-mode > legend {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        overflow: hidden;
-        clip: rect(0 0 0 0);
+        margin-inline-end: var(--ds-size-1);
         white-space: nowrap;
+    }
+
+    .search-panel .ds-heading {
+        margin-bottom: var(--ds-size-3);
     }
 
     .search-mode .ds-label {
         white-space: nowrap;
     }
 
-    /* Phones: Filter and Nullstill show only their icons (the words stay for screen readers);
-       "Nasjonale prøver" keeps its words */
-    .search-bar :is(.filter-toggle, .filter-reset) .search-bar__label {
+    /* Phones: Filter shows only its icon and count (the word stays for screen readers) */
+    .search-bar .filter-toggle .search-bar__label {
         position: absolute;
         width: 1px;
         height: 1px;
@@ -2040,33 +2076,19 @@ button.school-stat[aria-selected="true"] .school-stat__more {
         white-space: nowrap;
     }
 
-    .score-toggle,
-    .filter-toggle,
-    .filter-reset {
+    .filter-toggle {
         flex: 0 0 auto;
         padding-inline: var(--ds-size-2);
     }
 
-    /* Phones: the three buttons share one row under the field, at its right edge; a long
-       "Nasjonale prøver" (Ukrainian) is cut with "…" rather than pushing "Nullstill" to a new line */
+    /* Phones: the filter button right of the search field, the same height */
     .search-bar__actions {
+        flex: none;
         gap: var(--ds-size-2);
-        margin-left: auto;
     }
 
-    .search-bar__actions .score-toggle {
-        flex: 0 1 auto;
-    }
-
-    .score-toggle .search-bar__label {
-        min-width: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    .score-toggle__dots .color-dot:last-child {
-        margin-inline-end: 0;
+    .search-bar__actions .filter-toggle {
+        min-height: var(--ds-size-12);
     }
 
     .school-stats {
@@ -2129,7 +2151,7 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 @media (max-width: 640px) {
     .site-nav {
         flex-wrap: nowrap;
-        gap: 0;
+        gap: var(--ds-size-2);
     }
 
     .lang-switch.ds-button {
@@ -3306,7 +3328,7 @@ body.has-page-feedback {
 
 /* "Lagrede skoler" in the header: bookmark, label (hidden on phones) and a small count */
 .saved-link.ds-button {
-    gap: var(--ds-size-1);
+    gap: var(--ds-size-2);
 }
 
 .saved-link__count {
@@ -3406,7 +3428,8 @@ body.has-page-feedback {
     margin: var(--ds-size-2) 0 0;
 }
 
-.mini-map .leaflet-control-attribution {
+.mini-map .leaflet-control-attribution,
+#schoolMap .leaflet-control-attribution {
     font-size: var(--ds-font-size-1);
     line-height: 1.3;
 }
@@ -3451,6 +3474,91 @@ body.has-page-feedback {
 @media (max-width: 480px) {
     .school-card__actions > a.ds-button .ds-icon {
         display: none;
+    }
+}
+
+/* ── Active filters as chips under the search (finder.js renderActiveFilters) ── */
+.active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-2);
+    margin: var(--ds-size-3) 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.active-filters[hidden] {
+    display: none;
+}
+
+/* "Fjern alle" after the chips: a quiet text button the height of a chip */
+.active-filters__clear.ds-button {
+    --dsc-button-padding: 0 var(--ds-size-2);
+    min-height: 0;
+    height: 100%;
+    text-decoration: underline;
+}
+
+/* The score chip: the chosen colours before the words */
+.active-filters .ds-chip .color-dot {
+    margin-inline-end: 2px;
+}
+
+/* The filter button in the list head: only on phones, while the search row is out of view */
+.filter-toggle--sticky[hidden] {
+    display: none;
+}
+
+.filter-toggle--sticky .ds-badge {
+    margin-inline-start: var(--ds-size-1);
+}
+
+@media (max-width: 640px) {
+    /* Less space between the search and the list */
+    .results {
+        padding-top: var(--ds-size-2);
+    }
+
+    /* The list head (title, filter, sort) stays at the top of the screen while the list scrolls, low */
+    .results-head {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        margin-inline: calc(-1 * var(--ds-size-4));
+        margin-bottom: var(--ds-size-2);
+        padding: var(--ds-size-1) var(--ds-size-4);
+        background: var(--ds-color-neutral-background-default);
+        box-shadow: 0 1px 0 var(--ds-color-neutral-border-subtle);
+        align-items: center;
+    }
+
+    /* One compact row: the title (it may wrap) on the left, the filter icon and sort on the right */
+    .results-head {
+        flex-wrap: nowrap;
+        column-gap: var(--ds-size-1);
+    }
+
+    .results-head > div:first-child {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    /* Small enough that "Viser 10 av 2 564 skoler" fits on one line next to the filter and sort */
+    .results-head #resultsTitle {
+        font-size: var(--ds-font-size-3);
+    }
+
+    .results-head .filter-toggle--sticky > span:not(.ds-badge) {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+
+    .results-head .results-sort {
+        flex: none;
     }
 }
 
@@ -3697,6 +3805,18 @@ body.has-page-feedback {
     border-top: 1px solid var(--ds-color-neutral-border-subtle);
 }
 
+/* "Nullstill" and "Vis N skoler" share the row; long words (Ukrainian, narrow phones) wrap inside the buttons
+   instead of making the panel wider than the screen */
+.filter-dialog__foot > .ds-button {
+    min-width: 0;
+    white-space: normal;
+    text-align: center;
+}
+
+#filterDone {
+    flex: 1 1 auto;
+}
+
 .filter-dialog .filter-bar {
     flex: 1;
     flex-direction: column;
@@ -3735,7 +3855,7 @@ body.has-page-feedback {
     margin-bottom: var(--ds-size-2);
 }
 
-/* "Nasjonale prøver": a button before "Filter" that opens a row with the result colours under the search */
+/* The four score colours as small dots in a row (before "Om fargefordelingen" in the header) */
 .score-toggle__dots {
     display: inline-flex;
 }
@@ -3750,47 +3870,34 @@ body.has-page-feedback {
     margin-inline-end: var(--ds-size-1);
 }
 
-.score-toggle[aria-expanded="true"],
-.score-toggle[data-active] {
+/* The national tests group in the filter panel: the site's main measure, on the theme's light green */
+.filter-group--main.ds-fieldset {
+    box-sizing: border-box; /* the padding inside its width, so the panel does not scroll sideways on phones */
+    padding: var(--ds-size-4);
+    border-radius: var(--ds-border-radius-lg);
     background: var(--ds-color-brand1-surface-tinted);
 }
 
-.score-bar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--ds-size-2) var(--ds-size-5);
-    margin: var(--ds-size-6) 0 0;
-    padding: 0;
-    border: 0;
-}
-
-.score-bar[hidden] {
-    display: none;
-}
-
-.score-bar > legend {
+/* A fieldset draws its legend on its top edge, so the green would start halfway down the heading; floated,
+   the legend sits inside the green box like the rest */
+.filter-group--main.ds-fieldset > legend {
     float: left;
-    margin: 0;
-    padding: 0;
-    font-weight: var(--ds-font-weight-medium);
-    color: var(--ds-color-brand1-text-subtle); /* the same colour as the sort button ("Nærmest") */
+    width: 100%;
+    margin-bottom: var(--ds-size-2);
 }
 
-.ds-fieldset.score-bar > * + * {
-    margin: 0;
+.filter-group--main.ds-fieldset > legend + * {
+    clear: both;
 }
 
-/* "Snitt nasjonale prøver ↗": the same external-link icon as on other links; the page that explains the
-   colours opens in a new tab, so the filters stay as they are */
-.score-bar > legend {
+/* "Om fargefordelingen ↗" under the national tests choices in the filter panel */
+.filter-more {
+    margin: var(--ds-size-2) 0 0;
+}
+
+.filter-more .ds-link {
     display: inline-flex;
     align-items: center;
     gap: var(--ds-size-1);
-}
-
-.score-bar__info.ds-button {
-    margin-block: calc(-1 * var(--ds-size-2));
-    color: inherit;
 }
 
