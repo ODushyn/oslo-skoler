@@ -1701,7 +1701,8 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 }
 
 /* Worse than the whole country, in the tables on the school page: Designsystemet's danger colour, bold, and
-   (Trivsel and Mobbing) a red "Under landet" tag; a short legend under each table says what red means */
+   (Trivsel and Mobbing) a red "Under landet" tag; a short legend under each table says what red means there
+   (lower than the national average; for mobbing higher) */
 .stat-worse {
     color: var(--ds-color-danger-text-default);
     font-weight: var(--ds-font-weight-semibold);

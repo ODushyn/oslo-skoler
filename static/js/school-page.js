@@ -57,8 +57,16 @@
         const [a, b] = [Math.round(v * 10), Math.round(n * 10)];
         return better === 'higher' ? a < b : a > b;
     };
-    const worse = (text, bad) => (bad ? `<span class="stat-worse">${text}<span class="ds-sr-only"> (${t('dårligere enn landet')})</span></span>` : text);
-    const worseLegend = () => `<p class="ds-paragraph table-caption stat-worse-legend" data-size="xs"><span class="stat-worse-legend__dot" aria-hidden="true"></span>${t('Rødt betyr dårligere enn hele landet.')}</p>`;
+    const worse = (text, bad, better = 'higher') => (bad
+        ? `<span class="stat-worse">${text}<span class="ds-sr-only"> (${t(better === 'higher' ? 'lavere enn landsgjennomsnittet' : 'høyere enn landsgjennomsnittet')})</span></span>`
+        : text);
+    // The legend under a table: what red means there (`better`: 'higher', 'lower' for mobbing, 'both' for the survey table)
+    const LEGEND = {
+        higher: 'Rødt betyr lavere enn landsgjennomsnittet.',
+        lower: 'Rødt betyr høyere enn landsgjennomsnittet.',
+        both: 'Rødt betyr lavere enn landsgjennomsnittet, for mobbing høyere.'
+    };
+    const worseLegend = (better = 'higher') => `<p class="ds-paragraph table-caption stat-worse-legend" data-size="xs"><span class="stat-worse-legend__dot" aria-hidden="true"></span>${t(LEGEND[better])}</p>`;
     const average = values => {
         const valid = values.filter(v => v !== null && v !== undefined);
         return valid.length ? valid.reduce((a, b) => a + b, 0) / valid.length : null;
@@ -463,7 +471,7 @@
                 <div class="table-scroll">
                     <table class="ds-table school-history" data-size="sm" data-border>
                         <thead><tr><th>År</th><th class="num">Skolen</th><th class="num">Hele landet</th><th>Sammenlignet</th></tr></thead>
-                        <tbody>${rows.map(r => `<tr><td>${escapeHtml(r.year)}</td><td class="num"><strong>${worse(fmt(r.value), isWorse(r.value, r.national, better))}</strong></td>
+                        <tbody>${rows.map(r => `<tr><td>${escapeHtml(r.year)}</td><td class="num"><strong>${worse(fmt(r.value), isWorse(r.value, r.national, better), better)}</strong></td>
                             <td class="num">${fmt(r.national)}</td><td>${compare(r.value, r.national)}</td></tr>`).join('')}</tbody>
                     </table>
                 </div>`;
@@ -477,7 +485,7 @@
             <h3 class="ds-heading" data-size="xs">Mobbing over tid</h3>
             ${table('mobbing', 'Mobbing', I18N.isEnglish ? '%' : '&nbsp;%', 'lower')}
             <p class="ds-paragraph table-caption" data-size="xs">${t('Andel elever på {trinn}. trinn som er blitt mobbet to eller tre ganger i måneden eller oftere. År som mangler, er ikke publisert av Udir, ofte fordi for få svarte. Landsgjennomsnittet steg mye fra 2022–23 til 2023–24, og fra 2023–24 publiserer Udir tall for langt flere skoler. Sammenlign derfor helst år fra 2023–24 og senere.', { trinn })}</p>
-            ${worseLegend()}`;
+            ${worseLegend('lower')}`;
     }
 
     // ── Banner: photos, address and links ──────────────────────────────
@@ -713,7 +721,7 @@
             return `<tr>
                 <th scope="row">${t(survey.labels[key])}</th>
                 ${years.map(y => `<td class="num">${y in byYear
-                    ? worse(fmt(key, byYear[y].value), isWorse(byYear[y].value, byYear[y].national, key === 'mobbing' ? 'lower' : 'higher'))
+                    ? worse(fmt(key, byYear[y].value), isWorse(byYear[y].value, byYear[y].national, key === 'mobbing' ? 'lower' : 'higher'), key === 'mobbing' ? 'lower' : 'higher')
                     : '–'}</td>`).join('')}
                 <td>${sparkline(years.map(y => (byYear[y] ? byYear[y].value : null)))}</td>
                 <td class="num">${fmt(key, last.kommune)}</td>
@@ -733,7 +741,7 @@
                     </table>
                 </div>
                 <p class="ds-paragraph table-caption" data-size="xs">${t('* betyr at Udir har skjult tallet, ofte fordi for få elever svarte. – betyr at skolen ikke har tall det året.')}</p>
-                ${worseLegend()}
+                ${worseLegend('both')}
             </div>`;
     }
 
