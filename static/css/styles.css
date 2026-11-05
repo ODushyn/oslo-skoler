@@ -3288,15 +3288,11 @@ body.has-page-feedback {
     display: none;
 }
 
-/* The small map inside an open card: a row of its own between "Les mer om skolen" and "Skjul kartet",
-   with a smaller attribution line so it does not cover the map */
-.school-card__actions > .map-slot {
-    flex-basis: 100%;
-}
-
+/* The small map inside an open card, above the buttons, with a smaller attribution line so it does not
+   cover the map */
 .school-card__details .mini-map {
     height: 16rem;
-    margin: 0;
+    margin: var(--ds-size-2) 0 0;
 }
 
 .mini-map .leaflet-control-attribution {
@@ -3324,16 +3320,29 @@ body.has-page-feedback {
     margin: var(--ds-size-2) 0 0;
 }
 
-/* Side by side when they fit, otherwise one full-width button per row */
+/* One row: "Vis på kartet" a third of the width, "Les mer om skolen" two thirds. A long label wraps
+   inside its button rather than pushing the other off the row. */
 .school-card__actions {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     gap: var(--ds-size-2);
     margin-top: var(--ds-size-2);
 }
 
 .school-card__actions > .ds-button {
-    flex: 1 1 auto;
+    --dsc-button-padding: var(--ds-size-2);
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    white-space: normal;
+    text-align: center;
+}
+
+/* Narrow phones: the map button without its pin, so its words have the whole third */
+@media (max-width: 480px) {
+    .school-card__map .ds-icon {
+        display: none;
+    }
 }
 
 /* ── Loading placeholders and error messages ─────────────────────────── */

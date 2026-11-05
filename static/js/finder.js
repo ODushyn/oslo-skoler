@@ -792,8 +792,8 @@ const Finder = (() => {
                 ${levels}
                 ${schoolPhotoHtml(entry.school, 'popup-photo school-card__photo')}
                 <div class="school-card__actions">
-                    <a class="ds-button" data-variant="primary" data-size="sm" href="${schoolUrl(entry.school)}"><span>${t('Les mer om skolen')}</span>${icon('arrowRight')}</a>
                     <button type="button" class="ds-button school-card__map" data-variant="secondary" data-size="sm" aria-expanded="false">${icon('locationPin')}<span>${t('Vis på kartet')}</span></button>
+                    <a class="ds-button" data-variant="primary" data-size="sm" href="${schoolUrl(entry.school)}"><span>${t('Les mer om skolen')}</span>${icon('arrowRight')}</a>
                 </div>
             </div>`;
     }
@@ -864,8 +864,8 @@ const Finder = (() => {
 
     // ── Phones: only the list; a tapped school opens under itself ──
     // The big map stays out of sight (it still decides which schools the list shows). A tapped card opens
-    // with what the map popup would show and two buttons: "Vis på kartet" (a small map inside the card, between
-    // the buttons, centred on the school without its popup since the card already says it all, with the other
+    // with what the map popup would show and two buttons in one row: "Vis på kartet" (a small map inside the card,
+    // above the buttons, centred on the school without its popup since the card already says it all, with the other
     // schools around it as on the big map) and "Les mer om skolen". One
     // card is open at a time: tapping another opens that one and closes the first, tapping the same card
     // closes it. The tapped card keeps its place on the screen (no jump when a card above it closes), and
@@ -979,14 +979,14 @@ const Finder = (() => {
         if (!anchor || !entry) return;
         const before = anchor.getBoundingClientRect().top;
         closeMiniMap();
-        // An open card: the map opens between its buttons, under "Les mer om skolen" and above "Skjul kartet";
+        // An open card: the map opens inside it, above the row of buttons ("Skjul kartet" right under the map);
         // elsewhere right after `anchor`
-        const mapButton = anchor.matches(ITEM) ? anchor.querySelector('.school-card__map') : null;
-        const slot = document.createElement(!mapButton && anchor.tagName === 'LI' ? 'li' : 'div');
+        const actions = anchor.matches(ITEM) ? anchor.querySelector('.school-card__actions') : null;
+        const slot = document.createElement(!actions && anchor.tagName === 'LI' ? 'li' : 'div');
         slot.id = 'mapSlot';
         slot.className = 'map-slot';
         slot.innerHTML = '<div class="mini-map"></div>';
-        if (mapButton) mapButton.before(slot);
+        if (actions) actions.before(slot);
         else anchor.after(slot);
         if (keepPlace) window.scrollBy(0, anchor.getBoundingClientRect().top - before);
 
