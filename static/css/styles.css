@@ -3139,16 +3139,30 @@ body.has-page-feedback {
         grid-row: auto;
     }
 
-    /* Address, e-mail and phone: the text on the left, the action icons in one column at the right edge */
-    .school-contact li {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        column-gap: var(--ds-size-3);
+    /* Address, e-mail and phone: the texts on the left, the action icons in one column on their right, right
+       after the longest text (the rows share the list's two columns through subgrid) */
+    .school-contact {
+        grid-template-columns: minmax(0, max-content) auto;
+        column-gap: var(--ds-size-2);
     }
 
-    /* "Del" and "Google Maps": their icons line up with the text above (the buttons' own padding pulled back) */
+    .school-contact li {
+        display: grid;
+        grid-column: 1 / -1;
+        grid-template-columns: subgrid;
+    }
+
+    /* "Følg skolen" and "Del · Google Maps" centred under the contact details */
+    #bannerFollow {
+        text-align: center;
+    }
+
+    #bannerFollow .social-links,
     .school-banner__actions {
-        margin-inline-start: calc(-1 * var(--ds-size-2));
+        justify-content: center;
+    }
+
+    .school-banner__actions {
         gap: var(--ds-size-2);
     }
 
