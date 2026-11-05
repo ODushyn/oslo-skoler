@@ -50,6 +50,15 @@
         'osm-nominatim': 'OpenStreetMap'
     };
     const score = v => (v === null || v === undefined ? '*' : v);
+    // A value worse than the whole country (as shown, to one decimal): red and bold in the tables, with the
+    // words for screen readers, since colour alone does not say it. `better`: 'higher' or 'lower' (mobbing).
+    const isWorse = (v, n, better = 'higher') => {
+        if (v === null || v === undefined || n === null || n === undefined) return false;
+        const [a, b] = [Math.round(v * 10), Math.round(n * 10)];
+        return better === 'higher' ? a < b : a > b;
+    };
+    const worse = (text, bad) => (bad ? `<span class="stat-worse">${text}<span class="ds-sr-only"> (${t('dårligere enn landet')})</span></span>` : text);
+    const worseLegend = () => `<p class="ds-paragraph table-caption stat-worse-legend" data-size="xs"><span class="stat-worse-legend__dot" aria-hidden="true"></span>${t('Rødt betyr dårligere enn hele landet.')}</p>`;
     const average = values => {
         const valid = values.filter(v => v !== null && v !== undefined);
         return valid.length ? valid.reduce((a, b) => a + b, 0) / valid.length : null;
@@ -154,7 +163,7 @@
             const avg = average([r.engelsk, r.lesing, r.regning]);
             const national = (nationalByYear[r.year] || {}).snitt;
             return `<tr><td>${escapeHtml(r.year)}</td><td class="num">${score(r.engelsk)}</td><td class="num">${score(r.lesing)}</td>
-                    <td class="num">${score(r.regning)}</td><td class="num"><strong>${avg === null ? '*' : formatDecimal(avg)}</strong></td>
+                    <td class="num">${score(r.regning)}</td><td class="num"><strong>${avg === null ? '*' : worse(formatDecimal(avg), isWorse(avg, national))}</strong></td>
                     <td class="num">${national === undefined || national === null ? '–' : formatDecimal(national)}</td></tr>`;
         }).join('');
 
@@ -255,6 +264,7 @@
                         </table>
                     </div>
                     <p class="ds-paragraph table-caption" data-size="xs">${t('Skalapoeng, {type}. Landsgjennomsnittet var 50 i 2022. * betyr at resultatet ikke er publisert. Resultater for 2026–27 kommer når Udir publiserer dem.', { type: typeLabel.toLowerCase() })}</p>
+                    ${worseLegend()}
                 </div>
                 <div class="stat-panel" role="tabpanel" id="panel-trivsel" aria-labelledby="tab-trivsel" tabindex="0" hidden>
                     <p class="ds-paragraph">Henter tall…</p>
@@ -443,14 +453,17 @@
             const fmt = v => (v === null || v === undefined ? '*' : `${formatDecimal(v)}${unit}`);
             const compare = (v, n) => {
                 if (n === null || n === undefined || v === n) return '<span class="stat-compare">Som landet</span>';
-                const good = better === 'higher' ? v > n : v < n;
-                return `<span class="stat-compare" data-good="${good}">${v > n ? 'Over' : 'Under'} landet</span>`;
+                const word = `${v > n ? 'Over' : 'Under'} landet`;
+                // Worse than the country: a red Designsystemet tag; better: green text
+                return isWorse(v, n, better)
+                    ? `<span class="ds-tag stat-compare-tag" data-color="danger" data-size="sm">${word}</span>`
+                    : `<span class="stat-compare" data-good="true">${word}</span>`;
             };
             return `
                 <div class="table-scroll">
                     <table class="ds-table school-history" data-size="sm" data-border>
                         <thead><tr><th>År</th><th class="num">Skolen</th><th class="num">Hele landet</th><th>Sammenlignet</th></tr></thead>
-                        <tbody>${rows.map(r => `<tr><td>${escapeHtml(r.year)}</td><td class="num"><strong>${fmt(r.value)}</strong></td>
+                        <tbody>${rows.map(r => `<tr><td>${escapeHtml(r.year)}</td><td class="num"><strong>${worse(fmt(r.value), isWorse(r.value, r.national, better))}</strong></td>
                             <td class="num">${fmt(r.national)}</td><td>${compare(r.value, r.national)}</td></tr>`).join('')}</tbody>
                     </table>
                 </div>`;
@@ -458,11 +471,13 @@
         document.getElementById('panel-trivsel').innerHTML = `
             <h3 class="ds-heading" data-size="xs">Trivsel over tid</h3>
             ${table('trivsel', 'Trivsel', '', 'higher')}
-            <p class="ds-paragraph table-caption" data-size="xs">${t('Gjennomsnittlig svar på «Trives du på skolen?» på en skala fra 1 til 5, {trinn}. trinn. År som mangler, er ikke publisert av Udir.', { trinn })}</p>`;
+            <p class="ds-paragraph table-caption" data-size="xs">${t('Gjennomsnittlig svar på «Trives du på skolen?» på en skala fra 1 til 5, {trinn}. trinn. År som mangler, er ikke publisert av Udir.', { trinn })}</p>
+            ${worseLegend()}`;
         document.getElementById('panel-mobbing').innerHTML = `
             <h3 class="ds-heading" data-size="xs">Mobbing over tid</h3>
             ${table('mobbing', 'Mobbing', I18N.isEnglish ? '%' : '&nbsp;%', 'lower')}
-            <p class="ds-paragraph table-caption" data-size="xs">${t('Andel elever på {trinn}. trinn som er blitt mobbet to eller tre ganger i måneden eller oftere. År som mangler, er ikke publisert av Udir, ofte fordi for få svarte. Landsgjennomsnittet steg mye fra 2022–23 til 2023–24, og fra 2023–24 publiserer Udir tall for langt flere skoler. Sammenlign derfor helst år fra 2023–24 og senere.', { trinn })}</p>`;
+            <p class="ds-paragraph table-caption" data-size="xs">${t('Andel elever på {trinn}. trinn som er blitt mobbet to eller tre ganger i måneden eller oftere. År som mangler, er ikke publisert av Udir, ofte fordi for få svarte. Landsgjennomsnittet steg mye fra 2022–23 til 2023–24, og fra 2023–24 publiserer Udir tall for langt flere skoler. Sammenlign derfor helst år fra 2023–24 og senere.', { trinn })}</p>
+            ${worseLegend()}`;
     }
 
     // ── Banner: photos, address and links ──────────────────────────────
@@ -697,7 +712,9 @@
             const last = byYear[latest] || entries[entries.length - 1];
             return `<tr>
                 <th scope="row">${t(survey.labels[key])}</th>
-                ${years.map(y => `<td class="num">${y in byYear ? fmt(key, byYear[y].value) : '–'}</td>`).join('')}
+                ${years.map(y => `<td class="num">${y in byYear
+                    ? worse(fmt(key, byYear[y].value), isWorse(byYear[y].value, byYear[y].national, key === 'mobbing' ? 'lower' : 'higher'))
+                    : '–'}</td>`).join('')}
                 <td>${sparkline(years.map(y => (byYear[y] ? byYear[y].value : null)))}</td>
                 <td class="num">${fmt(key, last.kommune)}</td>
                 <td class="num">${fmt(key, last.national)}</td>
@@ -716,6 +733,7 @@
                     </table>
                 </div>
                 <p class="ds-paragraph table-caption" data-size="xs">${t('* betyr at Udir har skjult tallet, ofte fordi for få elever svarte. – betyr at skolen ikke har tall det året.')}</p>
+                ${worseLegend()}
             </div>`;
     }
 

@@ -1700,6 +1700,32 @@ button.school-stat[aria-selected="true"] .school-stat__more {
     color: var(--ds-color-danger-text-default);
 }
 
+/* Worse than the whole country, in the tables on the school page: Designsystemet's danger colour, bold, and
+   (Trivsel and Mobbing) a red "Under landet" tag; a short legend under each table says what red means */
+.stat-worse {
+    color: var(--ds-color-danger-text-default);
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.stat-compare-tag.ds-tag {
+    font-weight: var(--ds-font-weight-medium, 500);
+    white-space: nowrap;
+}
+
+.stat-worse-legend {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-size-2);
+}
+
+.stat-worse-legend__dot {
+    flex: none;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background: var(--ds-color-danger-base-default);
+}
+
 @media (prefers-reduced-motion: reduce) {
     button.school-stat.ds-card { transition: none; }
 }

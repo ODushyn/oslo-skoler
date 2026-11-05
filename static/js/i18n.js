@@ -282,6 +282,8 @@ const I18N = (() => {
         'AKS-sidene på skolens nettside, lest {date}': 'the after-school pages on the school’s website, read {date}',
         'Én gang i uken': 'Once a week',
         'Lagre til senere': 'Save for later',
+        'dårligere enn landet': 'worse than the country',
+        'Rødt betyr dårligere enn hele landet.': 'Red means worse than the whole country.',
         'Skoler etter kommune': 'Schools by municipality',
         'Nasjonale prøver {year}': 'National tests {year}',
         'Skjul kartet': 'Hide the map',

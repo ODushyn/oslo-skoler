@@ -199,6 +199,8 @@ window.I18N_UK = {
     "AKS-sidene på skolens nettside, lest {date}": "сторінки AKS на вебсайті школи, прочитано {date}",
     "Én gang i uken": "Раз на тиждень",
     "Lagre til senere": "Зберегти на потім",
+    "dårligere enn landet": "гірше, ніж по країні",
+    "Rødt betyr dårligere enn hele landet.": "Червоним позначено гірше, ніж по всій країні.",
     "Skoler etter kommune": "Школи за комунами",
     "Nasjonale prøver {year}": "Національні тести {year}",
     "Skjul kartet": "Сховати карту",
