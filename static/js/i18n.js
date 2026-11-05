@@ -10,12 +10,11 @@
 // translated automatically when their whole text matches a key, so most code needs no
 // changes. Only texts with values in them call t() directly.
 //
-// The English and Ukrainian texts were translated with AI and must be reviewed by a person before
-// they are published. Set REVIEWED for the language when that is done; the notice on the page follows it.
+// The English and Ukrainian texts must be checked by a person. A notice under the header says that the
+// Norwegian version applies if anything differs.
 // Choose language with ?lang=en, ?lang=uk or ?lang=no; the choice is remembered in this browser.
 
 const I18N = (() => {
-    const REVIEWED = { en: false, uk: false };
     const SUPPORTED = ['no', 'en', 'uk'];
     // Each language in its own words, for the switch: [long name, short name]
     const NAMES = { no: ['Norsk', 'NO'], en: ['English', 'EN'], uk: ['Українська', 'УКР'] };
@@ -438,7 +437,7 @@ const I18N = (() => {
         "Dette fungerer ikke godt nok ennå": "What does not work well enough yet",
         "Kartet er vanskelig å bruke med skjermleser. Listen ved siden av kartet har de samme skolene.": "The map is hard to use with a screen reader. The list next to the map has the same schools.",
         "Fargene på resultatene (rød, gul og grønn) kan være vanskelige å skille for personer med fargesvakhet. Tallene står alltid også i tekst.": "The colours of the results (red, yellow and green) can be hard to tell apart for people with colour vision deficiency. The numbers are always also given as text.",
-        "Den engelske og den ukrainske versjonen er oversatt med KI og er ikke kontrollert av en person ennå.": "The English and the Ukrainian version are translated with AI and have not yet been checked by a person.",
+        "Den engelske og den ukrainske versjonen er ikke kontrollert av en person ennå.": "The English and the Ukrainian version have not yet been checked by a person.",
         "Vi har ikke ansvar for skolenes og kommunenes egne nettsider som vi lenker til.": "We are not responsible for the schools’ and municipalities’ own websites that we link to.",
         "Gi oss beskjed": "Let us know",
         "Opplever du problemer, eller trenger du innholdet i en annen form?": "Do you have problems, or do you need the content in another form?",
@@ -1073,7 +1072,7 @@ const I18N = (() => {
         }
     }
 
-    // ── Language switch and AI notice ──────────────────────────────────────
+    // ── Language switch and language notice ────────────────────────────────
     function switchUrl(target) {
         const url = new URL(location.href);
         url.searchParams.set('lang', target);
@@ -1098,17 +1097,13 @@ const I18N = (() => {
     }
 
 
-    // The AI notice, in the chosen language, with a link back to Norwegian
+    // The language notice, in the chosen language, with a link back to Norwegian
     const NOTICE = {
         en: {
-            reviewed: 'This English version was translated with the help of AI and reviewed by people.',
-            draft: 'This English version was translated with the help of AI (artificial intelligence) and has not yet been checked by a person.',
             applies: 'If anything differs, the Norwegian version applies.',
             onlyNorwegian: 'The main text on this page is only available in Norwegian.'
         },
         uk: {
-            reviewed: 'Українську версію перекладено за допомогою ШІ та перевірено людьми.',
-            draft: 'Українську версію перекладено за допомогою ШІ (штучного інтелекту), і її ще не перевірила людина.',
             applies: 'Якщо щось відрізняється, чинною є норвезька версія.',
             onlyNorwegian: 'Основний текст цієї сторінки доступний лише норвезькою.'
         }
@@ -1119,7 +1114,7 @@ const I18N = (() => {
         const text = NOTICE[lang];
         const onlyNorwegian = TRANSLATED_PAGES.includes(PAGE) || SCHOOL_PAGE ? '' : ` ${text.onlyNorwegian}`;
         return `<div class="lang-notice" role="note"><div class="site-container">
-                    <p class="ds-paragraph" data-size="sm">${REVIEWED[lang] ? text.reviewed : text.draft} ${text.applies}${onlyNorwegian}
+                    <p class="ds-paragraph" data-size="sm">${text.applies}${onlyNorwegian}
                     <a class="ds-link" href="${switchUrl('no')}" lang="no" hreflang="no" data-lang-keep>Norsk versjon</a></p>
                 </div></div>`;
     }

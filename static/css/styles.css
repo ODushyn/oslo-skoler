@@ -2027,7 +2027,7 @@ button.school-stat[aria-selected="true"] .school-stat__more {
     font-weight: var(--ds-font-weight-semibold);
 }
 
-/* Notice that the English version is an AI translation */
+/* Notice under the header on the English and Ukrainian pages: the Norwegian version applies */
 .lang-notice {
     padding-block: var(--ds-size-2);
     background: var(--ds-color-warning-surface-tinted);

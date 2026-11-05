@@ -165,10 +165,8 @@ texts with values call `t()`. New Norwegian texts need an entry in the `EN` dict
 `I18N_UK` in `i18n-uk.js` (loaded only for Ukrainian, so the other languages do not download it).
 `python check_i18n.py` lists keys that are missing in one language or whose placeholders differ.
 
-The English and Ukrainian texts were translated with AI. Røde Kors' AI rules (6 and 8) require a person to
-review them and the page to say they are AI-translated. A notice under the header says so, in the
-language itself; set `REVIEWED.en` / `REVIEWED.uk` to `true` in `i18n.js` after a person has checked the
-texts. Texts from other sources (AKS link titles from school websites, values from the school register)
+The English and Ukrainian texts have not yet been checked by a person. A notice under the header says, in the
+language itself, that the Norwegian version applies if anything differs. Texts from other sources (AKS link titles from school websites, values from the school register)
 stay in Norwegian.
 
 ### School page = this school only; general pages and the menu

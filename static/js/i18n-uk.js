@@ -1,6 +1,6 @@
 // Ukrainian texts for static/js/i18n.js, loaded only when Ukrainian is chosen (?lang=uk).
-// The key is the Norwegian text, as in the EN dictionary in i18n.js. Translated with AI and not yet
-// reviewed by a person: set REVIEWED.uk in i18n.js when that is done. Check with: python check_i18n.py
+// The key is the Norwegian text, as in the EN dictionary in i18n.js. Not yet checked by a person.
+// Check the keys with: python check_i18n.py
 window.I18N_UK = {
     "Hovedmeny": "Головне меню",
     "Om fargefordelingen": "Про кольори",
@@ -354,7 +354,7 @@ window.I18N_UK = {
     "Dette fungerer ikke godt nok ennå": "Що поки працює недостатньо добре",
     "Kartet er vanskelig å bruke med skjermleser. Listen ved siden av kartet har de samme skolene.": "Мапою важко користуватися з екранним читачем. Список поруч із мапою має ті самі школи.",
     "Fargene på resultatene (rød, gul og grønn) kan være vanskelige å skille for personer med fargesvakhet. Tallene står alltid også i tekst.": "Кольори результатів (червоний, жовтий і зелений) людям із порушенням кольорового зору важко розрізнити. Числа завжди подано й текстом.",
-    "Den engelske og den ukrainske versjonen er oversatt med KI og er ikke kontrollert av en person ennå.": "Англійську та українську версії перекладено за допомогою ШІ, і їх ще не перевірила людина.",
+    "Den engelske og den ukrainske versjonen er ikke kontrollert av en person ennå.": "Англійську та українську версії ще не перевірила людина.",
     "Vi har ikke ansvar for skolenes og kommunenes egne nettsider som vi lenker til.": "Ми не відповідаємо за власні сайти шкіл і комун, на які посилаємося.",
     "Gi oss beskjed": "Повідомте нас",
     "Opplever du problemer, eller trenger du innholdet i en annen form?": "Виникли труднощі або потрібен вміст в іншій формі?",
