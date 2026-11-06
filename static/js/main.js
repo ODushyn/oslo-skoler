@@ -5,104 +5,13 @@
 let schoolsData = [];
 let schoolMarkers = new Map(); // Map of school unique key (name + kommune) -> marker
 
-// ── Legend & modal helpers (must be global for inline onclick handlers) ───────
-function legendOpen() {
-    const panel = document.getElementById('legendExpanded');
-    const btn = document.getElementById('legendCollapsed');
-    if (panel.style.display === 'block') {
-        legendClose();
-        return;
-    }
-    panel.style.display = 'block';
-    btn.style.backgroundColor = '#357ae8';
-
-    // Close when clicking outside
-    setTimeout(() => {
-        document.addEventListener('click', _legendOutsideHandler);
-    }, 0);
-}
-function legendClose() {
-    const panel = document.getElementById('legendExpanded');
-    const btn = document.getElementById('legendCollapsed');
-    panel.style.display = 'none';
-    btn.style.backgroundColor = '#4285f4';
-    document.removeEventListener('click', _legendOutsideHandler);
-}
-function _legendOutsideHandler(e) {
-    const box = document.getElementById('legendBox');
-    if (box && !box.contains(e.target)) {
-        legendClose();
-    }
-}
-function openModal(id) {
-    document.getElementById(id).classList.add('is-open');
-}
-function closeModal(id) {
-    document.getElementById(id).classList.remove('is-open');
-}
-
-// ── Feedback form handler ─────────────────────────────────────────────────────
-async function handleFeedbackSubmit(event) {
-    event.preventDefault();
-    const form = document.getElementById('feedbackForm');
-    const btn = document.getElementById('feedbackSubmitBtn');
-    const status = document.getElementById('feedbackStatus');
-
-    btn.disabled = true;
-    btn.textContent = 'Sender...';
-    status.style.display = 'none';
-
-    try {
-        const response = await fetch(form.action, {
-            method: 'POST',
-            body: new FormData(form),
-            headers: { 'Accept': 'application/json' }
-        });
-
-        if (response.ok) {
-            status.style.display = 'block';
-            status.style.backgroundColor = '#e6f4ea';
-            status.style.color = '#1e7e34';
-            status.textContent = '✓ Takk! Meldingen din er sendt.';
-            form.reset();
-            btn.textContent = 'Sendt!';
-        } else {
-            throw new Error('server error');
-        }
-    } catch (_) {
-        status.style.display = 'block';
-        status.style.backgroundColor = '#fdecea';
-        status.style.color = '#c62828';
-        status.textContent = '✗ Noe gikk galt. Prøv igjen eller send e-post direkte.';
-        btn.disabled = false;
-        btn.textContent = 'Send melding';
-    }
-}
-
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Initializing map application...');
-
-    // Load UI components (info modal and legend)
-    loadUIComponents();
-
     // Initialize the map
     const { map, markerCluster } = initMap();
 
     // Load school data from JSON and add markers
     loadSchoolData(map, markerCluster);
 });
-
-// Load UI components from external HTML
-function loadUIComponents() {
-    fetch('static/templates/info-modal.html', { cache: 'no-cache' })
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById('ui-components').innerHTML = html;
-        })
-        .catch(error => {
-            console.error('Error loading UI components:', error);
-        });
-}
 
 // Load school data from JSON file and create markers
 function loadSchoolData(map, markerCluster) {
@@ -114,12 +23,11 @@ function loadSchoolData(map, markerCluster) {
             return response.json();
         })
         .then(data => {
-            console.log(`Loaded data for ${data.schools.length} schools`);
-
             // Store the current year globally so popups can display it
             if (data.metadata && data.metadata.currentYear) {
                 window.SCHOOL_DATA_YEAR = data.metadata.currentYear;
             }
+            if (data.metadata) setDataTooltips(data.metadata);
 
             // Store schools data globally for search
             schoolsData = data.schools;
@@ -129,308 +37,210 @@ function loadSchoolData(map, markerCluster) {
                 map.setView(data.mapConfig.center, data.mapConfig.zoom);
             }
 
-            // Create markers for each school
-            createSchoolMarkers(data.schools, markerCluster);
+            // Create markers for each school; Finder adds the ones that pass the filters
+            const entries = createSchoolMarkers(data.schools);
 
             // Add the marker cluster to the map
             markerCluster.addTo(map);
 
-            // Initialize search functionality
-            initializeSearch(map, markerCluster);
-
-            console.log('✓ Map initialized successfully!');
+            // Filters, the search (addresses, schools, kommuner, postnummer) and the school list
+            Finder.init(map, markerCluster, entries);
         })
         .catch(error => {
-            console.error('Error loading school data:', error);
-            alert('Failed to load school data. Please ensure school-data.json exists.');
+            console.error('Could not load school-data.json:', error);
+            showLoadError();
         });
 }
 
-// Create markers for all schools
-function createSchoolMarkers(schools, markerCluster) {
-    schools.forEach(school => {
-        const marker = createSchoolMarker(school);
-        marker.addTo(markerCluster);
+// The schools could not be loaded: a message with "Prøv igjen" where the list would be
+function showLoadError() {
+    const list = document.getElementById('schoolList');
+    document.getElementById('listLoading')?.remove();
+    list.removeAttribute('aria-busy');
+    list.innerHTML = '';
+    list.insertAdjacentHTML('beforebegin', `<div class="ds-alert load-error" data-color="danger" role="alert">
+            <h2 class="ds-heading" data-size="xs">${t('Kunne ikke laste skolene')}</h2>
+            <p class="ds-paragraph">${t('Sjekk nettforbindelsen og prøv igjen.')}</p>
+            <button type="button" class="ds-button" data-variant="secondary" data-size="sm" id="retryLoad">${t('Prøv igjen')}</button>
+        </div>`);
+    document.getElementById('retryLoad').addEventListener('click', () => location.reload());
+}
 
-        // Store marker reference for search using unique key (name + kommune)
-        const uniqueKey = `${school.name}|${school.kommune}`;
-        schoolMarkers.set(uniqueKey, { marker: marker, school: school });
+// Create markers for all schools (not added to the map here).
+// A school with both levels (1.–10. trinn) is in the data twice, once per level, with the same name,
+// kommune and place. It becomes ONE entry and one marker: the barneskole record is the main one,
+// `levels` has both, and `keys` both page keys (each level keeps its own school page).
+function createSchoolMarkers(schools) {
+    const byPlace = new Map();
+    schools.forEach(school => {
+        const place = `${school.name}|${school.kommune}`;
+        if (!byPlace.has(place)) byPlace.set(place, []);
+        byPlace.get(place).push(school);
+    });
+
+    return [...byPlace.values()].map(group => {
+        const levels = group.slice().sort((a, b) => (a.schoolType === 'barneskole' ? -1 : 1) - (b.schoolType === 'barneskole' ? -1 : 1));
+        const school = levels[0];
+        const marker = levels.length > 1 ? createCombinedMarker(levels) : createSchoolMarker(school);
+        const keys = levels.map(schoolKey);
+        const entry = { key: keys[0], keys, school, levels, marker };
+        keys.forEach(key => schoolMarkers.set(key, { marker, school }));
+        return entry;
     });
 }
 
 // Create a single school marker
-// Icon design:
-// - Barnaskole (5th grade): Small building with flag (30x30 pixels)
-// - Ungdomskole (secondary): Larger/taller building icon (40x40 pixels)
+// Icon design: a round badge in the score colour with an Aksel icon:
+// a backpack for barneskole and a school hat for ungdomsskole.
+// - Barneskole (5th grade): 30x30 pixels
+// - Ungdomsskole (secondary): 40x40 pixels
 function createSchoolMarker(school) {
-    const popupContent = createPopupContent(school);
-
-    // Determine icon size based on school type
     const isUngdomsskole = school.schoolType === 'ungdomsskole';
-    const iconSize = isUngdomsskole ? 40 : 30;
-    const iconAnchor = iconSize / 2;
+    const size = isUngdomsskole ? 40 : 30;
+    const half = size / 2;
 
-    // Create custom school icon with SVG
     const schoolIcon = L.divIcon({
-        html: `
-            <svg width="${iconSize}" height="${iconSize}" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <!-- School building with flag -->
-                <g>
-                    <!-- Building -->
-                    <rect x="4" y="10" width="16" height="12" fill="${school.color}" stroke="#fff" stroke-width="1.2"/>
-                    <!-- Roof -->
-                    <path d="M2 10 L12 4 L22 10 Z" fill="${school.color}" stroke="#fff" stroke-width="1.2"/>
-                    <!-- Door -->
-                    <rect x="10" y="16" width="4" height="6" fill="#fff" opacity="0.4"/>
-                    <!-- Windows -->
-                    <rect x="6" y="12" width="2.5" height="2.5" fill="#fff" opacity="0.5"/>
-                    <rect x="15.5" y="12" width="2.5" height="2.5" fill="#fff" opacity="0.5"/>
-                    <!-- Flag pole -->
-                    <line x1="12" y1="4" x2="12" y2="1" stroke="#fff" stroke-width="0.8"/>
-                    <!-- Flag -->
-                    <path d="M12 1 L16 2.5 L12 4 Z" fill="#fff" opacity="0.7"/>
-                </g>
-            </svg>
-        `,
+        html: `<span class="school-marker score-${scoreCategory(school.color)}">${schoolTypeIcon(school.schoolType)}</span>`,
         className: `school-marker-icon ${isUngdomsskole ? 'ungdomsskole-icon' : 'barnaskole-icon'}`,
-        iconSize: [iconSize, iconSize],
-        iconAnchor: [iconAnchor, iconAnchor],
-        popupAnchor: [0, -iconAnchor]
+        iconSize: [size, size],
+        iconAnchor: [half, half],
+        popupAnchor: [0, -half]
     });
+    return bindSchoolPopup(L.marker([school.lat, school.lng], {
+        icon: schoolIcon,
+        title: `${school.name}, ${SCHOOL_TYPE_LABEL[school.schoolType] || school.schoolType}`
+    }), [school]);
+}
 
-    const marker = L.marker(
-        [school.lat, school.lng],
-        {
-            icon: schoolIcon
+// A school with 1.–10. trinn: one marker, the backpack and the hat side by side, each in the colour
+// of that level's result, so it is clear the school is both and how each level does
+function createCombinedMarker(levels) {
+    const [barne, ungdom] = levels;
+    const icon = L.divIcon({
+        html: `<span class="school-marker-pair">
+                   <span class="school-marker score-${scoreCategory(barne.color)}">${schoolTypeIcon('barneskole')}</span>
+                   <span class="school-marker score-${scoreCategory(ungdom.color)}">${schoolTypeIcon('ungdomsskole')}</span>
+               </span>`,
+        className: 'school-marker-icon combined-icon',
+        iconSize: [74, 40],
+        iconAnchor: [37, 20],
+        popupAnchor: [0, -20]
+    });
+    return bindSchoolPopup(L.marker([barne.lat, barne.lng], {
+        icon,
+        title: `${barne.name}, ${t('Barne- og ungdomsskole (1.–10. trinn)')}`
+    }), levels);
+}
+
+function bindSchoolPopup(marker, levels) {
+    const school = levels[0];
+    marker.bindPopup(() => {
+        // Build the popup once, on first open, and keep the same element: Leaflet's
+        // update() would otherwise re-insert the HTML and collapse an opened Historikk.
+        if (!marker._popupElement) {
+            const wrapper = document.createElement('div');
+            wrapper.innerHTML = createPopupContent(levels).trim();
+            marker._popupElement = wrapper.firstElementChild;
         }
-    ).bindPopup(popupContent, {
+        return marker._popupElement;
+    }, {
         maxWidth: 320
     });
 
     // Add school data to marker for later retrieval
     marker.schoolData = school;
+    marker.schoolLevels = levels;
     // Store color for cluster calculations
     marker.options.fillColor = school.color;
-
     return marker;
 }
 
-// Create popup content for a school
-function createPopupContent(school) {
+// Popup content for a school (Designsystemet heading, tag, paragraphs); a school with both levels
+// gets one block per level, as the national tests are taken on 5. trinn and on ungdomstrinnet
+function createPopupContent(levels) {
+    const school = levels[0];
+    const combined = levels.length > 1;
     const formatScore = (score) => (score === null || score === undefined) ? '*' : score;
+    const typeLabel = combined ? t('Barne- og ungdomsskole (1.–10. trinn)') : (SCHOOL_TYPE_LABEL[school.schoolType] || school.schoolType);
 
-    const currentScores = school.hasData
-        ? `<b>Engelsk:</b> ${formatScore(school.engelsk)}&nbsp;&nbsp;
-           <b>Lesing:</b> ${formatScore(school.lesing)}&nbsp;&nbsp;
-           <b>Regning:</b> ${formatScore(school.regning)}<br>
-           <b>Snitt:</b> ${school.average.toFixed(1)} <small>(${school.validScoresCount} fag)</small>`
-        : `<b>Engelsk:</b> *&nbsp;&nbsp;<b>Lesing:</b> *&nbsp;&nbsp;<b>Regning:</b> *<br>
-           <i style="color:#888">Ingen data tilgjengelig</i>`;
+    const levelHtml = level => {
+        const subjects = level.hasData
+            ? t('Engelsk {engelsk} · Lesing {lesing} · Regning {regning}', { engelsk: formatScore(level.engelsk), lesing: formatScore(level.lesing), regning: formatScore(level.regning) })
+            : 'Ingen resultater publisert';
+        // Snitt and Trivsel on one row; a missing value is a dash
+        const snitt = level.hasData
+            ? `<strong>Snitt</strong> ${formatDecimal(level.average)} <small>${t('({count} fag)', { count: level.validScoresCount })}</small>`
+            : '<strong>Snitt</strong> –';
+        const trivsel = level.trivsel
+            ? `<strong>Trivsel</strong> ${formatDecimal(level.trivsel.score)} <small>${t('({trinn}. trinn)', { trinn: level.trivsel.trinn })}</small>`
+            : '<strong>Trivsel</strong> –';
+        const mobbing = level.mobbing
+            ? `<strong>Mobbing</strong> ${formatPercent(level.mobbing.share)} <small>${t('(landet {value})', { value: formatPercent(level.mobbing.national) })}</small>`
+            : '<strong>Mobbing</strong> –';
+        return `${combined ? `<p class="ds-paragraph popup-level" data-size="xs"><span class="school-marker score-${scoreCategory(level.color)}" aria-hidden="true">${schoolTypeIcon(level.schoolType)}</span>${t(level.schoolType === 'barneskole' ? '5. trinn' : 'Ungdomstrinnet')}</p>` : ''}
+            <p class="ds-paragraph popup-subjects" data-size="sm">${subjects}</p>
+            <p class="ds-paragraph popup-stats" data-size="sm">${snitt} · ${trivsel}<br>${mobbing}</p>`;
+    };
 
-    let historyHtml = '';
-    if (school.history && school.history.length > 0) {
-        const rows = [...school.history].reverse().map(h => {
-            const scores = [h.engelsk, h.lesing, h.regning].filter(s => s !== null && s !== undefined);
-            const avg = scores.length > 0 ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : '*';
-            return `<tr>
-                <td>${h.year}</td>
-                <td>${formatScore(h.engelsk)}</td>
-                <td>${formatScore(h.lesing)}</td>
-                <td>${formatScore(h.regning)}</td>
-                <td>${avg}</td>
-            </tr>`;
-        }).join('');
-
-        historyHtml = `
-            <div class="popup-history">
-                <b>Historikk</b>
-                <table class="popup-history-table">
-                    <thead>
-                        <tr><th>År</th><th>Eng</th><th>Les</th><th>Reg</th><th>Snitt</th></tr>
-                    </thead>
-                    <tbody>${rows}</tbody>
-                </table>
-            </div>`;
-    }
+    const yearTag = window.SCHOOL_DATA_YEAR
+        ? `<span class="ds-tag" data-color="neutral" data-size="sm">${window.SCHOOL_DATA_YEAR}</span>`
+        : '';
 
     return `
         <div class="popup-school">
             <div class="popup-header">
-                <span class="popup-name">${school.name}</span>
-                <span class="popup-year">${window.SCHOOL_DATA_YEAR || ''}</span>
+                <h3 class="ds-heading popup-name" data-size="2xs">${escapeHtml(school.name)}</h3>
+                ${yearTag}
             </div>
-            <div class="popup-kommune">${school.kommune}</div>
-            <div class="popup-current">${currentScores}</div>
-            ${historyHtml}
+            <p class="ds-paragraph popup-kommune" data-size="xs">${escapeHtml(school.kommune)} · ${typeLabel}${school.eierform === 'privat' ? ` · ${t('Privat')}` : ''}</p>
+            ${levels.map(levelHtml).join('')}
+            ${schoolPhotoHtml(school, 'popup-photo')}
+            <p class="ds-paragraph popup-more" data-size="sm">
+                <a class="ds-link popup-more__link" href="${schoolUrl(school)}">Les mer om skolen${icon('arrowRight')}</a>
+            </p>
         </div>`;
 }
 
-// Initialize search functionality
-function initializeSearch(map, markerCluster) {
-    const searchInput = document.getElementById('schoolSearch');
-    const searchResults = document.getElementById('searchResults');
-    const clearButton = document.getElementById('clearSearch');
+// Find schools whose name (or kommune) matches the query, best matches first:
+// name starts with query, name contains query, then kommune matches.
+function findSchools(query) {
+    const q = query.toLocaleLowerCase('nb');
+    const rank = school => {
+        const name = school.name.toLocaleLowerCase('nb');
+        if (name.startsWith(q)) return 0;
+        if (name.includes(q)) return 1;
+        if (school.kommune.toLocaleLowerCase('nb').includes(q)) return 2;
+        return -1;
+    };
 
-    if (!searchInput || !searchResults || !clearButton) {
-        console.warn('Search elements not found, retrying in 100ms...');
-        setTimeout(() => initializeSearch(map, markerCluster), 100);
-        return;
-    }
-
-    // Handle input changes
-    searchInput.addEventListener('input', function() {
-        const query = this.value.trim();
-
-        // Show/hide clear button
-        if (query.length > 0) {
-            clearButton.classList.add('visible');
-        } else {
-            clearButton.classList.remove('visible');
-        }
-
-        // Perform search if query has at least 2 characters
-        if (query.length >= 2) {
-            performSearch(query, searchResults, map, markerCluster);
-        } else {
-            searchResults.classList.remove('visible');
-            searchResults.innerHTML = '';
-        }
-    });
-
-    // Handle clear button click
-    clearButton.addEventListener('click', function() {
-        searchInput.value = '';
-        clearButton.classList.remove('visible');
-        searchResults.classList.remove('visible');
-        searchResults.innerHTML = '';
-        searchInput.focus();
-    });
-
-    // Close search results when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.search-container')) {
-            searchResults.classList.remove('visible');
-        }
-    });
-
-    // Show results when clicking on search input if there's a query
-    searchInput.addEventListener('click', function() {
-        if (this.value.trim().length >= 2) {
-            searchResults.classList.add('visible');
-        }
-    });
+    return schoolsData
+        .map(school => ({ school, rank: rank(school) }))
+        .filter(item => item.rank >= 0)
+        .sort((a, b) => a.rank - b.rank
+            || a.school.name.localeCompare(b.school.name, 'nb')
+            || a.school.schoolType.localeCompare(b.school.schoolType))
+        .map(item => item.school);
 }
 
-// Perform search and display results
-function performSearch(query, resultsContainer, map, markerCluster) {
-    const queryLower = query.toLowerCase();
-
-    // Filter schools that match the query
-    const matchingSchools = schoolsData.filter(school =>
-        school.name.toLowerCase().includes(queryLower)
-    );
-
-    // Sort by relevance (starts with query first, then contains)
-    matchingSchools.sort((a, b) => {
-        const aStartsWith = a.name.toLowerCase().startsWith(queryLower);
-        const bStartsWith = b.name.toLowerCase().startsWith(queryLower);
-
-        if (aStartsWith && !bStartsWith) return -1;
-        if (!aStartsWith && bStartsWith) return 1;
-        return a.name.localeCompare(b.name);
-    });
-
-    // Display results
-    if (matchingSchools.length > 0) {
-        const maxResults = 10;
-        const resultsToShow = matchingSchools.slice(0, maxResults);
-
-        resultsContainer.innerHTML = resultsToShow.map(school => {
-            const highlightedName = highlightMatch(school.name, query);
-            return `
-                <div class="search-result-item" data-school-name="${escapeHtml(school.name)}" data-school-kommune="${escapeHtml(school.kommune)}">
-                    <div class="search-result-name">${highlightedName}</div>
-                    <div class="search-result-kommune">${escapeHtml(school.kommune)}</div>
-                </div>
-            `;
-        }).join('');
-
-        // Add more results indicator if needed
-        if (matchingSchools.length > maxResults) {
-            resultsContainer.innerHTML += `
-                <div class="no-results" style="font-style: normal; font-size: 12px;">
-                    Viser ${maxResults} av ${matchingSchools.length} resultater
-                </div>
-            `;
-        }
-
-        // Add click handlers to result items
-        resultsContainer.querySelectorAll('.search-result-item').forEach(item => {
-            item.addEventListener('click', function() {
-                const schoolName = this.getAttribute('data-school-name');
-                const schoolKommune = this.getAttribute('data-school-kommune');
-                zoomToSchool(schoolName, schoolKommune, map, markerCluster);
-                resultsContainer.classList.remove('visible');
-
-                // Optionally clear the search input
-                const searchInput = document.getElementById('schoolSearch');
-                const clearButton = document.getElementById('clearSearch');
-                if (searchInput) {
-                    searchInput.value = '';
-                    clearButton.classList.remove('visible');
-                }
-            });
-        });
-
-        resultsContainer.classList.add('visible');
-    } else {
-        resultsContainer.innerHTML = '<div class="no-results">Ingen skoler funnet</div>';
-        resultsContainer.classList.add('visible');
+// The list opens on key presses; text that is pasted (or typed by an input
+// method without key events) would otherwise leave it closed.
+function openSuggestions(list, inputId) {
+    const input = document.getElementById(inputId);
+    if (list.hidden && document.activeElement === input) {
+        input.click(); // the combobox opens its list when the input is clicked
     }
 }
 
-// Highlight matching text in school name
+// Highlight matching text
 function highlightMatch(text, query) {
     const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
-    return escapeHtml(text).replace(regex, '<span class="search-result-highlight">$1</span>');
+    return escapeHtml(text).replace(regex, '<mark class="search-result-highlight">$1</mark>');
 }
 
-// Escape HTML special characters
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
-
-// Escape special regex characters
-function escapeRegex(text) {
-    return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-// Zoom to a specific school on the map
-function zoomToSchool(schoolName, schoolKommune, map, markerCluster) {
-    // Find the marker in the cluster by school name AND kommune
-    let targetMarker = null;
-    const allMarkers = markerCluster.getLayers();
-
-    for (let i = 0; i < allMarkers.length; i++) {
-        const marker = allMarkers[i];
-        if (marker.schoolData &&
-            marker.schoolData.name === schoolName &&
-            marker.schoolData.kommune === schoolKommune) {
-            targetMarker = marker;
-            break;
-        }
-    }
-
-    if (!targetMarker) {
-        console.error('Marker not found for school:', schoolName, 'in kommune:', schoolKommune);
-        return;
-    }
-
+// Zoom to a school marker and open its popup
+function zoomToMarker(targetMarker, map, markerCluster) {
     const school = targetMarker.schoolData;
 
-    // Zoom to school location
     map.setView([school.lat, school.lng], 15, {
         animate: true,
         duration: 0.8
@@ -444,8 +254,34 @@ function zoomToSchool(schoolName, schoolKommune, map, markerCluster) {
                 targetMarker.openPopup();
             });
         } else {
-            // Marker is visible, open popup directly
             targetMarker.openPopup();
         }
     }, 1000);
+}
+
+// The year and the national averages in the filter tooltips come from the data, so they stay right
+// when the daily refresh (update_data.py) loads new numbers
+function setDataTooltips(metadata) {
+    const year = value => String(value).replace('-', '–');
+    const snitt = document.getElementById('snittHelp');
+    if (snitt && metadata.currentYear) {
+        snitt.dataset.tooltip = t('Snittet er gjennomsnittet av skolens skalapoeng i engelsk, lesing og regning på nasjonale prøver {year}. Fag uten publisert resultat telles ikke med. Skalaen er satt slik at landsgjennomsnittet var 50 i 2022.',
+            { year: year(metadata.currentYear) });
+    }
+    const mobbing = document.getElementById('mobbingHelp');
+    if (mobbing && metadata.mobbing) {
+        const percent = value => formatPercent(value).replace('&nbsp;', '\u00a0');
+        mobbing.dataset.tooltip = t('Andelen elever som svarer at de er blitt mobbet to eller tre ganger i måneden eller oftere, av andre elever, digitalt eller av voksne på skolen. Elevundersøkelsen {year}, 7. trinn for barneskoler og 10. trinn for ungdomsskoler. Landsgjennomsnittet er {barne} på 7. trinn og {ungdom} på 10. trinn. Små grupper er skjult av Udir.',
+            { year: year(metadata.mobbing.year), barne: percent(metadata.mobbing.national['7']), ungdom: percent(metadata.mobbing.national['10']) });
+    }
+    const laerer = document.getElementById('laererHelp');
+    if (laerer && metadata.gsi && metadata.gsi.laerertetthet) {
+        laerer.dataset.tooltip = t('Antall elever per lærer i ordinær undervisning, fra Grunnskolens informasjonssystem (GSI) {year}. Lavere tall betyr flere lærere per elev. 5.–7. trinn for barneskoler og 8.–10. trinn for ungdomsskoler. Landsgjennomsnittet er {barne} på 5.–7. trinn og {ungdom} på 8.–10. trinn.',
+            { year: year(metadata.gsi.year), barne: formatDecimal(metadata.gsi.laerertetthet['5-7']), ungdom: formatDecimal(metadata.gsi.laerertetthet['8-10']) });
+    }
+    const norsk = document.getElementById('norskHelp');
+    if (norsk && metadata.gsi && metadata.gsi.norsk !== null && metadata.gsi.norsk !== undefined) {
+        norsk.dataset.tooltip = t('Andelen elever ved skolen som får forsterket opplæring i norsk, fra Grunnskolens informasjonssystem (GSI) {year}. Landsgjennomsnittet er {value}.',
+            { year: year(metadata.gsi.year), value: formatPercent(metadata.gsi.norsk).replace('&nbsp;', '\u00a0') });
+    }
 }

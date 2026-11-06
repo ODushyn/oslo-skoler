@@ -1,0 +1,1061 @@
+{
+"source": "https://www.oslo.kommune.no/skole-og-utdanning/skoleoversikt-og-skolekrets/skolekrets-ungdomsskole/",
+"fetched": "2026-11-02",
+"schools": {
+"874589802": {
+"next": [
+{
+"name": "Sofienberg skole",
+"orgnr": "912187071"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"874589942": {
+"next": [
+{
+"name": "Øraker skole",
+"orgnr": "974590638"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"874590002": {
+"next": [
+{
+"name": "Manglerud skole",
+"orgnr": "874590002"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"874590142": {
+"next": [
+{
+"name": "Skullerud skole",
+"orgnr": "979126352"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"874590282": {
+"next": [
+{
+"name": "Haugerud skole",
+"orgnr": "974590557"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"874590452": {
+"next": [
+{
+"name": "Granstangen skole",
+"orgnr": "913511085"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"879126312": {
+"next": [
+{
+"name": "Sofienberg skole",
+"orgnr": "912187071"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"879128072": {
+"next": [
+{
+"name": "Morellbakken skole",
+"orgnr": "998469635"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"912033333": {
+"next": [
+{
+"name": "Årvoll skole",
+"orgnr": "974590395"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"912697711": {
+"next": [
+{
+"name": "Voldsløkka skole",
+"orgnr": "929177525"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"913579321": {
+"next": [
+{
+"name": "Teglverket skole",
+"orgnr": "913579321"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"916203993": {
+"next": [
+{
+"name": "Bentsebrua skole",
+"orgnr": "931816314"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"916513968": {
+"next": [
+{
+"name": "Brynseng skole",
+"orgnr": "916513968"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"917526427": {
+"next": [
+{
+"name": "Midtstuen skole",
+"orgnr": "974590808"
+},
+{
+"name": "Hovseter skole",
+"orgnr": "874590592"
+}
+],
+"same": false,
+"boundaryMap": "https://www.oslo.kommune.no/get-file/603228/42e62166ced050e40b04926f4e33aa9b28e593435b373b0a197e25ecac5b8e0b"
+},
+"918399267": {
+"next": [
+{
+"name": "Vollebekk skole",
+"orgnr": "918399267"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"973626442": {
+"next": [
+{
+"name": "Jordal skole",
+"orgnr": "880954342"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"973626450": {
+"next": [
+{
+"name": "Holmlia skole",
+"orgnr": "874589772"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589648": {
+"next": [
+{
+"name": "Abildsø skole",
+"orgnr": "974589648"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"974589656": {
+"next": [
+{
+"name": "Apalløkka skole",
+"orgnr": "982254701"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589664": {
+"next": [
+{
+"name": "Brannfjell skole",
+"orgnr": "974590581"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589672": {
+"next": [
+{
+"name": "Øraker skole",
+"orgnr": "974590638"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589680": {
+"next": [
+{
+"name": "Voldsløkka skole",
+"orgnr": "929177525"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589699": {
+"next": [
+{
+"name": "Midtstuen skole",
+"orgnr": "974590808"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589702": {
+"next": [
+{
+"name": "Fagerborg skole",
+"orgnr": "913511204"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589710": {
+"next": [
+{
+"name": "Brynseng skole",
+"orgnr": null
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589729": {
+"next": [
+{
+"name": "Ruseløkka skole",
+"orgnr": "974590131"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589737": {
+"next": [
+{
+"name": "Bøler skole",
+"orgnr": "974589737"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"974589745": {
+"next": [
+{
+"name": "Brannfjell skole",
+"orgnr": "974590581"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589753": {
+"next": [
+{
+"name": "Ellingsrud skole",
+"orgnr": "974590530"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589761": {
+"next": [
+{
+"name": "Granstangen skole",
+"orgnr": "913511085"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589788": {
+"next": [
+{
+"name": "Morellbakken skole",
+"orgnr": "998469635"
+},
+{
+"name": "Engebråten skole",
+"orgnr": "979127642"
+}
+],
+"same": false,
+"boundaryMap": "https://www.oslo.kommune.no/get-file/603229/32ce64c45c693aeae3b59dac52f92e7b30ec8ef3e6a48e3c1a2f721b7f460531"
+},
+"974589796": {
+"next": [
+{
+"name": "Groruddalen skole",
+"orgnr": "979125917"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589818": {
+"next": [
+{
+"name": "Brynseng skole",
+"orgnr": null
+},
+{
+"name": "Teglverket skole",
+"orgnr": "913579321"
+}
+],
+"same": false,
+"boundaryMap": "https://www.oslo.kommune.no/get-image/1964505/0/0/0/8b95567f950a57141281429f1ee7be5c1102ad58b11b492922d6025afaa1b125"
+},
+"974589834": {
+"next": [
+{
+"name": "Hovseter skole",
+"orgnr": "874590592"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589842": {
+"next": [
+{
+"name": "Stasjonsfjellet skole",
+"orgnr": "974590646"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589850": {
+"next": [
+{
+"name": "Høyenhall skole",
+"orgnr": "974589850"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"974589869": {
+"next": [
+{
+"name": "Fagerborg skole",
+"orgnr": "913511204"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589877": {
+"next": [
+{
+"name": "Jordal skole",
+"orgnr": "880954342"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589893": {
+"next": [
+{
+"name": "Engebråten skole",
+"orgnr": "979127642"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589907": {
+"next": [
+{
+"name": "Lofsrud skole",
+"orgnr": "974590794"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589915": {
+"next": [
+{
+"name": "Engebråten skole",
+"orgnr": "979127642"
+},
+{
+"name": "Nordberg skole",
+"orgnr": "979120087"
+}
+],
+"same": false,
+"boundaryMap": "https://www.oslo.kommune.no/get-file/603230/c179edf2dbac1e766f4274b55565b230873f04c47b0222572d127c915fd86322"
+},
+"974589923": {
+"next": [
+{
+"name": "Sofienberg skole",
+"orgnr": "912187071"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589931": {
+"next": [
+{
+"name": "Lambertseter skole",
+"orgnr": "974589931"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"974589958": {
+"next": [
+{
+"name": "Bentsebrua skole",
+"orgnr": "931816314"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589966": {
+"next": [
+{
+"name": "Linderud skole",
+"orgnr": "974589966"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"974589974": {
+"next": [
+{
+"name": "Nordstrand ungdomsskole",
+"orgnr": "926000705"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589982": {
+"next": [
+{
+"name": "Frydenberg skole",
+"orgnr": "996377210"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974589990": {
+"next": [
+{
+"name": "Majorstuen skole",
+"orgnr": "974589990"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"974590018": {
+"next": [
+{
+"name": "Engebråten skole",
+"orgnr": "979127642"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590026": {
+"next": [
+{
+"name": "Marienlyst skole",
+"orgnr": "974590026"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"974590034": {
+"next": [
+{
+"name": "Nordseter skole",
+"orgnr": "974590611"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590050": {
+"next": [
+{
+"name": "Holmlia skole",
+"orgnr": "874589772"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590069": {
+"next": [
+{
+"name": "Nordstrand ungdomsskole",
+"orgnr": "926000705"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590077": {
+"next": [
+{
+"name": "Groruddalen skole",
+"orgnr": "979125917"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590085": {
+"next": [
+{
+"name": "Skullerud skole",
+"orgnr": "979126352"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590093": {
+"next": [
+{
+"name": "Oppsal skole",
+"orgnr": "974590093"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"974590107": {
+"next": [
+{
+"name": "Hauketo skole",
+"orgnr": "974590565"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590115": {
+"next": [
+{
+"name": "Rommen skole",
+"orgnr": "974590115"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"974590123": {
+"next": [
+{
+"name": "Bjøråsen skole",
+"orgnr": "974590441"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590131": {
+"next": [
+{
+"name": "Ruseløkka skole",
+"orgnr": "974590131"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"974590158": {
+"next": [
+{
+"name": "Apalløkka skole",
+"orgnr": "982254701"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590166": {
+"next": [
+{
+"name": "Bentsebrua skole",
+"orgnr": "931816314"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590174": {
+"next": [
+{
+"name": "Frydenberg skole",
+"orgnr": "996377210"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590182": {
+"next": [
+{
+"name": "Ris skole",
+"orgnr": "974590824"
+}
+],
+"same": false,
+"boundaryMap": "https://www.oslo.kommune.no/get-file/603224/cec6e585df07233fe9af07bedb2bd3f4fbb45d11e1beb60237a5fad61605e69a"
+},
+"974590190": {
+"next": [
+{
+"name": "Ris skole",
+"orgnr": "974590824"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590212": {
+"next": [
+{
+"name": "Tokerud skole",
+"orgnr": "874590622"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590220": {
+"next": [
+{
+"name": "Hovseter skole",
+"orgnr": "874590592"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590239": {
+"next": [
+{
+"name": "Vollebekk skole",
+"orgnr": "918399267"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590247": {
+"next": [
+{
+"name": "Skøyenåsen skole",
+"orgnr": "876805022"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590255": {
+"next": [
+{
+"name": "Haugerud skole",
+"orgnr": "974590557"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590263": {
+"next": [
+{
+"name": "Haugerud skole",
+"orgnr": "974590557"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590271": {
+"next": [
+{
+"name": "Jordal skole",
+"orgnr": "880954342"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590298": {
+"next": [
+{
+"name": "Nordberg skole",
+"orgnr": "979120087"
+},
+{
+"name": "Voldsløkka skole",
+"orgnr": "929177525"
+}
+],
+"same": false,
+"boundaryMap": "https://www.oslo.kommune.no/get-file/603226/c1c6d818c39d9680d3c6adaa2b4af428d3b7dd7316925a07b85b1fea0b75e7c1"
+},
+"974590301": {
+"next": [
+{
+"name": "Marienlyst skole",
+"orgnr": "974590026"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590328": {
+"next": [
+{
+"name": "Uranienborg skole",
+"orgnr": "974590328"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"974590336": {
+"next": [
+{
+"name": "Veitvet skole",
+"orgnr": "974590336"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"974590344": {
+"next": [
+{
+"name": "Tokerud skole",
+"orgnr": "874590622"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590360": {
+"next": [
+{
+"name": "Hovseter skole",
+"orgnr": "874590592"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590379": {
+"next": [
+{
+"name": "Jordal skole",
+"orgnr": "880954342"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590387": {
+"next": [
+{
+"name": "Skøyenåsen skole",
+"orgnr": "876805022"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590395": {
+"next": [
+{
+"name": "Årvoll skole",
+"orgnr": "974590395"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"974590417": {
+"next": [
+{
+"name": "Holmlia skole",
+"orgnr": "874589772"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590433": {
+"next": [
+{
+"name": "Ellingsrud skole",
+"orgnr": "974590530"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590468": {
+"next": [
+{
+"name": "Lindeberg skole",
+"orgnr": "974590468"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"974590476": {
+"next": [
+{
+"name": "Brannfjell skole",
+"orgnr": "974590581"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590484": {
+"next": [
+{
+"name": "Hauketo skole",
+"orgnr": "974590565"
+},
+{
+"name": "Holmlia skole",
+"orgnr": "874589772"
+}
+],
+"same": false,
+"boundaryMap": "https://www.oslo.kommune.no/get-file/603229/32ce64c45c693aeae3b59dac52f92e7b30ec8ef3e6a48e3c1a2f721b7f460531"
+},
+"974590492": {
+"next": [
+{
+"name": "Lofsrud skole",
+"orgnr": "974590794"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590506": {
+"next": [
+{
+"name": "Lindeberg skole",
+"orgnr": "974590468"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590514": {
+"next": [
+{
+"name": "Bjørnholt ungdomsskole",
+"orgnr": "980953602"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590522": {
+"next": [
+{
+"name": "Bjørnsletta skole",
+"orgnr": "974590603"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"974590549": {
+"next": [
+{
+"name": "Haugenstua skole",
+"orgnr": "974590549"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"974590603": {
+"next": [
+{
+"name": "Bjørnsletta skole",
+"orgnr": "974590603"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"975960277": {
+"next": [
+{
+"name": "Lofsrud skole",
+"orgnr": "974590794"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"975960315": {
+"next": [
+{
+"name": "Nordberg skole",
+"orgnr": "979120087"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"976811232": {
+"next": [
+{
+"name": "Haugerud skole",
+"orgnr": "974590557"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"979126743": {
+"next": [
+{
+"name": "Karlsrud skole",
+"orgnr": "979126743"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"979127502": {
+"next": [
+{
+"name": "Bjørnholt ungdomsskole",
+"orgnr": "980953602"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"979128134": {
+"next": [
+{
+"name": "Majorstuen skole",
+"orgnr": "974589990"
+},
+{
+"name": "Ris skole",
+"orgnr": "974590824"
+}
+],
+"same": false,
+"boundaryMap": "https://www.oslo.kommune.no/get-file/603225/6245a5931a4a54c8966bfe26b6bb51d8319f3acf3762b2f42b48d50aa2424685"
+},
+"979927533": {
+"next": [
+{
+"name": "Skøyenåsen skole",
+"orgnr": "876805022"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"987131780": {
+"next": [
+{
+"name": "Kastellet skole",
+"orgnr": "987131780"
+}
+],
+"same": true,
+"boundaryMap": null
+},
+"987865997": {
+"next": [
+{
+"name": "Hovseter skole",
+"orgnr": "874590592"
+}
+],
+"same": false,
+"boundaryMap": null
+},
+"997621506": {
+"next": [
+{
+"name": "Voldsløkka skole",
+"orgnr": "929177525"
+}
+],
+"same": false,
+"boundaryMap": null
+}
+},
+"unmatched": [
+"Bryn skole -> Brynseng skole (no page on the map)",
+"Hasle skole -> Brynseng skole (no page on the map)",
+"Svarttjern skole",
+"Svenstuen skole",
+"Vindern skole"
+]
+}
