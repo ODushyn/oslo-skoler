@@ -2721,6 +2721,16 @@
 "offentlig": false
 },
 {
+"orgnr": "838815812",
+"navn": "Leider Utdanning AS",
+"fulltNavn": "Leider Utdanning AS",
+"kommunenummer": "3207",
+"aktiv": true,
+"grunnskole": false,
+"privat": true,
+"offentlig": false
+},
+{
 "orgnr": "871817162",
 "navn": "Stiftelsen Risøy folkehøyskole",
 "fulltNavn": "Stiftelsen Risøy folkehøyskole",
@@ -36115,6 +36125,16 @@
 "navn": "Cora Pilates AS",
 "fulltNavn": "Cora Pilates AS",
 "kommunenummer": "5001",
+"aktiv": true,
+"grunnskole": false,
+"privat": true,
+"offentlig": false
+},
+{
+"orgnr": "936322840",
+"navn": "Stall Hovedgården AS",
+"fulltNavn": "Stall Hovedgården AS",
+"kommunenummer": "4627",
 "aktiv": true,
 "grunnskole": false,
 "privat": true,
