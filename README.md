@@ -70,6 +70,7 @@ A school that has both levels (1–10) appears in both UDIR exports and gets one
 ### Trivsel and School Photos
 
 - **Trivsel** comes from Elevundersøkelsen via Udir's statistikkbank API (table 148, NLOD): the average answer to "Trives du på skolen?" (1–5), 7. trinn for barneskole and 10. trinn for ungdomsskole, matched by organisation number. Cached in `cached-data/trivsel.json`; refresh with `python elevundersokelsen.py --refresh`.
+- **Lærertetthet, pupil numbers and forsterket opplæring i norsk** come from GSI via Udir's statistics portal (reports «Lærertetthet» and «Elever og skoler», open without login, NLOD), every school year since 2014–15, for each school, its kommune and the country. Cached in `cached-data/gsi.json`; refresh with `python gsi.py --refresh` (new numbers come in December).
 - **Photos** come from Wikimedia Commons, found via Wikidata (schools with organisation number and image). Each photo is shown with author, licence and a link to the file. Cached in `cached-data/school-photos.json`; refresh with `python photos.py --refresh`.
 - **School page** `skole.html?id=<name|kommune|type>` shows results over time, Trivsel, photo, and address/pupils/website read live from the NSR API.
 
@@ -109,6 +110,37 @@ its details change, so a night with nothing new only changes `data-status.json`.
 Nasjonale prøver are not in Udir's open API. They are published once a year and imported by hand with
 `import_exam_result.py`. The same goes for the numbers on `om-fargefordelingen.html`. Facts read from school
 websites (links, AKS, læringsbrett) are refreshed by hand with their own scripts, not every night.
+
+### Map with layers and tools (`kart.html`, `static/js/kart.js`)
+
+A full-screen map like the kommunes' own map services, with open data only:
+
+- Layers ("Kartlag"): barneskoler and ungdomsskoler (our data, clustered and coloured as on the main map);
+  videregående skoler (Udir, from `videregaende.json`, off at the start, loaded when first switched on or searched);
+  skolekretser from `skolekretser.json` (Halden, Stavanger and Fredrikstad from open data; Oslo's barneskolekretser
+  from the WFS of Plan- og bygningsetaten, used with permission, and Oslo's ungdomsskolekretser put together from
+  them with Oslo kommune's list of which ungdomsskole each barneskole leads to); bydeler in Oslo (OpenStreetMap, ODbL,
+  from `bydeler-oslo.json`); kommuner (Kartverket, `wms.adm_enheter2`) and grunnkretser (SSB, `wms.grunnkretser`).
+  Each krets lists the postnummer that cover at least 10 % of it (Kartverket's postnummerområder), used for the
+  housing search links to Finn.no. Adult education has no layer of its own yet.
+- `videregaende.py` writes `videregaende.json` from Udir's dataset «Videregående skoler» in Geonorge's map
+  catalogue (NLOD), layer «VideregåendeSkole» in `wfs.grunnskoler_vgs`: the schools in operation with position, owner and website. Udir also
+  counts some adult education centres and bible schools there; they are kept as Udir lists them. The markers are
+  dark with a book icon, since there are no results to colour them by.
+- `bydeler.py` writes `bydeler-oslo.json` from the Overpass API: the 15 bydeler plus Sentrum and Marka, which belong
+  to no bydel. Overpass only answers requests with a User-Agent. If Python cannot connect (old SSL), save the answer
+  with curl and run `python bydeler.py <file>`. Each bydel gets a point for its name: deep inside it and near a
+  school, since the boundaries reach out into the fjord. When OpenFreeMap is not the background map, the layer
+  adds the OpenStreetMap credit itself.
+- Tools: my position (asked only when pressed), draw, measure distance and area (geodesic, as Leaflet.draw),
+  remove the drawings, change the background map (OpenFreeMap or Kartverket's topographic map, CC BY 4.0),
+  zoom. A hint at the bottom says what to do, shows the result so far and has Ferdig / Angre siste punkt / Avbryt.
+- Search: schools by name (videregående too) and addresses (Kartverket). An address shows its bydel in Oslo and,
+  where the kommune has published them (Halden, Stavanger, Fredrikstad), its skolekretser, drawn on the map;
+  in Oslo links to the kommune's own lookup, elsewhere to the kommune. The map's place is kept in the address (`#lat,lng,zoom`).
+
+The page's CSP also allows images from `cache.kartverket.no` and `wms.geonorge.no`. It is in the menu under
+"Finn skole" and in `sitemap.xml`.
 
 ### Pages for search engines (`site_pages.py`, `skoler/`, `sitemap.xml`)
 
@@ -150,7 +182,7 @@ Details that only the school page shows live in one small file per school,
 the data only changes when the build scripts run.
 
 - `photos.py --galleries`: up to 8 openly licensed photos per school from its own Wikimedia Commons category (Wikidata P373). Generic categories such as "Schools in Drammen" are skipped.
-- `school_links.py --refresh`: the school's website from NSR, plus Facebook and Instagram links that the school's own front page shows. Links on several schools' sites or naming only the kommune are dropped. For Oslo barneskoler it also stores the links in the school site's Aktivitetsskolen (AKS) menu. Only link titles and addresses are stored, never page text. `--clean` re-applies the filters without downloading. `--more` takes a second look for schools without Facebook or Instagram: Wikidata (P2013, P2003) and up to two more pages of the school's own site, such as Kontakt. The school page always shows both icons and greys out the one with no official page. `--check` tries every school website (also with/without www and with http) and writes the full list to `cached-data/school-websites.csv` (registered address, address we link to, status, reason). A front page that only says the school has moved ("Vi har nye hjemmesider her: …", a meta refresh) is followed to the new address; parked domains and closed sites count as not working. A school whose site does not work, or that has none in NSR, is looked up in its kommune's sitemap by the school's name, and the page is kept only when its title names the school (news, projects, barnehage, booking and job pages are skipped). A refused connection or timeout keeps the last result, since hosts with many school sites turn away bursts of requests. `--check --failed` rechecks only the sites that did not work or were not reached. A site that does not work is shown as text, not as a link. `--wikipedia` stores the school's Wikipedia article from Wikidata (bokmål, else nynorsk, else English); `school_details.py` keeps it only when the title shares a word with the school's name.
+- `school_links.py --refresh`: the school's website from NSR, plus Facebook and Instagram links that the school's own front page shows. Links on several schools' sites or naming only the kommune are dropped. For Oslo barneskoler it also stores the links in the school site's Aktivitetsskolen (AKS) menu. Only link titles and addresses are stored, never page text. `--clean` re-applies the filters without downloading. `--more` takes a second look for schools without Facebook or Instagram: Wikidata (P2013, P2003) and up to two more pages of the school's own site, such as Kontakt. The school page always shows both icons and greys out the one with no official page. `--check` tries every school website (also with/without www and with http) and writes the full list to `cached-data/school-websites.csv` (registered address, address we link to, status, reason). A front page that only says the school has moved ("Vi har nye hjemmesider her: …", a meta refresh) is followed to the new address; parked domains and closed sites count as not working. A school whose site does not work, or that has none in NSR, is looked up in its kommune's sitemap by the school's name, and the page is kept only when its title names the school (news, projects, barnehage, booking and job pages are skipped). An Oslo school still without a working site gets the address from Oslo kommune's own list of its schools (`source-data/oslo-skoler-nettsider.tsv`, copied from oslo.kommune.no «Skoler i Oslo»; `--oslo-list` applies only that), if the site answers. A refused connection or timeout keeps the last result, since hosts with many school sites turn away bursts of requests. `--check --failed` rechecks only the sites that did not work or were not reached. A site that does not work is shown as text, not as a link. `--wikipedia` stores the school's Wikipedia article from Wikidata (bokmål, else nynorsk, else English); `school_details.py` keeps it only when the title shares a word with the school's name.
 - `school_details.py`: writes the per-school files from those caches.
 
 Google Maps photos are not used: they are not openly licensed and Google's terms do not allow storing them or showing them outside Google's map.
@@ -314,6 +346,22 @@ Where no open skolekrets data exists (Oslo included), the address search shows t
 barneskole and ungdomsskole in the same cards as the krets pilot (bookmark, "Del", "Vis på kartet"), titled
 "Nærmeste offentlige skoler", with a note that the kommune decides the krets and, for Oslo, links to
 Oslo kommune's own lookup. These cards never claim that the address belongs to the school.
+
+### One search field
+
+The front page has one search field for everything. Schools (by name; a school with both levels is one hit)
+and kommuner come from our own data as soon as two letters are typed; a postnummer and addresses come from
+Kartverket a moment later. With a digit in the query, the postnummer and addresses are listed first. A school
+opens on the map, a kommune becomes the kommune filter, and a postnummer or an address sorts the list from there.
+
+### Search by postnummer
+
+Four digits in the search field offer the postnummer first ("0682 Oslo · Postnummer"), found by one of its
+addresses in Kartverket's address API. Choosing it loads the postnummer's outline from Kartverket's
+`wfs.postnummeromrader` (Postnummerområder, from Posten, CC BY 4.0, credited on the map), draws it, and sorts
+the list from its middle: schools inside say "I postnummer 0682", others "… fra midten av 0682", without a
+walking time. A postnummer spans several kretser, so the krets note is not shown, and the school page gets no
+walking time from it. The page's CSP allows `wfs.geonorge.no` for this.
 
 ### Feedback question on every page
 

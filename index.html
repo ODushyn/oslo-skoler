@@ -4,7 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <!-- Content Security Policy: scripts only from this site and the two CDNs (pinned, with integrity hashes),
          data only from the services the pages use. GitHub Pages cannot send it as a header. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: blob: https://thumb.wikimedia.org https://upload.wikimedia.org https://tiles.openfreemap.org; font-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tiles.openfreemap.org https://ws.geonorge.no https://data-nsr.udir.no https://api.entur.io https://formspree.io; worker-src 'self' blob:; child-src blob:; form-action https://formspree.io; base-uri 'self'; object-src 'none'" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: blob: https://thumb.wikimedia.org https://upload.wikimedia.org https://tiles.openfreemap.org; font-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tiles.openfreemap.org https://ws.geonorge.no https://wfs.geonorge.no https://data-nsr.udir.no https://api.entur.io https://formspree.io; worker-src 'self' blob:; child-src blob:; form-action https://formspree.io; base-uri 'self'; object-src 'none'" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Skolekartet – finn skole og se nasjonale prøver på kart</title>
@@ -51,8 +51,8 @@
 
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="static/css/styles.css?v=197"/>
-    <script src="static/js/i18n.js?v=89"></script>
+    <link rel="stylesheet" href="static/css/styles.css?v=208"/>
+    <script src="static/js/i18n.js?v=101"></script>
     <script src="static/js/theme.js?v=9"></script>
 
     <!-- Leaflet JS -->
@@ -75,48 +75,29 @@
 
     <!-- Header (shared, see static/js/layout.js) -->
     <div id="site-header"></div>
-    <script src="static/js/layout.js?v=29"></script>
+    <script src="static/js/layout.js?v=32"></script>
 
     <main id="main" tabindex="-1">
-        <!-- One search row (choose what to search by), filters below -->
+        <!-- One search for addresses, schools, kommuner and postnummer; filters below -->
         <section class="search-panel" aria-labelledby="searchHint">
             <div class="site-container">
                 <h1 class="ds-heading" data-size="sm" id="searchHint">Leter du etter en skole?</h1>
 
                 <div class="search-bar" role="search">
-                    <fieldset class="ds-fieldset search-mode">
-                        <legend class="ds-label">Søk på</legend>
-                        <ds-field class="ds-field">
-                            <input class="ds-input" type="radio" name="searchMode" id="modeAddress" value="address" checked />
-                            <label class="ds-label" data-weight="regular" for="modeAddress">Adresse</label>
-                        </ds-field>
-                        <ds-field class="ds-field">
-                            <input class="ds-input" type="radio" name="searchMode" id="modeSchool" value="school" />
-                            <label class="ds-label" data-weight="regular" for="modeSchool">Skolenavn</label>
-                        </ds-field>
-                    </fieldset>
                     <div class="search-bar__field">
                         <ds-field class="ds-field" id="addressField">
-                            <label class="ds-label ds-sr-only" for="addressSearch">Adresse</label>
+                            <label class="ds-label ds-sr-only" for="addressSearch">Søk på adresse, skole, kommune eller postnummer</label>
                             <div class="address-input">
                                 <ds-suggestion class="ds-suggestion" id="addressSuggestion">
-                                    <input class="ds-input" type="search" id="addressSearch" placeholder="F.eks. Kirkeveien 64, Oslo" autocomplete="off" />
-                                    <del aria-label="Tøm adressesøk"></del>
-                                    <u-datalist id="addressResults" data-nofilter data-sr-singular="%d adresse" data-sr-plural="%d adresser"></u-datalist>
+                                    <input class="ds-input" type="search" id="addressSearch" placeholder="Adresse, skole, kommune eller postnummer" autocomplete="off" />
+                                    <del aria-label="Tøm søket"></del>
+                                    <u-datalist id="addressResults" data-nofilter data-sr-singular="%d treff" data-sr-plural="%d treff"></u-datalist>
                                 </ds-suggestion>
                                 <!-- "Din posisjon", like Entur and Vy: an icon in the empty field and the first suggestion when the
                                      field gets focus. The browser asks for the position only then (see finder.js, bindLocate). -->
                                 <button type="button" class="ds-button locate-inline" data-variant="tertiary" data-size="sm" data-icon
                                         id="locateButton" aria-label="Bruk min posisjon" data-tooltip="Bruk min posisjon" hidden><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="6.25" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="2.25" fill="currentColor"/><path d="M12 2.75V5.75M12 18.25V21.25M2.75 12H5.75M18.25 12H21.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
                             </div>
-                        </ds-field>
-                        <ds-field class="ds-field" id="schoolField" hidden>
-                            <label class="ds-label ds-sr-only" for="schoolSearch">Skolenavn</label>
-                            <ds-suggestion class="ds-suggestion" id="schoolSuggestion">
-                                <input class="ds-input" type="search" id="schoolSearch" placeholder="F.eks. Majorstuen skole" autocomplete="off" />
-                                <del aria-label="Tøm skolesøk"></del>
-                                <u-datalist id="searchResults" data-nofilter data-sr-singular="%d skole" data-sr-plural="%d skoler"></u-datalist>
-                            </ds-suggestion>
                         </ds-field>
                     </div>
                     <!-- The filter button; on phones at the right edge. Filters are removed with the chips below
@@ -170,7 +151,7 @@
                             </ds-field>
                         </div>
                         <!-- The page that explains the colours opens in a new tab, so the filters stay as they are -->
-                        <p class="ds-paragraph filter-more" data-size="sm"><a class="ds-link" href="om-fargefordelingen.html" target="_blank" rel="noopener">Om fargefordelingen<svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M20.5319 3.47126C20.603 3.5428 20.6568 3.62511 20.6931 3.71291C20.7298 3.80134 20.75 3.89831 20.75 4V11.5C20.75 11.9142 20.4142 12.25 20 12.25C19.5858 12.25 19.25 11.9142 19.25 11.5V5.81066L10.5303 14.5303C10.2374 14.8232 9.76256 14.8232 9.46967 14.5303C9.17678 14.2374 9.17678 13.7626 9.46967 13.4697L18.1893 4.75H12.5C12.0858 4.75 11.75 4.41421 11.75 4C11.75 3.58579 12.0858 3.25 12.5 3.25H20C20.2063 3.25 20.3931 3.33329 20.5287 3.46808L20.5303 3.46967L20.5319 3.47126ZM4.75 9C4.75 8.86193 4.86193 8.75 5 8.75H12C12.4142 8.75 12.75 8.41421 12.75 8C12.75 7.58579 12.4142 7.25 12 7.25H5C4.0335 7.25 3.25 8.0335 3.25 9V19C3.25 19.9665 4.0335 20.75 5 20.75H15C15.9665 20.75 16.75 19.9665 16.75 19V12C16.75 11.5858 16.4142 11.25 16 11.25C15.5858 11.25 15.25 11.5858 15.25 12V19C15.25 19.1381 15.1381 19.25 15 19.25H5C4.86193 19.25 4.75 19.1381 4.75 19V9Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></a></p>
+                        <p class="ds-paragraph filter-more" data-size="sm"><a class="ds-link" href="om-fargefordelingen" target="_blank" rel="noopener">Om fargefordelingen<svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M20.5319 3.47126C20.603 3.5428 20.6568 3.62511 20.6931 3.71291C20.7298 3.80134 20.75 3.89831 20.75 4V11.5C20.75 11.9142 20.4142 12.25 20 12.25C19.5858 12.25 19.25 11.9142 19.25 11.5V5.81066L10.5303 14.5303C10.2374 14.8232 9.76256 14.8232 9.46967 14.5303C9.17678 14.2374 9.17678 13.7626 9.46967 13.4697L18.1893 4.75H12.5C12.0858 4.75 11.75 4.41421 11.75 4C11.75 3.58579 12.0858 3.25 12.5 3.25H20C20.2063 3.25 20.3931 3.33329 20.5287 3.46808L20.5303 3.46967L20.5319 3.47126ZM4.75 9C4.75 8.86193 4.86193 8.75 5 8.75H12C12.4142 8.75 12.75 8.41421 12.75 8C12.75 7.58579 12.4142 7.25 12 7.25H5C4.0335 7.25 3.25 8.0335 3.25 9V19C3.25 19.9665 4.0335 20.75 5 20.75H15C15.9665 20.75 16.75 19.9665 16.75 19V12C16.75 11.5858 16.4142 11.25 16 11.25C15.5858 11.25 15.25 11.5858 15.25 12V19C15.25 19.1381 15.1381 19.25 15 19.25H5C4.86193 19.25 4.75 19.1381 4.75 19V9Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></a></p>
                     </fieldset>
                     <fieldset class="ds-fieldset filter-group filter-checks">
                         <legend class="ds-label filter-legend" data-size="sm">Skoletype
@@ -276,6 +257,62 @@
                             </ds-field>
                         </div>
                     </fieldset>
+                    <fieldset class="ds-fieldset filter-group filter-checks">
+                        <legend class="ds-label filter-legend" data-size="sm">Lærertetthet (elever per lærer)
+                            <button type="button" class="ds-button filter-help" data-variant="tertiary" data-size="sm" data-icon id="laererHelp"
+                            data-tooltip="Antall elever per lærer i ordinær undervisning, fra Grunnskolens informasjonssystem (GSI) 2025–26. Lavere tall betyr flere lærere per elev. 5.–7. trinn for barneskoler og 8.–10. trinn for ungdomsskoler. Landsgjennomsnittet er 16,2 på 5.–7. trinn og 17,5 på 8.–10. trinn." data-placement="top"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12ZM11.0498 16.9C11.0498 16.3753 11.4751 15.95 11.9998 15.95C12.5245 15.95 12.9498 16.3753 12.9498 16.9C12.9498 17.4247 12.5245 17.85 11.9998 17.85C11.4751 17.85 11.0498 17.4247 11.0498 16.9ZM10.25 9.5C10.25 8.5335 11.0335 7.75 12 7.75H12.1361C13.0274 7.75 13.75 8.47255 13.75 9.36387C13.75 9.85413 13.5271 10.3178 13.1443 10.6241L12.7028 10.9773C11.7845 11.7119 11.25 12.8241 11.25 14C11.25 14.4142 11.5858 14.75 12 14.75C12.4142 14.75 12.75 14.4142 12.75 14C12.75 13.2797 13.0774 12.5985 13.6398 12.1486L14.0814 11.7954C14.82 11.2045 15.25 10.3098 15.25 9.36387C15.25 7.64413 13.8559 6.25 12.1361 6.25H12C10.2051 6.25 8.75 7.70507 8.75 9.5C8.75 9.91421 9.08579 10.25 9.5 10.25C9.91421 10.25 10.25 9.91421 10.25 9.5Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></button>
+                        </legend>
+                        <div class="filter-checks__options">
+                            <ds-field class="ds-field filter-option">
+                                <input class="ds-input" type="checkbox" id="f-laerer-u14" name="laerer" value="u14" checked />
+                                <label class="ds-label" data-weight="regular" for="f-laerer-u14">Under 14</label>
+                            </ds-field>
+                            <ds-field class="ds-field filter-option">
+                                <input class="ds-input" type="checkbox" id="f-laerer-14" name="laerer" value="14" checked />
+                                <label class="ds-label" data-weight="regular" for="f-laerer-14">14–15,9</label>
+                            </ds-field>
+                            <ds-field class="ds-field filter-option">
+                                <input class="ds-input" type="checkbox" id="f-laerer-16" name="laerer" value="16" checked />
+                                <label class="ds-label" data-weight="regular" for="f-laerer-16">16–17,9</label>
+                            </ds-field>
+                            <ds-field class="ds-field filter-option">
+                                <input class="ds-input" type="checkbox" id="f-laerer-18" name="laerer" value="18" checked />
+                                <label class="ds-label" data-weight="regular" for="f-laerer-18">18 og over</label>
+                            </ds-field>
+                            <ds-field class="ds-field filter-option">
+                                <input class="ds-input" type="checkbox" id="f-laerer-none" name="laerer" value="none" checked />
+                                <label class="ds-label" data-weight="regular" for="f-laerer-none">Ingen data</label>
+                            </ds-field>
+                        </div>
+                    </fieldset>
+                    <fieldset class="ds-fieldset filter-group filter-checks">
+                        <legend class="ds-label filter-legend" data-size="sm">Forsterket opplæring i norsk (andel elever)
+                            <button type="button" class="ds-button filter-help" data-variant="tertiary" data-size="sm" data-icon id="norskHelp"
+                            data-tooltip="Andelen elever ved skolen som får forsterket opplæring i norsk, fra Grunnskolens informasjonssystem (GSI) 2025–26. Landsgjennomsnittet er 7,5 %." data-placement="top"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12ZM11.0498 16.9C11.0498 16.3753 11.4751 15.95 11.9998 15.95C12.5245 15.95 12.9498 16.3753 12.9498 16.9C12.9498 17.4247 12.5245 17.85 11.9998 17.85C11.4751 17.85 11.0498 17.4247 11.0498 16.9ZM10.25 9.5C10.25 8.5335 11.0335 7.75 12 7.75H12.1361C13.0274 7.75 13.75 8.47255 13.75 9.36387C13.75 9.85413 13.5271 10.3178 13.1443 10.6241L12.7028 10.9773C11.7845 11.7119 11.25 12.8241 11.25 14C11.25 14.4142 11.5858 14.75 12 14.75C12.4142 14.75 12.75 14.4142 12.75 14C12.75 13.2797 13.0774 12.5985 13.6398 12.1486L14.0814 11.7954C14.82 11.2045 15.25 10.3098 15.25 9.36387C15.25 7.64413 13.8559 6.25 12.1361 6.25H12C10.2051 6.25 8.75 7.70507 8.75 9.5C8.75 9.91421 9.08579 10.25 9.5 10.25C9.91421 10.25 10.25 9.91421 10.25 9.5Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></button>
+                        </legend>
+                        <div class="filter-checks__options">
+                            <ds-field class="ds-field filter-option">
+                                <input class="ds-input" type="checkbox" id="f-norsk-u5" name="norsk" value="u5" checked />
+                                <label class="ds-label" data-weight="regular" for="f-norsk-u5">Under 5 %</label>
+                            </ds-field>
+                            <ds-field class="ds-field filter-option">
+                                <input class="ds-input" type="checkbox" id="f-norsk-5" name="norsk" value="5" checked />
+                                <label class="ds-label" data-weight="regular" for="f-norsk-5">5–9,9 %</label>
+                            </ds-field>
+                            <ds-field class="ds-field filter-option">
+                                <input class="ds-input" type="checkbox" id="f-norsk-10" name="norsk" value="10" checked />
+                                <label class="ds-label" data-weight="regular" for="f-norsk-10">10–19,9 %</label>
+                            </ds-field>
+                            <ds-field class="ds-field filter-option">
+                                <input class="ds-input" type="checkbox" id="f-norsk-20" name="norsk" value="20" checked />
+                                <label class="ds-label" data-weight="regular" for="f-norsk-20">20 % og over</label>
+                            </ds-field>
+                            <ds-field class="ds-field filter-option">
+                                <input class="ds-input" type="checkbox" id="f-norsk-none" name="norsk" value="none" checked />
+                                <label class="ds-label" data-weight="regular" for="f-norsk-none">Ingen data</label>
+                            </ds-field>
+                        </div>
+                    </fieldset>
                     </div>
                     <div class="filter-dialog__foot">
                         <button type="button" class="ds-button" data-variant="primary" id="filterDone">Vis skolene</button>
@@ -352,10 +389,10 @@
     <div id="site-footer"></div>
 
     <script src="static/js/score-colors.js?v=2"></script>
-    <script src="static/js/shared.js?v=23"></script>
-    <script src="static/js/map-init.js?v=13"></script>
-    <script src="static/js/finder.js?v=99"></script>
-    <script src="static/js/main.js?v=39"></script>
+    <script src="static/js/shared.js?v=28"></script>
+    <script src="static/js/map-init.js?v=14"></script>
+    <script src="static/js/finder.js?v=105"></script>
+    <script src="static/js/main.js?v=41"></script>
 </body>
 </html>
 

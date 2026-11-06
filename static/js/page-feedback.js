@@ -1,6 +1,6 @@
 // "Fant du det du lette etter?" as a tab at the bottom of the screen (closed until clicked),
-// on every page except tilbakemelding.html.
-// Answers go to Formspree, the same form as tilbakemelding.html (see static/js/feedback.js).
+// on every page except the tilbakemelding page.
+// Answers go to Formspree, the same form as the tilbakemelding page (see static/js/feedback.js).
 // Ja/Nei is sent right after step 1 and the optional text in a second request, so the answer
 // is kept even if the block is closed. The page address is sent without the hash.
 (function () {
@@ -163,7 +163,7 @@
         show(`
             <h2 class="ds-heading page-feedback__heading" data-size="xs" tabindex="-1" data-step-heading>${t('Takk for tilbakemeldingen!')}</h2>
             <div class="page-feedback__actions">
-                <a class="ds-link page-feedback__privacy" href="${typeof I18N !== 'undefined' ? I18N.href('personvern.html') : 'personvern.html'}">${t('Personvern')}</a>
+                <a class="ds-link page-feedback__privacy" href="${typeof I18N !== 'undefined' ? I18N.href('personvern') : 'personvern'}">${t('Personvern')}</a>
                 <button type="button" class="ds-button" data-variant="secondary" data-size="sm" data-close>${t('Lukk')}</button>
             </div>`);
         body.querySelector('[data-close]').addEventListener('click', () => {

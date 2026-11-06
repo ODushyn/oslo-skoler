@@ -1,4 +1,4 @@
-// Feedback form on tilbakemelding.html (sent to Formspree)
+// Feedback form on the tilbakemelding page (sent to Formspree)
 
 async function handleFeedbackSubmit(event) {
     event.preventDefault();

@@ -32,6 +32,7 @@ import aks_mat
 import anlegg
 import hjertesone
 import elevundersokelsen
+import gsi
 import photos
 import school_links
 import ungdomsskole_oslo
@@ -79,6 +80,8 @@ def main():
     devices = school_links.load_devices()
     aks_food = aks_mat.load_cache()
     contacts = school_links.load_contacts()
+    gsi_cache = gsi.load_cache()
+    kommune_of = {s['orgnr']: s['kommune'] for s in schools if s.get('orgnr')}
     # Skolekretser from kommuner that publish them as open data (skolekretser.py): orgnr -> its kretser
     krets_file = json.loads(KRETS_FILE.read_text(encoding='utf-8')) if KRETS_FILE.exists() else {'kommuner': {}, 'kretser': []}
     by_school = {(s['name'], s['kommune'], s['schoolType']): s['orgnr'] for s in schools if s.get('orgnr')}
@@ -145,6 +148,7 @@ def main():
                            if orgnr in feeders else None,
             'anlegg': facilities.for_school(*positions[orgnr]) if facilities and orgnr in positions else None,
             'elevundersokelsen': elevundersokelsen.indicators_for(indicators, orgnr),
+            'gsi': gsi.history_for(gsi_cache, orgnr, kommune_of.get(orgnr)),
             'devices': {'links': devices['schools'][orgnr], 'fetched': devices['fetched']}
                        if orgnr in devices['schools'] else None,
             'aksMat': dict(aks_food['schools'][orgnr], fetched=aks_food['fetched'])

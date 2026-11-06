@@ -14,35 +14,39 @@
     // "MenuHamburger" from Aksel icons by Nav (MIT licence)
     const ICON_MENU = '<svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M2.75 6C2.75 5.58579 3.08579 5.25 3.5 5.25H20.5C20.9142 5.25 21.25 5.58579 21.25 6C21.25 6.41421 20.9142 6.75 20.5 6.75H3.5C3.08579 6.75 2.75 6.41421 2.75 6ZM2.75 12C2.75 11.5858 3.08579 11.25 3.5 11.25H20.5C20.9142 11.25 21.25 11.5858 21.25 12C21.25 12.4142 20.9142 12.75 20.5 12.75H3.5C3.08579 12.75 2.75 12.4142 2.75 12ZM3.5 17.25C3.08579 17.25 2.75 17.5858 2.75 18C2.75 18.4142 3.08579 18.75 3.5 18.75H20.5C20.9142 18.75 21.25 18.4142 21.25 18C21.25 17.5858 20.9142 17.25 20.5 17.25H3.5Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg>';
 
+    // The map page opens on Oslo and the area around it
+    const KART_HREF = 'kart#59.92011,10.61440,10.5';
+
     // All pages in one menu ("Meny"), grouped as on Digdir's own sites. The school pages only have
     // what is about the school; the general information is on these pages.
     const MENU = [
         { heading: 'Finn skole', links: [
             { href: './', label: 'Skolekartet' },
-            { href: './?lagrede=1', label: 'Lagrede skoler' }
+            { href: './?lagrede=1', label: 'Lagrede skoler' },
+            { href: KART_HREF, label: 'Kart med kartlag og måling' }
         ] },
         { heading: 'For foreldre', links: [
-            { href: 'om-skolekrets.html', label: 'Om skolekrets' },
-            { href: 'skolefritid.html', label: 'SFO og AKS' },
-            { href: 'skolehverdag.html', label: 'Mat og aktiviteter' },
-            { href: 'ny-i-norge.html', label: 'Ny i Norge' }
+            { href: 'om-skolekrets', label: 'Om skolekrets' },
+            { href: 'skolefritid', label: 'SFO og AKS' },
+            { href: 'skolehverdag', label: 'Mat og aktiviteter' },
+            { href: 'ny-i-norge', label: 'Ny i Norge' }
         ] },
         { heading: 'Om tjenesten', links: [
-            { href: 'om-skolekartet.html', label: 'Om Skolekartet' },
-            { href: 'om-fargefordelingen.html', label: 'Om fargefordelingen' },
-            { href: 'datakilder.html', label: 'Datakilder' },
-            { href: 'tilbakemelding.html', label: 'Tilbakemelding' }
+            { href: 'om-skolekartet', label: 'Om Skolekartet' },
+            { href: 'om-fargefordelingen', label: 'Om fargefordelingen' },
+            { href: 'datakilder', label: 'Datakilder' },
+            { href: 'tilbakemelding', label: 'Tilbakemelding' }
         ] }
     ];
 
-    // This page's path from the site's root ("index.html" for the map; the pages under skoler/ match no link)
-    const current = (typeof I18N !== 'undefined' ? I18N.page : location.pathname.split('/').pop()) || 'index.html';
-    const ariaCurrent = href => (href === current ? ' aria-current="page"' : '');
+    // This page's path from the site's root ("" for the front page; the pages under skoler/ match no link)
+    const current = typeof I18N !== 'undefined' ? I18N.page : location.pathname.split('/').pop().replace(/(index)?\.html$/, '');
+    const ariaCurrent = href => (href.split('#')[0] === current ? ' aria-current="page"' : '');
     // The map page is two entries: the map, and the saved schools (?lagrede=1)
     function ariaCurrentMenu(href) {
         const saved = new URLSearchParams(location.search).get('lagrede') === '1';
-        if (href === './') return current === 'index.html' && !saved ? ' aria-current="page"' : '';
-        if (href === './?lagrede=1') return current === 'index.html' && saved ? ' aria-current="page"' : '';
+        if (href === './') return current === '' && !saved ? ' aria-current="page"' : '';
+        if (href === './?lagrede=1') return current === '' && saved ? ' aria-current="page"' : '';
         return ariaCurrent(href);
     }
     const localHref = href => (typeof I18N !== 'undefined' ? I18N.href(href) : href);
@@ -59,8 +63,9 @@
     const SCORE_DOTS = '<span class="score-toggle__dots site-primary__dots" aria-hidden="true">'
         + ['very-high', 'high', 'low', 'very-low'].map(c => `<span class="color-dot score-${c}"></span>`).join('') + '</span>';
     const PRIMARY = [
-        { href: 'om-skolekartet.html', label: 'Om Skolekartet' },
-        { href: 'om-fargefordelingen.html', label: 'Om fargefordelingen', dots: true }
+        { href: KART_HREF, label: 'Kart' },
+        { href: 'om-skolekartet', label: 'Om Skolekartet' },
+        { href: 'om-fargefordelingen', label: 'Om fargefordelingen', dots: true }
     ];
 
     const header = `
@@ -70,14 +75,14 @@
                     <span class="site-logo__mark" aria-hidden="true">${ICONS.logo}</span>
                     Skolekartet
                 </a>
-                <!-- The two pages most people need, in the middle as on Digdir's own sites; on narrow screens they
-                     are only in the menu -->
+                <!-- The map and the two pages most people need, in the middle as on Digdir's own sites; on narrow
+                     screens they are only in the menu -->
                 <nav class="site-primary" aria-label="Om tjenesten">
                     ${PRIMARY.map(l => `<a class="site-primary__link" href="${localHref(l.href)}"${ariaCurrent(l.href)}>${l.dots ? SCORE_DOTS : ''}${l.label}</a>`).join('')}
                 </nav>
                 <nav class="site-nav" aria-label="Hovedmeny">
-                    <a class="ds-button colors-link" data-variant="tertiary" data-size="sm" href="${localHref('om-fargefordelingen.html')}"
-                       aria-label="Om fargefordelingen" data-tooltip="Om fargefordelingen"${ariaCurrent('om-fargefordelingen.html')}>${SCORE_DOTS.replace(' site-primary__dots', '')}</a>
+                    <a class="ds-button colors-link" data-variant="tertiary" data-size="sm" href="${localHref('om-fargefordelingen')}"
+                       aria-label="Om fargefordelingen" data-tooltip="Om fargefordelingen"${ariaCurrent('om-fargefordelingen')}>${SCORE_DOTS.replace(' site-primary__dots', '')}</a>
                     <a class="ds-button saved-link" data-variant="tertiary" data-size="sm" href="${typeof I18N !== 'undefined' ? I18N.href('./?lagrede=1') : './?lagrede=1'}"
                        aria-label="Lagrede skoler">${ICONS.bookmark}<span class="site-nav__label">Lagrede skoler</span><span class="saved-link__count" aria-hidden="true" hidden></span></a>
                     ${typeof I18N !== 'undefined' ? I18N.switchLink() : ''}
@@ -96,10 +101,10 @@
 
     const footerLinks = [
         { href: 'skoler/', label: 'Skoler etter kommune' },
-        { href: 'om-skolekartet.html', label: 'Om Skolekartet' },
-        { href: 'datakilder.html', label: 'Datakilder' },
-        { href: 'personvern.html', label: 'Personvern' },
-        { href: 'tilgjengelighet.html', label: 'Tilgjengelighetserklæring' }
+        { href: 'om-skolekartet', label: 'Om Skolekartet' },
+        { href: 'datakilder', label: 'Datakilder' },
+        { href: 'personvern', label: 'Personvern' },
+        { href: 'tilgjengelighet', label: 'Tilgjengelighetserklæring' }
     ];
 
     const footer = `
@@ -123,7 +128,7 @@
                 <nav aria-label="Kom i kontakt med oss">
                     <p class="ds-heading" data-size="2xs">Kom i kontakt med oss</p>
                     <ul class="ds-list ds-list--unstyled footer-links footer-contact" data-size="sm">
-                        <li>${ICON_CHAT}<a class="ds-link" href="${localHref('tilbakemelding.html')}"${ariaCurrent('tilbakemelding.html')}>Gi tilbakemelding</a></li>
+                        <li>${ICON_CHAT}<a class="ds-link" href="${localHref('tilbakemelding')}"${ariaCurrent('tilbakemelding')}>Gi tilbakemelding</a></li>
                         <li>${ICON_GITHUB}<a class="ds-link" href="https://github.com/ODushyn/oslo-skoler" target="_blank" rel="noopener">Kildekoden på GitHub</a></li>
                     </ul>
                 </nav>
@@ -159,7 +164,7 @@
             badge.hidden = !count;
             const label = typeof I18N !== 'undefined' ? I18N.t('Lagrede skoler ({count})', { count }) : `Lagrede skoler (${count})`;
             link.setAttribute('aria-label', label);
-            if (current === 'index.html' && new URLSearchParams(location.search).get('lagrede') === '1') link.setAttribute('aria-current', 'page');
+            if (current === '' && new URLSearchParams(location.search).get('lagrede') === '1') link.setAttribute('aria-current', 'page');
         });
     }
     updateSavedCount();
@@ -169,10 +174,10 @@
     document.addEventListener('DOMContentLoaded', () => {
         const slot = document.getElementById('site-footer');
         // "Fant du det du lette etter?" sits right above the footer (not on the feedback page itself)
-        if (slot && current !== 'tilbakemelding.html') {
+        if (slot && current !== 'tilbakemelding') {
             slot.insertAdjacentHTML('beforebegin', '<div id="page-feedback"></div>');
             const script = document.createElement('script');
-            script.src = `${I18N.url('static/js/page-feedback.js')}?v=4`;
+            script.src = `${I18N.url('static/js/page-feedback.js')}?v=5`;
             document.body.appendChild(script);
         }
         if (slot) slot.outerHTML = footer;

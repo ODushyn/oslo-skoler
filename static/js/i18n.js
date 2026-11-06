@@ -20,16 +20,21 @@ const I18N = (() => {
     const NAMES = { no: ['Norsk', 'NO'], en: ['English', 'EN'], uk: ['Українська', 'УКР'] };
     const STORAGE_KEY = 'skolekartet-lang';
     // Pages whose own content is translated; on the others only the header and footer are
-    const TRANSLATED_PAGES = ['', 'index.html', 'om-skolekartet.html', 'skole.html', 'datakilder.html', 'om-fargefordelingen.html', 'om-skolekrets.html', 'tilbakemelding.html',
-                              'ny-i-norge.html', 'skolefritid.html', 'skolehverdag.html', 'tilgjengelighet.html', 'personvern.html'];
+    const TRANSLATED_PAGES = ['', 'kart', 'om-skolekartet', 'skole', 'datakilder', 'om-fargefordelingen', 'om-skolekrets', 'tilbakemelding',
+                              'ny-i-norge', 'skolefritid', 'skolehverdag', 'tilgjengelighet', 'personvern'];
 
     // The site's root, from this file's own address (static/js/i18n.js), so links and data work the same
     // on the pages at the top and on the school and kommune pages under skoler/
     const ROOT = new URL('../../', (document.currentScript && document.currentScript.src) || location.href);
-    // The page's path from the root: "", "skole.html", "skoler/oslo/", "skoler/oslo/majorstuen-skole.html"
+    // The site's addresses have no .html ending (GitHub Pages serves kart.html at /kart). An old link with the
+    // ending shows the page under its address without it, so the address bar and shared links are the same.
+    if (/\.html$/.test(location.pathname)) {
+        history.replaceState(history.state, '', location.pathname.replace(/(index)?\.html$/, '') + location.search + location.hash);
+    }
+    // The page's path from the root: "", "skole", "skoler/oslo/", "skoler/oslo/majorstuen-skole"
     const PAGE = location.pathname.startsWith(ROOT.pathname) ? location.pathname.slice(ROOT.pathname.length) : location.pathname.split('/').pop();
-    // A school page under skoler/<kommune>/ is drawn by school-page.js with translations, like skole.html
-    const SCHOOL_PAGE = /^skoler\/[^/]+\/[^/]+\.html$/.test(PAGE);
+    // A school page under skoler/<kommune>/ is drawn by school-page.js with translations, like skole
+    const SCHOOL_PAGE = /^skoler\/[^/]+\/[^/]+$/.test(PAGE);
 
     // A file or page of this site, as a path from the site's root ("static/js/x.json" → "/static/js/x.json")
     function url(path) {
@@ -82,21 +87,17 @@ const I18N = (() => {
         'Laster skole…': 'Loading school…',
 
         // ── Search ────────────────────────────────────────────────────────
-        'Søk på': 'Search by',
         'Adresse': 'Address',
-        'Skolenavn': 'School name',
-        'F.eks. Kirkeveien 64, Oslo': 'E.g. Kirkeveien 64, Oslo',
-        'F.eks. Majorstuen skole': 'E.g. Majorstuen skole',
-        'Tøm adressesøk': 'Clear address search',
-        'Tøm skolesøk': 'Clear school search',
-        '%d adresse': '%d address',
-        '%d adresser': '%d addresses',
-        '%d skole': '%d school',
-        '%d skoler': '%d schools',
+        'Adresse, skole, kommune eller postnummer': 'Address, school, municipality or postcode',
+        'Søk på adresse, skole, kommune eller postnummer': 'Search by address, school, municipality or postcode',
+        'Ingen treff': 'No matches',
+        '%d treff': '%d matches',
+        'Postnummer': 'Postcode',
+        'I postnummer {postnummer}': 'In postcode {postnummer}',
+        '{distance} fra midten av {postnummer}': '{distance} from the middle of {postnummer}',
+        'Tøm søket': 'Clear the search',
         'Ingen adresser funnet': 'No addresses found',
         'Adressesøket er ikke tilgjengelig akkurat nå': 'The address search is not available right now',
-        'Ingen skoler funnet': 'No schools found',
-        'Viser {shown} av {total} treff. Skriv mer for å snevre inn.': 'Showing {shown} of {total} matches. Type more to narrow the search.',
 
         // ── Filters ───────────────────────────────────────────────────────
         'Filtrer skoler': 'Filter schools',
@@ -121,6 +122,7 @@ const I18N = (() => {
         '45–49,3': '45–49.3',
         '49,3–55': '49.3–55',
         '55 og over': '55 and over',
+        'Skolen har ingen offentlige resultater og er derfor ikke med i lista.': 'The school has no published results, so it is not in the list.',
         'Ingen data': 'No data',
         'Trivsel (1–5)': 'Well-being (1–5)',
         'Elevenes gjennomsnittlige svar på «Trives du på skolen?» i Elevundersøkelsen, på en skala fra 1 til 5. 7. trinn for barneskoler og 10. trinn for ungdomsskoler. Små grupper er skjult av Udir.':
@@ -193,7 +195,6 @@ const I18N = (() => {
         'Ungdomsskole:': 'Lower secondary school:',
         'ingen skole i dataene': 'no school in the data',
         '({name} skolekrets)': '({name} school district)',
-        'Adressen ligger utenfor skolekretsene i datasettet.': 'The address is outside the school districts in the dataset.',
         'Dette er en pilot på åpne data og kan avvike fra kommunens gjeldende grenser.':
             'This is a pilot based on open data and may differ from the municipality’s current boundaries.',
         'Kilde:': 'Source:',
@@ -202,7 +203,7 @@ const I18N = (() => {
         'Bare barneskolekretser. Halden har ikke publisert ungdomsskolekretsene som åpne data.':
             'Primary school districts only. Halden has not published its lower secondary districts as open data.',
         'Stavanger kommune, «Skolekretser Stavanger» (NLOD 2.0)': 'Stavanger municipality, “School districts Stavanger” (NLOD 2.0)',
-        'Oslo kommune, skolekretser (brukt med tillatelse)': 'Oslo municipality, school districts (used with permission)',
+        'Plan- og bygningsetaten, Oslo kommune, barneskolekretser (brukt med tillatelse)': 'Agency for Planning and Building Services, City of Oslo, primary school catchment areas (used with permission)',
         'Kretsgrensene er veiledende. Det er kommunen som fatter vedtak om skoleplass.': 'The district boundaries are a guide. The municipality decides on the school place.',
         'Datasettet er ikke datert, og datakatalogen oppgir 2018 som siste oppdatering. Kretsene kan derfor avvike fra dagens grenser.':
             'The dataset is not dated, and the data catalogue gives 2018 as the last update. The districts may therefore differ from today’s boundaries.',
@@ -219,6 +220,14 @@ const I18N = (() => {
         'Skjul historikk': 'Hide history',
         'Resultater tidligere år': 'Results in earlier years',
         'Les mer om skolen': 'Read more about the school',
+        'Barneskolen adressen hører til': 'The primary school for this address',
+        'Ungdomsskolen adressen hører til': 'The lower secondary school for this address',
+        'Vi har ikke informasjon om hvilken skole adressen hører til.': 'We have no information about which school this address belongs to.',
+        'Vi har ikke informasjon om hvilken barneskole adressen hører til.': 'We have no information about which primary school this address belongs to.',
+        'Vi har ikke informasjon om hvilken ungdomsskole adressen hører til.': 'We have no information about which lower secondary school this address belongs to.',
+        'Nærmeste barneskole': 'Nearest primary school',
+        'Nærmeste ungdomsskole': 'Nearest lower secondary school',
+        'Nærmeste videregående skole': 'Nearest upper secondary school',
         'Foto av {name}': 'Photo of {name}',
         'Foto:': 'Photo:',
 
@@ -282,6 +291,43 @@ const I18N = (() => {
         'AKS-sidene på skolens nettside, lest {date}': 'the after-school pages on the school’s website, read {date}',
         'Én gang i uken': 'Once a week',
         'Lagre til senere': 'Save for later',
+        'Skolekart med kartlag, tegning og måling': 'School map with layers, drawing and measuring',
+        'Skolekart med kartlag, tegning og måling – Skolekartet': 'School map with layers, drawing and measuring – Skolekartet',
+        'Kart med kartlag og måling': 'Map with layers and measuring',
+        'Kartlag': 'Map layers',
+        'Lukk kartlag': 'Close map layers',
+        'Barneskoler': 'Primary schools',
+        'Ungdomsskoler': 'Lower secondary schools',
+        'Grenser': 'Boundaries',
+        'Skolekretser (Halden, Stavanger, Fredrikstad)': 'School catchment areas (Halden, Stavanger, Fredrikstad)',
+        'Skolekretser ({kommuner})': 'School catchment areas ({kommuner})',
+        'Kommuner': 'Municipalities',
+        'Grunnkretser': 'Basic statistical units',
+        'Bydeler i Oslo': 'Districts in Oslo',
+        'Bydel': 'District',
+        'ikke bydel': 'not a district',
+        'Skolekretser i Oslo er ikke med: Oslo kommune har ikke publisert dem som åpne data.': 'School catchment areas in Oslo are not included: Oslo kommune has not published them as open data.',
+        'Voksenopplæring har ikke et eget kartlag ennå.': 'Adult education does not have a map layer of its own yet.',
+        'Videregående skoler': 'Upper secondary schools',
+        'Videregående skole': 'Upper secondary school',
+        'Kartverktøy': 'Map tools',
+        'Min posisjon': 'My position',
+        'Fjern tegninger og målinger': 'Remove drawings and measurements',
+        'Bytt bakgrunnskart': 'Change background map',
+        'Bytt til vanlig kart': 'Back to the standard map',
+        'Tegn': 'Draw',
+        'Mål avstand': 'Measure distance',
+        'Mål areal': 'Measure area',
+        'Zoom inn': 'Zoom in',
+        'Zoom ut': 'Zoom out',
+        'Ferdig': 'Done',
+        'Angre siste punkt': 'Undo last point',
+        'Avbryt': 'Cancel',
+        'Klikk i kartet for å tegne en linje. Trykk Ferdig når du er ferdig.': 'Click on the map to draw a line. Press Done when you are finished.',
+        'Klikk i kartet for hvert punkt på strekningen. Trykk Ferdig når du er ferdig.': 'Click on the map for each point along the way. Press Done when you are finished.',
+        'Klikk i kartet for hvert hjørne av området. Trykk Ferdig når du er ferdig.': 'Click on the map for each corner of the area. Press Done when you are finished.',
+        'Nettleseren kan ikke finne posisjonen din.': 'Your browser cannot find your position.',
+        'Fikk ikke tilgang til posisjonen din. Sjekk at nettleseren har lov til å bruke den.': 'Could not get your position. Check that the browser is allowed to use it.',
         'Fjern alle': 'Remove all',
         'Aktive filtre': 'Active filters',
         'Fjern filter: {label}': 'Remove filter: {label}',
@@ -353,7 +399,7 @@ const I18N = (() => {
         "Ett år er et øyeblikksbilde.": "One year is a snapshot.",
         "Resultatene kan variere mye fra år til år, særlig på små skoler. Se utviklingen over flere år på skolesiden.": "Results can vary a lot from year to year, especially at small schools. See the trend over several years on the school page.",
         "Skolekrets bare i noen kommuner.": "Catchment areas only in some municipalities.",
-        "Vi viser skolekrets for adressen bare der kommunen har åpne kartdata. Ellers viser vi den nærmeste skolen, som trolig er nærskolen, men det avgjør kommunen.": "We only show the catchment area for an address where the municipality has open map data. Elsewhere we show the nearest school, which is probably the local school, but the municipality decides.",
+        "Vi viser skolekrets for adressen bare der kommunen har åpne kartdata, og i Oslo, der vi har fått tillatelse. Ellers viser vi den nærmeste skolen, som trolig er nærskolen, men det avgjør kommunen.": "We only show the catchment area for an address where the municipality has open map data, and in Oslo, where we have been given permission. Elsewhere we show the nearest school, which is probably the local school, but the municipality decides.",
         "Avstand og gangtid er beregnet.": "Distance and walking time are calculated.",
         "Avstanden er i luftlinje, og gangtiden er et anslag fra Enturs reiseplanlegger.": "The distance is in a straight line, and the walking time is an estimate from Entur’s journey planner.",
         "Ser du noe som er feil, for eksempel en lenke som ikke virker eller et tall som ikke stemmer med Udir?": "Do you see something wrong, for example a link that does not work or a figure that does not match Udir?",
@@ -949,8 +995,48 @@ const I18N = (() => {
             'When you search for an address, Skolekartet sorts the schools by straight-line distance. The nearest school is often, but not always, the school the address belongs to. Boundaries can follow roads, rivers or old districts, and some municipalities have no fixed district boundaries at all.',
         'Det finnes ikke et åpent, nasjonalt datasett med skolekretsgrenser. Kommunene registrerer kretsene i matrikkelen hos Kartverket, men disse dataene er ikke åpent tilgjengelige. Skolekartet bruker bare åpne data, og kan derfor bare vise skolekretsen i kommunene som har publisert den selv (se under).':
             'There is no open national dataset of school district boundaries. Municipalities register the districts in the Norwegian Mapping Authority’s property register, but this data is not openly available. Skolekartet only uses open data, so it can only show the school district in the municipalities that publish it themselves (see below).',
-        'Vi har søkt i Geonorge og den nasjonale datakatalogen (data.norge.no) i november 2026. Oslo, Bergen, Trondheim, Nordre Follo (Kolbotn), Hamar og de andre kommunene har ikke publisert skolekretsene som åpne data. For dem viser Skolekartet de nærmeste offentlige skolene og lenker til kommunens eget oppslag.':
-            'We searched Geonorge and the national data catalogue (data.norge.no) in November 2026. Oslo, Bergen, Trondheim, Nordre Follo (Kolbotn), Hamar and the other municipalities have not published their school districts as open data. For them, Skolekartet shows the nearest public schools and links to the municipality’s own lookup.',
+        'Vi har søkt i Geonorge og den nasjonale datakatalogen (data.norge.no) i november 2026. Bergen, Trondheim, Nordre Follo (Kolbotn), Hamar og de andre kommunene har ikke publisert skolekretsene som åpne data. For dem viser Skolekartet de nærmeste offentlige skolene og lenker til kommunens eget oppslag.':
+            'We searched Geonorge and the national data catalogue (data.norge.no) in November 2026. Bergen, Trondheim, Nordre Follo (Kolbotn), Hamar and the other municipalities have not published their school districts as open data. For them, Skolekartet shows the nearest public schools and links to the municipality’s own lookup.',
+        'Lærertetthet i ordinær undervisning. Lavere tall betyr flere lærere per elev.': 'Teacher density in ordinary teaching. A lower number means more teachers per pupil.',
+        'Lærertetthet, {trinn}. trinn, GSI {year}': 'Teacher density, years {trinn}, GSI {year}',
+        'Ikke publisert for skolen.': 'Not published for the school.',
+        'Lærertetthet': 'Teacher density',
+        'Udir har ikke publisert lærertetthet for skolen.': 'Udir has not published teacher density for the school.',
+        '{trinn}. trinn': 'Years {trinn}',
+        'Lærertetthet og elever over tid': 'Teacher density and pupils over time',
+        'Forsterket norsk': 'Extra Norwegian',
+        'Lærertetthet er antall elever per lærer i ordinær undervisning, uten spesialundervisning og særskilt norskopplæring. Forsterket norsk er andelen elever ved hele skolen som får forsterket opplæring i norsk. Tallene gjelder 1. oktober hvert skoleår. * betyr at Udir ikke har publisert tallet.': 'Teacher density is the number of pupils per teacher in ordinary teaching, excluding special needs education and special Norwegian teaching. Extra Norwegian is the share of pupils at the whole school who get extra teaching in Norwegian. The numbers are for 1 October each school year. * means Udir has not published the number.',
+        'Grunnskolens informasjonssystem (GSI), Utdanningsdirektoratet (NLOD)': 'Primary school information system (GSI), Norwegian Directorate for Education and Training (NLOD)',
+        'Boligsøk på Finn.no for postnumrene i skolekretsen:': 'Housing search on Finn.no for the postcodes in the school district:',
+        'Boligsøk på Finn.no for postnummer {n}': 'Housing search on Finn.no for postcode {n}',
+        'Fra {school} går noen elever til {others}, avhengig av adressen.': 'From {school}, some pupils go to {others}, depending on the address.',
+        'Se kretskartet': 'See the district map',
+        'Lærertetthet (elever per lærer)': 'Teacher density (pupils per teacher)',
+        'Under 14': 'Under 14',
+        '14–15,9': '14–15.9',
+        '16–17,9': '16–17.9',
+        '18 og over': '18 and over',
+        'Antall elever per lærer i ordinær undervisning, fra Grunnskolens informasjonssystem (GSI) {year}. Lavere tall betyr flere lærere per elev. 5.–7. trinn for barneskoler og 8.–10. trinn for ungdomsskoler. Landsgjennomsnittet er {barne} på 5.–7. trinn og {ungdom} på 8.–10. trinn.': 'Number of pupils per teacher in ordinary teaching, from the primary school information system (GSI) {year}. A lower number means more teachers per pupil. Years 5–7 for primary schools and years 8–10 for lower secondary schools. The national average is {barne} in years 5–7 and {ungdom} in years 8–10.',
+        'Kretsgrensene er veiledende. Ungdomsskolekretsene er satt sammen av barneskolekretsene etter Oslo kommunes oversikt over hvilken ungdomsskole elevene går videre til. For noen barneskoler avhenger ungdomsskolen av adressen. Det er kommunen som fatter vedtak om skoleplass.': 'The district boundaries are a guide. The lower secondary districts are put together from the primary school districts, using the City of Oslo’s list of which lower secondary school pupils move on to. For some primary schools the lower secondary school depends on the address. The municipality decides on the school place.',
+        'per lærer': 'per teacher',
+        "barneskolekretser fra Plan- og bygningsetaten, brukt med tillatelse. Ungdomsskolekretsene er satt sammen av barneskolekretsene etter Oslo kommunes oversikt over hvilken ungdomsskole elevene går videre til. For noen barneskoler avhenger det av adressen.": "primary school catchment areas from the Agency for Planning and Building Services, used with permission. The lower secondary catchment areas are put together from the primary ones, using the City of Oslo’s list of which lower secondary school pupils move on to. For some primary schools it depends on the address.",
+        "Lærertetthet, elevtall og forsterket opplæring i norsk, alle år fra 2014–15": "Teacher density, pupil numbers and extra Norwegian teaching, every year since 2014–15",
+        "Grunnskolens informasjonssystem (GSI), Udirs statistikkportal": "Primary school information system (GSI), Udir’s statistics portal",
+        "Skolekrets i Oslo": "School districts in Oslo",
+        "Barneskolekretser fra Plan- og bygningsetaten, Oslo kommune": "Primary school districts from the Agency for Planning and Building Services, City of Oslo",
+        ". Ungdomsskolekretsene er satt sammen etter": ". The lower secondary districts are put together using",
+        "Oslo kommunes oversikt": "the City of Oslo’s list",
+        "Brukt med tillatelse": "Used with permission",
+        "Postnumre i skolekretsen, med lenke til boligsøk på Finn.no": "Postcodes in the school district, with links to housing search on Finn.no",
+        "Postnummerområder, Kartverket": "Postcode areas, Norwegian Mapping Authority",
+        "Lærertetthet, elevtall og forsterket opplæring i norsk (GSI)": "Teacher density, pupil numbers and extra Norwegian teaching (GSI)",
+        "Én gang i året, i desember": "Once a year, in December",
+        "Lastes ned når Udir har publisert nye tall": "Downloaded when Udir has published new numbers",
+        "Forsterket opplæring i norsk (andel elever)": "Extra Norwegian teaching (share of pupils)",
+        "10–19,9 %": "10–19.9%",
+        "20 % og over": "20% and over",
+        "Andelen elever ved skolen som får forsterket opplæring i norsk, fra Grunnskolens informasjonssystem (GSI) {year}. Landsgjennomsnittet er {value}.": "The share of pupils at the school who get extra teaching in Norwegian, from the primary school information system (GSI) {year}. The national average is {value}.",
+        'Oslo:': 'Oslo:',
         'Fredrikstad:': 'Fredrikstad:',
         'inntakssoner for barne- og ungdomsskoler, oppdatert 3. juli 2018. Grensene kan derfor avvike fra dagens.':
             'intake zones for primary and lower secondary schools, updated 3 July 2018. The boundaries may therefore differ from today’s.',
@@ -1010,7 +1096,7 @@ const I18N = (() => {
         return values ? text.replace(/\{(\w+)\}/g, (match, name) => (name in values ? values[name] : match)) : text;
     }
 
-    // Internal links: from the site's root, so links built in code work at any depth ("skole.html" is the
+    // Internal links: from the site's root, so links built in code work at any depth ("skole" is the
     // same page from skoler/oslo/), and with the language, so it also works when the browser blocks storage.
     // `base`: what a relative link is read from; links already in the page use the page's own address.
     // Anchors on the page, e-mail and phone links stay as they are.

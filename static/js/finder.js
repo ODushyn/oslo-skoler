@@ -3,7 +3,6 @@
 
 const Finder = (() => {
     const PAGE_SIZE = 10;
-    const ADDRESS_API = 'https://ws.geonorge.no/adresser/v1/sok';
     const ALL_TYPES = ['barneskole', 'ungdomsskole'];
     const ALL_OWNERS = ['offentlig', 'privat'];
     const ALL_SCORES = ['very-low', 'low', 'high', 'very-high', 'none'];
@@ -11,6 +10,10 @@ const Finder = (() => {
     const ALL_TRIVSEL = ['u38', '38', '40', '42', '44', 'none'];
     // Mobbing bands, share of pupils bullied: under 5 % · 5–9,9 % · 10–14,9 % · 15 % and over
     const ALL_MOBBING = ['u5', '5', '10', '15', 'none'];
+    // Lærertetthet bands, pupils per teacher (GSI): under 14 · 14–15,9 · 16–17,9 · 18 and over
+    const ALL_LAERER = ['u14', '14', '16', '18', 'none'];
+    // Share of pupils with forsterket opplæring i norsk (GSI): under 5 % · 5–9,9 % · 10–19,9 % · 20 % and over
+    const ALL_NORSK = ['u5', '5', '10', '20', 'none'];
     const PROFILE_LABEL = {
         montessori: 'Montessori',
         steiner: 'Steiner',
@@ -32,11 +35,12 @@ const Finder = (() => {
         profile: '',
         trivsels: new Set(ALL_TRIVSEL),
         mobbings: new Set(ALL_MOBBING),
+        laerere: new Set(ALL_LAERER),
+        norsk: new Set(ALL_NORSK),
         sort: 'distance',
         address: null, // { lat, lng, label, kommune }
         krets: null,   // pilot: { info, hits } when the address is in a kommune with open skolekrets data
         school: null,  // key of the school whose popup is open
-        mode: 'address',
         savedOnly: false,   // the list shows the saved schools ("Lagre til senere") instead of the map view
         shown: PAGE_SIZE
     };
@@ -45,11 +49,12 @@ const Finder = (() => {
     let addressMarker = null;
     let keepList = false;   // true after a school was picked from the list, until the user moves the map
     let listBounds = null;  // the map area the list was last built from
-    let addressResults = [];
+    let searchItems = [];   // what the search list shows: schools, kommuner, a postnummer and addresses
     let addressAbort = null;
     let addressTimer = null;
     let kretsData = null;   // static/js/skolekretser.json, loaded on first use
     let kretsLayer = null;
+    let postalLayer = null; // the outline of a searched postnummer
 
 
     const el = id => document.getElementById(id);
@@ -72,7 +77,6 @@ const Finder = (() => {
         bindAddressSearch();
         bindLocate();
         bindPhoneMap();
-        bindSearchMode();
 
         el('showMore').addEventListener('click', () => {
             state.shown += PAGE_SIZE;
@@ -152,8 +156,7 @@ const Finder = (() => {
             picked: keepList ? (document.querySelector('#schoolList .school-card[aria-current]') || {}).dataset?.key || null : null,
             sort: state.sort,
             school: state.school,
-            address: state.address ? { label: state.address.label, lat: state.address.lat, lng: state.address.lng, kommune: state.address.kommune } : null,
-            schoolQuery: el('schoolSearch').value,
+            address: state.address ? { label: state.address.label, lat: state.address.lat, lng: state.address.lng, kommune: state.address.kommune, postnummer: state.address.postnummer } : null,
             scrollY: window.scrollY
         };
         try { sessionStorage.setItem(VIEW_KEY, JSON.stringify(view)); } catch (_) { /* storage blocked */ }
@@ -191,7 +194,6 @@ const Finder = (() => {
             showSort(view.sort);
             writeUrlState();
         }
-        if (view.schoolQuery) el('schoolSearch').value = view.schoolQuery;
         map.setView(view.center, view.zoom, { animate: false });
         state.shown = view.shown || PAGE_SIZE;
         if (view.listBounds) {
@@ -242,12 +244,13 @@ const Finder = (() => {
         const sort = params.get('sort');
         if (['distance', 'name', 'avg-desc', 'avg-asc', 'triv-desc', 'triv-asc', 'mob-asc', 'mob-desc'].includes(sort)) state.sort = sort;
         if (params.has('mobbing')) state.mobbings = new Set(list('mobbing', ALL_MOBBING));
+        if (params.has('laerer')) state.laerere = new Set(list('laerer', ALL_LAERER));
+        if (params.has('norsk')) state.norsk = new Set(list('norsk', ALL_NORSK));
         const trivsel = params.get('trivsel');
         // Older shared links used a minimum ("4.2" = 4,2 and over)
         const legacy = { '4.0': ['40', '42', '44'], '4.2': ['42', '44'], '4.4': ['44'] };
         if (legacy[trivsel]) state.trivsels = new Set(legacy[trivsel]);
         else if (params.has('trivsel')) state.trivsels = new Set(list('trivsel', ALL_TRIVSEL));
-        if (params.get('sok') === 'skole') state.mode = 'school';
         if (params.get('lagrede') === '1') state.savedOnly = true;
 
         return { school: params.get('skole') };
@@ -264,8 +267,9 @@ const Finder = (() => {
         if (state.profile) params.set('profil', state.profile);
         if (state.trivsels.size !== ALL_TRIVSEL.length) params.set('trivsel', list(state.trivsels, ALL_TRIVSEL));
         if (state.mobbings.size !== ALL_MOBBING.length) params.set('mobbing', list(state.mobbings, ALL_MOBBING));
+        if (state.laerere.size !== ALL_LAERER.length) params.set('laerer', list(state.laerere, ALL_LAERER));
+        if (state.norsk.size !== ALL_NORSK.length) params.set('norsk', list(state.norsk, ALL_NORSK));
         if (state.sort !== 'distance') params.set('sort', state.sort);
-        if (state.mode === 'school') params.set('sok', 'skole');
         if (state.savedOnly) params.set('lagrede', '1');
         if (state.school) params.set('skole', state.school);
         if (I18N.translated) params.set('lang', I18N.lang);   // a shared link keeps the language
@@ -283,8 +287,9 @@ const Finder = (() => {
         document.querySelectorAll('input[name="profile"]').forEach(i => { i.checked = i.value === state.profile; });
         document.querySelectorAll('input[name="trivsel"]').forEach(i => { i.checked = state.trivsels.has(i.value); });
         document.querySelectorAll('input[name="mobbing"]').forEach(i => { i.checked = state.mobbings.has(i.value); });
+        document.querySelectorAll('input[name="laerer"]').forEach(i => { i.checked = state.laerere.has(i.value); });
+        document.querySelectorAll('input[name="norsk"]').forEach(i => { i.checked = state.norsk.has(i.value); });
         showSort(state.sort);
-        document.querySelectorAll('input[name="searchMode"]').forEach(i => { i.checked = i.value === state.mode; });
     }
 
     // ── Filters ──────────────────────────────────────────────────────────
@@ -338,6 +343,18 @@ const Finder = (() => {
         document.querySelectorAll('input[name="mobbing"]').forEach(input => {
             input.addEventListener('change', () => {
                 toggle(state.mobbings, input.value, input.checked);
+                applyFilters();
+            });
+        });
+        document.querySelectorAll('input[name="laerer"]').forEach(input => {
+            input.addEventListener('change', () => {
+                toggle(state.laerere, input.value, input.checked);
+                applyFilters();
+            });
+        });
+        document.querySelectorAll('input[name="norsk"]').forEach(input => {
+            input.addEventListener('change', () => {
+                toggle(state.norsk, input.value, input.checked);
                 applyFilters();
             });
         });
@@ -434,7 +451,9 @@ const Finder = (() => {
             + (state.kommune ? 1 : 0)
             + (state.profile ? 1 : 0)
             + (state.trivsels.size !== ALL_TRIVSEL.length ? 1 : 0)
-            + (state.mobbings.size !== ALL_MOBBING.length ? 1 : 0);
+            + (state.mobbings.size !== ALL_MOBBING.length ? 1 : 0)
+            + (state.laerere.size !== ALL_LAERER.length ? 1 : 0)
+            + (state.norsk.size !== ALL_NORSK.length ? 1 : 0);
     }
 
     function updateFilterCount() {
@@ -461,7 +480,9 @@ const Finder = (() => {
         { name: 'type', label: 'Skoletype', key: 'types', all: () => ALL_TYPES, named: false },
         { name: 'owner', label: 'Eierform', key: 'owners', all: () => ALL_OWNERS, named: false },
         { name: 'trivsel', label: 'Trivsel', key: 'trivsels', all: () => ALL_TRIVSEL, named: true },
-        { name: 'mobbing', label: 'Mobbing', key: 'mobbings', all: () => ALL_MOBBING, named: true }
+        { name: 'mobbing', label: 'Mobbing', key: 'mobbings', all: () => ALL_MOBBING, named: true },
+        { name: 'laerer', label: 'Lærertetthet', key: 'laerere', all: () => ALL_LAERER, named: true },
+        { name: 'norsk', label: 'Forsterket norsk', key: 'norsk', all: () => ALL_NORSK, named: true }
     ];
 
     function activeFilterChips() {
@@ -558,7 +579,9 @@ const Finder = (() => {
             && (!state.kommune || school.kommune === state.kommune)
             && (!state.profile || school.profil === state.profile)
             && shown.some(level => state.trivsels.has(trivselBand(level)))
-            && shown.some(level => state.mobbings.has(mobbingBand(level)));
+            && shown.some(level => state.mobbings.has(mobbingBand(level)))
+            && shown.some(level => state.laerere.has(laererBand(level)))
+            && shown.some(level => state.norsk.has(norskBand(level)));
     }
 
     // ── Schools with 1.–10. trinn ──────────────────────────────────────
@@ -602,6 +625,24 @@ const Finder = (() => {
         return '15';
     }
 
+    function laererBand(school) {
+        const value = school.gsi && school.gsi.laerertetthet;
+        if (value === null || value === undefined) return 'none';
+        if (value < 14) return 'u14';
+        if (value < 16) return '14';
+        if (value < 18) return '16';
+        return '18';
+    }
+
+    function norskBand(school) {
+        const share = school.gsi && school.gsi.norsk;
+        if (share === null || share === undefined) return 'none';
+        if (share < 5) return 'u5';
+        if (share < 10) return '5';
+        if (share < 20) return '10';
+        return '20';
+    }
+
     function filtersActive() {
         return activeFilterCount() > 0;
     }
@@ -627,6 +668,8 @@ const Finder = (() => {
         state.profile = '';
         state.trivsels = new Set(ALL_TRIVSEL);
         state.mobbings = new Set(ALL_MOBBING);
+        state.laerere = new Set(ALL_LAERER);
+        state.norsk = new Set(ALL_NORSK);
         syncControls();
         applyFilters();
     }
@@ -925,16 +968,15 @@ const Finder = (() => {
     // "680 m · ca. 11 min å gå": distance in a straight line and the estimated walk
     function distanceLabel(school) {
         const meters = L.latLng(state.address.lat, state.address.lng).distanceTo([school.lat, school.lng]);
+        if (state.address.postnummer) {
+            return inPostalArea(state.address, school)
+                ? t('I postnummer {postnummer}', { postnummer: state.address.postnummer })
+                : t('{distance} fra midten av {postnummer}', { distance: formatDistance(meters), postnummer: state.address.postnummer });
+        }
         const walk = walkEstimate(state.address, school);
         return walk.minutes > WALK_MAX_MINUTES
             ? formatDistance(meters)
             : `${formatDistance(meters)} · ${t('ca. {minutes} min å gå', { minutes: walk.minutes })}`;
-    }
-
-    function formatDistance(meters) {
-        return meters < 1000
-            ? `${Math.round(meters / 10) * 10} m`
-            : `${numberFormat.format(meters / 1000)} km`;
     }
 
     // Jump to a school without animation and open its popup once the marker is on the map
@@ -1095,7 +1137,7 @@ const Finder = (() => {
         miniMap = L.map(slot.firstElementChild, { scrollWheelZoom: false, zoomControl: false, maxZoom: 19, zoomAnimation: false })
             .setView([school.lat, school.lng], 15);
         L.control.zoom({ position: 'bottomright' }).addTo(miniMap);
-        L.maplibreGL({ style: THEME.mapStyle(), attributionControl: { customAttribution: MAP_ATTRIBUTION } }).addTo(miniMap);
+        baseMapLayer().addTo(miniMap);
         miniMap.attributionControl.setPrefix(false);
         // Popups sized to the small map (their frame adds about 50 px). The bottom padding keeps the marker
         // under a popup clear of the attribution; a school with two levels scrolls inside its popup.
@@ -1121,33 +1163,10 @@ const Finder = (() => {
         if (keepPlace) scrollIntoViewIfCut(slot);
     }
 
-    // ── Search mode: one search row, the select decides what we search by ─
-    const SEARCH_MODES = {
-        address: { field: 'addressField', input: 'addressSearch' },
-        school: { field: 'schoolField', input: 'schoolSearch' }
-    };
-
-    function bindSearchMode() {
-        const radios = document.querySelectorAll('input[name="searchMode"]');
-        radios.forEach(radio => radio.addEventListener('change', () => {
-            if (radio.checked) setSearchMode(radio.value, true);
-        }));
-        const checked = document.querySelector('input[name="searchMode"]:checked');
-        setSearchMode(checked ? checked.value : 'address', false);
-    }
-
-    function setSearchMode(mode, focus) {
-        Object.entries(SEARCH_MODES).forEach(([name, config]) => {
-            el(config.field).hidden = name !== mode;
-        });
-        showLocateError(null);
-        const config = SEARCH_MODES[mode] || SEARCH_MODES.address;
-        state.mode = mode === 'school' ? 'school' : 'address';
-        if (map) writeUrlState();
-        if (focus) el(config.input).focus();
-    }
-
-    // ── Address search (Kartverket) ─────────────────────────────────────
+    // ── One search for everything ───────────────────────────────────────
+    // Schools and kommuner come from our own data as soon as two letters are typed; a postnummer and
+    // addresses come from Kartverket a moment later. A school opens on the map, a kommune becomes the
+    // kommune filter, and a postnummer or an address sorts the list from there.
     function bindAddressSearch() {
         const suggestion = el('addressSuggestion');
         const input = el('addressSearch');
@@ -1165,11 +1184,14 @@ const Finder = (() => {
                 list.innerHTML = locateOptionHtml();
                 return;
             }
-            if (query.length < 3) {
+            if (query.length < 2) {
                 list.innerHTML = '';
                 return;
             }
-            addressTimer = setTimeout(() => searchAddress(query, list), 250);
+            const local = localMatches(query);
+            if (local.length) showSearchItems(query, list, local);
+            else list.innerHTML = '';
+            if (query.length >= 3) addressTimer = setTimeout(() => searchAddress(query, list, local), 250);
         });
 
         // An empty field lists "Din posisjon" first, so it is there when the field gets focus
@@ -1199,10 +1221,18 @@ const Finder = (() => {
 
             // Only real results carry an index; the empty-state option does not
             if (!/^\d+$/.test(item.value)) return;
-            const result = addressResults[Number(item.value)];
+            const result = searchItems[Number(item.value)];
             if (!result) return;
             list.innerHTML = '';
-            selectAddress(result);
+            if (result.kind === 'school') {
+                // The searched address (if any) stays; the school opens on the map
+                input.value = state.address ? state.address.label : '';
+                input.blur();
+                showSchool(result.key);
+            } else if (result.kind === 'kommune') {
+                chooseKommune(result.kommune);
+            } else if (result.postnummer) placePostalArea(result).then(selectAddress);
+            else selectAddress(result);
         });
     }
 
@@ -1212,7 +1242,6 @@ const Finder = (() => {
     // browser: it is not sent to Kartverket or put in the address bar. The kommune for the skolekrets
     // pilot is found from the krets polygons themselves.
     const canLocate = () => 'geolocation' in navigator;
-    const TARGET_ICON = '<svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="6.25" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="2.25" fill="currentColor"/><path d="M12 2.75V5.75M12 18.25V21.25M2.75 12H5.75M18.25 12H21.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
 
     function locateOptionHtml() {
         if (!canLocate()) return '';
@@ -1294,37 +1323,92 @@ const Finder = (() => {
         clearAddress();
     }
 
-    async function searchAddress(query, list) {
+    // Schools by name (a school with both levels is one hit) and kommuner, best matches first
+    function localMatches(query) {
+        const q = query.toLocaleLowerCase('nb');
+        const seen = new Set();
+        const schools = findSchools(query)
+            .filter(school => {
+                const place = `${school.name}|${school.kommune}`;
+                if (seen.has(place) || !school.name.toLocaleLowerCase('nb').includes(q)) return false;
+                seen.add(place);
+                return true;
+            })
+            .slice(0, 5)
+            .map(school => ({ kind: 'school', key: schoolKey(school), school }));
+        const starts = name => (name.toLocaleLowerCase('nb').startsWith(q) ? 0 : 1);
+        const kommuner = [...new Set(entries.map(e => e.school.kommune))]
+            .filter(name => name.toLocaleLowerCase('nb').includes(q))
+            .sort((a, b) => starts(a) - starts(b) || a.localeCompare(b, 'nb'))
+            .slice(0, 3)
+            .map(kommune => ({ kind: 'kommune', kommune }));
+        return [...kommuner, ...schools];
+    }
+
+    // With a digit in it the query is most likely an address or a postnummer, so those come first
+    function showSearchItems(query, list, local, places = [], failed = false) {
+        // Beside schools and kommuner a few addresses are enough
+        if (local.length) places = places.slice(0, 5);
+        searchItems = /\d/.test(query) ? [...places, ...local] : [...local, ...places];
+        const option = (item, i) => {
+            if (item.kind === 'school') {
+                const levels = schoolsData.filter(s => s.name === item.school.name && s.kommune === item.school.kommune);
+                const type = levels.length > 1 ? t('Barne- og ungdomsskole (1.–10. trinn)') : (SCHOOL_TYPE_LABEL[item.school.schoolType] || item.school.schoolType);
+                return `<u-option value="${i}" label="${escapeHtml(`${item.school.name}, ${item.school.kommune}`)}">
+                    <span class="search-result-name">${highlightMatch(item.school.name, query)}</span>
+                    <span class="search-result-kommune">${escapeHtml(item.school.kommune)} · ${type}</span></u-option>`;
+            }
+            if (item.kind === 'kommune') {
+                return `<u-option value="${i}" label="${escapeHtml(item.kommune)}">${highlightMatch(item.kommune, query)} <span class="address-option__kind">${t('Kommune')}</span></u-option>`;
+            }
+            return `<u-option value="${i}" label="${escapeHtml(item.label)}">${escapeHtml(item.label)}${
+                item.postnummer ? ` <span class="address-option__kind">${t('Postnummer')}</span>` : ''}</u-option>`;
+        };
+        list.innerHTML = searchItems.map(option).join('')
+            + (failed ? `<u-option data-empty value="">${t('Adressesøket er ikke tilgjengelig akkurat nå')}</u-option>`
+                : searchItems.length ? '' : `<u-option data-empty value="">${t('Ingen treff')}</u-option>`);
+        openSuggestions(list, 'addressSearch');
+    }
+
+    // A kommune from the search works as the kommune filter: the map shows the whole kommune
+    function chooseKommune(kommune) {
+        state.kommune = kommune;
+        el('kommuneFilter').value = kommune;
+        clearAddressSearch();
+        applyFilters();
+        fitToFiltered();
+    }
+
+    async function searchAddress(query, list, local) {
         if (addressAbort) addressAbort.abort();
         addressAbort = new AbortController();
-        const params = new URLSearchParams({ sok: query, fuzzy: 'true', treffPerSide: '8', utkoordsys: '4258' });
-
         try {
-            const response = await fetch(`${ADDRESS_API}?${params}`, { signal: addressAbort.signal });
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            const data = await response.json();
-            addressResults = (data.adresser || [])
-                .filter(a => a.representasjonspunkt)
-                .map(a => ({
-                    label: `${a.adressetekst}, ${a.postnummer} ${titleCase(a.poststed)}`,
-                    lat: a.representasjonspunkt.lat,
-                    lng: a.representasjonspunkt.lon,
-                    kommune: titleCase(a.kommunenavn)
-                }));
-            list.innerHTML = addressResults.length
-                ? addressResults.map((a, i) => `<u-option value="${i}" label="${escapeHtml(a.label)}">${escapeHtml(a.label)}</u-option>`).join('')
-                : '<u-option data-empty value="">Ingen adresser funnet</u-option>';
-            openSuggestions(list, 'addressSearch');
+            const places = await searchPlaces(query, { signal: addressAbort.signal });
+            if (el('addressSearch').value.trim() === query) showSearchItems(query, list, local, places);
         } catch (error) {
             if (error.name === 'AbortError') return;
             console.error('Address search failed:', error);
-            list.innerHTML = '<u-option data-empty value="">Adressesøket er ikke tilgjengelig akkurat nå</u-option>';
+            if (el('addressSearch').value.trim() === query) showSearchItems(query, list, local, [], true);
         }
     }
 
+    function drawPostalArea(result) {
+        if (postalLayer) postalLayer.remove();
+        postalLayer = null;
+        if (!result.area || !result.area.length) return;
+        const color = getComputedStyle(document.documentElement).getPropertyValue('--ds-color-brand1-base-default').trim() || '#0d7a5f';
+        postalLayer = L.polygon(result.area.map(polygon => polygon.map(ring => ring.map(([lng, lat]) => [lat, lng]))), {
+            color, weight: 2, fillOpacity: 0.06, interactive: false,
+            attribution: POSTAL_AREA_ATTRIBUTION
+        }).addTo(map);
+    }
+
+    const inPostalArea = (address, school) => Boolean(address.area) && address.area.some(polygon => insideRings(school.lng, school.lat, polygon));
+
     function setAddress(result) {
         state.address = result;
-        rememberAddress(result);
+        // A postnummer is an area, not a place to walk from: the school page gets no walking time from it
+        rememberAddress(result.postnummer ? null : result);
         state.sort = 'distance';
         showSort('distance');
 
@@ -1340,11 +1424,27 @@ const Finder = (() => {
             zIndexOffset: 1000
         }).bindTooltip(escapeHtml(result.label)).addTo(map);
 
+        clearKrets();
+        if (result.postnummer) {
+            // Back from a school page the area is loaded again; the view is already the saved one
+            const ready = result.area !== undefined ? Promise.resolve(result) : placePostalArea({ ...result }).then(loaded => {
+                result.area = loaded.area;
+                return result;
+            });
+            ready.then(() => {
+                if (state.address !== result) return;
+                drawPostalArea(result);
+                if (postalLayer) map.fitBounds(postalLayer.getBounds(), { maxZoom: 15, padding: [16, 16] });
+                refreshList();
+            });
+            map.setView([result.lat, result.lng], 14);
+            writeUrlState();
+            return;
+        }
         map.setView([result.lat, result.lng], 14);
         writeUrlState();
 
         // Pilot: exact skolekrets where the kommune publishes open data
-        clearKrets();
         findKretser(result).then(found => {
             if (state.address !== result || !found) return;
             state.krets = found;
@@ -1358,6 +1458,10 @@ const Finder = (() => {
         state.address = null;
         rememberAddress(null);
         clearKrets();
+        if (postalLayer) {
+            postalLayer.remove();
+            postalLayer = null;
+        }
         if (addressMarker) {
             addressMarker.remove();
             addressMarker = null;
@@ -1369,23 +1473,11 @@ const Finder = (() => {
     // ── Skolekrets pilot (Halden, Stavanger) ──────────────────────────────
     function loadKretser() {
         if (!kretsData) {
-            kretsData = fetch('static/js/skolekretser.json?v=1')
+            kretsData = fetch('static/js/skolekretser.json?v=2')
                 .then(r => (r.ok ? r.json() : null))
                 .catch(() => null);
         }
         return kretsData;
-    }
-
-    // Even-odd rule over all rings, so holes work too. Coordinates are [lng, lat].
-    function insideRings(lng, lat, rings) {
-        let inside = false;
-        rings.forEach(ring => {
-            for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-                const [xi, yi] = ring[i], [xj, yj] = ring[j];
-                if ((yi > lat) !== (yj > lat) && lng < (xj - xi) * (lat - yi) / (yj - yi) + xi) inside = !inside;
-            }
-        });
-        return inside;
     }
 
     async function findKretser(result) {
@@ -1424,11 +1516,12 @@ const Finder = (() => {
     // Where a kommune publishes open skolekrets data, show the exact krets as a pilot.
     function renderKretsNote() {
         const note = el('kretsNote');
-        // Not on the saved schools page, which is only the list and the map
-        note.hidden = !state.address || state.savedOnly;
+        // Not on the saved schools page, which is only the list and the map. Not for a postnummer either:
+        // it spans several kretser, so neither the krets nor the nearest schools from its middle would be right
+        note.hidden = !state.address || state.savedOnly || Boolean(state.address.postnummer);
         if (note.hidden) return;
         const kommune = state.address.kommune;
-        const check = `<a class="ds-link" href="${I18N.href('om-skolekrets.html')}">${kommune
+        const check = `<a class="ds-link" href="${I18N.href('om-skolekrets')}">${kommune
             ? t('Sjekk skolekretsen hos {kommune} kommune', { kommune: escapeHtml(kommune) })
             : t('Sjekk skolekretsen hos kommunen')}</a>.`;
         const krets = state.krets;
@@ -1437,7 +1530,7 @@ const Finder = (() => {
                 const entry = k.school && entries.find(e => e.levels.some(l => l.name === k.school && l.kommune === k.kommune && l.schoolType === k.level));
                 return { krets: k, entry, level: entry && entry.levels.find(l => l.schoolType === k.level) };
             })
-            .filter(hit => hit.entry) : [];
+            .filter(hit => hit.entry || hit.krets.school) : [];
 
         // No skolekrets data for this address (Oslo and most kommuner): show the nearest public
         // barneskole and ungdomsskole in the same cards, clearly named as the nearest, not the krets
@@ -1449,7 +1542,7 @@ const Finder = (() => {
                        ${out('https://www.oslo.kommune.no/skole-og-utdanning/skoleoversikt-og-skolekrets/skolekrets-barneskole/', 'Finn barneskole')} ·
                        ${out('https://www.oslo.kommune.no/skole-og-utdanning/skoleoversikt-og-skolekrets/skolekrets-ungdomsskole/', 'Finn ungdomsskole')}</p>`
                 : `<p class="ds-paragraph" data-size="sm">${check}</p>`;
-            const where = `<p class="ds-paragraph" data-size="sm"><a class="ds-link" href="${I18N.href('om-skolekrets.html')}#pilot">${t('Se hvilke kommuner vi kan vise skolekretsen for, og hvor dataene kommer fra')}</a></p>`;
+            const where = `<p class="ds-paragraph" data-size="sm"><a class="ds-link" href="${I18N.href('om-skolekrets')}#pilot">${t('Se hvilke kommuner vi kan vise skolekretsen for, og hvor dataene kommer fra')}</a></p>`;
             const ref = L.latLng(state.address.lat, state.address.lng);
             const nearest = ['barneskole', 'ungdomsskole'].map(type => entries
                 .filter(e => e.levels.some(l => l.schoolType === type) && e.school.eierform !== 'privat' && e.school.lat && e.school.lng)
@@ -1490,14 +1583,49 @@ const Finder = (() => {
                     <p class="ds-paragraph" data-size="sm">${t('Dette er en pilot på åpne data og kan avvike fra kommunens gjeldende grenser.')} ${escapeHtml(t(krets.info.caveat))}</p>
                     <p class="ds-paragraph" data-size="sm">${t('Kilde:')} <a class="ds-link" href="${escapeHtml(safeUrl(krets.info.sourceUrl))}" target="_blank" rel="noopener">${escapeHtml(t(krets.info.source))}</a>.</p>
                     <p class="ds-paragraph" data-size="sm">${check}</p>
-                    <p class="ds-paragraph" data-size="sm"><a class="ds-link" href="${I18N.href('om-skolekrets.html')}#pilot">${t('Se hvilke kommuner vi kan vise skolekretsen for, og hvor dataene kommer fra')}</a></p>
+                    <p class="ds-paragraph" data-size="sm"><a class="ds-link" href="${I18N.href('om-skolekrets')}#pilot">${t('Se hvilke kommuner vi kan vise skolekretsen for, og hvor dataene kommer fra')}</a></p>
                 </div>
                 ${own.map(card).join('')}
+                ${finnHtml(own)}
             </section>`;
+        }
+
+        // Housing search on Finn.no for each postnummer in the barneskolekrets (or the krets found)
+        function finnHtml(hits) {
+            const krets = (hits.find(h => h.krets.level === 'barneskole') || hits[0] || {}).krets;
+            const numbers = (krets && krets.postnummer) || [];
+            if (!numbers.length) return '';
+            return `<p class="ds-paragraph own-schools__finn" data-size="sm">${t('Boligsøk på Finn.no for postnumrene i skolekretsen:')}
+                ${numbers.map(n => `<a class="ds-link" href="https://www.finn.no/realestate/homes/search.html?q=${encodeURIComponent(n)}" target="_blank" rel="noopener"
+                    aria-label="${escapeHtml(t('Boligsøk på Finn.no for postnummer {n}', { n }))}">${escapeHtml(n)}</a>`).join(' · ')}</p>`;
+        }
+
+        // Oslo: a barneskole whose pupils go to two ungdomsskoler, depending on the address
+        function splitNote(k) {
+            if (!k.split || !k.split.length) return '';
+            return k.split.map(sp => `<span class="own-school__split-line">${t('Fra {school} går noen elever til {others}, avhengig av adressen.', {
+                    school: escapeHtml(sp.school), others: sp.others.map(escapeHtml).join(', ') })}
+                    ${sp.map ? `<a class="ds-link" href="${escapeHtml(safeUrl(sp.map))}" target="_blank" rel="noopener">${t('Se kretskartet')}</a>` : ''}</span>`).join('');
         }
 
         // A card for one school: the krets name only when it comes from skolekrets data
         function card({ krets: k, entry, level }, index) {
+            // The krets school is not in our data (too small to have published results): name only
+            if (!entry) return `
+                <div class="own-school-item">
+                    <div class="ds-card own-school" data-variant="tinted" data-color="neutral">
+                        <span class="own-school__head">
+                            <span class="school-marker score-none" aria-hidden="true">${schoolTypeIcon(k.level)}</span>
+                            <span class="own-school__body">
+                                <span class="own-school__name">${escapeHtml(k.school)}</span>
+                                <span class="own-school__meta">${[t(k.level === 'barneskole' ? 'Barneskole' : 'Ungdomsskole'),
+                                    t('({name} skolekrets)', { name: escapeHtml(k.name) }).replace(/^\(|\)$/g, '')].join(' · ')}</span>
+                                <span class="own-school__meta">${t('Skolen har ingen offentlige resultater og er derfor ikke med i lista.')}</span>
+                                ${splitNote(k)}
+                            </span>
+                        </span>
+                    </div>
+                </div>`;
             const school = level || entry.school;
             const key = schoolKey(school);
             const meta = [SCHOOL_TYPE_LABEL[school.schoolType] || school.schoolType,
@@ -1519,6 +1647,7 @@ const Finder = (() => {
                     </button>
                     ${saveButtonHtml(key, 'own-school__fav')}
                     ${cardDetails({ levels: [school], school }, `ownDetails${index}`)}
+                    ${k.split ? `<p class="ds-paragraph own-school__split" data-size="xs">${splitNote(k)}</p>` : ''}
                 </div>`;
         }
     }
@@ -1549,10 +1678,6 @@ const Finder = (() => {
             card.setAttribute('aria-current', 'true');
             showSchool(card.dataset.show, true);
         });
-    }
-
-    function titleCase(text) {
-        return (text || '').toLowerCase().replace(/(^|[\s-])\p{L}/gu, m => m.toUpperCase());
     }
 
     return { init, showSchool };

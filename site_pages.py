@@ -8,9 +8,13 @@ static/js/school-page.js on top of the static text, as on skole.html.
 Run after create_map.py and school_details.py (update_data.py does this every night). create_map.py calls
 assign_pages() so every school in static/js/school-data.json has its page path ("page").
 
-    skoler/index.html                       all kommuner
-    skoler/<kommune>/index.html             the schools in one kommune
-    skoler/<kommune>/<skole>.html           one school (both levels of a 1–10 school on one page)
+    skoler/index.html                       all kommuner                  skolekartet.no/skoler/
+    skoler/<kommune>/index.html             the schools in one kommune    skolekartet.no/skoler/<kommune>/
+    skoler/<kommune>/<skole>.html           one school (both levels of    skolekartet.no/skoler/<kommune>/<skole>
+                                            a 1–10 school on one page)
+
+The addresses have no .html ending: GitHub Pages serves <skole>.html at /skoler/<kommune>/<skole>, and the
+links, canonical addresses and sitemap use that address.
 
 The pages say only what the data says. Titles and descriptions are neutral (no numbers), so a search result
 does not show "mobbing 12 %" without its context; the numbers are on the page, next to the national
@@ -66,8 +70,9 @@ def kommune_path(kommune):
 
 
 def assign_pages(schools):
-    """Give every school entry its page path ("page"). One page per school (orgnr), so both levels of a
-    1–10 school share it. Two schools with the same name in one kommune get the orgnr added."""
+    """Give every school entry its page address ("page", without .html; the file is page + ".html"). One page
+    per school (orgnr), so both levels of a 1–10 school share it. Two schools with the same name in one
+    kommune get the orgnr added."""
     taken = {}
     by_orgnr = defaultdict(list)
     for school in schools:
@@ -75,7 +80,7 @@ def assign_pages(schools):
     for key in sorted(by_orgnr):
         first = by_orgnr[key][0]
         base = f"{kommune_path(first['kommune'])}{slugify(first['name']) or 'skole'}"
-        path = f'{base}.html' if base not in taken else f'{base}-{slugify(key)}.html'
+        path = base if base not in taken else f'{base}-{slugify(key)}'
         taken[base] = key
         for school in by_orgnr[key]:
             school['page'] = path
@@ -294,7 +299,7 @@ def school_page(levels, details, nearby, data, national_all):
             </section>
             <p class="ds-paragraph school-page__sources" data-size="xs">Kilder: nasjonale prøver og Elevundersøkelsen fra
                 Utdanningsdirektoratet, Nasjonalt skoleregister (NLOD). Avstanden er målt i luftlinje.
-                <a class="ds-link" href="../../datakilder.html">Om datakildene</a>.</p>"""
+                <a class="ds-link" href="../../datakilder">Om datakildene</a>.</p>"""
 
     school_ld = {'@type': 'School', '@id': canonical + '#skole', 'name': name, 'url': canonical,
                  'address': {'@type': 'PostalAddress', 'addressLocality': re.sub(r'\s*\(.*\)$', '', kommune), 'addressCountry': 'NO'},
@@ -377,7 +382,7 @@ def kommune_page(kommune, schools_by_page, data, national_all, kommune_avg):
                 </div>
                 <p class="ds-paragraph"><a class="ds-link" href="../">Skoler i andre kommuner</a></p>
                 <p class="ds-paragraph school-page__sources" data-size="xs">Kilder: nasjonale prøver og Elevundersøkelsen fra
-                    Utdanningsdirektoratet, Nasjonalt skoleregister (NLOD). <a class="ds-link" href="../../datakilder.html">Om datakildene</a>.</p>"""
+                    Utdanningsdirektoratet, Nasjonalt skoleregister (NLOD). <a class="ds-link" href="../../datakilder">Om datakildene</a>.</p>"""
     json_ld = {'@context': 'https://schema.org', '@graph': [
         {'@type': 'CollectionPage', '@id': canonical, 'name': f'Skoler i {kommune}', 'url': canonical, 'description': description,
          'mainEntity': {'@type': 'ItemList', 'numberOfItems': count, 'itemListElement': [
@@ -431,7 +436,7 @@ def write(path, text, written):
 def main():
     data = json.loads(DATA_FILE.read_text(encoding='utf-8'))
     schools = data['schools']
-    if not all(s.get('page') for s in schools):
+    if not all(s.get('page') and not s['page'].endswith('.html') for s in schools):
         assign_pages(schools)  # data from an older create_map.py
     national_all = json.loads(NATIONAL_FILE.read_text(encoding='utf-8')) if NATIONAL_FILE.exists() else {}
     kommune_avg = json.loads(KOMMUNE_FILE.read_text(encoding='utf-8')) if KOMMUNE_FILE.exists() else {}
@@ -456,7 +461,7 @@ def main():
         if school.get('lat') is not None:
             nearby = heapq.nsmallest(NEARBY, ((other, pages[other_page], distance_km(school, other))
                                               for other_page, other in located if other_page != page), key=lambda item: item[2])
-        changed += write(page, school_page(levels, details[page], nearby, data, national_all), written)
+        changed += write(page + '.html', school_page(levels, details[page], nearby, data, national_all), written)
         entries.append((page, details[page].get('updated')))
 
     kommune_dates = {}

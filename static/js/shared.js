@@ -19,9 +19,9 @@ function schoolKey(school) {
 }
 
 // The school's own page: the page under skoler/ that search engines read (school.page, set by
-// create_map.py and built by site_pages.py), or skole.html?id= for a school without one
+// create_map.py and built by site_pages.py), or skole?id= for a school without one
 function schoolUrl(school) {
-    return I18N.href(school.page || `skole.html?id=${encodeURIComponent(schoolKey(school))}`);
+    return I18N.href(school.page || `skole?id=${encodeURIComponent(schoolKey(school))}`);
 }
 
 function formatDecimal(value) {
@@ -29,6 +29,57 @@ function formatDecimal(value) {
 }
 
 // "11,3 %" in Norwegian, "11.3%" in English (HTML, keeps the sign on the same line)
+// The base map: OpenFreeMap vector tiles, drawn by MapLibre GL inside Leaflet. The style names a few icons its
+// own sprite does not have (gate, bollard, swimming_pool ...); they get an empty image, not a console warning.
+function baseMapLayer() {
+    const layer = L.maplibreGL({
+        // Empty at first: the real style is loaded on 'add', through baseMapStyle below
+        style: { version: 8, sources: {}, layers: [] },
+        attributionControl: { customAttribution: MAP_ATTRIBUTION }
+    });
+    layer.once('add', () => {
+        const gl = layer.getMaplibreMap();
+        gl.on('styleimagemissing', event => {
+            if (!gl.hasImage(event.id)) gl.addImage(event.id, { width: 1, height: 1, data: new Uint8Array(4) });
+        });
+        gl.setStyle(typeof THEME !== 'undefined' ? THEME.mapStyle() : 'https://tiles.openfreemap.org/styles/liberty',
+            { diff: false, transformStyle: (previous, style) => baseMapStyle(style) });
+    });
+    return layer;
+}
+
+// The OpenFreeMap style compares numbers that many map features lack (rank of a label, length of a road
+// number, height of a building). MapLibre then warns "Expected value to be of type number, but found null"
+// for every such feature. A missing number gets a fallback that gives the same result: the comparison is
+// still false, and a building without a height stays flat.
+function baseMapStyle(style) {
+    const LOW = -1e9;
+    const HIGH = 1e9;
+    const fallback = { '>': LOW, '>=': LOW, '<': HIGH, '<=': HIGH };
+    const isGet = value => Array.isArray(value) && value[0] === 'get' && value.length === 2;
+    const fix = expression => {
+        if (!Array.isArray(expression)) return expression;
+        const fixed = expression.map(fix);
+        if (fallback[fixed[0]] !== undefined && fixed.length === 3) {
+            if (isGet(fixed[1]) && typeof fixed[2] === 'number') fixed[1] = ['coalesce', fixed[1], fallback[fixed[0]]];
+            if (isGet(fixed[2]) && typeof fixed[1] === 'number') fixed[2] = ['coalesce', fixed[2], -fallback[fixed[0]]];
+        }
+        return fixed;
+    };
+    style.layers.forEach(layer => {
+        if (layer.filter) layer.filter = fix(layer.filter);
+        ['fill-extrusion-base', 'fill-extrusion-height'].forEach(key => {
+            if (layer.paint && isGet(layer.paint[key])) layer.paint[key] = ['coalesce', layer.paint[key], 0];
+        });
+    });
+    return style;
+}
+
+// "850 m", "1,2 km"
+function formatDistance(meters) {
+    return meters < 1000 ? `${Math.round(meters / 10) * 10} m` : `${formatDecimal(meters / 1000)} km`;
+}
+
 function formatPercent(value) {
     return `${formatDecimal(value)}${I18N.isEnglish ? '' : '&nbsp;'}%`;
 }
@@ -78,6 +129,13 @@ const ICON_PATHS = {
     phone: '<path d="M6.11614 2.82315C6.6043 2.33499 7.39575 2.33499 7.88391 2.82315L11.6768 6.61604C12.165 7.1042 12.165 7.89565 11.6768 8.38381L10.0607 9.99992L14 13.9393L15.6161 12.3231C16.1043 11.835 16.8958 11.835 17.3839 12.3231L21.1768 16.116C21.665 16.6042 21.665 17.3957 21.1768 17.8838L18.3958 20.6648C17.6586 21.402 16.553 21.6289 15.585 21.2417C9.73437 18.9014 5.09851 14.2656 2.75824 8.41492C2.37105 7.44692 2.59798 6.34131 3.33519 5.6041L6.11614 2.82315L6.64647 3.35348L6.11614 2.82315ZM7.00002 4.06059L4.39585 6.66476C4.08293 6.97767 3.98661 7.44696 4.15096 7.85783C6.33876 13.3273 10.6726 17.6612 16.1421 19.849C16.553 20.0133 17.0223 19.917 17.3352 19.6041L19.9394 16.9999L16.5 13.5606L14.5304 15.5303C14.2375 15.8231 13.7626 15.8231 13.4697 15.5303L8.46969 10.5303C8.1768 10.2374 8.1768 9.76249 8.46969 9.46959L10.4394 7.49992L7.00002 4.06059Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/>',
     image: '<path d="M4 5.75C3.86193 5.75 3.75 5.86193 3.75 6V18C3.75 18.1381 3.86193 18.25 4 18.25H9.59861L13.376 12.584C13.5151 12.3753 13.7492 12.25 14 12.25C14.2508 12.25 14.4849 12.3753 14.624 12.584L18.4014 18.25H20C20.1381 18.25 20.25 18.1381 20.25 18V6C20.25 5.86193 20.1381 5.75 20 5.75H4ZM16.5986 18.25L14 14.3521L11.4014 18.25H16.5986ZM2.25 6C2.25 5.0335 3.0335 4.25 4 4.25H20C20.9665 4.25 21.75 5.0335 21.75 6V18C21.75 18.9665 20.9665 19.75 20 19.75H4C3.0335 19.75 2.25 18.9665 2.25 18V6ZM8 8.75C7.30964 8.75 6.75 9.30964 6.75 10C6.75 10.6904 7.30964 11.25 8 11.25C8.69036 11.25 9.25 10.6904 9.25 10C9.25 9.30964 8.69036 8.75 8 8.75ZM5.25 10C5.25 8.48122 6.48122 7.25 8 7.25C9.51878 7.25 10.75 8.48122 10.75 10C10.75 11.5188 9.51878 12.75 8 12.75C6.48122 12.75 5.25 11.5188 5.25 10Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/>',
     locationPin: '<path d="M7.58075 5.58058C10.0215 3.13981 13.9788 3.13981 16.4196 5.58058C18.829 7.98999 18.7208 11.7547 16.3826 14.4592C15.8985 15.0192 14.6522 16.5427 13.5371 17.9135C12.9773 18.6017 12.4472 19.2555 12.0572 19.7371L12.0002 19.8075L11.9432 19.7371C11.5531 19.2555 11.0231 18.6017 10.4633 17.9135C9.34813 16.5427 8.1019 15.0192 7.61778 14.4592C5.27952 11.7547 5.17135 7.98999 7.58075 5.58058ZM12.0002 21C12.5836 21.4713 12.5836 21.4713 12.5837 21.4712L12.0002 21ZM11.4167 21.4712L11.416 21.4704L11.2433 21.2567C11.1321 21.1193 10.9723 20.9217 10.7775 20.6811C10.3879 20.2 9.85856 19.5472 9.29965 18.8601C8.17735 17.4805 6.9487 15.9788 6.48307 15.4403C3.72084 12.2453 3.46216 7.57786 6.52009 4.51992C9.54666 1.49336 14.4537 1.49336 17.4802 4.51992C20.5382 7.57786 20.2795 12.2453 17.5173 15.4403C17.0516 15.9788 15.823 17.4805 14.7007 18.8601C14.1418 19.5472 13.6125 20.2 13.2229 20.6811C13.0281 20.9217 12.8682 21.1193 12.7571 21.2567L12.5837 21.4712C12.4413 21.6475 12.2268 21.75 12.0002 21.75C11.7736 21.75 11.5591 21.6475 11.4167 21.4712ZM12.0002 21L11.4167 21.4712C11.4167 21.4713 11.4168 21.4713 12.0002 21ZM9.75 10C9.75 8.75736 10.7574 7.75 12 7.75C13.2426 7.75 14.25 8.75736 14.25 10C14.25 11.2426 13.2426 12.25 12 12.25C10.7574 12.25 9.75 11.2426 9.75 10ZM12 6.25C9.92893 6.25 8.25 7.92893 8.25 10C8.25 12.0711 9.92893 13.75 12 13.75C14.0711 13.75 15.75 12.0711 15.75 10C15.75 7.92893 14.0711 6.25 12 6.25Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/>',
+    eraser: '<path d="M15.005 3.33783C14.8644 3.19718 14.6736 3.11816 14.4747 3.11816C14.2758 3.11816 14.085 3.19718 13.9444 3.33783L4.04479 13.2373C3.36137 13.9207 3.36137 15.0287 4.04479 15.7122L8.28743 19.9548C8.97084 20.6382 10.0789 20.6382 10.7623 19.9548L20.6619 10.0553C20.9548 9.76245 20.9548 9.28758 20.6619 8.99469L15.005 3.33783ZM7.04991 12.3535L14.4747 4.92882L19.0709 9.52502L11.6461 16.9497L7.04991 12.3535ZM5.98924 13.4142L5.10545 14.2979C5.00784 14.3956 5.00783 14.5539 5.10545 14.6515L9.34809 18.8941C9.44572 18.9918 9.60401 18.9918 9.70164 18.8941L10.5854 18.0104L5.98924 13.4142Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/>',
+    pencil: '<path d="M19.6381 4.41742C18.3693 3.13949 16.3036 3.13578 15.0302 4.40915L5.65182 13.7876C5.56169 13.8777 5.49602 13.9893 5.461 14.1118L4.04679 19.0616C3.97205 19.3232 4.04482 19.6047 4.23693 19.7973C4.42905 19.9899 4.7104 20.0634 4.97215 19.9893L9.91261 18.5912C10.0359 18.5563 10.1481 18.4904 10.2387 18.3999L19.6298 9.00875C20.8967 7.74183 20.9004 5.68889 19.6381 4.41742ZM16.0909 5.46981C16.777 4.78372 17.89 4.78571 18.5736 5.47427C19.2538 6.15934 19.2518 7.26547 18.5692 7.94809L18.3397 8.17752L15.8615 5.69924L16.0909 5.46981ZM14.8008 6.7599L6.8499 14.7108L5.85885 18.1795L9.31619 17.2011L17.2791 9.23818L14.8008 6.7599Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/>',
+    ruler: '<path d="M8.39243 3.46967C8.09954 3.17678 7.62466 3.17678 7.33177 3.46967L4.24996 6.55148C3.52614 7.2753 3.52614 8.44884 4.24995 9.17265L14.8274 19.7501C15.5512 20.4739 16.7247 20.4739 17.4485 19.7501L20.5304 16.6683C20.8233 16.3754 20.8233 15.9005 20.5304 15.6076L8.39243 3.46967ZM5.31062 7.61214L7.8621 5.06066L10.1123 7.31091C10.105 7.31768 10.0978 7.32462 10.0907 7.33173L8.98725 8.43518C8.69436 8.72807 8.69436 9.20295 8.98725 9.49584C9.28014 9.78873 9.75501 9.78873 10.0479 9.49584L11.1514 8.39239C11.1585 8.38528 11.1654 8.37806 11.1722 8.37074L12.8708 10.0693C12.8634 10.0761 12.8562 10.0831 12.849 10.0903L11.7455 11.1937C11.4527 11.4866 11.4527 11.9615 11.7455 12.2544C12.0384 12.5473 12.5133 12.5473 12.8062 12.2544L13.9097 11.1509C13.9168 11.1438 13.9238 11.1365 13.9306 11.1292L15.6293 12.8279C15.6219 12.8348 15.6145 12.8418 15.6073 12.8491L14.5038 13.9525C14.211 14.2454 14.211 14.7203 14.5038 15.0132C14.7967 15.3061 15.2716 15.3061 15.5645 15.0132L16.668 13.9097C16.6752 13.9025 16.6823 13.8951 16.6891 13.8877L18.9394 16.1379L16.3879 18.6894C16.2499 18.8274 16.0261 18.8274 15.888 18.6894L5.31061 8.11199C5.17259 7.97396 5.17258 7.75017 5.31062 7.61214Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/>',
+    layers: '<path d="M12.4249 4.38197C12.169 4.20601 11.831 4.20601 11.5751 4.38197L3.5751 9.88197C3.37159 10.0219 3.25 10.253 3.25 10.5C3.25 10.747 3.37159 10.9781 3.5751 11.118L11.5751 16.618C11.831 16.794 12.169 16.794 12.4249 16.618L20.4249 11.118C20.6284 10.9781 20.75 10.747 20.75 10.5C20.75 10.253 20.6284 10.0219 20.4249 9.88197L12.4249 4.38197ZM12 15.0899L5.32385 10.5L12 5.91015L18.6761 10.5L12 15.0899ZM4.4249 12.8819C4.08357 12.6473 3.61663 12.7337 3.38197 13.0751C3.1473 13.4164 3.23377 13.8833 3.5751 14.118L11.5751 19.618C11.831 19.7939 12.169 19.7939 12.4249 19.618L20.4249 14.118C20.7662 13.8833 20.8527 13.4164 20.618 13.0751C20.3834 12.7337 19.9164 12.6473 19.5751 12.8819L12 18.0898L4.4249 12.8819Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/>',
+    plus: '<path d="M12.75 5.5C12.75 5.08579 12.4142 4.75 12 4.75C11.5858 4.75 11.25 5.08579 11.25 5.5V11.25H5.5C5.08579 11.25 4.75 11.5858 4.75 12C4.75 12.4142 5.08579 12.75 5.5 12.75H11.25V18.5C11.25 18.9142 11.5858 19.25 12 19.25C12.4142 19.25 12.75 18.9142 12.75 18.5V12.75H18.5C18.9142 12.75 19.25 12.4142 19.25 12C19.25 11.5858 18.9142 11.25 18.5 11.25H12.75V5.5Z" fill="currentColor"/>',
+    minus: '<path d="M4.75 12.0001C4.75 11.5858 5.08579 11.2501 5.5 11.2501L18.5 11.2501C18.9142 11.2501 19.25 11.5858 19.25 12.0001C19.25 12.4143 18.9142 12.7501 18.5 12.7501L5.5 12.7501C5.08579 12.7501 4.75 12.4143 4.75 12.0001Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/>',
+    target: '<circle cx="12" cy="12" r="6.25" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="2.25" fill="currentColor"/><path d="M12 2.75V5.75M12 18.25V21.25M2.75 12H5.75M18.25 12H21.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>',
     externalLink: '<path d="M20.5319 3.47126C20.603 3.5428 20.6568 3.62511 20.6931 3.71291C20.7298 3.80134 20.75 3.89831 20.75 4V11.5C20.75 11.9142 20.4142 12.25 20 12.25C19.5858 12.25 19.25 11.9142 19.25 11.5V5.81066L10.5303 14.5303C10.2374 14.8232 9.76256 14.8232 9.46967 14.5303C9.17678 14.2374 9.17678 13.7626 9.46967 13.4697L18.1893 4.75H12.5C12.0858 4.75 11.75 4.41421 11.75 4C11.75 3.58579 12.0858 3.25 12.5 3.25H20C20.2063 3.25 20.3931 3.33329 20.5287 3.46808L20.5303 3.46967L20.5319 3.47126ZM4.75 9C4.75 8.86193 4.86193 8.75 5 8.75H12C12.4142 8.75 12.75 8.41421 12.75 8C12.75 7.58579 12.4142 7.25 12 7.25H5C4.0335 7.25 3.25 8.0335 3.25 9V19C3.25 19.9665 4.0335 20.75 5 20.75H15C15.9665 20.75 16.75 19.9665 16.75 19V12C16.75 11.5858 16.4142 11.25 16 11.25C15.5858 11.25 15.25 11.5858 15.25 12V19C15.25 19.1381 15.1381 19.25 15 19.25H5C4.86193 19.25 4.75 19.1381 4.75 19V9Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/>',
     envelopeClosed: '<path d="M3 5.25C2.58579 5.25 2.25 5.58579 2.25 6V19C2.25 19.4142 2.58579 19.75 3 19.75H21C21.4142 19.75 21.75 19.4142 21.75 19V6C21.75 5.58579 21.4142 5.25 21 5.25H3ZM3.75 17.1893L9.02277 11.9166L3.75 8.40139V17.1893ZM10.2956 12.7651L4.81066 18.25H19.1893L13.7044 12.7651L12.416 13.624C12.1641 13.792 11.8359 13.792 11.584 13.624L10.2956 12.7651ZM14.9772 11.9166L20.25 8.40139V17.1893L14.9772 11.9166ZM3.97708 6.75L12 12.0986L20.0229 6.75H3.97708Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/>',
     buildings3: '<path d="M6.25 3C6.25 2.58579 6.58579 2.25 7 2.25H17C17.4142 2.25 17.75 2.58579 17.75 3V9.25H21C21.4142 9.25 21.75 9.58579 21.75 10V21C21.75 21.4142 21.4142 21.75 21 21.75H3C2.58579 21.75 2.25 21.4142 2.25 21V10C2.25 9.58579 2.58579 9.25 3 9.25H6.25V3ZM17.75 20.25V10.75H20.25V20.25H17.75ZM16.25 3.75V20.25H7.75V3.75H16.25ZM6.25 10.75V20.25H3.75V10.75H6.25ZM10 5.75C10.4142 5.75 10.75 6.08579 10.75 6.5V8.5C10.75 8.91421 10.4142 9.25 10 9.25C9.58579 9.25 9.25 8.91421 9.25 8.5V6.5C9.25 6.08579 9.58579 5.75 10 5.75ZM13 5.75C13.4142 5.75 13.75 6.08579 13.75 6.5V8.5C13.75 8.91421 13.4142 9.25 13 9.25C12.5858 9.25 12.25 8.91421 12.25 8.5V6.5C12.25 6.08579 12.5858 5.75 13 5.75ZM10.75 12.5C10.75 12.0858 10.4142 11.75 10 11.75C9.58579 11.75 9.25 12.0858 9.25 12.5V14.5C9.25 14.9142 9.58579 15.25 10 15.25C10.4142 15.25 10.75 14.9142 10.75 14.5V12.5ZM13 11.75C13.4142 11.75 13.75 12.0858 13.75 12.5V14.5C13.75 14.9142 13.4142 15.25 13 15.25C12.5858 15.25 12.25 14.9142 12.25 14.5V12.5C12.25 12.0858 12.5858 11.75 13 11.75Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/>',
@@ -306,4 +364,119 @@ async function walkRoute(from, to) {
         });
     }
     return routeCache[key];
+}
+
+// ── Place search: addresses and postnummer (Kartverket), shared by the front page and the map page ──
+const ADDRESS_API = 'https://ws.geonorge.no/adresser/v1/sok';
+// Postnummerområder (Kartverket, from Posten, CC BY 4.0): the outline of one postnummer, as GML
+const POSTAL_AREA_WFS = 'https://wfs.geonorge.no/skwms1/wfs.postnummeromrader';
+const POSTAL_AREA_NS = 'http://skjema.geonorge.no/SOSI/produktspesifikasjon/Postnummeromrader/20180215';
+const POSTAL_AREA_ATTRIBUTION = '<a href="https://kartkatalog.geonorge.no/metadata/462a5297-33ef-438a-82a5-07fff5799be3" target="_blank" rel="noopener">Postnummerområder &copy; Kartverket</a>';
+// "Din posisjon" in the search fields and on the maps
+const TARGET_ICON = '<svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="6.25" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="2.25" fill="currentColor"/><path d="M12 2.75V5.75M12 18.25V21.25M2.75 12H5.75M18.25 12H21.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+
+function titleCase(text) {
+    return (text || '').toLowerCase().replace(/(^|[\s-])\p{L}/gu, m => m.toUpperCase());
+}
+
+// Even-odd rule over all rings, so holes work too. Coordinates are [lng, lat].
+function insideRings(lng, lat, rings) {
+    let inside = false;
+    rings.forEach(ring => {
+        for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+            const [xi, yi] = ring[i], [xj, yj] = ring[j];
+            if ((yi > lat) !== (yj > lat) && lng < (xj - xi) * (lat - yi) / (yj - yi) + xi) inside = !inside;
+        }
+    });
+    return inside;
+}
+
+// Addresses for a query, and first the postnummer when the query is four digits (found by one of its
+// addresses). Each place: { label, lat, lng, kommune } and, for a postnummer, `postnummer`.
+async function searchPlaces(query, { limit = 8, signal } = {}) {
+    const postnummer = /^\d{4}$/.test(query) ? query : null;
+    const ask = search => fetch(`${ADDRESS_API}?${search}`, { signal }).then(response => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.json();
+    });
+    const [data, postal] = await Promise.all([
+        ask(new URLSearchParams({ sok: query, fuzzy: 'true', treffPerSide: String(limit), utkoordsys: '4258' })),
+        postnummer ? ask(new URLSearchParams({ postnummer, treffPerSide: '1', utkoordsys: '4258' })) : null
+    ]);
+    const area = postal && (postal.adresser || []).find(a => a.representasjonspunkt);
+    return [
+        ...(area ? [{
+            label: `${postnummer} ${titleCase(area.poststed)}`,
+            postnummer,
+            lat: area.representasjonspunkt.lat,
+            lng: area.representasjonspunkt.lon,
+            kommune: titleCase(area.kommunenavn)
+        }] : []),
+        ...(data.adresser || [])
+            .filter(a => a.representasjonspunkt)
+            .map(a => ({
+                label: `${a.adressetekst}, ${a.postnummer} ${titleCase(a.poststed)}`,
+                lat: a.representasjonspunkt.lat,
+                lng: a.representasjonspunkt.lon,
+                kommune: titleCase(a.kommunenavn)
+            }))
+    ];
+}
+
+// The outline of a postnummer from Kartverket's map service: polygons as rings of [lng, lat]
+async function loadPostalArea(postnummer) {
+    const filter = `<Filter xmlns="http://www.opengis.net/fes/2.0" xmlns:app="${POSTAL_AREA_NS}"><PropertyIsEqualTo>`
+        + '<ValueReference>app:postnummerOmrådeId/app:PostnummerområdeId/app:postnummer</ValueReference>'
+        + `<Literal>${postnummer}</Literal></PropertyIsEqualTo></Filter>`;
+    const params = new URLSearchParams({
+        service: 'WFS', version: '2.0.0', request: 'GetFeature', typeNames: 'app:Postnummerområde',
+        srsName: 'urn:ogc:def:crs:EPSG::4326', FILTER: filter, NAMESPACES: `xmlns(app,${POSTAL_AREA_NS})`
+    });
+    const response = await fetch(`${POSTAL_AREA_WFS}?${params}`);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const xml = new DOMParser().parseFromString(await response.text(), 'application/xml');
+    // The service gives "lat lng lat lng ..."
+    const ring = node => {
+        const values = node.textContent.trim().split(/\s+/).map(Number);
+        const points = [];
+        for (let i = 0; i + 1 < values.length; i += 2) points.push([values[i + 1], values[i]]);
+        return points;
+    };
+    return [...xml.getElementsByTagNameNS('http://www.opengis.net/gml/3.2', 'Polygon')].map(polygon =>
+        [...polygon.getElementsByTagNameNS('http://www.opengis.net/gml/3.2', 'posList')].map(ring));
+}
+
+function middleOf(polygons) {
+    const area = ring => ring.reduce((sum, [x1, y1], i) => {
+        const [x2, y2] = ring[(i + 1) % ring.length];
+        return sum + x1 * y2 - x2 * y1;
+    }, 0) / 2;
+    const outer = polygons.map(p => p[0]).sort((a, b) => Math.abs(area(b)) - Math.abs(area(a)))[0];
+    const a = area(outer);
+    if (!a) return null;
+    let x = 0, y = 0;
+    outer.forEach(([x1, y1], i) => {
+        const [x2, y2] = outer[(i + 1) % outer.length];
+        const cross = x1 * y2 - x2 * y1;
+        x += (x1 + x2) * cross;
+        y += (y1 + y2) * cross;
+    });
+    return { lng: x / (6 * a), lat: y / (6 * a) };
+}
+
+// A postnummer gets its outline (result.area) and moves to its middle: the centre of the largest part,
+// or the address the search found when the centre is outside it
+async function placePostalArea(result) {
+    try {
+        result.area = await loadPostalArea(result.postnummer);
+    } catch (error) {
+        console.error('Postnummer area failed:', error);
+        result.area = null;
+    }
+    const middle = result.area && result.area.length ? middleOf(result.area) : null;
+    if (middle && result.area.some(polygon => insideRings(middle.lng, middle.lat, polygon))) {
+        result.lat = middle.lat;
+        result.lng = middle.lng;
+    }
+    return result;
 }

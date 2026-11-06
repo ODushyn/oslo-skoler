@@ -17,7 +17,10 @@
 "websiteNote": "answers"
 },
 "813993422": {
-"website": null
+"website": null,
+"websiteStatus": "ok",
+"websiteChecked": "https://spraksenteret.osloskolen.no/",
+"websiteNote": "listed by Oslo kommune"
 },
 "816578892": {
 "website": "https://www.wang.no/ung/sandnes",
@@ -2452,7 +2455,10 @@
 "websiteNote": "answers"
 },
 "926000705": {
-"website": null
+"website": null,
+"websiteStatus": "ok",
+"websiteChecked": "https://nordstrandung.osloskolen.no/",
+"websiteNote": "listed by Oslo kommune"
 },
 "926048090": {
 "website": "https://www.nittedal.kommune.no/enheter/nittedalsskolen/elvetangen-skole/",
@@ -2505,7 +2511,10 @@
 "websiteNote": "answers"
 },
 "929177525": {
-"website": null
+"website": null,
+"websiteStatus": "ok",
+"websiteChecked": "https://voldslokka.osloskolen.no/",
+"websiteNote": "listed by Oslo kommune"
 },
 "929630548": {
 "website": "https://tvedestrand.barneskole.no/",

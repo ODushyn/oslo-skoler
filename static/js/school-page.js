@@ -1,6 +1,6 @@
 // School page: everything we know about one school. Two addresses: the page under skoler/<kommune>/ that
 // site_pages.py builds for search engines (the school's key in <body data-school-id>; this script draws over
-// its static text), and skole.html?id=<name|kommune|type> for old links and the other level of a 1–10 school.
+// its static text), and skole?id=<name|kommune|type> for old links and the other level of a 1–10 school.
 // Results, Trivsel and photo come from school-data.json. Register data (address, pupils,
 // relations ...) is read live from Udir's Nasjonalt skoleregister (NSR, NLOD), the same
 // source as nsr.udir.no. A small map shows where the school is.
@@ -114,7 +114,7 @@
     const trinnShown = school.schoolType === 'barneskole' ? '7' : '10';
     const FEW_ANSWERS = 30;
     // The static page keeps its own (Norwegian) title for search engines, except in another language.
-    // On skole.html?id= the canonical address is the school's static page, so search engines count the two as one.
+    // On skole?id= the canonical address is the school's static page, so search engines count the two as one.
     if (!staticPage || I18N.translated) document.title = `${school.name} – Skolekartet`;
     if (!staticPage) {
         if (school.page) {
@@ -165,6 +165,19 @@
         : `<span class="school-stat__value">–</span>
            <span class="school-stat__text">Ikke publisert for skolen, ofte fordi for få elever svarte.</span>`;
 
+    // Lærertetthet (GSI): pupils per teacher in ordinary teaching, for the school type's trinn
+    const staffGroups = school.schoolType === 'barneskole' ? ['1-4', '5-7'] : ['8-10'];
+    const staffGroup = staffGroups[staffGroups.length - 1];
+    const gsiNational = (data.metadata && data.metadata.gsi) || null;
+    const staffCard = school.gsi && school.gsi.laerertetthet
+        ? `<span class="school-stat__value">${formatDecimal(school.gsi.laerertetthet)} <span>${t('per lærer')}</span></span>
+           <span class="school-stat__text">${t('Lærertetthet i ordinær undervisning. Lavere tall betyr flere lærere per elev.')}</span>
+           <span class="school-stat__compare" id="compare-laerere">${gsiNational && gsiNational.laerertetthet && gsiNational.laerertetthet[staffGroup] !== undefined
+               ? `<span>${t('Hele landet: {value}', { value: formatDecimal(gsiNational.laerertetthet[staffGroup]) })}</span>` : ''}</span>
+           <span class="school-stat__source">${t('Lærertetthet, {trinn}. trinn, GSI {year}', { trinn: staffGroup.replace('-', '.–'), year: school.gsi.laerertetthetYear })}</span>`
+        : `<span class="school-stat__value">–</span>
+           <span class="school-stat__text">${t('Ikke publisert for skolen.')}</span>`;
+
     const rows = [{ year, engelsk: school.engelsk, lesing: school.lesing, regning: school.regning }]
         .concat([...(school.history || [])].reverse())
         .map(r => {
@@ -178,7 +191,7 @@
     // Shortcuts to each part of the page, as in the Røde Kors "snarveier" block
     const careLabel = isOslo ? 'AKS' : 'SFO';
     // Only what is about this school: AKS links from the school's website (Oslo) and the school's
-    // groups for newcomers (Oslo). The general texts are on skolefritid.html and ny-i-norge.html.
+    // groups for newcomers (Oslo). The general texts are on skolefritid and ny-i-norge.
     const showCare = hasBarnetrinn && isPublic && isOslo;
     const showNew = isPublic && isOslo;
     const shortcuts = [
@@ -261,6 +274,7 @@
                     ${statTab('np', 'Nasjonale prøver', resultCard, true)}
                     ${statTab('trivsel', 'Trivsel', trivselCard, false)}
                     ${statTab('mobbing', 'Mobbing', mobbingCard, false)}
+                    ${statTab('laerere', 'Lærertetthet', staffCard, false)}
                 </div>
                 <div class="stat-panel" role="tabpanel" id="panel-np" aria-labelledby="tab-np" tabindex="0">
                     ${npDotPlotHtml()}
@@ -278,6 +292,9 @@
                     <p class="ds-paragraph">Henter tall…</p>
                 </div>
                 <div class="stat-panel" role="tabpanel" id="panel-mobbing" aria-labelledby="tab-mobbing" tabindex="0" hidden>
+                    <p class="ds-paragraph">Henter tall…</p>
+                </div>
+                <div class="stat-panel" role="tabpanel" id="panel-laerere" aria-labelledby="tab-laerere" tabindex="0" hidden>
                     <p class="ds-paragraph">Henter tall…</p>
                 </div>
                 <div id="surveyAll"></div>
@@ -343,6 +360,7 @@
     });
     document.getElementById('bannerShare').addEventListener('click', event => shareSchoolPage(school, event.currentTarget));
     showSurveyHistory(details.survey || {});
+    showStaffHistory(details.gsi);
     showComparisons(details.elevundersokelsen);
     document.getElementById('surveyAll').innerHTML = surveyTableHtml(details.elevundersokelsen);
     showMedia(details.gallery || []);
@@ -488,6 +506,46 @@
             ${worseLegend('lower')}`;
     }
 
+    // Lærertetthet, pupils and forsterket opplæring i norsk for every school year (GSI)
+    function showStaffHistory(gsi) {
+        const panel = document.getElementById('panel-laerere');
+        if (!gsi || !gsi.rows || !gsi.rows.length) {
+            panel.innerHTML = `<p class="ds-paragraph">${t('Udir har ikke publisert lærertetthet for skolen.')}</p>`;
+            return;
+        }
+        const fmt = (v, unit = '') => (v === null || v === undefined ? '*' : `${formatDecimal(v)}${unit}`);
+        // The kommune beside the country on the card, as on the Trivsel and Mobbing cards
+        const newest = gsi.rows[gsi.rows.length - 1];
+        const local = newest && newest.kommune && newest.kommune.laerertetthet && newest.kommune.laerertetthet[staffGroup];
+        const compare = document.getElementById('compare-laerere');
+        if (compare && gsi.kommune && local !== undefined && local !== null && newest.year === (school.gsi || {}).laerertetthetYear) {
+            compare.insertAdjacentHTML('afterbegin', `<span>${escapeHtml(gsi.kommune)}: ${formatDecimal(local)}</span>`);
+        }
+        const pct = I18N.isEnglish ? '%' : '&nbsp;%';
+        const trinnLabel = g => t('{trinn}. trinn', { trinn: g.replace('-', '.–') });
+        const rows = gsi.rows.slice().reverse().map(r => {
+            const own = r.laerertetthet || {};
+            const nat = (r.national && r.national.laerertetthet) || {};
+            const cells = staffGroups.map(g => `<td class="num"><strong>${worse(fmt(own[g]), isWorse(own[g], nat[g], 'lower'), 'lower')}</strong></td>`).join('');
+            return `<tr><td>${escapeHtml(r.year)}</td>${cells}<td class="num">${fmt(nat[staffGroup])}</td>
+                <td class="num">${r.elever ? new Intl.NumberFormat(I18N.locale).format(r.elever) : '–'}</td>
+                <td class="num">${fmt(r.norsk, pct)}</td><td class="num">${fmt(r.national && r.national.norsk, pct)}</td></tr>`;
+        }).join('');
+        panel.innerHTML = `
+            <h3 class="ds-heading" data-size="xs">${t('Lærertetthet og elever over tid')}</h3>
+            <div class="table-scroll">
+                <table class="ds-table school-history" data-size="sm" data-border>
+                    <thead><tr><th>${t('År')}</th>${staffGroups.map(g => `<th class="num">${trinnLabel(g)}</th>`).join('')}
+                        <th class="num">${t('Hele landet')}, ${trinnLabel(staffGroup)}</th><th class="num">${t('Elever')}</th>
+                        <th class="num">${t('Forsterket norsk')}</th><th class="num">${t('Hele landet')}</th></tr></thead>
+                    <tbody>${rows}</tbody>
+                </table>
+            </div>
+            <p class="ds-paragraph table-caption" data-size="xs">${t('Lærertetthet er antall elever per lærer i ordinær undervisning, uten spesialundervisning og særskilt norskopplæring. Forsterket norsk er andelen elever ved hele skolen som får forsterket opplæring i norsk. Tallene gjelder 1. oktober hvert skoleår. * betyr at Udir ikke har publisert tallet.')}</p>
+            ${worseLegend('lower')}
+            <p class="ds-paragraph school-page__sources" data-size="xs">${t('Kilde:')} <a class="ds-link" href="${escapeHtml(safeUrl(gsi.sourceUrl))}" target="_blank" rel="noopener">${t('Grunnskolens informasjonssystem (GSI), Utdanningsdirektoratet (NLOD)')}</a>.</p>`;
+    }
+
     // ── Banner: photos, address and links ──────────────────────────────
     function mediaPlaceholder() {
         return `<div class="school-banner__placeholder">${icon('image')}<span>Foto ikke funnet</span></div>`;
@@ -591,7 +649,7 @@
     function careHtml(details) {
         const website = details.website;
         const out = (href, label) => `<a class="ds-link" href="${escapeHtml(safeUrl(href))}" target="_blank" rel="noopener">${escapeHtml(label)}${icon('externalLink')}</a>`;
-        const general = `<p class="ds-paragraph"><a class="ds-link" href="${I18N.href('skolefritid.html#aks')}">${t('Om AKS i Oslo: søknad, plass og pris')}</a></p>`;
+        const general = `<p class="ds-paragraph"><a class="ds-link" href="${I18N.href('skolefritid#aks')}">${t('Om AKS i Oslo: søknad, plass og pris')}</a></p>`;
         const aks = details.aks;
         // Long link lists fold away (Designsystemet Details) and open when needed
         const schoolLinks = aks && aks.links.length
@@ -617,7 +675,7 @@
                <p class="ds-paragraph" data-size="sm">Antall plasser er totalt, ikke ledige plasser.</p>`
             : `<p class="ds-paragraph">Skolen står ikke på Oslo kommunes liste over skoler med mottaksgruppe eller alfabetiseringsgruppe. Eleven kan likevel få særskilt språkopplæring på skolen.</p>`;
         return `${groups}
-            <p class="ds-paragraph"><a class="ds-link" href="${I18N.href('ny-i-norge.html')}">${t('Om språkopplæring, tolk og informasjon på ditt språk')}</a></p>
+            <p class="ds-paragraph"><a class="ds-link" href="${I18N.href('ny-i-norge')}">${t('Om språkopplæring, tolk og informasjon på ditt språk')}</a></p>
             ${welcome ? `<p class="ds-paragraph school-page__sources section-source" data-size="xs">${t('Kilde: {sources}, hentet {date}.', { sources: 'Oslo kommune', date: date(welcome.fetched) })}</p>` : ''}`;
     }
 
@@ -834,9 +892,9 @@
         if (device) tiles.push({ icon: icon('tablet'), label: t('Læringsbrett – les mer på skolens nettside'), href: device.url });
         if (aks.length || device) sources.push(t('lenker fra skolens nettside, hentet {date}', { date: date((device && details.devices.fetched) || details.updated) }));
 
-        // What applies to all Oslo schools (skolehage, nettfilter, fritid) is on skolehverdag.html
+        // What applies to all Oslo schools (skolehage, nettfilter, fritid) is on skolehverdag
         const notes = isOslo && isPublic
-            ? [`<a class="ds-link" href="${I18N.href('skolehverdag.html#aktiviteter')}">${t('Om skolehage, fritidsaktiviteter og nettfilter i Osloskolen')}</a>`]
+            ? [`<a class="ds-link" href="${I18N.href('skolehverdag#aktiviteter')}">${t('Om skolehage, fritidsaktiviteter og nettfilter i Osloskolen')}</a>`]
             : [];
         const website = details.websiteBroken ? null : details.website;
         const empty = t('Vi har ikke funnet idrettsanlegg ved skolen i OpenStreetMap eller sider om aktiviteter på skolens nettside.')
@@ -872,9 +930,9 @@
             const milk = aksLink(details, /skolemelk/i);
             if (milk) tiles.push({ icon: materialIcon('waterFull'), label: t('Skolemelk'), href: milk.url });
         }
-        // Skolemat in Oslo and the allergy advice apply to all schools: skolehverdag.html
+        // Skolemat in Oslo and the allergy advice apply to all schools: skolehverdag
         if (isOslo && showCare) sources.push(t('Oslo kommune, hentet {date}', { date: date(OSLO_CHECKED) }));
-        if (isOslo) notes.push(`<a class="ds-link" href="${I18N.href('skolehverdag.html#mat')}">${t('Om skolemat i Oslo, allergier og spesialkost')}</a>`);
+        if (isOslo) notes.push(`<a class="ds-link" href="${I18N.href('skolehverdag#mat')}">${t('Om skolemat i Oslo, allergier og spesialkost')}</a>`);
         if (details.aksMat) sources.push(t('AKS-sidene på skolens nettside, lest {date}', { date: date(details.aksMat.fetched) }));
         else if (tiles.length > 1) sources.push(t('lenker fra skolens nettside, hentet {date}', { date: date(details.updated) }));
         const website = details.websiteBroken ? null : details.website;
@@ -968,7 +1026,7 @@
             <nav class="level-switch" aria-label="${t('Resultater for')}">
                 ${levels.map(level => level === school
                     ? `<span class="ds-button level-switch__item" data-variant="primary" data-size="sm" aria-current="page">${t(level.schoolType === 'barneskole' ? 'Barnetrinnet (5. trinn)' : 'Ungdomstrinnet')}</span>`
-                    : `<a class="ds-button level-switch__item" data-variant="secondary" data-size="sm" href="${I18N.href(`skole.html?id=${encodeURIComponent(schoolKey(level))}#resultater`)}">${t(level.schoolType === 'barneskole' ? 'Barnetrinnet (5. trinn)' : 'Ungdomstrinnet')}</a>`).join('')}
+                    : `<a class="ds-button level-switch__item" data-variant="secondary" data-size="sm" href="${I18N.href(`skole?id=${encodeURIComponent(schoolKey(level))}#resultater`)}">${t(level.schoolType === 'barneskole' ? 'Barnetrinnet (5. trinn)' : 'Ungdomstrinnet')}</a>`).join('')}
             </nav>`;
     }
 
@@ -1170,7 +1228,7 @@
         const caption = document.getElementById('kretsCaption');
         caption.innerHTML = `${t('Den stiplede linjen viser skolekretsen ({name}). Pilot på åpne data, kan avvike fra kommunens gjeldende grenser.', { name: escapeHtml(own[0].name) })}
             ${t('Kilde:')} <a class="ds-link" href="${escapeHtml(safeUrl(info.sourceUrl))}" target="_blank" rel="noopener">${escapeHtml(t(info.source))}</a>.
-            <a class="ds-link" href="${I18N.href('om-skolekrets.html')}#pilot">${t('Om skolekretsdataene')}</a>`;
+            <a class="ds-link" href="${I18N.href('om-skolekrets')}#pilot">${t('Om skolekretsdataene')}</a>`;
         caption.hidden = false;
     }
 
@@ -1181,12 +1239,7 @@
         const map = L.map('schoolMap', { center: [s.lat, s.lng], zoom: 15, scrollWheelZoom: false, zoomControl: false });
         L.control.zoom({ position: 'bottomright' }).addTo(map);
         schoolMap = map;
-        L.maplibreGL({
-            style: typeof THEME !== 'undefined' ? THEME.mapStyle() : 'https://tiles.openfreemap.org/styles/liberty',
-            attributionControl: {
-                customAttribution: MAP_ATTRIBUTION
-            }
-        }).addTo(map);
+        baseMapLayer().addTo(map);
         map.attributionControl.setPrefix(false);
         const size = s.schoolType === 'ungdomsskole' ? 40 : 30;
         L.marker([s.lat, s.lng], {

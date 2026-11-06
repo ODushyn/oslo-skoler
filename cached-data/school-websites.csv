@@ -1538,14 +1538,14 @@ orgnr;skole;kommune;registrert nettside (NSR);nettside vi lenker til;status;merk
 997621506;Nordpolen skole;Oslo;https://nordpolen.osloskolen.no;https://nordpolen.osloskolen.no;ok;answers
 974590611;Nordseter skole;Oslo;https://nordseter.osloskolen.no/;https://nordseter.osloskolen.no/;ok;answers
 974590069;Nordstrand skole;Oslo;https://nordstrand.osloskolen.no/;https://nordstrand.osloskolen.no/;ok;answers
-926000705;Nordstrand ungdomsskole;Oslo;;;ingen nettside;
+926000705;Nordstrand ungdomsskole;Oslo;;https://nordstrandung.osloskolen.no/;ok;listed by Oslo kommune
 974590077;Nordtvet skole;Oslo;https://nordtvet.osloskolen.no/;https://nordtvet.osloskolen.no/;ok;answers
 974590816;Nordvoll skole;Oslo;https://nordvoll.osloskolen.no/;https://nordvoll.osloskolen.no/;ok;answers
 915601618;Norlights International School Oslo AS;Oslo;https://internationalschool-oslo.no/;https://internationalschool-oslo.no/;ok;answers
 885142362;Nyskolen i Oslo grunnskole;Oslo;https://www.nyskolen.no;https://nyskolen.no/;ok;answers
 974590085;Nøklevann skole;Oslo;https://noklevann.osloskolen.no/;https://noklevann.osloskolen.no/;ok;answers
 974590093;Oppsal skole;Oslo;https://oppsal.osloskolen.no/;https://oppsal.osloskolen.no/;ok;answers
-813993422;Oslo kommune Språksenteret;Oslo;;;ingen nettside;
+813993422;Oslo kommune Språksenteret;Oslo;;https://spraksenteret.osloskolen.no/;ok;listed by Oslo kommune
 973488910;Oslo montessoriskole;Oslo;https://www.montessori.no;https://www.montessori.no;ok;answers
 974590107;Prinsdal skole;Oslo;https://prinsdal.osloskolen.no/;https://prinsdal.osloskolen.no/;ok;answers
 974589982;Refstad skole;Oslo;https://refstad.osloskolen.no;https://refstad.osloskolen.no;ok;answers
@@ -1598,7 +1598,7 @@ orgnr;skole;kommune;registrert nettside (NSR);nettside vi lenker til;status;merk
 974590352;Vinderen skole;Oslo;https://vinderen.osloskolen.no/;https://vinderen.osloskolen.no/;ok;answers
 974590360;Voksen skole;Oslo;https://voksen.osloskolen.no/;https://voksen.osloskolen.no/;ok;answers
 974590727;Voksentoppen skole;Oslo;https://voksentoppen.osloskolen.no/;https://voksentoppen.osloskolen.no/;ok;answers
-929177525;Voldsløkka skole;Oslo;;;ingen nettside;
+929177525;Voldsløkka skole;Oslo;;https://voldslokka.osloskolen.no/;ok;listed by Oslo kommune
 918399267;Vollebekk skole;Oslo;https://vollebekk.osloskolen.no/;https://vollebekk.osloskolen.no/;ok;answers
 974590379;Vålerenga skole;Oslo;https://valerenga.osloskolen.no/;https://valerenga.osloskolen.no/;ok;answers
 913946065;Wang Ung Oslo AS;Oslo;https://www.wang.no;https://www.wang.no;ok;answers

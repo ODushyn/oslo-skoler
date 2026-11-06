@@ -27,12 +27,15 @@ stored, as for AKS. Cached separately in cached-data/school-devices.json.
 Website check (`--check`): every registered website is tried; a "we have moved" front page is
 followed to the new address, parked or closed sites count as not working, and a school without a
 working site is looked up in its kommune's sitemap (the page must name the school in its title).
+An Oslo school still without a working site gets the address from Oslo kommune's own list of its
+schools (source-data/oslo-skoler-nettsider.tsv, `--oslo-list` to apply only that), if it answers.
 The full list is written to cached-data/school-websites.csv.
 
 Cached in cached-data/school-links.json. Refresh with:
     python school_links.py --refresh
     python school_links.py --check            # all websites, writes cached-data/school-websites.csv
     python school_links.py --check --failed   # only the sites that did not work or were not reached last time
+    python school_links.py --oslo-list        # Oslo schools without a working site: Oslo kommune's list
     python school_links.py --devices
     python school_links.py --contacts         # email and phone (Enhetsregisteret), shared mailboxes and landlines only
 """
@@ -492,6 +495,40 @@ def _find_on_kommune_site(names, kommune, old_url):
     return None
 
 
+# Oslo kommune's list of its schools and their websites, saved as name<TAB>website
+OSLO_LIST = Path('source-data/oslo-skoler-nettsider.tsv')
+
+
+def _list_name(name):
+    return re.sub(r'^oslo kommune\s+', '', re.sub(r'\s+', ' ', name.strip().lower()))
+
+
+def from_oslo_list(links, wanted, only=None):
+    """Oslo schools without a working website get the address from Oslo kommune's list, if it answers."""
+    if not OSLO_LIST.exists():
+        return 0
+    listed = {}
+    for line in OSLO_LIST.read_text(encoding='utf-8').splitlines():
+        if '\t' in line and not line.startswith('#'):
+            name, url = line.split('\t', 1)
+            listed[_list_name(name)] = url.strip()
+    added = 0
+    for orgnr, entry in links.items():
+        info = wanted.get(orgnr)
+        if (not info or info['kommune'] != 'Oslo' or entry.get('websiteStatus') == 'ok'
+                or (only is not None and orgnr not in only)):
+            continue
+        url = next((listed[n] for n in map(_list_name, info['names']) if n in listed), None)
+        if not url:
+            continue
+        _, status, working, _ = _check_website(orgnr, url)
+        if status == 'ok':
+            entry.update(websiteStatus='ok', websiteChecked=working, websiteNote="listed by Oslo kommune")
+            added += 1
+    print(f"  Oslo kommune's list gave a website to {added} schools")
+    return added
+
+
 def _write_report(links, wanted, path=WEBSITES_REPORT):
     """Every school with the registered address, the address we link to and the result."""
     with path.open('w', encoding='utf-8', newline='') as out:
@@ -544,6 +581,7 @@ def check_websites(path=CACHE_FILE, only=None):
                 entry = links[orgnr]
                 entry.update(websiteStatus='ok', websiteChecked=found,
                              websiteNote='found on the kommune website' + (f" (registered address: {entry['websiteNote'].split(' (')[0]})" if entry.get('websiteNote') else ''))
+    from_oslo_list(links, wanted, only)
     _save(links, path)
     _write_report(links, wanted)
     counts = collections.Counter(e.get('websiteStatus') or 'none' for e in links.values())
@@ -747,8 +785,14 @@ if __name__ == '__main__':
     parser.add_argument('--wikipedia', action='store_true', help='download Wikipedia articles about the schools')
     parser.add_argument('--devices', action='store_true', help='look for links about learning tablets (læringsbrett)')
     parser.add_argument('--contacts', action='store_true', help='email and phone from Enhetsregisteret')
+    parser.add_argument('--oslo-list', action='store_true', help="Oslo schools without a working website: Oslo kommune's list")
     args = parser.parse_args()
-    if args.contacts:
+    if args.oslo_list:
+        links, wanted = load_cache(), _wanted()
+        if from_oslo_list(links, wanted):
+            _save(links, CACHE_FILE)
+            _write_report(links, wanted)
+    elif args.contacts:
         refresh_contacts()
     elif args.devices:
         refresh_devices()

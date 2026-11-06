@@ -18,8 +18,8 @@ publish their own districts openly:
   https://kartkatalog.geonorge.no/metadata/7035559d74614fe5993cb04adcf99d8a_3
 
 Searched and not found as open data (Geonorge and data.norge.no, November 2026): Oslo, Bergen,
-Trondheim, Nordre Follo, Hamar and the other kommuner. Oslo can be added from a file the kommune
-delivers (see OSLO_FILE below).
+Trondheim, Nordre Follo, Hamar and the other kommuner. Oslo's barneskolekretser come from the WFS
+of Plan- og bygningsetaten, used with permission (see OSLO_WFS below).
 
 Writes static/js/skolekretser.json, read by the address search. Run:
     python skolekretser.py
@@ -27,8 +27,11 @@ Writes static/js/skolekretser.json, read by the address search. Run:
 import io
 import json
 import math
+import os
 import re
+import urllib.parse
 import urllib.request
+import xml.etree.ElementTree as ET
 import zipfile
 from difflib import SequenceMatcher
 from pathlib import Path
@@ -190,27 +193,64 @@ def _krets_name(name):
     return re.sub(r'\s+(skole|skule|barneskole|ungdomsskole|ungdomskole)$', '', name, flags=re.I)
 
 
-# Oslo: school districts delivered by Oslo kommune as a file, used with the kommune's permission.
-# Put a GeoJSON FeatureCollection (WGS84) here, one Polygon/MultiPolygon per krets, with the
-# school's name in properties.name (or "skole"/"navn") and the level in properties.level
-# ("barneskole"/"ungdomsskole"; barneskole if missing). Without the file, Oslo is left out.
+# Oslo: barneskolekretser from the WFS of Plan- og bygningsetaten (PBE), used with permission.
+# The service sends GML 3.1.1 in UTM zone 32 (EPSG:32632) and needs no key today. If PBE starts
+# asking for one, set it in the environment (PBE_WFS_KEY); never write the key in this file.
+# Each fetch is saved to OSLO_FILE as GeoJSON (WGS84), which is used when the service is down.
+OSLO_WFS = ('https://od2.pbe.oslo.kommune.no/cgi-bin/wms?map=SKOLER&SERVICE=WFS&VERSION=1.1.0'
+            '&REQUEST=GetFeature&TYPENAME=Skolekretser_f')
 OSLO_FILE = Path('source-data/oslo-skolekretser.geojson')
+GML = {'gml': 'http://www.opengis.net/gml', 'ms': 'http://mapserver.gis.umn.edu/mapserver'}
+OSLO_CAVEAT = ('Kretsgrensene er veiledende. Ungdomsskolekretsene er satt sammen av barneskolekretsene etter '
+               'Oslo kommunes oversikt over hvilken ungdomsskole elevene går videre til. For noen barneskoler '
+               'avhenger ungdomsskolen av adressen. Det er kommunen som fatter vedtak om skoleplass.')
 OSLO_SOURCE = {
     'levels': ['barneskole'],
-    'source': 'Oslo kommune, skolekretser (brukt med tillatelse)',
+    'source': 'Plan- og bygningsetaten, Oslo kommune, barneskolekretser (brukt med tillatelse)',
     'sourceUrl': 'https://www.oslo.kommune.no/skole-og-utdanning/skoleoversikt-og-skolekrets/skolekrets-barneskole/',
     'updated': None,
     'caveat': 'Kretsgrensene er veiledende. Det er kommunen som fatter vedtak om skoleplass.',
 }
 
 
+def _utm_ring(text):
+    values = [float(v) for v in text.split()]
+    return [[round(lng, 7), round(lat, 7)] for lat, lng in
+            (utm_to_latlng(n, e, 32) for e, n in zip(values[0::2], values[1::2]))]
+
+
+def fetch_oslo(path=OSLO_FILE):
+    """Download the kretser from PBE and save them as GeoJSON (WGS84)."""
+    key = os.environ.get('PBE_WFS_KEY')
+    url = OSLO_WFS + ('&key=' + urllib.parse.quote(key) if key else '')
+    root = ET.fromstring(_get(url))
+    features = []
+    for member in root.iterfind('gml:featureMember/ms:Skolekretser_f', GML):
+        name = member.findtext('ms:SKRETSNAVN', '', GML).strip()
+        for polygon in member.iterfind('.//gml:Polygon', GML):
+            rings = [_utm_ring(polygon.findtext('gml:exterior/gml:LinearRing/gml:posList', '', GML))]
+            rings += [_utm_ring(r.text) for r in polygon.iterfind('gml:interior/gml:LinearRing/gml:posList', GML)]
+            features.append({'type': 'Feature', 'properties': {'SKRETSNAVN': name},
+                             'geometry': {'type': 'Polygon', 'coordinates': rings}})
+    if not features:
+        raise ValueError('PBE sent no skolekretser')
+    path.write_text(json.dumps({'type': 'FeatureCollection', 'features': features}, ensure_ascii=False,
+                               separators=(',', ':')), encoding='utf-8')
+    print(f'Fetched {len(features)} Oslo skolekretser from PBE')
+
+
 def oslo(path=OSLO_FILE):
+    try:
+        fetch_oslo(path)
+    except Exception as error:  # the saved copy is used when the service is down
+        print(f'WARNING: could not fetch Oslo skolekretser from PBE ({error}); using {path}')
     if not path.exists():
         return []
+    collection = json.loads(path.read_text(encoding='utf-8'))
     result = []
-    for feature in json.loads(path.read_text(encoding='utf-8'))['features']:
+    for feature in collection['features']:
         props, geometry = feature.get('properties') or {}, feature.get('geometry') or {}
-        name = (props.get('name') or props.get('skole') or props.get('navn') or '').strip()
+        name = (props.get('name') or props.get('SKRETSNAVN') or props.get('skole') or props.get('navn') or '').strip()
         level = props.get('level') or 'barneskole'
         polygons = [geometry['coordinates']] if geometry.get('type') == 'Polygon' else \
                    geometry.get('coordinates', []) if geometry.get('type') == 'MultiPolygon' else []
@@ -227,11 +267,24 @@ def _base(name):
     return re.sub(r'\s+(skole|skule|oppvekstsenter.*|barneskole|ungdomsskole)$', '', name.strip().lower())
 
 
+# Krets names that differ too much from the school's name to match automatically
+KRETS_SCHOOL = {
+    ('Oslo', 'Majorstua'): 'Majorstuen skole',
+    ('Oslo', 'Svarttjern og Tiurleiken'): 'Tiurleiken skole',
+    # Too small to have published results, so it is not in our school data; the name is from NSR.
+    # The address card shows it as a plain card without scores.
+    ('Stavanger', 'Fogn'): 'Fogn oppvekstsenter',
+}
+
+
 def match_schools(kretser):
     """Krets name -> school name in our data (public schools of the same level and kommune)."""
     schools = json.loads(SCHOOL_DATA.read_text(encoding='utf-8'))['schools']
     unmatched = []
     for krets in kretser:
+        if (krets['kommune'], krets['name']) in KRETS_SCHOOL:
+            krets['school'] = KRETS_SCHOOL[(krets['kommune'], krets['name'])]
+            continue
         pool = [s for s in schools if s['kommune'] == krets['kommune'] and s['schoolType'] == krets['level']
                 and s.get('eierform') != 'privat']
         target = krets['name'].lower()
@@ -255,21 +308,193 @@ def _inside(lng, lat, rings):
     return inside
 
 
+# Schools that sit in temporary buildings outside their own krets while their school is rebuilt.
+# NSR gives the temporary address, so their position is right. Check again after the end date.
+TEMPORARY_SITES = {
+    ('Oslo', 'Lilleborg skole'): 'FO-bygget på Huseby until the end of 2026',
+    ('Oslo', 'Ellingsrudåsen skole'): 'Bredtvetveien 2 until 2028',
+}
+
+
+BORDER_TOLERANCE_M = 50  # a school this close to its krets border counts as inside (rounded positions)
+
+
+def _metres_to_border(lng, lat, rings):
+    scale = 111320 * math.cos(math.radians(lat))
+    best = float('inf')
+    for ring in rings:
+        for (x1, y1), (x2, y2) in zip(ring, ring[1:]):
+            ax, ay, bx, by = (x1 - lng) * scale, (y1 - lat) * 111320, (x2 - lng) * scale, (y2 - lat) * 111320
+            dx, dy = bx - ax, by - ay
+            t = max(0, min(1, -(ax * dx + ay * dy) / (dx * dx + dy * dy))) if dx or dy else 0
+            best = min(best, math.hypot(ax + t * dx, ay + t * dy))
+    return best
+
+
 def check_schools_inside(kretser):
-    """Sanity check: each matched school's own position lies inside its krets."""
+    """Sanity check: each matched school's own position lies inside its krets, or right at its border."""
     schools = json.loads(SCHOOL_DATA.read_text(encoding='utf-8'))['schools']
     outside = []
     for krets in kretser:
+        if (krets['kommune'], krets['school']) in TEMPORARY_SITES or 'from' in krets:
+            continue   # an Oslo ungdomsskole may stand in a barneskolekrets that leads elsewhere
         school = next((s for s in schools if s['name'] == krets['school'] and s['kommune'] == krets['kommune']
                        and s['schoolType'] == krets['level']), None)
-        if school and not _inside(school['lng'], school['lat'], krets['rings']):
+        if school and not _inside(school['lng'], school['lat'], krets['rings']) \
+                and _metres_to_border(school['lng'], school['lat'], krets['rings']) > BORDER_TOLERANCE_M:
             outside.append(f"{krets['school']} ({krets['name']})")
     return outside
+
+
+# Postnummerområder (Kartverket, from Posten, CC BY 4.0): which postnummer each krets covers, for the
+# links to housing search on Finn.no
+POSTAL_WFS = 'https://wfs.geonorge.no/skwms1/wfs.postnummeromrader'
+POSTAL_NS = 'http://skjema.geonorge.no/SOSI/produktspesifikasjon/Postnummeromrader/20180215'
+POSTAL_MIN_SHARE = 0.10   # a postnummer counts when it covers at least this share of the krets (by area)
+POSTAL_SAMPLES = 400      # about this many points are tested inside each krets
+
+
+def postal_areas(south, west, north, east):
+    """[(postnummer, rings of [lng, lat], bbox)] in a box."""
+    params = urllib.parse.urlencode({
+        'service': 'WFS', 'version': '2.0.0', 'request': 'GetFeature', 'typeNames': 'app:Postnummerområde',
+        'srsName': 'urn:ogc:def:crs:EPSG::4326', 'NAMESPACES': f'xmlns(app,{POSTAL_NS})', 'count': '20000',
+        'BBOX': f'{south},{west},{north},{east},urn:ogc:def:crs:EPSG::4326'})
+    root = ET.fromstring(_get(f'{POSTAL_WFS}?{params}'))
+    gml = {'gml': 'http://www.opengis.net/gml/3.2', 'app': POSTAL_NS}
+    areas = []
+    for feature in root.iter(f'{{{POSTAL_NS}}}Postnummerområde'):
+        number = feature.findtext('.//app:postnummer', '', gml)
+        for polygon in feature.iterfind('.//gml:Polygon', gml):
+            rings = []
+            for pos in polygon.iterfind('.//gml:posList', gml):
+                values = [float(v) for v in pos.text.split()]
+                rings.append(list(zip(values[1::2], values[0::2])))   # the service gives lat lng
+            xs = [x for x, _ in rings[0]]
+            ys = [y for _, y in rings[0]]
+            areas.append((number, rings, (min(xs), min(ys), max(xs), max(ys))))
+    return areas
+
+
+def add_postnummer(kretser):
+    """Give each krets the postnummer it covers (largest share first), from points spread over it."""
+    for kommune in sorted({k['kommune'] for k in kretser}):
+        own = [k for k in kretser if k['kommune'] == kommune]
+        points = [p for k in own for r in k['rings'] for p in r]
+        west, east = min(x for x, _ in points), max(x for x, _ in points)
+        south, north = min(y for _, y in points), max(y for _, y in points)
+        areas = postal_areas(south, west, north, east)
+        for krets in own:
+            xs = [x for x, _ in krets['rings'][0]]
+            ys = [y for _, y in krets['rings'][0]]
+            # A square grid, with the step chosen so that about POSTAL_SAMPLES points fall in the box
+            step = math.sqrt((max(xs) - min(xs)) * (max(ys) - min(ys)) / POSTAL_SAMPLES) or 0.001
+            counts, inside = {}, 0
+            y = min(ys) + step / 2
+            while y < max(ys):
+                x = min(xs) + step / 2
+                while x < max(xs):
+                    if _inside(x, y, krets['rings']):
+                        inside += 1
+                        hit = next((n for n, rings, (x1, y1, x2, y2) in areas
+                                    if x1 <= x <= x2 and y1 <= y <= y2 and _inside(x, y, rings)), None)
+                        if hit:
+                            counts[hit] = counts.get(hit, 0) + 1
+                    x += step
+                y += step
+            krets['postnummer'] = sorted((n for n, c in counts.items() if inside and c / inside >= POSTAL_MIN_SHARE),
+                                         key=lambda n: -counts[n])
+        print(f"Postnummer for {len(own)} kretser in {kommune}")
+
+
+# Oslo has no ungdomsskolekretser of its own: the barneskole decides the ungdomsskole. Oslo kommune
+# lists which ungdomsskole each barneskole leads to (ungdomsskole_oslo.py); the ungdomsskolekrets is
+# the barneskolekretser that lead to it, joined. Some barneskoler send pupils to two ungdomsskoler,
+# depending on the address; their krets is in both, marked 'split', with Oslo kommune's boundary map.
+FEEDERS_FILE = Path('cached-data/ungdomsskole-oslo.json')
+
+
+def _dissolve(pieces):
+    """Join polygons that share borders: drop every edge that two pieces share, chain the rest.
+    Each piece is a list of rings (outer first); holes are dropped. Returns a list of outer rings."""
+    edges = {}
+    for rings in pieces:
+        ring = [tuple(p) for p in rings[0]]
+        area = sum(x1 * y2 - x2 * y1 for (x1, y1), (x2, y2) in zip(ring, ring[1:] + ring[:1]))
+        if area < 0:
+            ring.reverse()   # all counter-clockwise, so a shared edge runs both ways
+        for a, b in zip(ring, ring[1:] + ring[:1]):
+            if a == b:
+                continue
+            if (b, a) in edges:
+                del edges[(b, a)]
+            else:
+                edges[(a, b)] = True
+    following = {}
+    for a, b in edges:
+        following.setdefault(a, []).append(b)
+    result = []
+    while following:
+        start = next(iter(following))
+        ring, point = [start], start
+        while True:
+            nexts = following.get(point)
+            if not nexts:
+                break
+            nxt = nexts.pop()
+            if not nexts:
+                del following[point]
+            if nxt == start:
+                break
+            ring.append(nxt)
+            point = nxt
+        if len(ring) >= 3:
+            result.append([list(p) for p in ring + [start]])
+    return result
+
+
+def oslo_ungdomsskolekretser(kretser):
+    if not FEEDERS_FILE.exists():
+        return []
+    feeders = json.loads(FEEDERS_FILE.read_text(encoding='utf-8'))
+    schools = json.loads(SCHOOL_DATA.read_text(encoding='utf-8'))['schools']
+    orgnr = {s['name']: s['orgnr'] for s in schools if s['kommune'] == 'Oslo' and s['schoolType'] == 'barneskole' and s.get('orgnr')}
+    pieces = {}
+    for krets in kretser:
+        if krets['kommune'] != 'Oslo' or krets['level'] != 'barneskole':
+            continue
+        info = feeders['schools'].get(orgnr.get(krets.get('school')))
+        if not info:
+            continue
+        for target in info['next']:
+            entry = pieces.setdefault(target['name'], {'rings': [], 'from': [], 'split': []})
+            entry['rings'].append(krets['rings'])
+            entry['from'].append(krets['school'])
+            if len(info['next']) > 1:
+                entry['split'].append({'school': krets['school'], 'map': info.get('boundaryMap'),
+                                       'others': [t['name'] for t in info['next'] if t['name'] != target['name']]})
+    result = []
+    area = lambda r: abs(sum(x1 * y2 - x2 * y1 for (x1, y1), (x2, y2) in zip(r, r[1:]))) / 2
+    for name, entry in sorted(pieces.items()):
+        rings = _dissolve(entry['rings'])
+        largest = max(map(area, rings), default=0)
+        for ring in rings:
+            if area(ring) < 0.02 * largest:
+                continue   # slivers where neighbouring kretser do not quite meet
+            result.append({'kommune': 'Oslo', 'level': 'ungdomsskole', 'name': re.sub(r'\s+skole$', '', name),
+                           'school': name, 'rings': [ring], 'from': sorted(set(entry['from'])),
+                           **({'split': entry['split']} if entry['split'] else {})})
+    print(f"Oslo ungdomsskolekretser: {len(pieces)} schools, {len(result)} areas, from {FEEDERS_FILE}")
+    return result
 
 
 def main():
     kretser = halden() + stavanger() + fredrikstad() + oslo()
     unmatched = match_schools(kretser)
+    kretser += oslo_ungdomsskolekretser(kretser)   # these name their school already
+    if any(k['kommune'] == 'Oslo' and k['level'] == 'ungdomsskole' for k in kretser):
+        SOURCES['Oslo'].update(levels=['barneskole', 'ungdomsskole'], caveat=OSLO_CAVEAT)
+    add_postnummer(kretser)
     OUTPUT.write_text(json.dumps({'kommuner': SOURCES, 'kretser': kretser}, ensure_ascii=False, separators=(',', ':')),
                       encoding='utf-8')
     print(f"Saved {len(kretser)} skolekretser to {OUTPUT} ({OUTPUT.stat().st_size // 1024} kB)")

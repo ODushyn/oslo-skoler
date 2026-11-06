@@ -7,6 +7,7 @@ import photos
 import school_locations
 import site_pages
 from nsr import NsrMatcher, load_cache
+import gsi
 
 # ─────────────────────────────────────────────────────────────────────────────
 # UPDATE THIS SINGLE VALUE EACH YEAR when new data arrives.
@@ -130,8 +131,17 @@ def calculate_map_config(schools):
     }
 
 
+def _gsi_national(cache):
+    if not cache:
+        return None
+    density = cache['national'].get('laerertetthet', {})
+    norsk = cache['national'].get('norsk', {})
+    year = max(density) if density else None
+    return {'year': year, 'laerertetthet': density.get(year), 'norsk': norsk.get(max(norsk)) if norsk else None}
+
+
 def prepare_school_data_for_export(schools, history=None, nsr_matcher=None, trivsel_cache=None, photo_cache=None,
-                                   mobbing_cache=None):
+                                   mobbing_cache=None, gsi_cache=None):
     """Prepare school data with all necessary computed fields for JSON export."""
     prepared_data = []
     if history is None:
@@ -172,6 +182,8 @@ def prepare_school_data_for_export(schools, history=None, nsr_matcher=None, triv
         # Trivsel (Elevundersøkelsen) and an openly licensed photo, both looked up by orgnr
         trivsel = elevundersokelsen.trivsel_for(trivsel_cache, orgnr, school_type) if trivsel_cache else None
         mobbing = elevundersokelsen.mobbing_for(mobbing_cache, orgnr, school_type) if mobbing_cache else None
+        # Lærertetthet, share with forsterket opplæring i norsk and pupil count (GSI, Udir)
+        staff = gsi.latest_for(gsi_cache, orgnr, school_type) if gsi_cache and orgnr else None
         photo = dict(photo_cache[orgnr]) if photo_cache and orgnr in photo_cache else None
         if photo and photo.get('thumb'):
             photo['thumb'] = photo['thumb'].split('?', 1)[0]  # drop tracking parameters
@@ -196,6 +208,7 @@ def prepare_school_data_for_export(schools, history=None, nsr_matcher=None, triv
             'profil': register.get('profil'),
             'trivsel': trivsel,
             'mobbing': mobbing,
+            'gsi': staff,
             'photo': photo,
         })
 
@@ -375,17 +388,18 @@ def create_norway_schools_map(input_files=None,
     trivsel_cache = elevundersokelsen.load_cache()
     mobbing_cache = elevundersokelsen.load_mobbing()
     photo_cache = photos.load_cache()
+    gsi_cache = gsi.load_cache()
 
     prepared_schools = prepare_school_data_for_export(schools, history=history, nsr_matcher=nsr_matcher,
                                                       trivsel_cache=trivsel_cache, photo_cache=photo_cache,
-                                                      mobbing_cache=mobbing_cache)
+                                                      mobbing_cache=mobbing_cache, gsi_cache=gsi_cache)
     matched = sum(1 for s in prepared_schools if s['eierform'])
     print(f"  - Owner type found for {matched} of {len(prepared_schools)} entries")
     print(f"  - Trivsel for {sum(1 for s in prepared_schools if s['trivsel'])} entries, "
           f"mobbing for {sum(1 for s in prepared_schools if s['mobbing'])} entries, "
           f"photo for {sum(1 for s in prepared_schools if s['photo'])} entries")
 
-    # Each school's page for search engines (skoler/<kommune>/<skole>.html, built by site_pages.py)
+    # Each school's page for search engines (skoler/<kommune>/<skole>, built by site_pages.py)
     site_pages.assign_pages(prepared_schools)
 
     # Create output data structure
@@ -397,7 +411,9 @@ def create_norway_schools_map(input_files=None,
             'title': map_title,
             'currentYear': CURRENT_YEAR,
             # National share bullied, for the Mobbing tooltip on the map page (year and 7./10. trinn)
-            'mobbing': {'year': mobbing_cache['year'], 'national': mobbing_cache['national']} if mobbing_cache else None
+            'mobbing': {'year': mobbing_cache['year'], 'national': mobbing_cache['national']} if mobbing_cache else None,
+            # National lærertetthet and share with forsterket norsk, newest year, for the cards and filters
+            'gsi': _gsi_national(gsi_cache),
         }
     }
 

@@ -43,11 +43,8 @@ function loadSchoolData(map, markerCluster) {
             // Add the marker cluster to the map
             markerCluster.addTo(map);
 
-            // Filters, address search and the school list
+            // Filters, the search (addresses, schools, kommuner, postnummer) and the school list
             Finder.init(map, markerCluster, entries);
-
-            // School name search
-            initializeSearch(map, markerCluster);
         })
         .catch(error => {
             console.error('Could not load school-data.json:', error);
@@ -204,42 +201,6 @@ function createPopupContent(levels) {
         </div>`;
 }
 
-// Initialize search functionality (Designsystemet Suggestion / u-combobox)
-const MAX_SEARCH_RESULTS = 10;
-
-function initializeSearch(map, markerCluster) {
-    const suggestion = document.getElementById('schoolSuggestion');
-    const searchInput = document.getElementById('schoolSearch');
-    const searchResults = document.getElementById('searchResults');
-
-    if (!suggestion || !searchInput || !searchResults) {
-        console.warn('Search elements not found, retrying in 100ms...');
-        setTimeout(() => initializeSearch(map, markerCluster), 100);
-        return;
-    }
-
-    // Render matching schools as options while the user types
-    searchInput.addEventListener('input', function(event) {
-        if (!event.isTrusted) return; // ignore the combobox clearing the field
-        renderSearchResults(this.value.trim(), searchResults);
-    });
-
-    // An option was picked (click or keyboard). Prevent the combobox from
-    // keeping it as a selected value, and go to the school instead.
-    suggestion.addEventListener('comboboxbeforeselect', function(event) {
-        event.preventDefault();
-        const option = event.detail;
-        const key = option && option.value;
-        if (!key || !schoolMarkers.has(key)) return;
-
-        Finder.showSchool(key);
-
-        searchInput.value = '';
-        searchResults.innerHTML = '';
-        searchInput.blur();
-    });
-}
-
 // Find schools whose name (or kommune) matches the query, best matches first:
 // name starts with query, name contains query, then kommune matches.
 function findSchools(query) {
@@ -259,43 +220,6 @@ function findSchools(query) {
             || a.school.name.localeCompare(b.school.name, 'nb')
             || a.school.schoolType.localeCompare(b.school.schoolType))
         .map(item => item.school);
-}
-
-// Fill the suggestion list with options for the query
-function renderSearchResults(query, resultsContainer) {
-    // Search only when the query has at least 2 characters
-    if (query.length < 2) {
-        resultsContainer.innerHTML = '';
-        return;
-    }
-
-    // A school with both levels is one hit (its barneskole record comes first)
-    const seen = new Set();
-    const matchingSchools = findSchools(query).filter(school => {
-        const place = `${school.name}|${school.kommune}`;
-        if (seen.has(place)) return false;
-        seen.add(place);
-        return true;
-    });
-    const options = matchingSchools.slice(0, MAX_SEARCH_RESULTS).map(school => {
-        const levels = schoolsData.filter(s => s.name === school.name && s.kommune === school.kommune);
-        const type = levels.length > 1 ? t('Barne- og ungdomsskole (1.–10. trinn)') : (SCHOOL_TYPE_LABEL[school.schoolType] || school.schoolType);
-        return `
-            <u-option value="${escapeHtml(schoolKey(school))}" label="${escapeHtml(`${school.name}, ${school.kommune}, ${type}`)}">
-                <span class="search-result-name">${highlightMatch(school.name, query)}</span>
-                <span class="search-result-kommune">${highlightMatch(school.kommune, query)} · ${type}</span>
-            </u-option>`;
-    }).join('');
-
-    let more = '';
-    if (matchingSchools.length > MAX_SEARCH_RESULTS) {
-        more = `<p class="ds-paragraph search-more" data-size="xs" aria-hidden="true">${t('Viser {shown} av {total} treff. Skriv mer for å snevre inn.', { shown: MAX_SEARCH_RESULTS, total: matchingSchools.length })}</p>`;
-    }
-
-    resultsContainer.innerHTML = options
-        ? options + more
-        : '<u-option data-empty value="">Ingen skoler funnet</u-option>';
-    openSuggestions(resultsContainer, 'schoolSearch');
 }
 
 // The list opens on key presses; text that is pasted (or typed by an input
@@ -349,5 +273,15 @@ function setDataTooltips(metadata) {
         const percent = value => formatPercent(value).replace('&nbsp;', '\u00a0');
         mobbing.dataset.tooltip = t('Andelen elever som svarer at de er blitt mobbet to eller tre ganger i måneden eller oftere, av andre elever, digitalt eller av voksne på skolen. Elevundersøkelsen {year}, 7. trinn for barneskoler og 10. trinn for ungdomsskoler. Landsgjennomsnittet er {barne} på 7. trinn og {ungdom} på 10. trinn. Små grupper er skjult av Udir.',
             { year: year(metadata.mobbing.year), barne: percent(metadata.mobbing.national['7']), ungdom: percent(metadata.mobbing.national['10']) });
+    }
+    const laerer = document.getElementById('laererHelp');
+    if (laerer && metadata.gsi && metadata.gsi.laerertetthet) {
+        laerer.dataset.tooltip = t('Antall elever per lærer i ordinær undervisning, fra Grunnskolens informasjonssystem (GSI) {year}. Lavere tall betyr flere lærere per elev. 5.–7. trinn for barneskoler og 8.–10. trinn for ungdomsskoler. Landsgjennomsnittet er {barne} på 5.–7. trinn og {ungdom} på 8.–10. trinn.',
+            { year: year(metadata.gsi.year), barne: formatDecimal(metadata.gsi.laerertetthet['5-7']), ungdom: formatDecimal(metadata.gsi.laerertetthet['8-10']) });
+    }
+    const norsk = document.getElementById('norskHelp');
+    if (norsk && metadata.gsi && metadata.gsi.norsk !== null && metadata.gsi.norsk !== undefined) {
+        norsk.dataset.tooltip = t('Andelen elever ved skolen som får forsterket opplæring i norsk, fra Grunnskolens informasjonssystem (GSI) {year}. Landsgjennomsnittet er {value}.',
+            { year: year(metadata.gsi.year), value: formatPercent(metadata.gsi.norsk).replace('&nbsp;', '\u00a0') });
     }
 }

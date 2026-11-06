@@ -1,6 +1,7 @@
 """
 Local web server for working on the site: like `python3 -m http.server`, but it tells the browser not to
-keep old copies (Cache-Control: no-store), so a reload always shows the latest HTML, CSS and JS.
+keep old copies (Cache-Control: no-store), so a reload always shows the latest HTML, CSS and JS. Like GitHub
+Pages it serves a page without its .html ending: /kart gives kart.html, /skoler/oslo/majorstuen-skole its page.
 
     python3 dev_server.py          # http://localhost:8000
     python3 dev_server.py 8080     # another port
@@ -14,6 +15,12 @@ from pathlib import Path
 
 
 class NoCacheHandler(http.server.SimpleHTTPRequestHandler):
+    def translate_path(self, path):
+        file = super().translate_path(path)
+        if not Path(file).exists() and Path(file + '.html').is_file():
+            return file + '.html'
+        return file
+
     def end_headers(self):
         self.send_header('Cache-Control', 'no-store')
         super().end_headers()

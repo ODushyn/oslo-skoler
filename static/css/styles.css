@@ -478,39 +478,11 @@ main:focus {
     gap: var(--ds-size-2) var(--ds-size-4);
 }
 
-/* "Søk på  (•) Adresse  ( ) Skolenavn" on one line */
-.search-mode {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--ds-size-2) var(--ds-size-5);
-    flex-shrink: 0;
-    margin: 0;
-    padding: 0;
-    border: 0;
-}
-
-.search-mode > legend {
-    float: left;
-    margin: 0;
-    padding: 0;
-}
-
-.ds-fieldset.search-mode > * + * {
-    margin: 0;
-}
-
-/* Centre "Søk på (•) Adresse ( ) Skolenavn" on the 48 px input. A fieldset centres its content in an
-   inner box that does not grow with min-height, so the space goes in as padding instead. */
-.search-mode {
-    padding-block: calc((var(--ds-size-12) - 1lh) / 2);
-}
-
-/* The address field takes most of the row; its messages stack under it */
+/* The search field takes half the row (not narrower than 20rem); its messages stack under it */
 .search-bar__field {
     display: flex;
     flex-direction: column;
-    flex: 2 1 24rem;
+    flex: 0 1 max(50%, 20rem);
     min-width: 0;
 }
 
@@ -548,6 +520,13 @@ main:focus {
     color: var(--ds-color-neutral-text-subtle);
 }
 
+/* "0682 Oslo  Postnummer": the postnummer in the address suggestions says what it is */
+.address-option__kind {
+    margin-left: var(--ds-size-2);
+    color: var(--ds-color-neutral-text-subtle);
+    font-size: var(--ds-font-size-1, 0.8125rem);
+}
+
 .search-bar__field .ds-validation-message {
     margin-top: var(--ds-size-2);
 }
@@ -557,11 +536,6 @@ main:focus {
 .search-bar__field .ds-field > .ds-suggestion,
 .search-bar__field .ds-field > .address-input {
     margin-top: 0;
-}
-
-/* Designsystemet sets display on .ds-field; keep the inactive field hidden */
-.search-bar__field > [hidden] {
-    display: none !important;
 }
 
 .search-bar input[type="search"] {
@@ -2030,40 +2004,13 @@ button.school-stat[aria-selected="true"] .school-stat__more {
         padding-block: var(--ds-size-5) var(--ds-size-4);
     }
 
-    /* "Søk på" and the two options on one line, the search field full width below */
-    .search-bar {
-        flex-wrap: wrap;
-    }
-
-    /* "Søk på" on its own row; the search field and the filter button share the next one */
-    .search-mode {
-        flex-basis: 100%;
-    }
-
     .search-bar__field {
         flex: 1 1 0;
         min-width: 0;
     }
 
-    /* Phones: "Søk på (•) Adresse ( ) Skolenavn" on one line, close under the heading and above the field;
-       where the words are too long for the screen (Ukrainian on a narrow phone) the options wrap */
-    .search-mode {
-        flex-wrap: wrap;
-        gap: var(--ds-size-1) var(--ds-size-3);
-        padding-block: 0;
-    }
-
-    .search-mode > legend {
-        margin-inline-end: var(--ds-size-1);
-        white-space: nowrap;
-    }
-
     .search-panel .ds-heading {
         margin-bottom: var(--ds-size-3);
-    }
-
-    .search-mode .ds-label {
-        white-space: nowrap;
     }
 
     /* Phones: Filter shows only its icon and count (the word stays for screen readers) */
@@ -2156,13 +2103,6 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 
     .lang-switch.ds-button {
         padding-inline: var(--ds-size-2);
-    }
-
-    /* "Søk på / Search by" and the two options may wrap on narrow screens */
-    .search-mode {
-        flex-shrink: 1;
-        min-width: 0;
-        max-width: 100%;
     }
 }
 
@@ -2308,6 +2248,22 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 
 .own-school__meta {
     color: var(--ds-color-neutral-text-subtle);
+}
+
+/* Oslo: where a barneskole's pupils go to two ungdomsskoler, under the ungdomsskole card */
+.own-school__split {
+    margin: var(--ds-size-1) 0 0;
+    color: var(--ds-color-neutral-text-subtle);
+    grid-column: 1 / -1;
+}
+
+.own-school__split-line {
+    display: block;
+}
+
+/* Housing search on Finn.no, one link per postnummer in the krets */
+.own-schools__finn {
+    margin: var(--ds-size-2) 0 0;
 }
 
 .own-schools__caveat {
@@ -3562,18 +3518,263 @@ body.has-page-feedback {
     }
 }
 
-/* ── Loading placeholders and error messages ─────────────────────────── */
-/* Grey blocks in the shape of what is coming (the school banner, the school cards), so nothing jumps when
-   the data arrives. They pulse gently, and stand still for those who ask for less motion. */
-.skeleton {
-    display: block;
-    border-radius: var(--ds-border-radius-md);
-    background: var(--ds-color-neutral-surface-active);
-    animation: skeleton-pulse 1.4s ease-in-out infinite;
+/* ── The map page (kart.html): the map fills the screen under the header ── */
+.map-page {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
 }
 
-@keyframes skeleton-pulse {
-    50% { opacity: 0.5; }
+.map-page__main {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+}
+
+.map-page__map {
+    position: absolute;
+    inset: 0;
+}
+
+/* Top: the search in the middle and "Kartlag" in the right corner; on phones side by side */
+.map-page__top {
+    position: absolute;
+    z-index: 1000;
+    top: var(--ds-size-3);
+    left: var(--ds-size-3);
+    right: var(--ds-size-3);
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 30rem) 1fr;
+    align-items: start;
+    gap: var(--ds-size-2);
+    pointer-events: none;
+}
+
+@media (max-width: 48rem) {
+    .map-page__top {
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+}
+
+.map-page__top > * {
+    pointer-events: auto;
+}
+
+.map-search {
+    position: relative;
+    grid-column: -3;
+    min-width: 0;
+}
+
+.map-search .ds-input {
+    width: 100%;
+    box-shadow: 0 1px 4px rgb(0 0 0 / 20%);
+}
+
+.map-search__results {
+    position: absolute;
+    top: calc(100% + var(--ds-size-1));
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: var(--ds-size-1) 0;
+    list-style: none;
+}
+
+.map-search__item {
+    display: block;
+    width: 100%;
+    padding: var(--ds-size-2) var(--ds-size-3);
+    border: 0;
+    background: none;
+    text-align: start;
+    font: inherit;
+    cursor: pointer;
+}
+
+.map-search__item:hover,
+.map-search__item:focus-visible {
+    background: var(--ds-color-brand1-surface-tinted);
+}
+
+.map-search__item span {
+    color: var(--ds-color-neutral-text-subtle);
+    font-size: var(--ds-font-size-2);
+}
+
+.map-search__item .ds-icon {
+    vertical-align: -0.2em;
+    margin-inline-end: var(--ds-size-2);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.map-search__empty {
+    padding: var(--ds-size-2) var(--ds-size-3);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.map-layers-toggle.ds-button {
+    grid-column: -2;
+    justify-self: end;
+    background: var(--ds-color-neutral-background-default);
+    box-shadow: 0 1px 4px rgb(0 0 0 / 20%);
+}
+
+/* The layer list under its button in the right corner, left of the tool column so the tools stay in reach */
+.map-layers.ds-card {
+    position: absolute;
+    z-index: 1000;
+    top: calc(var(--ds-size-3) + var(--ds-size-12) + var(--ds-size-2));
+    right: calc(var(--ds-size-3) + var(--ds-size-12) + var(--ds-size-2));
+    width: min(22rem, calc(100% - 2 * var(--ds-size-3) - var(--ds-size-12) - var(--ds-size-2)));
+    max-height: calc(100% - 9rem);
+    overflow-y: auto;
+    padding: var(--ds-size-4);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
+}
+
+.map-layers[hidden] {
+    display: none;
+}
+
+.map-layers__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--ds-size-2);
+}
+
+.map-layers__head .ds-heading {
+    margin: 0;
+}
+
+.map-layers__group {
+    margin-bottom: var(--ds-size-3);
+}
+
+.map-layers__group .ds-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-size-2);
+}
+
+/* Videregående skoler on the map page: no results, so a dark colour none of the result colours use */
+.vgs-marker {
+    --score-bg: var(--ds-color-neutral-base-default);
+    --score-fg: var(--ds-color-neutral-base-contrast-default);
+}
+
+.map-layers__icon .school-marker {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.map-layers__note {
+    margin: 0;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+/* Bottom right: the tools in a column, the drawing ones marked while in use */
+.map-tools {
+    position: absolute;
+    z-index: 1000;
+    right: var(--ds-size-3);
+    bottom: var(--ds-size-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-size-1);
+}
+
+.map-tool.ds-button {
+    background: var(--ds-color-neutral-background-default);
+    box-shadow: 0 1px 4px rgb(0 0 0 / 20%);
+}
+
+.map-tool.ds-button[aria-pressed="true"] {
+    background: var(--ds-color-brand1-base-default);
+    color: var(--ds-color-brand1-base-contrast-default);
+}
+
+.map-tool--text span {
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+/* While drawing or measuring, the schools do not catch the clicks */
+.is-drawing .leaflet-marker-icon {
+    pointer-events: none !important;
+}
+
+.is-drawing {
+    cursor: crosshair;
+}
+
+/* What to do while drawing or measuring, at the bottom left */
+.map-hint.ds-card {
+    position: absolute;
+    z-index: 1000;
+    left: var(--ds-size-3);
+    bottom: var(--ds-size-8);
+    width: min(24rem, calc(100% - 5rem));
+    padding: var(--ds-size-3) var(--ds-size-4);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
+}
+
+.map-hint[hidden] {
+    display: none;
+}
+
+.map-hint .ds-paragraph {
+    margin: 0;
+}
+
+.map-hint__result {
+    font-size: var(--ds-font-size-5);
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.map-hint__result:empty {
+    display: none;
+}
+
+.map-hint__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-2);
+    margin-top: var(--ds-size-2);
+}
+
+/* Bydel names on the map, in the middle of each bydel: text only, no box */
+.leaflet-tooltip.map-bydel-label {
+    padding: 0;
+    border: 0;
+    background: none;
+    box-shadow: none;
+    color: #3b4a5a;
+    font-size: 0.75rem;
+    font-weight: var(--ds-font-weight-semibold);
+    text-transform: uppercase;
+    text-shadow: 0 0 3px #fff, 0 0 3px #fff;
+}
+
+.map-far .leaflet-tooltip.map-bydel-label {
+    display: none;
+}
+
+/* The measurement on a finished line or area */
+.leaflet-tooltip.map-measure {
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+/* ── Loading placeholders and error messages ─────────────────────────── */
+/* Light blocks in the shape of what is coming (the school banner, the school cards), so nothing jumps when
+   the data arrives. The colour and the slow fade are Designsystemet's Skeleton (.ds-skeleton and its
+   keyframes); they stand still for those who ask for less motion. */
+.skeleton {
+    --dsc-skeleton-background: var(--ds-color-neutral-surface-tinted);
+    display: block;
+    border-radius: var(--ds-border-radius-lg);
+    background: var(--dsc-skeleton-background);
+    animation: ds-skeleton-opacity-fade 1.6s linear infinite alternate;
 }
 
 @media (prefers-reduced-motion: reduce) {
