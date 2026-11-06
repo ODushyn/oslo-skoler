@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="no" data-color-scheme="light" data-color="brand1">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <!-- Content Security Policy: scripts only from this site and the two CDNs (pinned, with integrity hashes),
+         data only from the services the pages use. GitHub Pages cannot send it as a header. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: blob: https://thumb.wikimedia.org https://upload.wikimedia.org https://tiles.openfreemap.org; font-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tiles.openfreemap.org https://ws.geonorge.no https://data-nsr.udir.no https://api.entur.io https://formspree.io; worker-src 'self' blob:; child-src blob:; form-action https://formspree.io; base-uri 'self'; object-src 'none'" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Skoler i Ørsta – barneskoler og ungdomsskoler | Skolekartet</title>
+    <meta name="description" content="Oversikt over 7 grunnskoler i Ørsta: resultater fra nasjonale prøver 2025-26, trivsel og mobbing fra Elevundersøkelsen, og skolene på kart." />
+    <link rel="canonical" href="https://skolekartet.no/skoler/orsta/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Skolekartet" />
+    <meta property="og:url" content="https://skolekartet.no/skoler/orsta/" />
+    <meta property="og:title" content="Skoler i Ørsta – barneskoler og ungdomsskoler | Skolekartet" />
+    <meta property="og:description" content="Oversikt over 7 grunnskoler i Ørsta: resultater fra nasjonale prøver 2025-26, trivsel og mobbing fra Elevundersøkelsen, og skolene på kart." />
+    <meta property="og:image" content="https://skolekartet.no/static/img/og-skolekartet.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="nb_NO" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"CollectionPage","@id":"https://skolekartet.no/skoler/orsta/","name":"Skoler i Ørsta","url":"https://skolekartet.no/skoler/orsta/","description":"Oversikt over 7 grunnskoler i Ørsta: resultater fra nasjonale prøver 2025-26, trivsel og mobbing fra Elevundersøkelsen, og skolene på kart.","mainEntity":{"@type":"ItemList","numberOfItems":7,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://skolekartet.no/skoler/orsta/dalane-skule","name":"Dalane skule"},{"@type":"ListItem","position":2,"url":"https://skolekartet.no/skoler/orsta/hovden-skule","name":"Hovden skule"},{"@type":"ListItem","position":3,"url":"https://skolekartet.no/skoler/orsta/saebo-skule","name":"Sæbø skule"},{"@type":"ListItem","position":4,"url":"https://skolekartet.no/skoler/orsta/vartdal-skule","name":"Vartdal skule"},{"@type":"ListItem","position":5,"url":"https://skolekartet.no/skoler/orsta/velle-skule","name":"Velle skule"},{"@type":"ListItem","position":6,"url":"https://skolekartet.no/skoler/orsta/orsta-ungdomsskule","name":"Ørsta ungdomsskule"},{"@type":"ListItem","position":7,"url":"https://skolekartet.no/skoler/orsta/amas-friskule","name":"Åmås friskule"}]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Skolekartet","item":"https://skolekartet.no/"},{"@type":"ListItem","position":2,"name":"Skoler","item":"https://skolekartet.no/skoler/"},{"@type":"ListItem","position":3,"name":"Ørsta"}]}]}</script>
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
+    
+
+    <!-- Map for the school position (same libraries as the main map) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css" integrity="sha384-o/2yZuJZWGJ4s/adjxVW71R+EO/LyCwdQfP5UWSgX/w87iiTXuvDZaejd3TsN7mf" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.css" integrity="sha384-uTttxo/aOKbdE5RlD/SPzSDoDmNvGlUYPjONi2MN/b7c9HPSvW07OIuyP7uL6jxK" crossorigin="anonymous"/>
+    <!-- Deferred: the map libraries (MapLibre is large) load without holding up the page; they run in this
+         order before school-page.js, which is deferred too -->
+    <script defer src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js" integrity="sha384-okbbMvvx/qfQkmiQKfd5VifbKZ/W8p1qIsWvE1ROPUfHWsDcC8/BnHohF7vPg2T6" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.js" integrity="sha384-5+cfbwT0iiub6VsQAdn6yz16nr6sDiQoHx6tm4O8OVYXHYOxcffFmCJBL0dgdvGp" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@maplibre/maplibre-gl-leaflet@0.1.4/leaflet-maplibre-gl.js" integrity="sha384-tXYNKOHx4T02jMP7YYCtBxPIv1B5gaA5mcVPBzqMp6d7VzWzxJgI2aWF/nJLrQdS" crossorigin="anonymous"></script>
+
+    <!-- Designsystemet (Digdir): font, theme and component CSS -->
+    <link rel="stylesheet" id="dsTheme" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/theme/designsystemet.css" integrity="sha384-IT4guVJwkq1uL/GwNWhv2zk3uUZ18gRVe1qOVMWTTjaEkDut+i02gT9l/cnPrDSm" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/src/index.css" integrity="sha384-CAE1Qe2Yp1euTdmOujy77VIT0GR/Yu8V+3taPP8Oo7GGV9hrQKrVigMB51hyUKYD" crossorigin="anonymous" />
+
+
+    <link rel="stylesheet" href="../../static/css/styles.css?v=207"/>
+
+    <script src="../../static/js/i18n.js?v=100"></script>
+    <script src="../../static/js/theme.js?v=9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-web@1.23.0/dist/umd/index.js" integrity="sha384-gB8nQDA1vTT5N2EUrwILb4EmNquufjYcGqx5Cmce63dC5l/zyDRlxPjzv4/pG6mE" crossorigin="anonymous"></script>
+</head>
+<body>
+    <a class="ds-skip-link" href="#main">Hopp til hovedinnhold</a>
+
+    <!-- Header (shared, see static/js/layout.js) -->
+    <div id="site-header"></div>
+    <script src="../../static/js/layout.js?v=32"></script>
+
+    <main id="main" tabindex="-1" class="page">
+        <div class="site-container page__container page__container--wide">
+            <a class="ds-button page__back" data-variant="tertiary" data-size="sm" href="../../" data-back>Tilbake</a>
+            <article class="page__content">
+                <nav class="breadcrumbs" aria-label="Brødsmulesti"><ol><li><a class="ds-link" href="../../">Skolekartet</a></li><li><a class="ds-link" href="../../skoler/">Skoler</a></li><li aria-current="page">Ørsta</li></ol></nav>
+                <h1 class="ds-heading" data-size="lg">Skoler i Ørsta</h1>
+                <p class="ds-paragraph" data-size="lg">7 grunnskoler med offentlige tall: 6 med 5. trinn og 3 med ungdomstrinn.</p>
+                <p class="ds-paragraph"><a class="ds-link" href="../../?kommune=%C3%98rsta">Se skolene i Ørsta på kartet</a>,
+                    søk på adressen din og finn skolene i nærheten.</p>
+                <h2 class="ds-heading" data-size="sm">Snitt på nasjonale prøver 2025-26</h2><ul class="ds-list"><li>5. trinn: 49,0 i Ørsta, 49,3 i hele landet</li><li>Ungdomstrinnet: 49,0 i Ørsta, 49,7 i hele landet</li></ul>
+                <h2 class="ds-heading" data-size="sm">Alle skolene</h2>
+                <p class="ds-paragraph" data-size="sm">I alfabetisk rekkefølge. Snitt er skalapoeng fra nasjonale prøver 2025-26;
+                    trivsel er elevenes svar på en skala fra 1 til 5 (7. og 10. trinn). – betyr ikke publisert.</p>
+                <div class="table-scroll">
+                    <table class="ds-table" data-size="sm">
+                        <thead><tr><th scope="col">Skole</th><th scope="col">Type</th><th scope="col">Eierform</th>
+                            <th scope="col">Snitt 5. trinn</th><th scope="col">Snitt ungdomstrinnet</th>
+                            <th scope="col">Trivsel 7. trinn</th><th scope="col">Trivsel 10. trinn</th></tr></thead>
+                        <tbody><tr><th scope="row"><a class="ds-link" href="../../skoler/orsta/dalane-skule">Dalane skule</a></th><td>barneskole</td><td>Offentlig</td><td>48,7</td><td></td><td>4,0</td><td></td></tr><tr><th scope="row"><a class="ds-link" href="../../skoler/orsta/hovden-skule">Hovden skule</a></th><td>barneskole</td><td>Offentlig</td><td>49,7</td><td></td><td>4,5</td><td></td></tr><tr><th scope="row"><a class="ds-link" href="../../skoler/orsta/saebo-skule">Sæbø skule</a></th><td>barne- og ungdomsskole</td><td>Offentlig</td><td>–</td><td>–</td><td>4,2</td><td>4,1</td></tr><tr><th scope="row"><a class="ds-link" href="../../skoler/orsta/vartdal-skule">Vartdal skule</a></th><td>barne- og ungdomsskole</td><td>Offentlig</td><td>46,7</td><td>–</td><td>3,8</td><td>4,0</td></tr><tr><th scope="row"><a class="ds-link" href="../../skoler/orsta/velle-skule">Velle skule</a></th><td>barneskole</td><td>Offentlig</td><td>49,0</td><td></td><td>4,1</td><td></td></tr><tr><th scope="row"><a class="ds-link" href="../../skoler/orsta/orsta-ungdomsskule">Ørsta ungdomsskule</a></th><td>ungdomsskole</td><td>Offentlig</td><td></td><td>49,0</td><td></td><td>4,1</td></tr><tr><th scope="row"><a class="ds-link" href="../../skoler/orsta/amas-friskule">Åmås friskule</a></th><td>barneskole</td><td>Privat</td><td>–</td><td></td><td>4,3</td><td></td></tr></tbody>
+                    </table>
+                </div>
+                <p class="ds-paragraph"><a class="ds-link" href="../">Skoler i andre kommuner</a></p>
+                <p class="ds-paragraph school-page__sources" data-size="xs">Kilder: nasjonale prøver og Elevundersøkelsen fra
+                    Utdanningsdirektoratet, Nasjonalt skoleregister (NLOD). <a class="ds-link" href="../../datakilder">Om datakildene</a>.</p>
+            </article>
+        </div>
+    </main>
+
+    <!-- Footer (shared, see static/js/layout.js) -->
+    <div id="site-footer"></div>
+    <script defer src="../../static/js/shared.js?v=27"></script>
+</body>
+</html>

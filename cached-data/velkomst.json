@@ -1,0 +1,298 @@
+{
+"source": "https://www.oslo.kommune.no/skole-og-utdanning/sprakopplaring/tilbud-til-minoritetsspraklige-elever/",
+"fetched": "2026-11-02",
+"schools": {
+"874589802": [
+{
+"type": "mottaksgruppe",
+"trinn": "barnetrinn",
+"plasser": 12
+}
+],
+"874590622": [
+{
+"type": "mottaksgruppe",
+"trinn": "ungdomstrinn",
+"plasser": 15
+}
+],
+"879126312": [
+{
+"type": "mottaksgruppe",
+"trinn": "barnetrinn",
+"plasser": 24
+}
+],
+"880954342": [
+{
+"type": "mottaksgruppe",
+"trinn": "ungdomstrinn",
+"plasser": 30
+}
+],
+"916513968": [
+{
+"type": "mottaksgruppe",
+"trinn": "barnetrinn",
+"plasser": 36
+},
+{
+"type": "alfabetiseringsgruppe",
+"trinn": "barnetrinn",
+"plasser": 12
+}
+],
+"929177525": [
+{
+"type": "mottaksgruppe",
+"trinn": "ungdomstrinn",
+"plasser": 45
+},
+{
+"type": "alfabetiseringsgruppe",
+"trinn": "ungdomstrinn",
+"plasser": 10
+}
+],
+"973626442": [
+{
+"type": "mottaksgruppe",
+"trinn": "barnetrinn",
+"plasser": 36
+},
+{
+"type": "alfabetiseringsgruppe",
+"trinn": "barnetrinn",
+"plasser": 12
+}
+],
+"973626450": [
+{
+"type": "mottaksgruppe",
+"trinn": "barnetrinn",
+"plasser": 12
+}
+],
+"974589680": [
+{
+"type": "mottaksgruppe",
+"trinn": "barnetrinn",
+"plasser": 12
+},
+{
+"type": "alfabetiseringsgruppe",
+"trinn": "barnetrinn",
+"plasser": 12
+}
+],
+"974589702": [
+{
+"type": "mottaksgruppe",
+"trinn": "barnetrinn",
+"plasser": 24
+}
+],
+"974589788": [
+{
+"type": "mottaksgruppe",
+"trinn": "barnetrinn",
+"plasser": 12
+}
+],
+"974589796": [
+{
+"type": "mottaksgruppe",
+"trinn": "barnetrinn",
+"plasser": 12
+},
+{
+"type": "alfabetiseringsgruppe",
+"trinn": "barnetrinn",
+"plasser": 12
+}
+],
+"974589818": [
+{
+"type": "mottaksgruppe",
+"trinn": "barnetrinn",
+"plasser": 12
+},
+{
+"type": "alfabetiseringsgruppe",
+"trinn": "barnetrinn",
+"plasser": 12
+}
+],
+"974589907": [
+{
+"type": "mottaksgruppe",
+"trinn": "barnetrinn",
+"plasser": 24
+}
+],
+"974589923": [
+{
+"type": "mottaksgruppe",
+"trinn": "barnetrinn",
+"plasser": 36
+},
+{
+"type": "alfabetiseringsgruppe",
+"trinn": "barnetrinn",
+"plasser": 12
+}
+],
+"974590069": [
+{
+"type": "mottaksgruppe",
+"trinn": "barnetrinn",
+"plasser": 24
+}
+],
+"974590085": [
+{
+"type": "mottaksgruppe",
+"trinn": "barnetrinn",
+"plasser": 24
+}
+],
+"974590115": [
+{
+"type": "mottaksgruppe",
+"trinn": "barnetrinn",
+"plasser": 36
+}
+],
+"974590123": [
+{
+"type": "mottaksgruppe",
+"trinn": "barnetrinn",
+"plasser": 24
+}
+],
+"974590158": [
+{
+"type": "mottaksgruppe",
+"trinn": "barnetrinn",
+"plasser": 12
+},
+{
+"type": "alfabetiseringsgruppe",
+"trinn": "barnetrinn",
+"plasser": 12
+}
+],
+"974590190": [
+{
+"type": "mottaksgruppe",
+"trinn": "barnetrinn",
+"plasser": 36
+},
+{
+"type": "alfabetiseringsgruppe",
+"trinn": "barnetrinn",
+"plasser": 12
+}
+],
+"974590301": [
+{
+"type": "mottaksgruppe",
+"trinn": "barnetrinn",
+"plasser": 12
+}
+],
+"974590328": [
+{
+"type": "mottaksgruppe",
+"trinn": "ungdomstrinn",
+"plasser": 30
+}
+],
+"974590336": [
+{
+"type": "mottaksgruppe",
+"trinn": "ungdomstrinn",
+"plasser": 30
+}
+],
+"974590395": [
+{
+"type": "mottaksgruppe",
+"trinn": "ungdomstrinn",
+"plasser": 15
+}
+],
+"974590441": [
+{
+"type": "mottaksgruppe",
+"trinn": "ungdomstrinn",
+"plasser": 30
+}
+],
+"974590468": [
+{
+"type": "mottaksgruppe",
+"trinn": "ungdomstrinn",
+"plasser": 30
+}
+],
+"974590484": [
+{
+"type": "mottaksgruppe",
+"trinn": "barnetrinn",
+"plasser": 24
+},
+{
+"type": "alfabetiseringsgruppe",
+"trinn": "barnetrinn",
+"plasser": 12
+}
+],
+"974590638": [
+{
+"type": "mottaksgruppe",
+"trinn": "ungdomstrinn",
+"plasser": 30
+}
+],
+"974590794": [
+{
+"type": "mottaksgruppe",
+"trinn": "ungdomstrinn",
+"plasser": 15
+}
+],
+"979126352": [
+{
+"type": "mottaksgruppe",
+"trinn": "ungdomstrinn",
+"plasser": 15
+},
+{
+"type": "alfabetiseringsgruppe",
+"trinn": "ungdomstrinn",
+"plasser": 10
+}
+],
+"980953602": [
+{
+"type": "mottaksgruppe",
+"trinn": "ungdomstrinn",
+"plasser": 30
+}
+],
+"995821664": [
+{
+"type": "mottaksgruppe",
+"trinn": "ungdomstrinn",
+"plasser": 30
+},
+{
+"type": "alfabetiseringsgruppe",
+"trinn": "ungdomstrinn",
+"plasser": 10
+}
+]
+},
+"unmatched": []
+}

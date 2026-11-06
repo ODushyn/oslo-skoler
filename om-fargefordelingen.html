@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="no" data-color-scheme="light" data-color="brand1">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <!-- Content Security Policy: scripts only from this site and the two CDNs (pinned, with integrity hashes),
+         data only from the services the pages use. GitHub Pages cannot send it as a header. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: blob: https://thumb.wikimedia.org https://upload.wikimedia.org https://tiles.openfreemap.org; font-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tiles.openfreemap.org https://ws.geonorge.no https://data-nsr.udir.no https://api.entur.io https://formspree.io; worker-src 'self' blob:; child-src blob:; form-action https://formspree.io; base-uri 'self'; object-src 'none'" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Om fargefordelingen – Skolekartet</title>
+    <meta name="description" content="Hvordan Skolekartet fargelegger skolene ut fra resultatene på nasjonale prøver." />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="canonical" href="https://skolekartet.no/om-fargefordelingen" />
+    <!-- Link previews (Open Graph, X/Twitter): one shared image for the whole site -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Skolekartet" />
+    <meta property="og:url" content="https://skolekartet.no/om-fargefordelingen" />
+    <meta property="og:title" content="Om fargefordelingen – Skolekartet" />
+    <meta property="og:description" content="Hvordan Skolekartet fargelegger skolene ut fra resultatene på nasjonale prøver." />
+    <meta property="og:image" content="https://skolekartet.no/static/img/og-skolekartet.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Skolekartet – finn skole og se nasjonale prøver, trivsel og skolekrets på kart" />
+    <meta property="og:locale" content="nb_NO" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Designsystemet (Digdir): font, theme and component CSS -->
+    <link rel="stylesheet" id="dsTheme" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/theme/designsystemet.css" integrity="sha384-IT4guVJwkq1uL/GwNWhv2zk3uUZ18gRVe1qOVMWTTjaEkDut+i02gT9l/cnPrDSm" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/src/index.css" integrity="sha384-CAE1Qe2Yp1euTdmOujy77VIT0GR/Yu8V+3taPP8Oo7GGV9hrQKrVigMB51hyUKYD" crossorigin="anonymous" />
+
+
+    <link rel="stylesheet" href="static/css/styles.css?v=207"/>
+
+    <script src="static/js/i18n.js?v=100"></script>
+    <script src="static/js/theme.js?v=9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-web@1.23.0/dist/umd/index.js" integrity="sha384-gB8nQDA1vTT5N2EUrwILb4EmNquufjYcGqx5Cmce63dC5l/zyDRlxPjzv4/pG6mE" crossorigin="anonymous"></script>
+</head>
+<body>
+    <a class="ds-skip-link" href="#main">Hopp til hovedinnhold</a>
+
+    <!-- Header (shared, see static/js/layout.js) -->
+    <div id="site-header"></div>
+    <script src="static/js/layout.js?v=32"></script>
+
+    <main id="main" tabindex="-1" class="page">
+        <div class="site-container page__container">
+            <a class="ds-button page__back" data-variant="tertiary" data-size="sm" href="./" data-back>Tilbake</a>
+            <article class="page__content">
+            <h1 class="ds-heading" data-size="md"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M14.5 2.25C13.8096 2.25 13.25 2.80964 13.25 3.5V20.25H10.75V10.5C10.75 9.80964 10.1904 9.25 9.5 9.25H6.5C5.80964 9.25 5.25 9.80964 5.25 10.5V20.25H4C3.58579 20.25 3.25 20.5858 3.25 21C3.25 21.4142 3.58579 21.75 4 21.75H20C20.4142 21.75 20.75 21.4142 20.75 21C20.75 20.5858 20.4142 20.25 20 20.25H18.75V3.5C18.75 2.80964 18.1904 2.25 17.5 2.25H14.5ZM14.75 20.25V3.75H17.25V20.25H14.75ZM6.75 10.75V20.25H9.25V10.75H6.75Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg>Om Fargefordelingen</h1>
+            
+            <h2 class="ds-heading" data-size="xs">Offisiell Skala</h2>
+            <p class="ds-paragraph">Til nasjonale prøver er det utviklet en egen skala (skalapoeng) hvor <strong>gjennomsnittet i 2022 ble satt til 50</strong> og <strong>standardavviket til 10</strong>. Alle prøveresultater blir omregnet til denne skalaen.</p>
+            
+            <div class="ds-card" data-variant="tinted" data-color="brand1">
+                <p class="ds-paragraph" data-size="sm"><strong>Datagrunnlag (1 947 skoler):</strong></p>
+                <ul class="ds-list" data-size="sm">
+                    <li>Gjennomsnitt: 49,31 (nær landsgjennomsnitt ✓)</li>
+                    <li>Median: 49,33</li>
+                    <li>Standardavvik: 2,84</li>
+                    <li>Spredning: 39-59 poeng</li>
+                </ul>
+            </div>
+            
+            <h2 class="ds-heading" data-size="xs">Fargeforklaring</h2>
+            <p class="ds-paragraph">Fargene på kartet og i listen bygger på det siste skoleåret med publiserte resultater fra nasjonale prøver. Resultatene fra tidligere år ser du på siden til hver skole.</p>
+            <ul class="ds-list ds-list--unstyled color-explanation">
+                <li><span class="color-dot score-very-low" aria-hidden="true"></span><span><strong>Rød (&lt; 45):</strong> Betydelig under landsgjennomsnitt (3,7% av skoler)</span></li>
+                <li><span class="color-dot score-low" aria-hidden="true"></span><span><strong>Oransje (45 – 49,31):</strong> Under landsgjennomsnitt (44,9% av skoler)</span></li>
+                <li><span class="color-dot score-high" aria-hidden="true"></span><span><strong>Lysegrønn (49,31 – 55):</strong> Over landsgjennomsnitt (48,2% av skoler)</span></li>
+                <li><span class="color-dot score-very-high" aria-hidden="true"></span><span><strong>Mørkegrønn (≥ 55):</strong> Betydelig over landsgjennomsnitt (3,2% av skoler)</span></li>
+                <li><span class="color-dot score-none" aria-hidden="true"></span><span><strong>Grå:</strong> Ingen data tilgjengelig (alle fag mangler)</span></li>
+            </ul>
+            
+            <table class="ds-table range-table" data-size="sm" data-border>
+                <thead>
+                    <tr>
+                        <th>Intervall</th>
+                        <th class="num">Andel</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><span class="color-dot score-very-low" aria-hidden="true"></span>Under 45</td><td class="num">3,7%</td></tr>
+                    <tr><td><span class="color-dot score-low" aria-hidden="true"></span>45 – 46</td><td class="num">4,8%</td></tr>
+                    <tr><td><span class="color-dot score-low" aria-hidden="true"></span>46 – 47</td><td class="num">7,1%</td></tr>
+                    <tr><td><span class="color-dot score-low" aria-hidden="true"></span>48 – 49</td><td class="num">16,5%</td></tr>
+                    <tr><td><span class="color-dot score-low" aria-hidden="true"></span>49 – 50</td><td class="num">14,4%</td></tr>
+                    <tr><td><span class="color-dot score-high" aria-hidden="true"></span>50 – 51</td><td class="num">14,2%</td></tr>
+                    <tr><td><span class="color-dot score-high" aria-hidden="true"></span>52 – 53</td><td class="num">6,7%</td></tr>
+                    <tr><td><span class="color-dot score-high" aria-hidden="true"></span>53 – 54</td><td class="num">4,8%</td></tr>
+                    <tr><td><span class="color-dot score-high" aria-hidden="true"></span>54 – 55</td><td class="num">3,2%</td></tr>
+                    <tr><td><span class="color-dot score-very-high" aria-hidden="true"></span>Over 55</td><td class="num">3,2%</td></tr>
+                </tbody>
+            </table>
+            <p class="ds-paragraph table-caption" data-size="xs">Basert på 1 947 skoler med data (2025–26)</p>
+            
+            <h2 class="ds-heading" data-size="xs">Begrunnelse</h2>
+            <p class="ds-paragraph">Fargefordelingen bruker det faktiske gjennomsnittlige resultatet blant skoler i datagrunnlaget (<strong>49,31</strong>) som skillelinje mellom oransje og lysegrønn, i stedet for den teoretiske midtverdien 50. Dette gir en:</p>
+            <ul class="ds-list">
+                <li><strong>Realistisk fordeling</strong> basert på faktiske resultater fra 1 947 skoler</li>
+                <li><strong>Rettferdig vurdering</strong> som gjenspeiler det faktiske landsgjennomsnitt</li>
+                <li><strong>Meningsfull tolkning</strong> – ca. halvparten av skolene er over/under midten</li>
+            </ul>
+            <p class="ds-paragraph">Dette sikrer at skoler som presterer over det faktiske gjennomsnittet får anerkjennelse, mens skoler som trenger støtte blir identifisert.</p>
+            
+            <p class="ds-paragraph">
+                <a class="ds-link" href="https://statistikkportalen.udir.no/api/rapportering/rest/v1/Tekst/visTekst/19715?dataChanged=2026-02-19_074500#title5"
+                   target="_blank" rel="noopener">Les mer hos UDIR (offisiell forklaring)<svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M20.5319 3.47126C20.603 3.5428 20.6568 3.62511 20.6931 3.71291C20.7298 3.80134 20.75 3.89831 20.75 4V11.5C20.75 11.9142 20.4142 12.25 20 12.25C19.5858 12.25 19.25 11.9142 19.25 11.5V5.81066L10.5303 14.5303C10.2374 14.8232 9.76256 14.8232 9.46967 14.5303C9.17678 14.2374 9.17678 13.7626 9.46967 13.4697L18.1893 4.75H12.5C12.0858 4.75 11.75 4.41421 11.75 4C11.75 3.58579 12.0858 3.25 12.5 3.25H20C20.2063 3.25 20.3931 3.33329 20.5287 3.46808L20.5303 3.46967L20.5319 3.47126ZM4.75 9C4.75 8.86193 4.86193 8.75 5 8.75H12C12.4142 8.75 12.75 8.41421 12.75 8C12.75 7.58579 12.4142 7.25 12 7.25H5C4.0335 7.25 3.25 8.0335 3.25 9V19C3.25 19.9665 4.0335 20.75 5 20.75H15C15.9665 20.75 16.75 19.9665 16.75 19V12C16.75 11.5858 16.4142 11.25 16 11.25C15.5858 11.25 15.25 11.5858 15.25 12V19C15.25 19.1381 15.1381 19.25 15 19.25H5C4.86193 19.25 4.75 19.1381 4.75 19V9Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></a>
+            </p>
+            </article>
+        </div>
+    </main>
+
+    <!-- Footer (shared, see static/js/layout.js) -->
+    <div id="site-footer"></div>
+</body>
+</html>

@@ -1,0 +1,8804 @@
+{
+"source": "Enhetsregisteret, Brønnøysundregistrene (NLOD)",
+"fetched": "2026-11-03",
+"schools": {
+"811801402": {
+"phone": "35293130"
+},
+"813822172": {
+"email": "postnnu@bjornafjorden.kommune.no",
+"phone": "56575800"
+},
+"813943492": {
+"email": "post.moss@cisschools.no"
+},
+"813993422": {
+"email": "postmottak.spraksenteret@osloskolen.no"
+},
+"816578892": {
+"email": "ungsandnes@wang.no",
+"phone": "51290720"
+},
+"816668212": {
+"email": "kontor@kkfriskole.no"
+},
+"816691842": {
+"email": "post@nrg.no"
+},
+"819260702": {
+"email": "vagsbygd@oasenskole.no"
+},
+"820332342": {
+"phone": "51950250"
+},
+"825308512": {
+"email": "romerike@wang.no",
+"phone": "67206668"
+},
+"827890502": {
+"email": "stangaland@karmoy.kommune.no",
+"phone": "52857570"
+},
+"829325942": {
+"email": "tonsberg@skagerak.org",
+"phone": "33456550"
+},
+"832272922": {
+"email": "kleppelunden.skule@klepp.kommune.no"
+},
+"873084022": {
+"email": "lorenskog@steinerskolen.no",
+"phone": "67914000"
+},
+"873441852": {
+"email": "tromso@steinerskolen.no",
+"phone": "77698870"
+},
+"873501162": {
+"email": "kristiansand@steinerskolen.no",
+"phone": "38079730"
+},
+"873608862": {
+"email": "sagdalenskole@lillestrom.kommune.no",
+"phone": "66938830"
+},
+"873688602": {
+"email": "postmottak.royslimoen.skole@lillehammer.kommune.no",
+"phone": "61267410"
+},
+"873844302": {
+"email": "vennesla.ungdomsskole@vennesla.kommune.no",
+"phone": "38150500"
+},
+"873994592": {
+"email": "bergmo.ungdomsskole@molde.kommune.no",
+"phone": "71112600"
+},
+"874043052": {
+"email": "narvik.ungdomsskole@narvikskolen.no",
+"phone": "76912500"
+},
+"874065102": {
+"email": "postmottak.alta.ungdomsskole@alta.kommune.no",
+"phone": "78481600"
+},
+"874222062": {
+"email": "kringlebotn.skole@bergen.kommune.no",
+"phone": "53037500"
+},
+"874546062": {
+"email": "oddevall.skole@lier.kommune.no",
+"phone": "32225780"
+},
+"874550612": {
+"email": "lyngheim.skole@rana.kommune.no",
+"phone": "75144220"
+},
+"874551422": {
+"email": "post@randaberg.kommune.no",
+"phone": "51413200"
+},
+"874552062": {
+"email": "eikeli.skole@baerum.kommune.no",
+"phone": "67507901"
+},
+"874552232": {
+"email": "snaroya.skole@baerum.kommune.no",
+"phone": "67505485"
+},
+"874552372": {
+"email": "ringstabekk.skole@baerum.kommune.no",
+"phone": "67113600"
+},
+"874558532": {
+"email": "gimsoy.skole@vagan.kommune.no",
+"phone": "75420375"
+},
+"874559512": {
+"email": "eid.skole@melhus.kommune.no"
+},
+"874560502": {
+"phone": "78983250"
+},
+"874565172": {
+"email": "berger.skole@rendalen.kommune.no",
+"phone": "62468400"
+},
+"874565652": {
+"email": "sleviksk@fredrikstad.kommune.no",
+"phone": "69363160"
+},
+"874566292": {
+"email": "ersfjordbotn.skole@tromso.kommune.no"
+},
+"874566322": {
+"email": "kaldfjord.skole@tromso.kommune.no",
+"phone": "77693360"
+},
+"874570052": {
+"phone": "62471660"
+},
+"874570702": {
+"email": "skolepost@vega.kommune.no",
+"phone": "75036820"
+},
+"874573442": {
+"email": "flisnesbs@alesund.kommune.no",
+"phone": "70164280"
+},
+"874578282": {
+"email": "mellom-nes.skole@asker.kommune.no",
+"phone": "66715670"
+},
+"874578312": {
+"email": "solberg.skole@asker.kommune.no",
+"phone": "66715530"
+},
+"874580562": {
+"email": "post@eigersund.kommune.no",
+"phone": "51465032"
+},
+"874581372": {
+"phone": "75074110"
+},
+"874584592": {
+"email": "postmottak@larvik.kommune.no",
+"phone": "33171350"
+},
+"874586722": {
+"email": "hanstad.skole@elverum.kommune.no",
+"phone": "62433830"
+},
+"874587982": {
+"email": "postmottak@hadsel.kommune.no",
+"phone": "76164420"
+},
+"874589772": {
+"email": "postmottak.holmlia@osloskolen.no",
+"phone": "22752900"
+},
+"874589802": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23464200"
+},
+"874589942": {
+"email": "postmottak.lilleaker@osloskolen.no",
+"phone": "22134270"
+},
+"874590002": {
+"email": "postmottak.manglerud@osloskolen.no",
+"phone": "22757310"
+},
+"874590142": {
+"email": "postmottak.rustad@osloskolen.no",
+"phone": "23386500"
+},
+"874590282": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23175100"
+},
+"874590452": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23344200"
+},
+"874590592": {
+"email": "postmottak.hovseter@osloskolen.no",
+"phone": "22703300"
+},
+"874590622": {
+"email": "postmottak.tokerud@osloskolen.no",
+"phone": "22790320"
+},
+"874591432": {
+"email": "os.skole@halden.kommune.no",
+"phone": "69212750"
+},
+"874593532": {
+"email": "vevelstadaasen.skole@nordrefollo.kommune.no",
+"phone": "64853650"
+},
+"874594342": {
+"email": "store.bergan.skole@sandefjord.kommune.no",
+"phone": "33417340"
+},
+"874598542": {
+"email": "post.flekkeroy.skole@kristiansand.kommune.no",
+"phone": "38127220"
+},
+"874598682": {
+"email": "post.torridal.skole@kristiansand.kommune.no"
+},
+"874598712": {
+"email": "post.tordenskjoldsgate.skole@kristiansand.kommune.no",
+"phone": "38006050"
+},
+"874598852": {
+"email": "post.haumyrheia.skole@kristiansand.kommune.no",
+"phone": "38058660"
+},
+"874603252": {
+"email": "solberg.skole@as.kommune.no",
+"phone": "64962820"
+},
+"874604852": {
+"email": "loten.usk@loten.kommune.no",
+"phone": "62564233"
+},
+"874605662": {
+"email": "lillas.skole@horten.kommune.no",
+"phone": "33085760"
+},
+"874607592": {
+"email": "tjome.ungdomsskole@faerder.kommune.no",
+"phone": "33390000"
+},
+"874610852": {
+"email": "hole.skule@sandnes.kommune.no",
+"phone": "51337800"
+},
+"874611492": {
+"email": "kvaleberg.skole@stavanger.kommune.no",
+"phone": "51912888"
+},
+"874611522": {
+"email": "tjensvoll.skole@stavanger.kommune.no",
+"phone": "51839100"
+},
+"874611662": {
+"email": "byfjord.skole@stavanger.kommune.no",
+"phone": "51912277"
+},
+"874611832": {
+"email": "skeie.skole@stavanger.kommune.no",
+"phone": "51912030"
+},
+"874615722": {
+"email": "post@lindesnes.kommune.no",
+"phone": "38273270"
+},
+"874617032": {
+"email": "postmottak@suldal.kommune.no"
+},
+"874617962": {
+"email": "sunnylven.skule@stranda.kommune.no",
+"phone": "70268000"
+},
+"874626872": {
+"email": "harstad.skole@harstad.kommune.no",
+"phone": "77026380"
+},
+"874627852": {
+"email": "ostbyen.skole@bodo.kommune.no",
+"phone": "75557600"
+},
+"874735582": {
+"email": "gautesete.skole@stavanger.kommune.no",
+"phone": "51912700"
+},
+"874737852": {
+"email": "nordnes.skole@bergen.kommune.no",
+"phone": "53038100"
+},
+"874737992": {
+"email": "rothaugen.skole@bergen.kommune.no",
+"phone": "55564010"
+},
+"874738042": {
+"email": "kyrkjekrinsen.skole@bergen.kommune.no",
+"phone": "53038700"
+},
+"874738182": {
+"email": "hjellestad.skole@bergen.kommune.no",
+"phone": "53035400"
+},
+"874738352": {
+"email": "alvoen.skole@bergen.kommune.no",
+"phone": "53034010"
+},
+"874738492": {
+"email": "ulsetskogen.skole@bergen.kommune.no",
+"phone": "53035750"
+},
+"874738522": {
+"email": "hop.skole@bergen.kommune.no",
+"phone": "53037800"
+},
+"874738662": {
+"email": "li.skole@bergen.kommune.no",
+"phone": "53037750"
+},
+"874747882": {
+"email": "post.mandalen@rauma.kommune.no",
+"phone": "71166200"
+},
+"875267582": {
+"email": "skarpengland.skole@vennesla.kommune.no",
+"phone": "38151070"
+},
+"875268872": {
+"email": "ogndal.skole@steinkjer.kommune.no",
+"phone": "74134160"
+},
+"875270532": {
+"phone": "62563420"
+},
+"875270672": {
+"email": "postmottak.gaupen.skole@ringsaker.kommune.no",
+"phone": "62336420"
+},
+"875270842": {
+"phone": "62563000"
+},
+"875270982": {
+"email": "solerod.skole@tonsberg.kommune.no",
+"phone": "33406400"
+},
+"875271032": {
+"email": "andebu.skole@sandefjord.kommune.no",
+"phone": "33438210"
+},
+"875271172": {
+"email": "barkaker.skole@tonsberg.kommune.no",
+"phone": "33406600"
+},
+"875271202": {
+"email": "husvik.skole@tonsberg.kommune.no",
+"phone": "33406650"
+},
+"875271342": {
+"email": "brattas.skole@faerder.kommune.no",
+"phone": "33390000"
+},
+"875271512": {
+"email": "eikeland.skole@vennesla.kommune.no",
+"phone": "38152880"
+},
+"875271652": {
+"email": "post@lyngdal.kommune.no"
+},
+"875271822": {
+"email": "tonstad.skule@sirdal.kommune.no",
+"phone": "38379250"
+},
+"875272292": {
+"email": "langset.skole@eidsvoll.kommune.no",
+"phone": "66107360"
+},
+"875272322": {
+"email": "dal.skole@eidsvoll.kommune.no",
+"phone": "66107300"
+},
+"875272462": {
+"email": "postmottak.mogreina.skole@ullensaker.kommune.no",
+"phone": "66109460"
+},
+"875272632": {
+"email": "kjenn.skole@lorenskog.kommune.no"
+},
+"875272772": {
+"email": "blakerskole@lillestrom.kommune.no"
+},
+"875272802": {
+"email": "ingierasen.ungdomsskole@nordrefollo.kommune.no",
+"phone": "66823650"
+},
+"875272942": {
+"email": "postmottak@frogn.kommune.no",
+"phone": "64906320"
+},
+"875273302": {
+"email": "hernes.skole@elverum.kommune.no",
+"phone": "62433870"
+},
+"875273582": {
+"email": "os.skole@os.kommune.no",
+"phone": "62470400"
+},
+"875273752": {
+"phone": "61121801"
+},
+"875273892": {
+"email": "bjoneroa.skole@gran.kommune.no"
+},
+"875274082": {
+"email": "nordli.skole@ostre-toten.kommune.no"
+},
+"875274252": {
+"email": "solvang.skole@oyer.kommune.no",
+"phone": "61277810"
+},
+"875274392": {
+"phone": "61299320"
+},
+"875274422": {
+"phone": "61216480"
+},
+"875274872": {
+"email": "postmottak.vingrom.skole@lillehammer.kommune.no",
+"phone": "61246700"
+},
+"875274902": {
+"email": "kripost@lillehammer.kommune.no",
+"phone": "61265280"
+},
+"875275232": {
+"email": "adm.grinde@tysver.kommune.no"
+},
+"875275542": {
+"email": "epost@sola.kommune.no",
+"phone": "51715222"
+},
+"875275712": {
+"email": "froyland.skule@time.kommune.no",
+"phone": "51776510"
+},
+"875275992": {
+"email": "gard.skole@haugesund.kommune.no",
+"phone": "52744420"
+},
+"875276042": {
+"email": "solvang.skole@haugesund.kommune.no",
+"phone": "52743740"
+},
+"875276182": {
+"phone": "57631800"
+},
+"875276492": {
+"phone": "57738161"
+},
+"875276522": {
+"email": "postmottak@sunnfjord.kommune.no",
+"phone": "57718080"
+},
+"875276662": {
+"phone": "57795864"
+},
+"875277332": {
+"email": "post.gursken@sande.kommune.no",
+"phone": "70026799"
+},
+"875277472": {
+"email": "postmottak@hareid.kommune.no",
+"phone": "70037660"
+},
+"875277952": {
+"email": "tveten.skole@porsgrunn.kommune.no"
+},
+"875278002": {
+"email": "heistad.u.skole@porsgrunn.kommune.no"
+},
+"875278282": {
+"email": "herre.skole@bamble.kommune.no",
+"phone": "35965680"
+},
+"875278312": {
+"email": "stathelle.barneskole@bamble.kommune.no",
+"phone": "35967450"
+},
+"875278622": {
+"phone": "35051360"
+},
+"875278932": {
+"email": "nidarvoll-skole.postmottak@trondheim.kommune.no",
+"phone": "72543800"
+},
+"875279092": {
+"email": "rosenborg-skole.postmottak@trondheim.kommune.no",
+"phone": "72542100"
+},
+"875279572": {
+"email": "namsos.barneskole@namsos.kommune.no"
+},
+"875279602": {
+"email": "hoknes.barneskole@namsos.kommune.no"
+},
+"875279912": {
+"email": "fjordtun.skole@hammerfest.kommune.no",
+"phone": "78402240"
+},
+"875280082": {
+"email": "billefjord.skole@porsanger.kommune.no"
+},
+"875280252": {
+"email": "tanabru.skole@tana.kommune.no"
+},
+"875280562": {
+"email": "spydeberg.ungdomsskole@io.kommune.no",
+"phone": "69682200"
+},
+"875280732": {
+"email": "tindlund.ungdomsskole@sarpsborg.com",
+"phone": "69108900"
+},
+"875280902": {
+"email": "postmottak@arendal.kommune.no",
+"phone": "37013600"
+},
+"875281712": {
+"email": "post@ullensvang.kommune.no"
+},
+"875281852": {
+"email": "skulestad.skule@voss.kommune.no",
+"phone": "56521345"
+},
+"875281992": {
+"email": "postfs@bjornafjorden.kommune.no",
+"phone": "56582148"
+},
+"875282182": {
+"email": "postsos@bjornafjorden.kommune.no",
+"phone": "56575970"
+},
+"875282352": {
+"phone": "72463310"
+},
+"875282492": {
+"email": "postmottak@indrefosen.kommune.no"
+},
+"875282662": {
+"phone": "72401740"
+},
+"875282832": {
+"email": "soknedal.skole@midtre-gauldal.kommune.no",
+"phone": "72403425"
+},
+"875282972": {
+"email": "sondeled.skole@risor.kommune.no",
+"phone": "37156130"
+},
+"875283022": {
+"email": "postmottak@arendal.kommune.no",
+"phone": "37006550"
+},
+"875283162": {
+"email": "postmotak@arendal.kommune.no",
+"phone": "37006440"
+},
+"875283472": {
+"phone": "71265583"
+},
+"875283502": {
+"phone": "71268780"
+},
+"875283952": {
+"email": "veggli.skole@rollag.kommune.no"
+},
+"875284592": {
+"email": "vang.skole@ringerike.kommune.no",
+"phone": "32171470"
+},
+"875284932": {
+"email": "geilo.buskole@hol.kommune.no",
+"phone": "32096620"
+},
+"875285092": {
+"email": "tofte.barneskole@asker.kommune.no",
+"phone": "32278410"
+},
+"875285572": {
+"email": "post.mellembygd@malselvskolen.no",
+"phone": "77832640"
+},
+"875285602": {
+"phone": "77185440"
+},
+"875285882": {
+"email": "post@alver.kommune.no",
+"phone": "56375050"
+},
+"875286072": {
+"phone": "56385554"
+},
+"875286862": {
+"phone": "75052501"
+},
+"875287052": {
+"email": "ytteren.skole@rana.kommune.no",
+"phone": "75144200"
+},
+"875287672": {
+"email": "brattholmen.skule@oygarden.kommune.no",
+"phone": "55097500"
+},
+"875287702": {
+"email": "bjoroyskule@oygarden.kommune.no",
+"phone": "55097580"
+},
+"875288482": {
+"email": "ballangen.skole@narvik.kommune.no",
+"phone": "76929300"
+},
+"875288512": {
+"email": "bjerkvik.skole@narvik.kommune.no",
+"phone": "76912900"
+},
+"875289152": {
+"email": "ottestad.usk@stange.kommune.no",
+"phone": "62562600"
+},
+"875289292": {
+"phone": "57789550"
+},
+"875289632": {
+"email": "postmottak.brottum.skole@ringsaker.kommune.no",
+"phone": "62349900"
+},
+"875289802": {
+"email": "ytteroy-bu@levanger.kommune.no",
+"phone": "74052420"
+},
+"875289942": {
+"email": "postmottak@trysil.kommune.no",
+"phone": "62448780"
+},
+"875290142": {
+"email": "sjetne-skole.postmottak@trondheim.kommune.no",
+"phone": "72549730"
+},
+"875290282": {
+"phone": "52811990"
+},
+"875290312": {
+"email": "hokksund.ungdomsskole@ovre-eiker.kommune.no",
+"phone": "32252450"
+},
+"875290592": {
+"email": "postmottak.nes.ungdomsskole@ringsaker.kommune.no"
+},
+"875290622": {
+"email": "lena.ungdomsskole@ostre-toten.kommune.no",
+"phone": "61141900"
+},
+"875290762": {
+"email": "finnsnes.ungdomskole@senja.kommune.no",
+"phone": "77871620"
+},
+"875292722": {
+"email": "hallermoen.skole@drammen.kommune.no",
+"phone": "32049460"
+},
+"875294792": {
+"phone": "61352563"
+},
+"875294962": {
+"email": "lo.skole@steinkjer.kommune.no",
+"phone": "74169130"
+},
+"875295942": {
+"email": "selsbakk-skole.postmottak@trondheim.kommune.no",
+"phone": "72545350"
+},
+"875296752": {
+"email": "froyland.ungdomsskule@time.kommune.no",
+"phone": "51776500"
+},
+"875296892": {
+"email": "kurland.skole@lorenskog.kommune.no"
+},
+"875298542": {
+"email": "austrheim.skole@haugesund.kommune.no",
+"phone": "52744400"
+},
+"875298682": {
+"email": "kollmyr.barneskole@skien.kommune.no",
+"phone": "35503490"
+},
+"875299182": {
+"phone": "78971930"
+},
+"875299492": {
+"email": "kattem-skole.postmottak@trondheim.kommune.no",
+"phone": "72543560"
+},
+"875299832": {
+"email": "hennummarka.skole@lier.kommune.no",
+"phone": "32243670"
+},
+"875324772": {
+"email": "kaiskuru.skole@alta.kommune.no",
+"phone": "78481630"
+},
+"876210762": {
+"phone": "32160052"
+},
+"876599112": {
+"phone": "70176672"
+},
+"876805022": {
+"email": "postmottak.skoyenasen@osloskolen.no",
+"phone": "22761000"
+},
+"876824922": {
+"email": "postmottak@notodden.kommune.no"
+},
+"876976072": {
+"email": "skogn-bu@levanger.kommune.no",
+"phone": "74053400"
+},
+"879126312": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23243500"
+},
+"879128072": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22893500"
+},
+"879895782": {
+"email": "emma.hjorth.skole@baerum.kommune.no",
+"phone": "67506440"
+},
+"879909252": {
+"email": "braanaasskole@lillestrom.kommune.no",
+"phone": "63870500"
+},
+"879931282": {
+"email": "moan.skole@nordreisa.kommune.no",
+"phone": "77588320"
+},
+"880954342": {
+"email": "postmottak.jordal@osloskolen.no",
+"phone": "23242350"
+},
+"880962132": {
+"email": "post@buenskole.no",
+"phone": "69232330"
+},
+"881659522": {
+"email": "barneskulen@samnanger.kommune.no",
+"phone": "56589980"
+},
+"884675812": {
+"email": "post@idrettsungdomsskolen.no",
+"phone": "72892666"
+},
+"884791162": {
+"email": "eidsvoll@steinerskolen.no",
+"phone": "63951277"
+},
+"885142362": {
+"email": "post@nionett.no",
+"phone": "21899826"
+},
+"886086202": {
+"phone": "32299380"
+},
+"886225172": {
+"email": "erdal.ungdomsskole@askoy.kommune.no",
+"phone": "56158750"
+},
+"887232482": {
+"email": "post@montessoriskolen.no",
+"phone": "33051699"
+},
+"888820132": {
+"email": "post@totenmontessoriskole.no",
+"phone": "61166500"
+},
+"894907592": {
+"email": "einedalen.skule@heroy.kommune.no"
+},
+"895060062": {
+"email": "nordbygdo.ungdom.skule@stord.kommune.no",
+"phone": "53454400"
+},
+"896850172": {
+"email": "post.bruhagen.barneskole@averoy.kommune.no"
+},
+"897457962": {
+"email": "grenland@oasenskole.no",
+"phone": "35499049"
+},
+"898154432": {
+"phone": "55559800"
+},
+"898211932": {
+"email": "post@skulen.no",
+"phone": "70055233"
+},
+"911572907": {
+"email": "postmottak@orkland.kommune.no",
+"phone": "72494600"
+},
+"911632179": {
+"email": "askim.ungdomsskole@io.kommune.no",
+"phone": "69681100"
+},
+"911687100": {
+"phone": "51290129"
+},
+"911716291": {
+"email": "post@skms.no"
+},
+"911765977": {
+"email": "opdol.montessori@gmail.com"
+},
+"911769646": {
+"email": "post@kf-skolen.no"
+},
+"911772515": {
+"email": "post@omskole.no"
+},
+"911777886": {
+"email": "mandal@oasenskole.no",
+"phone": "38266111"
+},
+"911779641": {
+"email": "post@eltoftmontessoriskole.no"
+},
+"912033333": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23372110"
+},
+"912076512": {
+"email": "gvarvskole@mt.kommune.no",
+"phone": "35957700"
+},
+"912187071": {
+"email": "postmottak.sofienberg@osloskolen.no"
+},
+"912374076": {
+"email": "barneskolebrarud@hoppensprett.no"
+},
+"912399060": {
+"email": "postmottak@msmorgan.no"
+},
+"912427617": {
+"email": "post@nordborg.no"
+},
+"912549569": {
+"email": "bekkestua.barneskole@baerum.kommune.no",
+"phone": "67508700"
+},
+"912666077": {
+"email": "hatlaneskole@alesund.kommune.no",
+"phone": "70162660"
+},
+"912697711": {
+"email": "postmottak@osloskolen.no",
+"phone": "23468400"
+},
+"913180208": {
+"phone": "66106750"
+},
+"913261968": {
+"email": "post@moreskodje.no",
+"phone": "71707051"
+},
+"913394844": {
+"email": "postmottak.gystadmarka.ungdomsskole@ullensaker.kommune.no",
+"phone": "66109050"
+},
+"913433483": {
+"email": "levanger-us@levanger.kommune.no"
+},
+"913461746": {
+"email": "info@stams.no"
+},
+"913511085": {
+"email": "postmottak.granstangen@osloskolen.no",
+"phone": "23388000"
+},
+"913511204": {
+"email": "postmottak.fagerborg@osloskolen.no",
+"phone": "22602600"
+},
+"913579321": {
+"email": "postmottak.teglverket@osloskolen.no",
+"phone": "22643000"
+},
+"913755537": {
+"email": "post@harstadmontessori.no"
+},
+"913808932": {
+"email": "post@ikskole.no"
+},
+"913815351": {
+"email": "post-rektor@jennestadms.no"
+},
+"913837517": {
+"email": "skole@innfjorden.no"
+},
+"913964241": {
+"email": "braatejordetskole@lillestrom.kommune.no",
+"phone": "66932400"
+},
+"913998766": {
+"email": "postmottak@larvik.kommune.no",
+"phone": "33171100"
+},
+"914059135": {
+"email": "post@vigmostadskole.no"
+},
+"914571251": {
+"email": "torvastadskole@karmoy.kommune.no",
+"phone": "52812280"
+},
+"914906725": {
+"email": "postmottak@vadso.kommune.no",
+"phone": "78942800"
+},
+"914937159": {
+"email": "tjeldstoskuleadministrasjon@oygarden.kommune.no",
+"phone": "56385511"
+},
+"915008607": {
+"email": "post@amotmontessori.no"
+},
+"915050212": {
+"email": "holen@vestby.kommune.no",
+"phone": "64980390"
+},
+"915114091": {
+"phone": "64809181"
+},
+"915121624": {
+"phone": "51201575"
+},
+"915225284": {
+"email": "lillehammer-u@ntg.no"
+},
+"915225713": {
+"phone": "33500070"
+},
+"915239013": {
+"email": "tromso-u@ntg.no"
+},
+"915254845": {
+"email": "kongsvinger-u@ntg.no",
+"phone": "62888840"
+},
+"915258360": {
+"email": "post@halddemontessori.no"
+},
+"915372473": {
+"email": "post@enspire.no"
+},
+"915619886": {
+"email": "postmottak@larvik.kommune.no",
+"phone": "33172940"
+},
+"915644759": {
+"email": "frol-bs@levanger.kommune.no",
+"phone": "74053500"
+},
+"915684920": {
+"email": "post@senja-montessoriskole.no",
+"phone": "77847777"
+},
+"915779328": {
+"email": "skien@ttungdomsskole.no"
+},
+"915828701": {
+"email": "stromme@oasenskole.no"
+},
+"916105576": {
+"email": "holviga.ungdomsskole@grimstad.kommune.no",
+"phone": "37296205"
+},
+"916203993": {
+"email": "postmottak.fernandanissen@osloskolen.no",
+"phone": "22226000"
+},
+"916513968": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22794000"
+},
+"916579632": {
+"email": "ungstavanger@wang.no",
+"phone": "51840700"
+},
+"916594550": {
+"email": "hansbakken-skole.postmottak@ou.trondheim.kommune.no",
+"phone": "72546460"
+},
+"916688296": {
+"email": "bodo-u@ntg.no"
+},
+"916871422": {
+"email": "frognerskole@lillestrom.kommune.no",
+"phone": "63869500"
+},
+"916974302": {
+"email": "luhr@lorenskog.kommune.no"
+},
+"917450064": {
+"email": "post@strandvikmontessori.no",
+"phone": "56581000"
+},
+"917485976": {
+"email": "post@dalsgrendamontessori.no"
+},
+"917526427": {
+"email": "postmottak.holmen@osloskolen.no",
+"phone": "22147000"
+},
+"917611386": {
+"email": "brandbu.barneskole@gran.kommune.no"
+},
+"917635501": {
+"email": "post@hjellvikskule.no",
+"phone": "56390000"
+},
+"917635595": {
+"phone": "31011955"
+},
+"917672938": {
+"email": "post@fagerenget.no"
+},
+"918195793": {
+"phone": "38382440"
+},
+"918374221": {
+"email": "ungsandefjord@wang.no"
+},
+"918399267": {
+"email": "postmottak.vollebekk@osloskolen.no",
+"phone": "22791000"
+},
+"918511377": {
+"email": "post@vollskole.no"
+},
+"918522859": {
+"email": "post@kongsvingermontessori.no"
+},
+"918530428": {
+"email": "ungfollo@wang.no"
+},
+"918535705": {
+"phone": "51505100"
+},
+"919000716": {
+"email": "barneskole@smola.kommune.no",
+"phone": "71544500"
+},
+"919590955": {
+"email": "postmottak.moelv.skole@ringsaker.kommune.no"
+},
+"920312063": {
+"email": "hurdal@steinerskolen.no"
+},
+"920330576": {
+"email": "post@hjartdalmontessori.no"
+},
+"920335195": {
+"phone": "57851000"
+},
+"920382878": {
+"email": "lier@akademiet.no",
+"phone": "31051955"
+},
+"920424260": {
+"email": "kongeveien.postmottak@halden.kommune.no",
+"phone": "69174950"
+},
+"920897908": {
+"email": "benterud.skole@ringerike.kommune.no",
+"phone": "32122500"
+},
+"921181183": {
+"email": "huseby-bskole.postmottak@trondheim.kommune.no",
+"phone": "72548200"
+},
+"921248253": {
+"phone": "37502441"
+},
+"921382480": {
+"phone": "62489070"
+},
+"922093474": {
+"email": "porsgrunn@ttungdomsskole.no"
+},
+"922148872": {
+"email": "bergen-u@ntg.no"
+},
+"922220026": {
+"email": "post@tresfjordenspire.no"
+},
+"922273510": {
+"email": "post@fiksdalfriskule.no"
+},
+"922573115": {
+"email": "sandnes.og.bjornevatn.skole@sor-varanger.kommune.no",
+"phone": "78971730"
+},
+"922758328": {
+"email": "vestretoten.ungdomsskole@vestre-toten.kommune.no",
+"phone": "61194500"
+},
+"922802742": {
+"phone": "56122500"
+},
+"923033556": {
+"phone": "72463200"
+},
+"923189963": {
+"email": "trondheim@idrettsungdomsskolen.no"
+},
+"923614648": {
+"email": "bogafjellungdomsskole@sandnes.kommune.no",
+"phone": "51663000"
+},
+"923927085": {
+"email": "post@stordkristneskule.no",
+"phone": "23290121"
+},
+"925103446": {
+"email": "vennesla@oasenskole.no"
+},
+"925148849": {
+"email": "helland.ungdomsskule@vestnes.kommune.no"
+},
+"925910325": {
+"email": "kjerrberget@sola.kommune.no"
+},
+"925959146": {
+"email": "bambleungdomsskole@bamble.kommune.no",
+"phone": "35965000"
+},
+"925977373": {
+"email": "vardheia.ungdomsskule@time.kommune.no",
+"phone": "51776070"
+},
+"926000705": {
+"email": "postmottak.nordstrand@osloskolen.no",
+"phone": "23688601"
+},
+"926048090": {
+"email": "elvetangen.skole@nittedal.kommune.no",
+"phone": "67062980"
+},
+"926159534": {
+"email": "post@heimdalfriskole.no"
+},
+"926345990": {
+"email": "postmottak@valer.kommune.no",
+"phone": "69289100"
+},
+"926381520": {
+"email": "labakken.skole@faerder.kommune.no",
+"phone": "33390000"
+},
+"926600974": {
+"phone": "69375000"
+},
+"926864475": {
+"email": "postborg@bjornafjorden.kommune.no",
+"phone": "56575960"
+},
+"927864827": {
+"email": "post@buskerudva.no"
+},
+"927892332": {
+"email": "postmottak@inderoy.kommune.no",
+"phone": "74605151"
+},
+"928563278": {
+"email": "asker-u@ntg.no"
+},
+"929177525": {
+"email": "postmottak.voldslokka@osloskolen.no",
+"phone": "23706600"
+},
+"929967259": {
+"phone": "71575900"
+},
+"930050229": {
+"email": "mk-aarolia@molde.kommune.no"
+},
+"930582662": {
+"email": "postmottak@amot.kommune.no",
+"phone": "62434000"
+},
+"930771899": {
+"email": "post@sandstransmontesorri.no"
+},
+"931338854": {
+"email": "klokkerjordet.skole@holmestrand.kommune.no",
+"phone": "33787090"
+},
+"931816314": {
+"email": "postmottak.bentsebrua@osloskolen.no",
+"phone": "22012221"
+},
+"932433095": {
+"phone": "61148650"
+},
+"933034380": {
+"email": "post@lindesnes.kommune.no"
+},
+"933131165": {
+"email": "skole@drobakmontessori.no",
+"phone": "64930523"
+},
+"933181995": {
+"email": "st-stange-usk@stange.kommune.no",
+"phone": "62562620"
+},
+"933508153": {
+"email": "no-post-mobu@nord-odal.kommune.no",
+"phone": "62978350"
+},
+"933632539": {
+"email": "kjellervollaskole@lillestrom.kommune.no"
+},
+"933703630": {
+"email": "alesund@akademiet.no",
+"phone": "70134210"
+},
+"933874583": {
+"phone": "75167067"
+},
+"934905288": {
+"email": "eidetskule@haram.kommune.no"
+},
+"935208033": {
+"phone": "32807600"
+},
+"971427418": {
+"email": "post@skauenskole.no",
+"phone": "35505400"
+},
+"971638982": {
+"phone": "69844020"
+},
+"971816287": {
+"phone": "52223200"
+},
+"971845635": {
+"phone": "67818290"
+},
+"973073214": {
+"email": "fredrikstad@steinerskolen.no",
+"phone": "69367200"
+},
+"973075373": {
+"email": "moss@steinerskolen.no",
+"phone": "69278580"
+},
+"973076914": {
+"phone": "66965080"
+},
+"973125508": {
+"email": "hedemarken@steinerskolen.no",
+"phone": "62588900"
+},
+"973131621": {
+"email": "post@tonsbergmontessori.no",
+"phone": "33380133"
+},
+"973141791": {
+"email": "vestfold@steinerskolen.no",
+"phone": "33352200"
+},
+"973159232": {
+"email": "bergen@steinerskolen.no",
+"phone": "55922929"
+},
+"973159658": {
+"phone": "55559850"
+},
+"973255428": {
+"phone": "77753900"
+},
+"973358502": {
+"phone": "73870260"
+},
+"973443143": {
+"email": "alesund@steinerskolen.no"
+},
+"973448889": {
+"email": "skjold@steinerskolen.no",
+"phone": "55112380"
+},
+"973465112": {
+"email": "skjold@steinerskolen.no",
+"phone": "55112380"
+},
+"973465139": {
+"email": "ljabruskolen@steinerskolen.no",
+"phone": "22629890"
+},
+"973465147": {
+"email": "ringerike@steinerskolen.no"
+},
+"973477579": {
+"email": "post@gamleveienskole.no",
+"phone": "51490706"
+},
+"973482130": {
+"phone": "64985090"
+},
+"973488783": {
+"phone": "33456500"
+},
+"973488910": {
+"email": "admin.oms@montessori.no",
+"phone": "22136250"
+},
+"973501186": {
+"phone": "64977660"
+},
+"973511017": {
+"email": "post@viktenskole.no",
+"phone": "76094631"
+},
+"973556932": {
+"email": "post@oksfriskole.no",
+"phone": "64846460"
+},
+"973589768": {
+"email": "mysen.ungdomsskole@io.kommune.no",
+"phone": "69898400"
+},
+"973589776": {
+"email": "haerland.skole@io.kommune.no",
+"phone": "69898280"
+},
+"973601997": {
+"email": "arnestad.skole@asker.kommune.no",
+"phone": "66715500"
+},
+"973608878": {
+"email": "skjettenskole@lillestrom.kommune.no",
+"phone": "66932270"
+},
+"973608886": {
+"email": "sten-taerudskole@lillestrom.kommune.no",
+"phone": "64835120"
+},
+"973608894": {
+"email": "asakskole@lillestrom.kommune.no",
+"phone": "66932500"
+},
+"973608908": {
+"email": "aasenhagenskole@lillestrom.kommune.no",
+"phone": "66938910"
+},
+"973609033": {
+"email": "vigernesskole@lillestrom.kommune.no",
+"phone": "66932000"
+},
+"973609041": {
+"email": "vollaskole@lillestrom.kommune.no",
+"phone": "66938640"
+},
+"973616870": {
+"email": "holmenvgs@afk.no",
+"phone": "66855300"
+},
+"973626361": {
+"email": "postmottak.vetland@osloskolen.no",
+"phone": "23127110"
+},
+"973626434": {
+"email": "postmottak.sollerudstranda@osloskolen.no",
+"phone": "23296600"
+},
+"973626442": {
+"email": "postmottak.gamlebyen@osloskolen.no",
+"phone": "23472450"
+},
+"973626450": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23191700"
+},
+"973672770": {
+"email": "postmottak@sor-odal.kommune.no",
+"phone": "62968000"
+},
+"973681737": {
+"phone": "62468500"
+},
+"973746960": {
+"email": "spikkestad.ungdomsskole@asker.kommune.no",
+"phone": "31296300"
+},
+"973746979": {
+"email": "slemmestad.ungdomsskole@asker.kommune.no",
+"phone": "31293440"
+},
+"973746987": {
+"email": "sydskogen.barneskole@asker.kommune.no",
+"phone": "31293355"
+},
+"973746995": {
+"email": "torvbraten.barneskole@asker.kommune.no",
+"phone": "66715342"
+},
+"973747002": {
+"email": "midtbygda.barneskole@asker.kommune.no",
+"phone": "31293500"
+},
+"973747010": {
+"email": "frydenlund.barneskole@asker.kommune.no",
+"phone": "31297550"
+},
+"973747029": {
+"email": "naersnes.barneskole@asker.kommune.no",
+"phone": "31293540"
+},
+"973747037": {
+"email": "slemmestad.barneskole@asker.kommune.no",
+"phone": "31293400"
+},
+"973747045": {
+"email": "hyggen.barneskole@asker.kommune.no"
+},
+"973747053": {
+"email": "spikkestad.barneskole@asker.kommune.no",
+"phone": "31293300"
+},
+"973758837": {
+"email": "byskolen@sandefjord.kommune.no",
+"phone": "33417000"
+},
+"973801317": {
+"email": "rjukan.barneskole@tinn.kommune.no"
+},
+"973812793": {
+"phone": "37046633"
+},
+"973837397": {
+"email": "post@lindesnes.kommune.no",
+"phone": "38273320"
+},
+"973837400": {
+"email": "post@lindesnes.kommune.no",
+"phone": "38271860"
+},
+"973837419": {
+"email": "fellespost@lindesnes.kommune.no",
+"phone": "38273250"
+},
+"973837427": {
+"email": "post@lindesnes.kommune.no",
+"phone": "38273230"
+},
+"973854143": {
+"email": "post@eigersund.kommune.no",
+"phone": "51463640"
+},
+"973857622": {
+"email": "porsholen.skole@sandnes.kommune.no",
+"phone": "51637440"
+},
+"973863843": {
+"email": "post@johannesls.no",
+"phone": "51508810"
+},
+"973871935": {
+"phone": "69959300"
+},
+"973872087": {
+"email": "vestbygdausk@fredrikstad.kommune.no",
+"phone": "69306720"
+},
+"973872257": {
+"email": "lundesk@fredrikstad.kommune.no",
+"phone": "69959750"
+},
+"973872451": {
+"phone": "69306610"
+},
+"973890034": {
+"email": "kleppe.skule@klepp.kommune.no",
+"phone": "51789300"
+},
+"973915878": {
+"email": "kontor@moeskole.no",
+"phone": "33487340"
+},
+"973915886": {
+"email": "post@bjerkelyskole.no",
+"phone": "33063030"
+},
+"973915908": {
+"email": "post@granlyskole.no",
+"phone": "33003110"
+},
+"973935828": {
+"phone": "77767330"
+},
+"973938053": {
+"email": "vaagen.skule@vindafjord.kommune.no",
+"phone": "53655770"
+},
+"973945769": {
+"email": "odda.barneskole@ullensvang.kommune.no",
+"phone": "53654900"
+},
+"973994581": {
+"email": "skjevik.skole@molde.kommune.no"
+},
+"973994603": {
+"email": "bekkevoll.skole@molde.kommune.no",
+"phone": "71112550"
+},
+"973994646": {
+"email": "bolsoya.skole@molde.kommune.no",
+"phone": "71112740"
+},
+"973994654": {
+"email": "vaagsetra.skole@molde.kommune.no"
+},
+"973994662": {
+"email": "kleive.skole@molde.kommune.no",
+"phone": "71112700"
+},
+"973994689": {
+"email": "kviltorp.skole@molde.kommune.no"
+},
+"973994697": {
+"email": "nordbyen.skole@molde.kommune.no",
+"phone": "71112520"
+},
+"973994700": {
+"email": "langmyra.skole@molde.kommune.no",
+"phone": "71112400"
+},
+"973994727": {
+"email": "sellanra.skole@molde.kommune.no",
+"phone": "71112430"
+},
+"973994735": {
+"email": "kvam.skole@molde.kommune.no",
+"phone": "71112500"
+},
+"974013436": {
+"email": "alesund.postmottak@alesund.kommune.no"
+},
+"974016370": {
+"email": "postmottak.ungdomsskole@sunndal.kommune.no"
+},
+"974025906": {
+"phone": "72401275"
+},
+"974036606": {
+"email": "vuku.skole@verdal.kommune.no",
+"phone": "74600830"
+},
+"974040514": {
+"email": "rorvik-skole@naroysund.kommune.no"
+},
+"974042606": {
+"email": "tverlandet.skole@bodo.kommune.no",
+"phone": "75557700"
+},
+"974043068": {
+"email": "ankenes.skole@narvik.kommune.no",
+"phone": "76912850"
+},
+"974043785": {
+"email": "vik.skole@somna.kommune.no",
+"phone": "75015080"
+},
+"974048566": {
+"email": "postmottak@gildeskal.kommune.no",
+"phone": "75760600"
+},
+"974048574": {
+"email": "postmottak@gildeskal.kommune.no",
+"phone": "75760600"
+},
+"974058111": {
+"email": "stakkevollan.skole@tromso.kommune.no",
+"phone": "77757170"
+},
+"974058758": {
+"phone": "77728740"
+},
+"974058782": {
+"phone": "77722083"
+},
+"974058790": {
+"phone": "77728730"
+},
+"974058804": {
+"phone": "77728710"
+},
+"974061651": {
+"email": "senjahopen.skole@senja.kommune.no",
+"phone": "77859890"
+},
+"974061805": {
+"email": "finnsnes.barneskole@senja.kommune.no",
+"phone": "77871640"
+},
+"974062712": {
+"email": "eidebakken.skole@lyngen.kommune.no"
+},
+"974065118": {
+"email": "postmottak.saga.skole@alta.kommune.no",
+"phone": "78481838"
+},
+"974065703": {
+"email": "rektor.hasvik@hasvik.kommune.no",
+"phone": "78452610"
+},
+"974066769": {
+"email": "rektor.gamvik@gamvik.kommune.no"
+},
+"974066904": {
+"email": "postmottakskolen@berlevag.kommune.no",
+"phone": "78782070"
+},
+"974068192": {
+"email": "skule@eidfjord.kommune.no",
+"phone": "53673620"
+},
+"974117045": {
+"email": "skolen@stpaul.no",
+"phone": "55215900"
+},
+"974117053": {
+"email": "post@samfundet.org",
+"phone": "38125700"
+},
+"974117061": {
+"email": "kontor@stfx.no",
+"phone": "37076040"
+},
+"974117088": {
+"email": "post@stsunniva.no",
+"phone": "23292500"
+},
+"974117096": {
+"email": "post@rsio.no",
+"phone": "21082200"
+},
+"974122898": {
+"phone": "67162270"
+},
+"974127016": {
+"email": "trondheim@steinerskolen.no",
+"phone": "73879080"
+},
+"974139790": {
+"email": "post@valskoler.no",
+"phone": "74389000"
+},
+"974146371": {
+"email": "haugesund@steinerskolen.no",
+"phone": "52708560"
+},
+"974154307": {
+"email": "post@stavanger-steinerskolen.no",
+"phone": "51828400"
+},
+"974175762": {
+"email": "lillehammer@steinerskolen.no",
+"phone": "61258346"
+},
+"974180022": {
+"email": "post@askersteinerskole.no",
+"phone": "66852680"
+},
+"974180030": {
+"email": "gjovik@steinerskolen.no",
+"phone": "69021788"
+},
+"974185385": {
+"email": "hurum@steinerskolen.no",
+"phone": "32792190"
+},
+"974187442": {
+"phone": "55306330"
+},
+"974222078": {
+"email": "aurdalslia.skole@bergen.kommune.no",
+"phone": "53034200"
+},
+"974223384": {
+"email": "montessoriskolen@mbib.no",
+"phone": "55912790"
+},
+"974309424": {
+"email": "post@bkgs.no",
+"phone": "55987820"
+},
+"974542498": {
+"email": "meraker.skole@meraker.kommune.no",
+"phone": "74813260"
+},
+"974542714": {
+"email": "gjoklep@holmestrand.kommune.no",
+"phone": "33064370"
+},
+"974543850": {
+"email": "askimbyen.skole@io.kommune.no",
+"phone": "69681200"
+},
+"974544148": {
+"email": "krokstad.skole@drammen.kommune.no",
+"phone": "32041750"
+},
+"974544156": {
+"email": "solberg.skole@drammen.kommune.no",
+"phone": "32236650"
+},
+"974544164": {
+"email": "mjondalen.skole@drammen.kommune.no",
+"phone": "32041340"
+},
+"974544172": {
+"email": "steinberg.skole@drammen.kommune.no",
+"phone": "32040250"
+},
+"974544180": {
+"email": "stenseth.skole@drammen.kommune.no",
+"phone": "32040110"
+},
+"974544199": {
+"email": "aasen.skole@drammen.kommune.no",
+"phone": "32041700"
+},
+"974544202": {
+"email": "veiavangen.skole@drammen.kommune.no",
+"phone": "32040100"
+},
+"974544210": {
+"email": "killingrud.skole@drammen.kommune.no",
+"phone": "32041200"
+},
+"974544229": {
+"email": "eknes.skole@drammen.kommune.no",
+"phone": "32236200"
+},
+"974545071": {
+"email": "mosjoen.skole@vefsn.kommune.no",
+"phone": "75101300"
+},
+"974545365": {
+"email": "postmottak@gildeskal.kommune.no",
+"phone": "75760600"
+},
+"974545373": {
+"email": "postmottak@gildeskal.kommune.no",
+"phone": "75760600"
+},
+"974545977": {
+"email": "egge.skole@lier.kommune.no",
+"phone": "32226210"
+},
+"974545985": {
+"email": "tranby.skole@lier.kommune.no",
+"phone": "32849340"
+},
+"974545993": {
+"email": "gullaug.skole@lier.kommune.no",
+"phone": "32227900"
+},
+"974546000": {
+"email": "hallingstad.skole@lier.kommune.no",
+"phone": "32226950"
+},
+"974546019": {
+"email": "hegg.skole@lier.kommune.no",
+"phone": "32225600"
+},
+"974546027": {
+"email": "heia.skole@lier.kommune.no",
+"phone": "32220750"
+},
+"974546035": {
+"email": "hovik.skole@lier.kommune.no",
+"phone": "32859700"
+},
+"974546043": {
+"email": "lierbyen.skole@lier.kommune.no",
+"phone": "32228500"
+},
+"974546086": {
+"email": "sylling.skole@lier.kommune.no",
+"phone": "32241780"
+},
+"974546353": {
+"email": "postmottak@nordre-land.kommune.no"
+},
+"974546361": {
+"email": "postmottak@nordre-land.kommune.no"
+},
+"974546469": {
+"email": "postmottak@flakstad.kommune.no",
+"phone": "76093295"
+},
+"974547651": {
+"phone": "66106000"
+},
+"974548410": {
+"email": "atraa.barne-ungdomsskole@tinn.kommune.no"
+},
+"974548429": {
+"email": "rjukan.ungdomsskole@tinn.kommune.no"
+},
+"974548771": {
+"email": "landvik.skole@grimstad.kommune.no",
+"phone": "37250500"
+},
+"974548798": {
+"email": "frivoll.skole@grimstad.kommune.no",
+"phone": "37250691"
+},
+"974548801": {
+"email": "fevik.skole@grimstad.kommune.no",
+"phone": "37250580"
+},
+"974548828": {
+"email": "holviga.barneskole@grimstad.kommune.no",
+"phone": "37296240"
+},
+"974548844": {
+"email": "postmottak.fjaere.barneskole@grimstad.kommune.no",
+"phone": "37250150"
+},
+"974548852": {
+"email": "grimstad.ungdomsskole@grimstad.kommune.no",
+"phone": "37250111"
+},
+"974550016": {
+"email": "tydal.skole@tydal.kommune.no",
+"phone": "73815860"
+},
+"974550210": {
+"email": "postmottak@dyroy.kommune.no",
+"phone": "77189200"
+},
+"974551411": {
+"email": "post@randaberg.kommune.no",
+"phone": "51413170"
+},
+"974551438": {
+"email": "post@randaberg.kommune.no",
+"phone": "51413140"
+},
+"974552027": {
+"email": "rykkinn.skole@baerum.kommune.no",
+"phone": "67154500"
+},
+"974552035": {
+"email": "blommenholm.skole@baerum.kommune.no",
+"phone": "67509500"
+},
+"974552043": {
+"email": "bryn.hammerbakken@baerum.kommune.no",
+"phone": "67507150"
+},
+"974552078": {
+"email": "eiksmarka.skole@baerum.kommune.no",
+"phone": "67506400"
+},
+"974552086": {
+"email": "evje.skole@baerum.kommune.no"
+},
+"974552108": {
+"email": "grav.skole@baerum.kommune.no",
+"phone": "67509300"
+},
+"974552116": {
+"email": "haslum.skole@baerum.kommune.no",
+"phone": "67507801"
+},
+"974552124": {
+"phone": "67509110"
+},
+"974552132": {
+"phone": "67507101"
+},
+"974552140": {
+"email": "hovik.verk.skole@baerum.kommune.no",
+"phone": "67524300"
+},
+"974552159": {
+"email": "jarskole@baerum.kommune.no",
+"phone": "67107900"
+},
+"974552167": {
+"email": "jong.skole@baerum.kommune.no",
+"phone": "67507000"
+},
+"974552175": {
+"email": "annakrefting.skole@baerum.kommune.no",
+"phone": "67507080"
+},
+"974552183": {
+"email": "levre.skole@baerum.kommune.no",
+"phone": "67509580"
+},
+"974552191": {
+"phone": "67506100"
+},
+"974552205": {
+"email": "lysaker.skole@baerum.kommune.no",
+"phone": "67507850"
+},
+"974552221": {
+"email": "skui.skole@baerum.kommune.no",
+"phone": "67176800"
+},
+"974552248": {
+"email": "stabekk.skole@baerum.kommune.no",
+"phone": "67504981"
+},
+"974552256": {
+"email": "tanum.skole@baerum.kommune.no",
+"phone": "67553610"
+},
+"974552302": {
+"email": "bekkestua.skole@baerum.kommune.no",
+"phone": "67508500"
+},
+"974552310": {
+"email": "bjornegard.skole@baerum.kommune.no",
+"phone": "67817770"
+},
+"974552329": {
+"email": "hosletoppen.skole@baerum.kommune.no",
+"phone": "67167300"
+},
+"974552337": {
+"email": "gjettum.skole@baerum.kommune.no",
+"phone": "67506500"
+},
+"974552345": {
+"email": "hauger.skole@baerum.kommune.no",
+"phone": "67509400"
+},
+"974552353": {
+"email": "osteras.skole@baerum.kommune.no",
+"phone": "67167600"
+},
+"974552361": {
+"email": "ramstad.skole@baerum.kommune.no",
+"phone": "67835020"
+},
+"974552388": {
+"email": "eineasen.skole@baerum.kommune.no",
+"phone": "67130003"
+},
+"974554674": {
+"phone": "72417640"
+},
+"974554682": {
+"phone": "72416364"
+},
+"974555700": {
+"email": "frydenlundskole@lillestrom.kommune.no",
+"phone": "66938860"
+},
+"974555778": {
+"email": "stavskole@lillestrom.kommune.no",
+"phone": "64832850"
+},
+"974555794": {
+"email": "sophieradichskole@lillestrom.kommune.no",
+"phone": "63891030"
+},
+"974555808": {
+"email": "gjelleraasskole@lillestrom.kommune.no",
+"phone": "66932250"
+},
+"974556413": {
+"phone": "74053200"
+},
+"974558491": {
+"phone": "75420346"
+},
+"974558505": {
+"phone": "75420340"
+},
+"974558513": {
+"phone": "75420450"
+},
+"974558521": {
+"phone": "75420390"
+},
+"974558637": {
+"phone": "75420430"
+},
+"974558645": {
+"email": "kabelvag.skole@vagan.kommune.no",
+"phone": "75420330"
+},
+"974558661": {
+"phone": "75420275"
+},
+"974559528": {
+"email": "flaa.skole@melhus.kommune.no"
+},
+"974559536": {
+"email": "gimse.skole@melhus.kommune.no"
+},
+"974559544": {
+"phone": "72858790"
+},
+"974559552": {
+"email": "hovin.skole@melhus.kommune.no"
+},
+"974559560": {
+"email": "hoyeggen.skole@melhus.kommune.no"
+},
+"974559579": {
+"email": "lundamo.skole@melhus.kommune.no"
+},
+"974559587": {
+"email": "rosmalen.skole@melhus.kommune.no",
+"phone": "72858900"
+},
+"974559609": {
+"email": "gimse.ungdomsskole@melhus.kommune.no",
+"phone": "72855265"
+},
+"974559617": {
+"email": "lundamo.ungdomsskole@melhus.kommune.no"
+},
+"974560364": {
+"email": "postmottak@hitra.kommune.no",
+"phone": "72441915"
+},
+"974560372": {
+"email": "postmottak@hitra.kommune.no",
+"phone": "72441785"
+},
+"974560380": {
+"email": "postmottak@hitra.kommune.no"
+},
+"974560399": {
+"email": "postmottak@hitra.kommune.no",
+"phone": "72441830"
+},
+"974561840": {
+"email": "svelvik.ungdomsskole@drammen.kommune.no",
+"phone": "33780446"
+},
+"974563207": {
+"email": "skaun.uskole@skaun.kommune.no"
+},
+"974563215": {
+"email": "buvik.skole@skaun.kommune.no"
+},
+"974563223": {
+"email": "borsa.skole@skaun.kommune.no",
+"phone": "72867420"
+},
+"974563436": {
+"email": "nysaeter.ungdomsskule@stord.kommune.no"
+},
+"974563444": {
+"email": "stord-u.skule@stord.kommune.no",
+"phone": "53404440"
+},
+"974563479": {
+"email": "hystad.skule@stord.kommune.no",
+"phone": "53409630"
+},
+"974563487": {
+"email": "langeland.skule@stord.kommune.no",
+"phone": "53456464"
+},
+"974563495": {
+"email": "leirvik.skule@stord.kommune.no",
+"phone": "53409650"
+},
+"974563517": {
+"email": "sagvaag.skule@stord.kommune.no",
+"phone": "53409710"
+},
+"974565099": {
+"email": "postmottak@namdalseid.kommune.no"
+},
+"974565277": {
+"email": "borgeusk@fredrikstad.kommune.no",
+"phone": "69959100"
+},
+"974565285": {
+"email": "begbysk@fredrikstad.kommune.no",
+"phone": "69363100"
+},
+"974565293": {
+"email": "borgesk@fredrikstad.kommune.no",
+"phone": "69383440"
+},
+"974565307": {
+"phone": "69361200"
+},
+"974565315": {
+"email": "torpsk@fredrikstad.kommune.no",
+"phone": "69363180"
+},
+"974565323": {
+"email": "torsnessk@fredrikstad.kommune.no",
+"phone": "69959700"
+},
+"974565331": {
+"email": "aarumsk@fredrikstad.kommune.no",
+"phone": "69363140"
+},
+"974565412": {
+"email": "gudeberg@fredrikstad.kommune.no",
+"phone": "69384300"
+},
+"974565420": {
+"email": "cicignon@fredrikstad.kommune.no",
+"phone": "69307660"
+},
+"974565439": {
+"email": "kvernhusetusk@fredrikstad.kommune.no",
+"phone": "69959500"
+},
+"974565447": {
+"email": "noklebysk@fredrikstad.kommune.no",
+"phone": "69307630"
+},
+"974565455": {
+"email": "trarask@fredrikstad.kommune.no",
+"phone": "69307400"
+},
+"974565463": {
+"email": "trosvikskole@fredrikstad.kommune.no",
+"phone": "69307330"
+},
+"974565471": {
+"phone": "69959350"
+},
+"974565560": {
+"phone": "69361270"
+},
+"974565579": {
+"phone": "69959250"
+},
+"974565587": {
+"phone": "69361290"
+},
+"974565617": {
+"phone": "69302400"
+},
+"974565625": {
+"email": "hurrodsk@fredrikstad.kommune.no",
+"phone": "69361230"
+},
+"974565633": {
+"phone": "69306700"
+},
+"974565641": {
+"phone": "69959160"
+},
+"974565706": {
+"email": "haugesk@fredrikstad.kommune.no",
+"phone": "69363170"
+},
+"974565722": {
+"phone": "69332700"
+},
+"974566257": {
+"email": "bjerkaker.skole@tromso.kommune.no"
+},
+"974566265": {
+"email": "borgtun.skole@tromso.kommune.no"
+},
+"974566281": {
+"email": "hillesoyskolen@tromso.kommune.no"
+},
+"974566311": {
+"email": "gyllenborg.skole@tromso.kommune.no",
+"phone": "77792030"
+},
+"974566362": {
+"email": "kvaloysletta.skole@tromso.kommune.no"
+},
+"974566370": {
+"email": "lakselvbukt.skole@tromso.kommune.no",
+"phone": "77690480"
+},
+"974566397": {
+"email": "mortensnes.skole@tromso.kommune.no"
+},
+"974566427": {
+"email": "prestvannet.skole@tromso.kommune.no"
+},
+"974566435": {
+"email": "ramfjord.skole@tromso.kommune.no",
+"phone": "77791790"
+},
+"974566443": {
+"email": "sandnessund.skole@tromso.kommune.no"
+},
+"974566451": {
+"email": "selnes.skole@tromso.kommune.no"
+},
+"974566478": {
+"email": "skittenelv.skole@tromso.kommune.no"
+},
+"974566486": {
+"email": "skjelnan.skole@tromso.kommune.no"
+},
+"974566516": {
+"email": "sommerlyst.skole@tromso.kommune.no"
+},
+"974566524": {
+"email": "straumsbukta.skole@tromso.kommune.no"
+},
+"974566532": {
+"email": "tromsdalen.skole@tromso.kommune.no"
+},
+"974566567": {
+"email": "trondjord.skole@tromso.kommune.no",
+"phone": "77643180"
+},
+"974566591": {
+"email": "krokelvdalen.skole@tromso.kommune.no"
+},
+"974566605": {
+"email": "slettaelva.skole@tromso.kommune.no"
+},
+"974566613": {
+"email": "lunheim.skole@tromso.kommune.no"
+},
+"974567865": {
+"email": "post@heim.kommune.no",
+"phone": "72460150"
+},
+"974568993": {
+"phone": "77746250"
+},
+"974569000": {
+"phone": "77746200"
+},
+"974569221": {
+"phone": "77719270"
+},
+"974569256": {
+"email": "manndalen.skole@kafjord.kommune.no",
+"phone": "77719400"
+},
+"974569728": {
+"email": "postmottak.sentralskolen@sorreisa.kommune.no",
+"phone": "77875140"
+},
+"974570041": {
+"email": "kvikne.skole@kvikne.no",
+"phone": "62485520"
+},
+"974570068": {
+"phone": "62485070"
+},
+"974570076": {
+"phone": "62485110"
+},
+"974570475": {
+"email": "aremark.skole@aremark.kommune.no",
+"phone": "69199700"
+},
+"974571250": {
+"phone": "77775650"
+},
+"974573377": {
+"email": "spjelkavikbs@alesund.kommune.no",
+"phone": "70164700"
+},
+"974573385": {
+"email": "stokkebs@alesund.kommune.no",
+"phone": "70162680"
+},
+"974573393": {
+"email": "hessabs@alesund.kommune.no",
+"phone": "70163460"
+},
+"974573407": {
+"email": "emblembs@alesund.kommune.no",
+"phone": "70165100"
+},
+"974573423": {
+"email": "ellingsoy.skole@alesund.kommune.no",
+"phone": "70163580"
+},
+"974573431": {
+"email": "blindheimbs@alesund.kommune.no",
+"phone": "70164240"
+},
+"974573466": {
+"email": "larsgardenbs@alesund.kommune.no",
+"phone": "70162980"
+},
+"974573474": {
+"email": "aspoybs@alesund.kommune.no",
+"phone": "70163440"
+},
+"974573482": {
+"email": "volsdalenbs@alesund.kommune.no",
+"phone": "70162780"
+},
+"974573490": {
+"email": "skarbovikus@alesund.kommune.no",
+"phone": "70165080"
+},
+"974573504": {
+"phone": "70163880"
+},
+"974573520": {
+"email": "spjelkavikus@alesund.kommune.no",
+"phone": "70164580"
+},
+"974573539": {
+"email": "kolvikbakkenus@alesund.kommune.no",
+"phone": "70163280"
+},
+"974573547": {
+"email": "blindheimus@alesund.kommune.no",
+"phone": "70164220"
+},
+"974573555": {
+"email": "lerstadbs@alesund.kommune.no",
+"phone": "70162580"
+},
+"974574624": {
+"email": "tondergard.skole@molde.kommune.no",
+"phone": "71195660"
+},
+"974575523": {
+"email": "postmottak@fedje.kommune.no",
+"phone": "56165120"
+},
+"974576031": {
+"email": "brandval.skole@kongsvinger.kommune.no",
+"phone": "62874250"
+},
+"974576058": {
+"email": "langeland.skole@kongsvinger.kommune.no",
+"phone": "62808930"
+},
+"974576074": {
+"email": "vennersberg.skole@kongsvinger.kommune.no",
+"phone": "62874230"
+},
+"974576082": {
+"email": "austmarka.skole@kongsvinger.kommune.no",
+"phone": "62874240"
+},
+"974576104": {
+"email": "roverud.skole@kongsvinger.kommune.no",
+"phone": "62823350"
+},
+"974576112": {
+"phone": "62874205"
+},
+"974577682": {
+"email": "kirkefjerdingen.skole@io.kommune.no",
+"phone": "69846380"
+},
+"974577690": {
+"email": "mysen.skole@io.kommune.no",
+"phone": "69702100"
+},
+"974577704": {
+"email": "tenor.skole@io.kommune.no",
+"phone": "69846480"
+},
+"974577712": {
+"email": "tromborg.skole@io.kommune.no",
+"phone": "69846980"
+},
+"974578212": {
+"email": "bondi.skole@asker.kommune.no",
+"phone": "66761920"
+},
+"974578220": {
+"email": "drengsrud.skole@asker.kommune.no",
+"phone": "66712700"
+},
+"974578239": {
+"email": "hagalokka.skole@asker.kommune.no",
+"phone": "66715050"
+},
+"974578247": {
+"email": "heggedal.skole@asker.kommune.no",
+"phone": "66768800"
+},
+"974578255": {
+"email": "hofstad.skole@asker.kommune.no",
+"phone": "66715420"
+},
+"974578263": {
+"email": "billingstad.skole@asker.kommune.no",
+"phone": "66715300"
+},
+"974578271": {
+"email": "janslokka.skole@asker.kommune.no",
+"phone": "66715570"
+},
+"974578298": {
+"email": "nesoya.skole@asker.kommune.no",
+"phone": "66712000"
+},
+"974578301": {
+"email": "ronningen.skole@asker.kommune.no",
+"phone": "66712900"
+},
+"974578328": {
+"email": "vettre.skole@asker.kommune.no",
+"phone": "66715550"
+},
+"974578336": {
+"email": "borgen.skole@asker.kommune.no",
+"phone": "66715400"
+},
+"974578344": {
+"email": "hovedgarden.ungdomsskole@asker.kommune.no",
+"phone": "66715900"
+},
+"974578352": {
+"email": "landoya.skole@asker.kommune.no",
+"phone": "66712400"
+},
+"974578360": {
+"email": "risenga.ungdomsskole@asker.kommune.no",
+"phone": "66712800"
+},
+"974578379": {
+"email": "solvang.skole@asker.kommune.no",
+"phone": "66712350"
+},
+"974578387": {
+"email": "torstad.ungdomsskole@asker.kommune.no",
+"phone": "66715350"
+},
+"974579898": {
+"email": "postmottak@indrefosen.kommune.no",
+"phone": "74854010"
+},
+"974579901": {
+"email": "postmottak@indrefosen.kommune.no"
+},
+"974579960": {
+"email": "hoyanger.skule@hoyanger.kommune.no",
+"phone": "57710000"
+},
+"974580586": {
+"email": "post@eigersund.kommune.no",
+"phone": "51461660"
+},
+"974580594": {
+"email": "post@eigersund.kommune.no",
+"phone": "51464830"
+},
+"974580608": {
+"email": "groene.braaden.skole@eigersund.kommune.no",
+"phone": "51464520"
+},
+"974580632": {
+"email": "post@eigersund.kommune.no",
+"phone": "51496020"
+},
+"974581892": {
+"email": "boe.ungdomsskole@boe.kommune.no",
+"phone": "76114402"
+},
+"974581906": {
+"email": "eidet.skole@boe.kommune.no",
+"phone": "76114445"
+},
+"974581930": {
+"email": "steine.skole@boe.kommune.no",
+"phone": "76114425"
+},
+"974581949": {
+"email": "straume.skole@boe.kommune.no",
+"phone": "76114390"
+},
+"974582066": {
+"email": "lodingen.skole@lodingen.kommune.no",
+"phone": "76986679"
+},
+"974582074": {
+"email": "vestbygd.skole@lodingen.kommune.no",
+"phone": "76986680"
+},
+"974583305": {
+"email": "fskontoret@froland.kommune.no"
+},
+"974583321": {
+"phone": "37502532"
+},
+"974583666": {
+"email": "postmottak@ahk.no",
+"phone": "67205950"
+},
+"974583674": {
+"email": "bjorkelangen.skole@ahk.no",
+"phone": "67205400"
+},
+"974583682": {
+"email": "postmottak@ahk.no",
+"phone": "67205470"
+},
+"974583704": {
+"email": "postmottak@ahk.no",
+"phone": "67205840"
+},
+"974583712": {
+"email": "postmottak@ahk.no",
+"phone": "67205200"
+},
+"974584522": {
+"email": "postmottak@larvik.kommune.no",
+"phone": "33171450"
+},
+"974584549": {
+"email": "postmottak@larvik.kommune.no",
+"phone": "33171420"
+},
+"974584573": {
+"email": "postmottak@larvik.kommune.no"
+},
+"974584611": {
+"email": "postmottak@larvik.kommune.no",
+"phone": "33172760"
+},
+"974584646": {
+"email": "postmottak@larvik.kommune.no",
+"phone": "33171480"
+},
+"974584654": {
+"email": "postmottak@larvik.kommune.no",
+"phone": "33171320"
+},
+"974584662": {
+"email": "postmottak@larvik.kommune.no",
+"phone": "33171200"
+},
+"974584689": {
+"email": "postmottak@larvik.kommune.no",
+"phone": "33173880"
+},
+"974584697": {
+"email": "postmottak@larvik.kommune.no",
+"phone": "33171300"
+},
+"974584700": {
+"email": "postmottak@larvik.kommune.no",
+"phone": "33139800"
+},
+"974584743": {
+"email": "postmottak@larvik.kommune.no",
+"phone": "33172340"
+},
+"974584778": {
+"email": "postmottak@larvik.kommune.no",
+"phone": "33171240"
+},
+"974586487": {
+"email": "rud.skole@ralingen.kommune.no",
+"phone": "64804080"
+},
+"974586495": {
+"email": "fjerdingby.skole@ralingen.kommune.no",
+"phone": "64804060"
+},
+"974586509": {
+"email": "lovenstad.skole@ralingen.kommune.no",
+"phone": "64804100"
+},
+"974586517": {
+"email": "marikollen.u.skole@ralingen.kommune.no",
+"phone": "64804000"
+},
+"974586525": {
+"email": "sandbekken.ungdomsskole@ralingen.kommune.no",
+"phone": "64804020"
+},
+"974586533": {
+"email": "blystadlia.skole@ralingen.kommune.no",
+"phone": "64804120"
+},
+"974586541": {
+"email": "nordby.skole@ralingen.kommune.no",
+"phone": "64804040"
+},
+"974587947": {
+"email": "postmottak@hadsel.kommune.no",
+"phone": "76164530"
+},
+"974587955": {
+"email": "postmottak@hadsel.kommune.no",
+"phone": "76164460"
+},
+"974587971": {
+"email": "postmottak@hadsel.kommune.no",
+"phone": "76164500"
+},
+"974588145": {
+"email": "klabu-uskole.postmottak@trondheim.kommune.no",
+"phone": "72540000"
+},
+"974588382": {
+"email": "postmottak@orkland.kommune.no",
+"phone": "72483380"
+},
+"974588390": {
+"email": "postmottak@orkland.kommune.no",
+"phone": "72479820"
+},
+"974588404": {
+"email": "postmottak@orkland.kommune.no"
+},
+"974588412": {
+"email": "postmottak@orkland.kommune.no"
+},
+"974588420": {
+"email": "postmottak@orkland.kommune.no"
+},
+"974588439": {
+"email": "postmottak@orkland.kommune.no",
+"phone": "72483300"
+},
+"974589648": {
+"email": "postmottak.abildso@osloskolen.no",
+"phone": "23384370"
+},
+"974589656": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22902400"
+},
+"974589664": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23466100"
+},
+"974589672": {
+"email": "postmottak.bestum@osloskolen.no",
+"phone": "24124900"
+},
+"974589680": {
+"email": "postmottak.bjolsen@osloskolen.no",
+"phone": "23005120"
+},
+"974589699": {
+"email": "postmottak.grindbakken@osloskolen.no",
+"phone": "22139250"
+},
+"974589702": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23466450"
+},
+"974589710": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23054610"
+},
+"974589729": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23281130"
+},
+"974589737": {
+"email": "postmottak.boler@osloskolen.no",
+"phone": "23464300"
+},
+"974589745": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22083570"
+},
+"974589753": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23479700"
+},
+"974589761": {
+"email": "postmottak.furuset@osloskolen.no",
+"phone": "22907820"
+},
+"974589788": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23468700"
+},
+"974589796": {
+"email": "postmottak.grorud@osloskolen.no",
+"phone": "23466250"
+},
+"974589818": {
+"email": "postmottak.hasle@osloskolen.no",
+"phone": "23037420"
+},
+"974589834": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22703250"
+},
+"974589842": {
+"email": "postmottak.hoybraten@osloskolen.no",
+"phone": "23344600"
+},
+"974589850": {
+"email": "postmottak.hoyenhall@osloskolen.no",
+"phone": "23348000"
+},
+"974589869": {
+"email": "postmottak.ila@osloskolen.no",
+"phone": "22955250"
+},
+"974589877": {
+"email": "postmottak.kampen@osloskolen.no",
+"phone": "23060170"
+},
+"974589893": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23392100"
+},
+"974589907": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22763380"
+},
+"974589915": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23005370"
+},
+"974589923": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23036780"
+},
+"974589931": {
+"email": "postmottak.lambertseter@osloskolen.no",
+"phone": "23167620"
+},
+"974589958": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23227170"
+},
+"974589966": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22726000"
+},
+"974589974": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22754600"
+},
+"974589982": {
+"email": "postmottak.refstad@osloskolen.no",
+"phone": "24058800"
+},
+"974589990": {
+"email": "postmottak.majorstuen@osloskolen.no",
+"phone": "23462400"
+},
+"974590018": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23005290"
+},
+"974590026": {
+"email": "postmottak.marienlyst@osloskolen.no",
+"phone": "22932450"
+},
+"974590034": {
+"email": "postmottak.munkerud@osloskolen.no",
+"phone": "23468600"
+},
+"974590050": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23464000"
+},
+"974590069": {
+"email": "postmottak@osloskolen.no",
+"phone": "23384000"
+},
+"974590077": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22820600"
+},
+"974590085": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23464700"
+},
+"974590093": {
+"email": "postmottak.oppsal@osloskolen.no",
+"phone": "23126440"
+},
+"974590107": {
+"email": "postmottak.prinsdal@osloskolen.no",
+"phone": "23191800"
+},
+"974590115": {
+"email": "postmottak.rommen@osloskolen.no",
+"phone": "23465300"
+},
+"974590123": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23464600"
+},
+"974590131": {
+"email": "postmottak.ruselokka@osloskolen.no",
+"phone": "23272840"
+},
+"974590158": {
+"email": "postmottak.rodtvet@osloskolen.no",
+"phone": "22709010"
+},
+"974590166": {
+"email": "postmottak.sagene@osloskolen.no",
+"phone": "22807720"
+},
+"974590174": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23472870"
+},
+"974590182": {
+"email": "postmottak.slemdal@osloskolen.no",
+"phone": "23222300"
+},
+"974590190": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22516380"
+},
+"974590212": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22788830"
+},
+"974590220": {
+"email": "postmottak.sorkedalen@osloskolen.no",
+"phone": "23466800"
+},
+"974590239": {
+"email": "postmottak.tonsenhagen@osloskolen.no",
+"phone": "23207150"
+},
+"974590247": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22761850"
+},
+"974590255": {
+"email": "postmottak.trosterud@osloskolen.no",
+"phone": "23177070"
+},
+"974590263": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22757610"
+},
+"974590271": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22666800"
+},
+"974590298": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22588900"
+},
+"974590301": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23196160"
+},
+"974590328": {
+"email": "postmottak.uranienborg@osloskolen.no",
+"phone": "22440000"
+},
+"974590336": {
+"email": "postmottak.veitvet@osloskolen.no",
+"phone": "23469500"
+},
+"974590344": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23466350"
+},
+"974590352": {
+"email": "postmottak.vinderen@osloskolen.no",
+"phone": "22136900"
+},
+"974590360": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22136800"
+},
+"974590379": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22088780"
+},
+"974590387": {
+"email": "postmottak.ostensjo@osloskolen.no",
+"phone": "23126300"
+},
+"974590395": {
+"email": "postmottak.arvoll@osloskolen.no",
+"phone": "22074210"
+},
+"974590417": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23169350"
+},
+"974590433": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22909460"
+},
+"974590441": {
+"email": "postmottak.bjorasen@osloskolen.no",
+"phone": "23466300"
+},
+"974590468": {
+"email": "postmottak.lindeberg@osloskolen.no",
+"phone": "23465200"
+},
+"974590476": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22782950"
+},
+"974590484": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23169040"
+},
+"974590492": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23191600"
+},
+"974590506": {
+"email": "postmottak.jeriko@osloskolen.no",
+"phone": "22903220"
+},
+"974590514": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23169590"
+},
+"974590522": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "24126640"
+},
+"974590530": {
+"email": "postmottak.ellingsrud@osloskolen.no",
+"phone": "23287050"
+},
+"974590549": {
+"email": "postmottak.haugenstua@osloskolen.no",
+"phone": "23344450"
+},
+"974590557": {
+"email": "postmottak.haugerud@osloskolen.no",
+"phone": "22793380"
+},
+"974590565": {
+"email": "postmottak.hauketo@osloskolen.no",
+"phone": "22753400"
+},
+"974590581": {
+"email": "postmottak.brannfjell@osloskolen.no",
+"phone": "22782650"
+},
+"974590603": {
+"email": "postmottak.bjornsletta@osloskolen.no",
+"phone": "23468580"
+},
+"974590611": {
+"email": "postmottak.nordseter@osloskolen.no",
+"phone": "22782980"
+},
+"974590638": {
+"email": "postmottak.oraker@osloskolen.no",
+"phone": "22510260"
+},
+"974590646": {
+"email": "postmottak.stasjonsfjellet@osloskolen.no",
+"phone": "22219200"
+},
+"974590654": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23369040"
+},
+"974590670": {
+"email": "postmottak.stig@osloskolen.no",
+"phone": "23466500"
+},
+"974590689": {
+"email": "postmottak.ullevalsveien@osloskolen.no",
+"phone": "23466400"
+},
+"974590719": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "66907190"
+},
+"974590727": {
+"email": "postmottak.voksentoppen@osloskolen.no",
+"phone": "23222071"
+},
+"974590786": {
+"email": "postmottak.lonnebakken@osloskolen.no",
+"phone": "23393360"
+},
+"974590794": {
+"email": "postmottak.lofsrud@osloskolen.no",
+"phone": "22764960"
+},
+"974590808": {
+"email": "postmottak.midtstuen@osloskolen.no",
+"phone": "23220720"
+},
+"974590816": {
+"email": "postmottak.nordvoll@osloskolen.no",
+"phone": "23142660"
+},
+"974590824": {
+"email": "postmottak.ris@osloskolen.no",
+"phone": "22143300"
+},
+"974591383": {
+"email": "berg.skole@halden.kommune.no",
+"phone": "69194150"
+},
+"974591405": {
+"email": "hjortsberg.postmottak@halden.kommune.no",
+"phone": "69174970"
+},
+"974591421": {
+"email": "laby.postmottak@halden.kommune.no",
+"phone": "69217180"
+},
+"974591464": {
+"email": "risum.skole@halden.kommune.no",
+"phone": "69194000"
+},
+"974591472": {
+"email": "rodsberg.skole@halden.kommune.no",
+"phone": "69194060"
+},
+"974591480": {
+"email": "strupe.postmottak@halden.kommune.no",
+"phone": "69212710"
+},
+"974591774": {
+"phone": "74324860"
+},
+"974593009": {
+"email": "postmottak.gratangen@gratangen.kommune.no",
+"phone": "77021800"
+},
+"974593122": {
+"phone": "77099000"
+},
+"974593165": {
+"email": "postmottak@lavangen.kommune.no",
+"phone": "77176500"
+},
+"974593491": {
+"email": "ski.skole@nordrefollo.kommune.no",
+"phone": "64853900"
+},
+"974593505": {
+"email": "hebekk.skole@nordrefollo.kommune.no",
+"phone": "64853000"
+},
+"974593513": {
+"email": "finstad.skole@nordrefollo.kommune.no",
+"phone": "64853050"
+},
+"974593521": {
+"email": "langhus.skole@nordrefollo.kommune.no",
+"phone": "64864700"
+},
+"974593548": {
+"email": "siggerud.skole@nordrefollo.kommune.no",
+"phone": "64864400"
+},
+"974593564": {
+"email": "magasinparken.ungdomsskole@nordrefollo.kommune.no",
+"phone": "64853800"
+},
+"974593572": {
+"email": "haugjordet.ungdomsskole@nordrefollo.kommune.no",
+"phone": "64853400"
+},
+"974593580": {
+"email": "kraakstad.skole@nordrefollo.kommune.no",
+"phone": "64918950"
+},
+"974593599": {
+"email": "fbu.skole@nordrefollo.kommune.no",
+"phone": "64913950"
+},
+"974593785": {
+"email": "bolerasen.skole@nordrefollo.kommune.no",
+"phone": "64918200"
+},
+"974594250": {
+"email": "fevang.skole@sandefjord.kommune.no",
+"phone": "33419060"
+},
+"974594269": {
+"email": "framnes.skole@sandefjord.kommune.no",
+"phone": "33417050"
+},
+"974594277": {
+"email": "gokstad.skole@sandefjord.kommune.no",
+"phone": "33419330"
+},
+"974594285": {
+"email": "haukerod.skole@sandefjord.kommune.no",
+"phone": "33416870"
+},
+"974594293": {
+"email": "helgerod.skole@sandefjord.kommune.no",
+"phone": "33419160"
+},
+"974594307": {
+"email": "krokemoa.skole@sandefjord.kommune.no",
+"phone": "33419100"
+},
+"974594315": {
+"email": "mosserod.skole@sandefjord.kommune.no",
+"phone": "33417230"
+},
+"974594323": {
+"email": "ormestad.skole@sandefjord.kommune.no",
+"phone": "33417270"
+},
+"974594331": {
+"email": "sande.skole@sandefjord.kommune.no",
+"phone": "33417310"
+},
+"974594358": {
+"email": "unneberg.skole@sandefjord.kommune.no",
+"phone": "33417380"
+},
+"974594366": {
+"email": "vesteroy.skole@sandefjord.kommune.no",
+"phone": "33417400"
+},
+"974594374": {
+"email": "virik.skole@sandefjord.kommune.no",
+"phone": "33416660"
+},
+"974594390": {
+"email": "breidablikk.ungdomsskole@sandefjord.kommune.no",
+"phone": "33419030"
+},
+"974594404": {
+"email": "bugarden.ungdomsskole@sandefjord.kommune.no",
+"phone": "33419600"
+},
+"974594412": {
+"email": "ranvik.ungdomsskole@sandefjord.kommune.no",
+"phone": "33417600"
+},
+"974594420": {
+"email": "varden.ungdomsskole@sandefjord.kommune.no",
+"phone": "33417650"
+},
+"974595443": {
+"email": "post@beiarn.kommune.no",
+"phone": "75569000"
+},
+"974595761": {
+"phone": "61101916"
+},
+"974595842": {
+"email": "gausdal.ungdomsskole@gausdal.kommune.no",
+"phone": "61224390"
+},
+"974596547": {
+"phone": "61348603"
+},
+"974596555": {
+"phone": "61348663"
+},
+"974596563": {
+"phone": "61348500"
+},
+"974596709": {
+"phone": "61356700"
+},
+"974596946": {
+"email": "vestre.slidre.skule@vestre-slidre.kommune.no",
+"phone": "61345000"
+},
+"974597071": {
+"phone": "61369430"
+},
+"974597535": {
+"phone": "77172031"
+},
+"974598469": {
+"email": "post.hellemyr@kristiansand.kommune.no",
+"phone": "38019800"
+},
+"974598558": {
+"email": "post.sjostrand.skole@kristiansand.kommune.no",
+"phone": "38004150"
+},
+"974598574": {
+"email": "post.movig.skole@kristiansand.kommune.no",
+"phone": "38064300"
+},
+"974598582": {
+"email": "post.vagsbygd.skole@kristiansand.kommune.no",
+"phone": "38018950"
+},
+"974598590": {
+"email": "fiska.skole@kristiansand.kommune.no",
+"phone": "38002060"
+},
+"974598604": {
+"email": "post.slettheia.skole@kristiansand.kommune.no",
+"phone": "38002330"
+},
+"974598620": {
+"email": "post.hellemyr@kristiansand.kommune.no",
+"phone": "38019800"
+},
+"974598639": {
+"email": "post.karl.johans.minne.skole@kristiansand.kommune.no",
+"phone": "38002380"
+},
+"974598655": {
+"email": "post.solholmen.skole@kristiansand.kommune.no",
+"phone": "38004170"
+},
+"974598663": {
+"email": "post.grim.skole@kristiansand.kommune.no",
+"phone": "38074841"
+},
+"974598671": {
+"email": "post.krossen.skole@kristiansand.kommune.no",
+"phone": "38121000"
+},
+"974598701": {
+"email": "post.mosby.skole@kristiansand.kommune.no"
+},
+"974598728": {
+"email": "post.vigvoll.skole@kristiansand.kommune.no",
+"phone": "38146350"
+},
+"974598736": {
+"email": "post.wilds.minne.skole@kristiansand.kommune.no",
+"phone": "38148460"
+},
+"974598744": {
+"email": "post.lovisenlund.skole@kristiansand.kommune.no",
+"phone": "38107960"
+},
+"974598752": {
+"email": "post.oddemarka.skole@kristiansand.kommune.no",
+"phone": "38144420"
+},
+"974598787": {
+"email": "fagerholt.skole@kristiansand.kommune.no",
+"phone": "38004190"
+},
+"974598795": {
+"email": "post.justvik.skole@kristiansand.kommune.no",
+"phone": "38111300"
+},
+"974598809": {
+"email": "post.ve.skole@kristiansand.kommune.no",
+"phone": "38064200"
+},
+"974598817": {
+"email": "post.vardasen.skole@kristiansand.kommune.no",
+"phone": "38179720"
+},
+"974598825": {
+"email": "post.haanes.skole@kristiansand.kommune.no"
+},
+"974598833": {
+"email": "post.stromme.skole@kristiansand.kommune.no",
+"phone": "38006200"
+},
+"974598868": {
+"email": "post.kringsja.skole@kristiansand.kommune.no",
+"phone": "38006060"
+},
+"974599406": {
+"email": "post.skole@karasjok.kommune.no"
+},
+"974600218": {
+"email": "postmottak@inderoy.kommune.no",
+"phone": "74605121"
+},
+"974601710": {
+"email": "fuglenes.skole@hammerfest.kommune.no",
+"phone": "78407930"
+},
+"974601974": {
+"phone": "78452620"
+},
+"974601982": {
+"email": "sorvar.skole@hasvik.kommune.no",
+"phone": "78452630"
+},
+"974602083": {
+"email": "marker.skole@marker.kommune.no"
+},
+"974602369": {
+"email": "bastad.skole@io.kommune.no"
+},
+"974602377": {
+"phone": "69681680"
+},
+"974602385": {
+"email": "havnas.skole@io.kommune.no",
+"phone": "69827719"
+},
+"974602393": {
+"email": "trogstad.ungdomsskole@io.kommune.no",
+"phone": "69681675"
+},
+"974603195": {
+"email": "bronnerud.skole@as.kommune.no",
+"phone": "64974200"
+},
+"974603209": {
+"email": "asgard.skole@as.kommune.no",
+"phone": "64962170"
+},
+"974603217": {
+"email": "rustad.skole@as.kommune.no",
+"phone": "64962900"
+},
+"974603241": {
+"email": "nordby.skole@as.kommune.no",
+"phone": "64964400"
+},
+"974603268": {
+"phone": "64962600"
+},
+"974603276": {
+"email": "nordbytun.ungdomsskole@as.kommune.no",
+"phone": "64964450"
+},
+"974605651": {
+"email": "sentrum.skole@horten.kommune.no",
+"phone": "33085900"
+},
+"974605678": {
+"email": "nordskogen.skole@horten.kommune.no",
+"phone": "33086300"
+},
+"974605686": {
+"email": "holtan.skole@horten.kommune.no",
+"phone": "33086100"
+},
+"974605694": {
+"email": "oreronningen.skole@horten.kommune.no",
+"phone": "33086960"
+},
+"974605708": {
+"email": "fagerheim.skole@horten.kommune.no"
+},
+"974605724": {
+"email": "granly.skole@horten.kommune.no",
+"phone": "33086200"
+},
+"974605732": {
+"email": "asgarden.skole@horten.kommune.no"
+},
+"974605740": {
+"email": "lysheim.skole@horten.kommune.no"
+},
+"974605759": {
+"email": "borre.ungdomsskole@horten.kommune.no",
+"phone": "33086010"
+},
+"974606984": {
+"email": "andebu.ungdomsskole@sandefjord.kommune.no",
+"phone": "33438262"
+},
+"974607549": {
+"email": "lindhoy.skole@faerder.kommune.no",
+"phone": "33390000"
+},
+"974607905": {
+"email": "gol.skule@gol.kommune.no",
+"phone": "32029240"
+},
+"974608227": {
+"email": "krodsherad.skole@krodsherad.kommune.no",
+"phone": "32150666"
+},
+"974608642": {
+"email": "postmottak@nome.kommune.no",
+"phone": "35008700"
+},
+"974608650": {
+"email": "postmottak.lunde-10arige@nome.kommune.no",
+"phone": "35008800"
+},
+"974609525": {
+"email": "eiken.skule@haegebostad.kommune.no",
+"phone": "38349250"
+},
+"974610736": {
+"email": "lura.skole@sandnes.kommune.no",
+"phone": "51337500"
+},
+"974610744": {
+"email": "trones.skole@sandnes.kommune.no",
+"phone": "51338400"
+},
+"974610752": {
+"email": "stangeland.skole@sandnes.kommune.no",
+"phone": "51336800"
+},
+"974610779": {
+"email": "malmheim.sk0le@sandnes.kommune.no",
+"phone": "51336160"
+},
+"974610787": {
+"email": "sandved.skole@sandnes.kommune.no",
+"phone": "51336100"
+},
+"974610795": {
+"email": "ganddal.skole@sandnes.kommune.no",
+"phone": "51974920"
+},
+"974610809": {
+"email": "figgjo.skole@sandnes.kommune.no",
+"phone": "51670369"
+},
+"974610817": {
+"email": "austraatt.skole@sandnes.kommune.no",
+"phone": "51338500"
+},
+"974610825": {
+"email": "hana.skole@sandnes.kommune.no",
+"phone": "51336700"
+},
+"974610833": {
+"email": "sviland.skole@sandnes.kommune.no"
+},
+"974610841": {
+"email": "hommersak.skole@sandnes.kommune.no"
+},
+"974610876": {
+"email": "iglemyr.skole@sandnes.kommune.no",
+"phone": "51972330"
+},
+"974610892": {
+"email": "giske.u.skole@sandnes.kommune.no",
+"phone": "51337300"
+},
+"974610906": {
+"email": "skeiane.u.skole.kontorsekretar@sandnes.kommune.no",
+"phone": "51973600"
+},
+"974610914": {
+"email": "hoeyland.u.skole@sandnes.kommune.no",
+"phone": "51973500"
+},
+"974610922": {
+"email": "oygardu.skole@sandnes.kommune.no",
+"phone": "51338100"
+},
+"974610965": {
+"email": "aspervika.skole@sandnes.kommune.no",
+"phone": "51973710"
+},
+"974610973": {
+"email": "riska.u.skole@sandnes.kommune.no",
+"phone": "51336610"
+},
+"974611120": {
+"email": "maudland.skole.kontorsekrtar@sandnes.kommune.no"
+},
+"974611147": {
+"email": "kyrkjevollen.skole@sandnes.kommune.no",
+"phone": "51686600"
+},
+"974611244": {
+"email": "austbo.skole@stavanger.kommune.no",
+"phone": "51912690"
+},
+"974611341": {
+"email": "godeset.skole@stavanger.kommune.no",
+"phone": "51912860"
+},
+"974611376": {
+"email": "roaldsoy.skole@stavanger.kommune.no",
+"phone": "51913950"
+},
+"974611384": {
+"email": "felles-vassoy@stavangerskolen.no",
+"phone": "51913101"
+},
+"974611406": {
+"phone": "51912930"
+},
+"974611414": {
+"email": "buoy.skole@stavanger.kommune.no",
+"phone": "51913770"
+},
+"974611422": {
+"email": "nylund.skole@stavanger.kommune.no",
+"phone": "51507111"
+},
+"974611430": {
+"email": "storhaug.skole@stavanger.kommune.no",
+"phone": "51507200"
+},
+"974611449": {
+"email": "vaaland.skole@stavanger.kommune.no",
+"phone": "51913636"
+},
+"974611457": {
+"email": "eiganes.skole@stavanger.kommune.no",
+"phone": "51912050"
+},
+"974611465": {
+"email": "kampen.skole@stavanger.kommune.no",
+"phone": "51507575"
+},
+"974611473": {
+"email": "auglend.skole@stavanger.kommune.no",
+"phone": "51913190"
+},
+"974611481": {
+"email": "ullandhaug.skole@stavanger.kommune.no",
+"phone": "51914380"
+},
+"974611503": {
+"email": "vaulen.skole@stavanger.kommune.no",
+"phone": "51914410"
+},
+"974611511": {
+"email": "jatten.skole@stavanger.kommune.no",
+"phone": "51914230"
+},
+"974611538": {
+"email": "tasta.skole@stavanger.kommune.no",
+"phone": "51839800"
+},
+"974611546": {
+"email": "hundvag.skole@stavanger.kommune.no",
+"phone": "51912266"
+},
+"974611562": {
+"email": "madlamark.skole@stavanger.kommune.no"
+},
+"974611570": {
+"email": "hafrsfjord.skole@stavanger.kommune.no",
+"phone": "51912110"
+},
+"974611589": {
+"email": "sunde.skole@stavanger.kommune.no",
+"phone": "51914400"
+},
+"974611597": {
+"email": "kannik.skole@stavanger.kommune.no",
+"phone": "51914070"
+},
+"974611600": {
+"email": "hinna.skole@stavanger.kommune.no",
+"phone": "51912500"
+},
+"974611619": {
+"email": "tastaveden.skole@stavanger.kommune.no",
+"phone": "51914100"
+},
+"974611627": {
+"email": "revheim.skole@stavanger.kommune.no",
+"phone": "51912211"
+},
+"974611635": {
+"email": "stsvithun.skole@stavanger.kommune.no",
+"phone": "51913540"
+},
+"974611651": {
+"email": "kristianslyst.skole@stavanger.kommune.no",
+"phone": "51913030"
+},
+"974611678": {
+"email": "kvernevik.skole@stavanger.kommune.no",
+"phone": "51914090"
+},
+"974611686": {
+"email": "gosen.skole@stavanger.kommune.no",
+"phone": "51507904"
+},
+"974611805": {
+"email": "gausel.skole@stavanger.kommune.no",
+"phone": "51912626"
+},
+"974611813": {
+"email": "madlavoll.skole@stavanger.kommune.no",
+"phone": "51912730"
+},
+"974611848": {
+"email": "smiodden.skole@stavanger.kommune.no",
+"phone": "51913900"
+},
+"974612623": {
+"email": "postmottak@lillesand.kommune.no",
+"phone": "37267070"
+},
+"974612631": {
+"email": "postmottak@lillesand.kommune.no",
+"phone": "37268080"
+},
+"974614103": {
+"email": "flekkefjord.ungdomsskole@flekkefjord.kommune.no",
+"phone": "38328550"
+},
+"974614464": {
+"phone": "57786230"
+},
+"974615738": {
+"email": "post@lindesnes.kommune.no",
+"phone": "38273300"
+},
+"974616173": {
+"email": "postmottak@modalen.kommune.no",
+"phone": "56599070"
+},
+"974616335": {
+"email": "risor.barneskole@risor.kommune.no",
+"phone": "37149500"
+},
+"974616777": {
+"email": "postmottak@heroy.kommune.no"
+},
+"974616785": {
+"email": "bergsoy.skule@heroy.kommune.no",
+"phone": "70081850"
+},
+"974616815": {
+"email": "leikanger.skule@heroy.kommune.no"
+},
+"974616831": {
+"email": "moltu.skule@heroy.kommune.no",
+"phone": "70084680"
+},
+"974616858": {
+"email": "nerlandsoy.skule@heroy.kommune.no"
+},
+"974617021": {
+"email": "postmottak@suldal.kommune.no",
+"phone": "52790830"
+},
+"974617048": {
+"email": "postmottak@suldal.kommune.no"
+},
+"974617064": {
+"email": "postmottak@suldal.kommune.no",
+"phone": "52790800"
+},
+"974617080": {
+"email": "postmottak@suldal.kommune.no",
+"phone": "52790900"
+},
+"974617285": {
+"phone": "52786350"
+},
+"974617587": {
+"phone": "51736370"
+},
+"974617943": {
+"email": "ringstad.skule@stranda.kommune.no"
+},
+"974617951": {
+"phone": "70269199"
+},
+"974618109": {
+"email": "vikedal.skule@vindafjord.kommune.no",
+"phone": "53655810"
+},
+"974618117": {
+"email": "sandeid.skule@vindafjord.kommune.no",
+"phone": "53655800"
+},
+"974618125": {
+"email": "vats.skule@vindafjord.kommune.no",
+"phone": "53655760"
+},
+"974618133": {
+"email": "skjold.skule@vindafjord.kommune.no",
+"phone": "53655740"
+},
+"974618397": {
+"email": "post@fjord.kommune.no"
+},
+"974618605": {
+"email": "postmottak@sykkylven.kommune.no",
+"phone": "70246500"
+},
+"974618729": {
+"email": "skodje.ungdomsskule@alesund.kommune.no"
+},
+"974620472": {
+"email": "brekstad.barneskole@orland.kommune.no"
+},
+"974620847": {
+"email": "postmottak@afjord.kommune.no"
+},
+"974620855": {
+"email": "postmottak@afjord.kommune.no",
+"phone": "72530800"
+},
+"974621746": {
+"phone": "75012200"
+},
+"974621770": {
+"phone": "75012148"
+},
+"974622882": {
+"email": "post@varoy.kommune.no",
+"phone": "75420615"
+},
+"974623404": {
+"email": "misvaer.skole@bodo.kommune.no",
+"phone": "75554860"
+},
+"974623412": {
+"email": "skjerstad.os@bodo.kommune.no",
+"phone": "75554840"
+},
+"974623528": {
+"email": "vikesaa.skule@bjerkreim.kommune.no",
+"phone": "51459300"
+},
+"974623536": {
+"email": "bjerkreim.skule@bjerkreim.kommune.no",
+"phone": "51459380"
+},
+"974625237": {
+"phone": "75682210"
+},
+"974625563": {
+"phone": "75775260"
+},
+"974626608": {
+"email": "postmottak@lierne.kommune.no",
+"phone": "74343460"
+},
+"974626616": {
+"email": "postmottak@lierne.kommune.no",
+"phone": "74343560"
+},
+"974626810": {
+"phone": "77027800"
+},
+"974626829": {
+"email": "kila.skole@harstad.kommune.no"
+},
+"974626837": {
+"email": "kanebogen.skole@harstad.kommune.no"
+},
+"974626853": {
+"email": "seljestad.barneskole@harstad.kommune.no"
+},
+"974626861": {
+"email": "seljestad.ungdomsskole@harstad.kommune.no",
+"phone": "77026360"
+},
+"974626896": {
+"email": "hagebyen.skole@harstad.kommune.no",
+"phone": "77028400"
+},
+"974626950": {
+"email": "lundenes.skole@harstad.kommune.no",
+"phone": "77027880"
+},
+"974627787": {
+"email": "ronvik.skole@bodo.kommune.no",
+"phone": "75556860"
+},
+"974627809": {
+"email": "hunstad.barneskole@bodo.kommune.no",
+"phone": "75556530"
+},
+"974627817": {
+"email": "alberthaugen.skole@bodo.kommune.no",
+"phone": "75556890"
+},
+"974627825": {
+"email": "skaug.skole@bodo.kommune.no",
+"phone": "75556840"
+},
+"974627841": {
+"email": "aspaasen.skole@bodo.kommune.no",
+"phone": "75556670"
+},
+"974627868": {
+"email": "alstad.barneskole@bodo.kommune.no",
+"phone": "75556500"
+},
+"974627876": {
+"email": "stover.skole@bodo.kommune.no",
+"phone": "75556940"
+},
+"974627884": {
+"email": "lopsmark.skole@bodo.kommune.no",
+"phone": "75556900"
+},
+"974627892": {
+"email": "saltstraumen.skole@bodo.kommune.no",
+"phone": "75557900"
+},
+"974627906": {
+"email": "alstad.ungdomsskole@bodo.kommune.no",
+"phone": "75556400"
+},
+"974627914": {
+"email": "bankgata.skole@bodo.kommune.no",
+"phone": "75556620"
+},
+"974627930": {
+"email": "saltvern.skole@bodo.kommune.no",
+"phone": "75556700"
+},
+"974627949": {
+"email": "skolen.i.veran@bodo.kommune.no",
+"phone": "75557840"
+},
+"974627957": {
+"email": "kjerringoy.skole@bodo.kommune.no",
+"phone": "75557760"
+},
+"974627965": {
+"email": "hunstad.ungdomsskole@bodo.kommune.no",
+"phone": "75556430"
+},
+"974627973": {
+"email": "morkvedmarka.skole@bodo.kommune.no",
+"phone": "75556800"
+},
+"974628465": {
+"email": "valnesfjord.skole@fauske.kommune.no",
+"phone": "75604170"
+},
+"974628511": {
+"email": "vestmyra.skole@fauske.kommune.no",
+"phone": "75604600"
+},
+"974628546": {
+"email": "sulitjelma.skole@fauske.kommune.no",
+"phone": "75604500"
+},
+"974631857": {
+"email": "knapstad.skole@io.kommune.no",
+"phone": "69681000"
+},
+"974631873": {
+"email": "tomter.skole@io.kommune.no",
+"phone": "69924600"
+},
+"974633302": {
+"email": "hoydalsmo.skule@tokke.kommune.no",
+"phone": "35075600"
+},
+"974633345": {
+"email": "tokke.skule@tokke.kommune.no",
+"phone": "35075310"
+},
+"974702444": {
+"email": "postmottak@larvik.kommune.no",
+"phone": "33172500"
+},
+"974737817": {
+"email": "blokkhaugen.skole@bergen.kommune.no",
+"phone": "53039900"
+},
+"974737825": {
+"email": "rolland.skole@bergen.kommune.no",
+"phone": "53035200"
+},
+"974737833": {
+"email": "sandgotna.skole@bergen.kommune.no",
+"phone": "55562960"
+},
+"974737841": {
+"email": "seljedalen.skole@bergen.kommune.no",
+"phone": "53036900"
+},
+"974737868": {
+"email": "landas.skole@bergen.kommune.no",
+"phone": "53033711"
+},
+"974737876": {
+"email": "slettebakken.skole@bergen.kommune.no",
+"phone": "53038900"
+},
+"974737884": {
+"phone": "53033900"
+},
+"974737892": {
+"email": "hellen.skole@bergen.kommune.no",
+"phone": "53034400"
+},
+"974737906": {
+"email": "nykrohnborg.skole@bergen.kommune.no",
+"phone": "53033110"
+},
+"974737914": {
+"email": "krohnengen.skole@bergen.kommune.no",
+"phone": "53039600"
+},
+"974737922": {
+"email": "kronstad.skole@bergen.kommune.no",
+"phone": "53036150"
+},
+"974737930": {
+"email": "haukeland.skole@bergen.kommune.no",
+"phone": "53035900"
+},
+"974737949": {
+"email": "fridalen.skole@bergen.kommune.no",
+"phone": "53038800"
+},
+"974737957": {
+"email": "christikrybbe.skole@bergen.kommune.no",
+"phone": "53033820"
+},
+"974737965": {
+"email": "mohlenpris.skole@bergen.kommune.no",
+"phone": "53037850"
+},
+"974737973": {
+"email": "varden.skole@bergen.kommune.no",
+"phone": "53039500"
+},
+"974737981": {
+"email": "saelen.oppveksttun@bergen.kommune.no",
+"phone": "53037550"
+},
+"974738015": {
+"email": "gimle.skole@bergen.kommune.no",
+"phone": "55562210"
+},
+"974738023": {
+"email": "hordvik.skole@bergen.kommune.no",
+"phone": "53036700"
+},
+"974738031": {
+"email": "mjolkeraen.skole@bergen.kommune.no",
+"phone": "53035700"
+},
+"974738058": {
+"email": "salhus.skule@bergen.kommune.no",
+"phone": "53034900"
+},
+"974738066": {
+"email": "haukas.skole@bergen.kommune.no",
+"phone": "53037150"
+},
+"974738074": {
+"email": "tertnes.skole@bergen.kommune.no",
+"phone": "53037000"
+},
+"974738112": {
+"email": "lone.skule@bergen.kommune.no",
+"phone": "53037300"
+},
+"974738120": {
+"email": "garnes.barneskule@bergen.kommune.no",
+"phone": "53037050"
+},
+"974738139": {
+"email": "ytrearna.skule@bergen.kommune.no",
+"phone": "53037400"
+},
+"974738171": {
+"email": "skeie.skole@bergen.kommune.no",
+"phone": "55522810"
+},
+"974738228": {
+"email": "krokeide.skole@bergen.kommune.no",
+"phone": "53038300"
+},
+"974738236": {
+"email": "soreide.skole@bergen.kommune.no",
+"phone": "53036800"
+},
+"974738244": {
+"email": "saedalen.skole@bergen.kommune.no",
+"phone": "53033200"
+},
+"974738252": {
+"email": "kirkevoll.skole@bergen.kommune.no",
+"phone": "53035600"
+},
+"974738260": {
+"email": "skjold.skole@bergen.kommune.no",
+"phone": "53035500"
+},
+"974738279": {
+"email": "liland.skole@bergen.kommune.no",
+"phone": "53037700"
+},
+"974738287": {
+"email": "bones.skole@bergen.kommune.no",
+"phone": "53038600"
+},
+"974738295": {
+"email": "minde.skole@bergen.kommune.no",
+"phone": "53036600"
+},
+"974738309": {
+"email": "nattland.skole@bergen.kommune.no",
+"phone": "53030600"
+},
+"974738317": {
+"email": "paradis.skole@bergen.kommune.no",
+"phone": "53039100"
+},
+"974738325": {
+"email": "smoras.skole@bergen.kommune.no",
+"phone": "53037350"
+},
+"974738333": {
+"email": "kaland.skole@bergen.kommune.no",
+"phone": "53037600"
+},
+"974738341": {
+"email": "midtun.skole@bergen.kommune.no",
+"phone": "53037900"
+},
+"974738368": {
+"email": "holen.skole@bergen.kommune.no",
+"phone": "53032600"
+},
+"974738376": {
+"email": "mathopen.skole@bergen.kommune.no",
+"phone": "53037200"
+},
+"974738392": {
+"email": "damsgard.skole@bergen.kommune.no",
+"phone": "53034800"
+},
+"974738406": {
+"email": "lyshovden.oppveksttun@bergen.kommune.no",
+"phone": "53039000"
+},
+"974738414": {
+"email": "ortun.skole@bergen.kommune.no",
+"phone": "53033650"
+},
+"974738422": {
+"email": "vadmyra.skole@bergen.kommune.no",
+"phone": "53038200"
+},
+"974738449": {
+"email": "kjokkelvik.skole@bergen.kommune.no",
+"phone": "53034500"
+},
+"974738457": {
+"email": "slatthaug.skole@bergen.kommune.no",
+"phone": "53030660"
+},
+"974738465": {
+"email": "astveit.skole@bergen.kommune.no",
+"phone": "53039400"
+},
+"974738473": {
+"email": "garnes.ungdomsskule@bergen.kommune.no",
+"phone": "53034700"
+},
+"974738481": {
+"email": "lynghaug.skole@bergen.kommune.no",
+"phone": "53036200"
+},
+"974738503": {
+"email": "kalvatraeet.skole@bergen.kommune.no",
+"phone": "53036000"
+},
+"974738511": {
+"email": "ulsmag.skole@bergen.kommune.no",
+"phone": "55561000"
+},
+"974738538": {
+"email": "lovas.skole@bergen.kommune.no",
+"phone": "53032700"
+},
+"974738546": {
+"email": "nygardslien.skole@bergen.kommune.no",
+"phone": "53037650"
+},
+"974738554": {
+"email": "eidsvag.skole@bergen.kommune.no",
+"phone": "53038400"
+},
+"974738562": {
+"email": "haukedalen.skole@bergen.kommune.no",
+"phone": "53036750"
+},
+"974738570": {
+"email": "adnamarka.skule@bergen.kommune.no",
+"phone": "53033370"
+},
+"974738589": {
+"email": "loddefjord.skole@bergen.kommune.no",
+"phone": "55562970"
+},
+"974738597": {
+"email": "ytrebygda.skole@bergen.kommune.no",
+"phone": "53038500"
+},
+"974738600": {
+"email": "ra.skole@bergen.kommune.no",
+"phone": "53036550"
+},
+"974738619": {
+"email": "storetveit.skole@bergen.kommune.no",
+"phone": "53039200"
+},
+"974738627": {
+"email": "bjorndalsskogen.skole@bergen.kommune.no",
+"phone": "53034300"
+},
+"974738635": {
+"email": "olsvik.skole@bergen.kommune.no",
+"phone": "53034600"
+},
+"974738740": {
+"email": "flaktveit.skole@bergen.kommune.no",
+"phone": "53039300"
+},
+"974739380": {
+"email": "sorashogda.skole@bergen.kommune.no",
+"phone": "53036650"
+},
+"974747839": {
+"email": "post.aabs@rauma.kommune.no",
+"phone": "71166010"
+},
+"974747928": {
+"email": "post.isfjorden@rauma.kommune.no"
+},
+"974747952": {
+"email": "post.aus@rauma.kommune.no",
+"phone": "71166050"
+},
+"974747960": {
+"email": "post.aafarnes@rauma.kommune.no"
+},
+"974795655": {
+"email": "postmottak.skolen@lokalstyre.no",
+"phone": "79023901"
+},
+"975013286": {
+"phone": "21551000"
+},
+"975079368": {
+"email": "egersund@samfundet.org",
+"phone": "51496220"
+},
+"975079465": {
+"email": "post@ryenbergetskole.no",
+"phone": "23210161"
+},
+"975267628": {
+"email": "hoberg.bsk@stange.kommune.no",
+"phone": "62562590"
+},
+"975267636": {
+"email": "borgen.barneskole@sarpsborg.com",
+"phone": "69108945"
+},
+"975267644": {
+"email": "auli.skole@nes.kommune.no",
+"phone": "66104420"
+},
+"975267652": {
+"email": "skavanger.skole@kongsberg.kommune.no"
+},
+"975267660": {
+"email": "post.motland.skule@ha.kommune.no",
+"phone": "51798380"
+},
+"975267679": {
+"email": "bore.ungdomsskule@klepp.kommune.no",
+"phone": "51788400"
+},
+"975267687": {
+"email": "epost@sola.kommune.no",
+"phone": "51641900"
+},
+"975267695": {
+"phone": "52811770"
+},
+"975267717": {
+"phone": "69248000"
+},
+"975267725": {
+"email": "foldnesskuleadministrasjon@oygarden.kommune.no",
+"phone": "55096950"
+},
+"975267733": {
+"email": "nordbygda.sk@masfjorden.kommune.no",
+"phone": "56166400"
+},
+"975267792": {
+"email": "huseby-uskole.postmottak@trondheim.kommune.no",
+"phone": "72548200"
+},
+"975267806": {
+"email": "romolslia-skole.postmottak@trondheim.kommune.no",
+"phone": "72546480"
+},
+"975268586": {
+"email": "storslett.skole@nordreisa.kommune.no",
+"phone": "77588300"
+},
+"975268640": {
+"email": "rotsundelv.skole@nordreisa.kommune.no",
+"phone": "77588350"
+},
+"975268667": {
+"email": "ekeberg.skole@holmestrand.kommune.no",
+"phone": "33059620"
+},
+"975268675": {
+"email": "traeleborg.skole@tonsberg.kommune.no",
+"phone": "33348130"
+},
+"975268683": {
+"email": "byskogen.skole@tonsberg.kommune.no",
+"phone": "33292300"
+},
+"975268705": {
+"email": "tangen.skole@drammen.kommune.no"
+},
+"975268721": {
+"email": "tommeras.skole@drammen.kommune.no",
+"phone": "32040360"
+},
+"975268748": {
+"email": "selvik.skole@holmestrand.kommune.no",
+"phone": "33787110"
+},
+"975268756": {
+"email": "galleberg.skole@holmestrand.kommune.no",
+"phone": "33787200"
+},
+"975268764": {
+"email": "kjeldas.skole@holmestrand.kommune.no",
+"phone": "33787120"
+},
+"975268799": {
+"email": "hof.skole@holmestrand.kommune.no",
+"phone": "33059630"
+},
+"975268802": {
+"email": "steinkjer.skole@steinkjer.kommune.no",
+"phone": "74171050"
+},
+"975268810": {
+"email": "kvam.skole@steinkjer.kommune.no"
+},
+"975268829": {
+"email": "beitstad.skole@steinkjer.kommune.no"
+},
+"975268837": {
+"email": "egge.ungdomsskole@steinkjer.kommune.no"
+},
+"975268853": {
+"email": "binde.skole@steinkjer.kommune.no"
+},
+"975268888": {
+"email": "henning.skole@steinkjer.kommune.no",
+"phone": "74169095"
+},
+"975268896": {
+"email": "byafossen.skole@steinkjer.kommune.no",
+"phone": "74169340"
+},
+"975268934": {
+"email": "mare.skole@steinkjer.kommune.no",
+"phone": "74135020"
+},
+"975268942": {
+"email": "post@leka.kommune.no",
+"phone": "74387050"
+},
+"975268969": {
+"phone": "74382891"
+},
+"975269043": {
+"phone": "74382960"
+},
+"975269108": {
+"email": "joa.skole@fosnes.kommune.no"
+},
+"975269140": {
+"email": "hunn.skole@overhalla.kommune.no"
+},
+"975269191": {
+"phone": "74330803"
+},
+"975269264": {
+"email": "postmottak@inderoy.kommune.no",
+"phone": "74605120"
+},
+"975269280": {
+"email": "postmottak@inderoy.kommune.no",
+"phone": "74124200"
+},
+"975269299": {
+"email": "postmottak@inderoy.kommune.no",
+"phone": "74124206"
+},
+"975269922": {
+"phone": "62563000"
+},
+"975269930": {
+"phone": "62563560"
+},
+"975270017": {
+"email": "vestby@vestby.kommune.no",
+"phone": "64980720"
+},
+"975270548": {
+"email": "borstad-uskole@hamar.kommune.no",
+"phone": "62563575"
+},
+"975270556": {
+"email": "postmottak.furnes.uskole@ringsaker.kommune.no",
+"phone": "62336150"
+},
+"975270564": {
+"email": "postmottak.morkved.skole@ringsaker.kommune.no",
+"phone": "62336360"
+},
+"975270580": {
+"email": "postmottak.fagerlund.skole@ringsaker.kommune.no",
+"phone": "62362200"
+},
+"975270629": {
+"email": "postmottak.kylstad.skole@ringsaker.kommune.no",
+"phone": "62336040"
+},
+"975270637": {
+"email": "postmottak.stavsberg.skole@ringsaker.kommune.no",
+"phone": "62350048"
+},
+"975270645": {
+"email": "postmottak.kirkenar.skole@ringsaker.kommune.no",
+"phone": "62336270"
+},
+"975270688": {
+"email": "postmottak.kirkekretsen.skole@ringsaker.kommune.no",
+"phone": "62336290"
+},
+"975270815": {
+"phone": "62563400"
+},
+"975270823": {
+"phone": "62563000"
+},
+"975270831": {
+"phone": "62563000"
+},
+"975270858": {
+"phone": "62563000"
+},
+"975270866": {
+"phone": "62564270"
+},
+"975270874": {
+"email": "adalsbruk@loten.kommune.no",
+"phone": "62564293"
+},
+"975270882": {
+"email": "ostvang@loten.kommune.no",
+"phone": "62564259"
+},
+"975270890": {
+"phone": "62564280"
+},
+"975270912": {
+"email": "stange.bsk@stange.kommune.no",
+"phone": "62562520"
+},
+"975270939": {
+"email": "vallset.bsk@stange.kommune.no",
+"phone": "62562561"
+},
+"975270947": {
+"email": "solvin.bsk@stange.kommune.no",
+"phone": "62562540"
+},
+"975270955": {
+"email": "breidablikk.bsk@stange.kommune.no",
+"phone": "62562580"
+},
+"975270963": {
+"email": "tangen.bsk@stange.kommune.no",
+"phone": "62562550"
+},
+"975270971": {
+"email": "kirkevoll.skole@tonsberg.kommune.no",
+"phone": "33406320"
+},
+"975270998": {
+"email": "revetal.ungdomsskole@tonsberg.kommune.no",
+"phone": "33406360"
+},
+"975271005": {
+"email": "ramnes.skole@tonsberg.kommune.no",
+"phone": "33406340"
+},
+"975271021": {
+"email": "hoyjord.skole@sandefjord.kommune.no",
+"phone": "33430380"
+},
+"975271048": {
+"email": "kodal.skole@sandefjord.kommune.no",
+"phone": "33439000"
+},
+"975271064": {
+"email": "stokke.ungdomsskole@sandefjord.kommune.no",
+"phone": "33295700"
+},
+"975271072": {
+"email": "melsom.skole@sandefjord.kommune.no",
+"phone": "33295830"
+},
+"975271080": {
+"email": "bokemoa.skole@sandefjord.kommune.no",
+"phone": "33295750"
+},
+"975271099": {
+"email": "vennerod.skole@sandefjord.kommune.no",
+"phone": "33295860"
+},
+"975271145": {
+"email": "presterod.ungdomsskole@tonsberg.kommune.no",
+"phone": "33356700"
+},
+"975271153": {
+"email": "sem.skole@tonsberg.kommune.no",
+"phone": "33354530"
+},
+"975271161": {
+"email": "presterod.skole@tonsberg.kommune.no",
+"phone": "33348430"
+},
+"975271196": {
+"email": "eik.skole@tonsberg.kommune.no",
+"phone": "33348830"
+},
+"975271218": {
+"email": "volden.skole@tonsberg.kommune.no",
+"phone": "33355370"
+},
+"975271234": {
+"email": "ringshaug.skole@tonsberg.kommune.no",
+"phone": "33406710"
+},
+"975271242": {
+"email": "kongseik.ungdomsskole@tonsberg.kommune.no",
+"phone": "33354230"
+},
+"975271250": {
+"email": "borgheim.ungdomsskole@faerder.kommune.no",
+"phone": "33390000"
+},
+"975271277": {
+"email": "teie.skole@faerder.kommune.no",
+"phone": "33390000"
+},
+"975271285": {
+"email": "foynland.skole@faerder.kommune.no",
+"phone": "33390000"
+},
+"975271323": {
+"email": "torod.skole@faerder.kommune.no",
+"phone": "33390000"
+},
+"975271358": {
+"email": "teigar.ungdomsskole@faerder.kommune.no",
+"phone": "33390000"
+},
+"975271366": {
+"email": "postmottak@larvik.kommune.no",
+"phone": "33155250"
+},
+"975271382": {
+"email": "borhaug.skole@farsund.kommune.no",
+"phone": "38382400"
+},
+"975271404": {
+"email": "vanse.skole@farsund.kommune.no",
+"phone": "38395170"
+},
+"975271439": {
+"email": "sunde.skole@flekkefjord.kommune.no",
+"phone": "38328500"
+},
+"975271447": {
+"email": "hidra.skole@flekkefjord.kommune.no",
+"phone": "38328650"
+},
+"975271455": {
+"email": "post@flekkefjord.kommune.no",
+"phone": "38328000"
+},
+"975271463": {
+"email": "sira.skole@flekkefjord.kommune.no",
+"phone": "38328630"
+},
+"975271471": {
+"email": "moseidmoen.skole@vennesla.kommune.no",
+"phone": "38152250"
+},
+"975271498": {
+"phone": "38152700"
+},
+"975271501": {
+"phone": "38131110"
+},
+"975271544": {
+"email": "finsland.skole@kristiansand.kommune.no",
+"phone": "38180023"
+},
+"975271560": {
+"email": "post.songdalen.skole@kristiansand.kommune.no",
+"phone": "38185960"
+},
+"975271579": {
+"email": "post.tangvall.skole@kristiansand.kommune.no",
+"phone": "38055900"
+},
+"975271587": {
+"email": "post.nygard.skole@kristiansand.kommune.no"
+},
+"975271595": {
+"email": "post.langenes.skole@kristiansand.kommune.no",
+"phone": "38055980"
+},
+"975271609": {
+"email": "post@lindesnes.kommune.no",
+"phone": "38289000"
+},
+"975271617": {
+"email": "post@lindesnes.kommune.no",
+"phone": "38289000"
+},
+"975271625": {
+"email": "post@lindesnes.kommune.no",
+"phone": "38257000"
+},
+"975271633": {
+"email": "skulen@aseral.kommune.no"
+},
+"975271676": {
+"email": "post@lindesnes.kommune.no",
+"phone": "38256577"
+},
+"975271684": {
+"email": "post@lindesnes.kommune.no",
+"phone": "38255510"
+},
+"975271706": {
+"email": "post@lindesnes.kommune.no",
+"phone": "38256418"
+},
+"975271714": {
+"email": "post@lyngdal.kommune.no",
+"phone": "38334220"
+},
+"975271722": {
+"email": "aa-barneskole@lyngdal.kommune.no",
+"phone": "38334410"
+},
+"975271730": {
+"email": "post@lyngdal.kommune.no"
+},
+"975271765": {
+"email": "kollemoskole@haegebostad.kommune.no",
+"phone": "38349280"
+},
+"975271773": {
+"email": "liknes.skole@kvinesdal.kommune.no",
+"phone": "38358580"
+},
+"975271803": {
+"phone": "38354101"
+},
+"975271811": {
+"email": "feda.skole@kvinesdal.kommune.no",
+"phone": "38354120"
+},
+"975271846": {
+"phone": "38379390"
+},
+"975271854": {
+"email": "post@kinn.kommune.no",
+"phone": "57756340"
+},
+"975271889": {
+"email": "post@kinn.kommune.no",
+"phone": "57756520"
+},
+"975271897": {
+"email": "post@kinn.kommune.no",
+"phone": "57756400"
+},
+"975271935": {
+"email": "post@kinn.kommune.no",
+"phone": "57756260"
+},
+"975271978": {
+"phone": "57781711"
+},
+"975271986": {
+"phone": "57781720"
+},
+"975272060": {
+"phone": "57714270"
+},
+"975272079": {
+"phone": "57714080"
+},
+"975272109": {
+"phone": "57707572"
+},
+"975272117": {
+"email": "post@vik.kommune.no",
+"phone": "57698020"
+},
+"975272206": {
+"email": "postmottak@nannestad.kommune.no",
+"phone": "66105401"
+},
+"975272214": {
+"email": "postmottak@nannestad.kommune.no",
+"phone": "66105470"
+},
+"975272222": {
+"email": "postmottak@nannestad.kommune.no",
+"phone": "66105530"
+},
+"975272249": {
+"email": "postmottak@nannestad.kommune.no",
+"phone": "66105440"
+},
+"975272257": {
+"email": "vilberg.ungdomsskole@eidsvoll.kommune.no",
+"phone": "66107270"
+},
+"975272265": {
+"email": "eidsvoll.verk.skole@eidsvoll.kommune.no",
+"phone": "66107320"
+},
+"975272273": {
+"email": "feiring.skole@eidsvoll.kommune.no",
+"phone": "66107380"
+},
+"975272303": {
+"email": "vilberg.skole@eidsvoll.kommune.no",
+"phone": "66107250"
+},
+"975272311": {
+"email": "aas.skole@eidsvoll.kommune.no",
+"phone": "66107340"
+},
+"975272338": {
+"email": "raholt.skole@eidsvoll.kommune.no",
+"phone": "66107230"
+},
+"975272346": {
+"email": "raholt.ungdomsskole@eidsvoll.kommune.no",
+"phone": "66107400"
+},
+"975272354": {
+"email": "runni.ungdomsskole@nes.kommune.no",
+"phone": "66104410"
+},
+"975272362": {
+"email": "skogbygda.skole@nes.kommune.no",
+"phone": "66104470"
+},
+"975272370": {
+"email": "ostgard.skole@nes.kommune.no",
+"phone": "66104480"
+},
+"975272389": {
+"email": "framtun.skole@nes.kommune.no",
+"phone": "66104450"
+},
+"975272397": {
+"email": "fenstad.skole@nes.kommune.no",
+"phone": "66104430"
+},
+"975272427": {
+"email": "arnes.skole@nes.kommune.no",
+"phone": "66104490"
+},
+"975272435": {
+"email": "vormsund.ungdomsskole@nes.kommune.no",
+"phone": "66104400"
+},
+"975272443": {
+"email": "postmottak.jessheim.skole@ullensaker.kommune.no",
+"phone": "66109132"
+},
+"975272478": {
+"email": "postmottak.nordkisa.skole@ullensaker.kommune.no",
+"phone": "66108680"
+},
+"975272486": {
+"email": "postmottak.algarheim.skole@ullensaker.kommune.no",
+"phone": "66109400"
+},
+"975272494": {
+"email": "postmottak.areppen.skole@ullensaker.kommune.no",
+"phone": "66108700"
+},
+"975272508": {
+"email": "postmottak.hovin.skole@ullensaker.kommune.no",
+"phone": "66108580"
+},
+"975272516": {
+"email": "postmottak.nordby.ungdomsskole@ullensaker.kommune.no",
+"phone": "66108720"
+},
+"975272524": {
+"email": "postmottak.allergot.ungdomsskole@ullensaker.kommune.no",
+"phone": "66109240"
+},
+"975272532": {
+"email": "postmottak@gjerdrum.kommune.no",
+"phone": "66106150"
+},
+"975272540": {
+"email": "nittedal.ungdomsskole@nittedal.kommune.no",
+"phone": "67059370"
+},
+"975272567": {
+"email": "slattumskole@nittedal.kommune.no",
+"phone": "67073030"
+},
+"975272575": {
+"email": "rotnes.skole@nittedal.kommune.no",
+"phone": "67066900"
+},
+"975272605": {
+"email": "fjellhamar.skole@lorenskog.kommune.no"
+},
+"975272621": {
+"email": "hammer.skole@lorenskog.kommune.no"
+},
+"975272648": {
+"email": "fjellsrud-skole@lorenskog.kommune.no",
+"phone": "67934825"
+},
+"975272664": {
+"email": "kirkebygden.skole@enebakk.kommune.no",
+"phone": "64992060"
+},
+"975272672": {
+"phone": "64992040"
+},
+"975272680": {
+"email": "stranden.skole@enebakk.kommune.no",
+"phone": "64992090"
+},
+"975272699": {
+"email": "hovinhogdaskole@lillestrom.kommune.no",
+"phone": "63882770"
+},
+"975272702": {
+"email": "dalenskole@lillestrom.kommune.no",
+"phone": "63888200"
+},
+"975272710": {
+"email": "riddersandskole@lillestrom.kommune.no",
+"phone": "63887400"
+},
+"975272729": {
+"email": "bingsfossungdomsskole@lillestrom.kommune.no"
+},
+"975272745": {
+"email": "sorumsandskole@lillestrom.kommune.no"
+},
+"975272753": {
+"email": "sorumskole@lillestrom.kommune.no",
+"phone": "63869720"
+},
+"975272788": {
+"email": "vesterskaunskole@lillestrom.kommune.no"
+},
+"975272818": {
+"email": "greverud.skole@nordrefollo.kommune.no",
+"phone": "66813100"
+},
+"975272826": {
+"email": "sofiemyr.skole@nordrefollo.kommune.no",
+"phone": "66814200"
+},
+"975272834": {
+"email": "kolbotn.skole@nordrefollo.kommune.no",
+"phone": "66813200"
+},
+"975272842": {
+"email": "hellerasten.ungdomdsskole@nordrefollo.kommune.no",
+"phone": "66812200"
+},
+"975272850": {
+"email": "nesoddtangen.skole@nesodden.kommune.no",
+"phone": "66964700"
+},
+"975272869": {
+"email": "jaer.skole@nesodden.kommune.no",
+"phone": "66965470"
+},
+"975272877": {
+"email": "fjellstrand.skole@nesodden.kommune.no",
+"phone": "66966120"
+},
+"975272885": {
+"email": "berger.skole@nesodden.kommune.no",
+"phone": "66966000"
+},
+"975272893": {
+"email": "myklerud.skole@nesodden.kommune.no",
+"phone": "66966030"
+},
+"975272907": {
+"email": "tangenaasen.ungdomsskole@nesodden.kommune.no",
+"phone": "66964720"
+},
+"975272923": {
+"email": "postmottak@frogn.kommune.no",
+"phone": "64905940"
+},
+"975272931": {
+"email": "drobak.skole@frogn.kommune.no",
+"phone": "64906600"
+},
+"975272958": {
+"email": "arstad.bsk@stange.kommune.no",
+"phone": "62562500"
+},
+"975272982": {
+"email": "sentralskolen@nord-odal.kommune.no",
+"phone": "62978400"
+},
+"975273059": {
+"email": "postmottak@eidskog.kommune.no",
+"phone": "62832830"
+},
+"975273067": {
+"email": "postmottak@eidskog.kommune.no",
+"phone": "62832810"
+},
+"975273091": {
+"email": "post@grue.kommune.no",
+"phone": "62942100"
+},
+"975273156": {
+"email": "asnes.ungdomsskole@asnes.kommune.no",
+"phone": "62955480"
+},
+"975273210": {
+"phone": "62424240"
+},
+"975273253": {
+"email": "elverum.ungdomsskole@elverum.kommune.no",
+"phone": "62433960"
+},
+"975273261": {
+"email": "frydenlund.skole@elverum.kommune.no",
+"phone": "62435820"
+},
+"975273318": {
+"email": "lillemoen.skole@elverum.kommune.no",
+"phone": "62435860"
+},
+"975273326": {
+"email": "vestad.skole@elverum.kommune.no",
+"phone": "62433800"
+},
+"975273334": {
+"email": "postmottak@trysil.kommune.no",
+"phone": "62448760"
+},
+"975273385": {
+"email": "postmottak@trysil.kommune.no"
+},
+"975273431": {
+"email": "koppang.skole@stor-elvdal.kommune.no"
+},
+"975273490": {
+"email": "folldal.skole@folldal.kommune.no",
+"phone": "62491021"
+},
+"975273520": {
+"email": "alvdal.ungdomsskole@alvdal.kommune.no",
+"phone": "62489170"
+},
+"975273547": {
+"email": "tolga.skole@tolga.kommune.no",
+"phone": "62496530"
+},
+"975273571": {
+"email": "vingelen.skole@tolga.kommune.no",
+"phone": "62494772"
+},
+"975273598": {
+"phone": "62458260"
+},
+"975273628": {
+"phone": "61352480"
+},
+"975273695": {
+"phone": "61356740"
+},
+"975273768": {
+"phone": "61129191"
+},
+"975273792": {
+"email": "odnes.skole@sondre-land.kommune.no"
+},
+"975273806": {
+"email": "brandbu.ungdomsskole@gran.kommune.no"
+},
+"975273857": {
+"email": "trintom.skole@gran.kommune.no"
+},
+"975273873": {
+"email": "fredheim.skole@gran.kommune.no"
+},
+"975273881": {
+"email": "jaren.skole@gran.kommune.no"
+},
+"975273911": {
+"email": "gran.ungdomsskole@gran.kommune.no"
+},
+"975273962": {
+"phone": "61324340"
+},
+"975274012": {
+"email": "raufoss.barneskole@vestre-toten.kommune.no",
+"phone": "61153770"
+},
+"975274020": {
+"email": "reinsvoll.barneskole@vestre-toten.kommune.no",
+"phone": "61153700"
+},
+"975274047": {
+"email": "kolbu.skole@ostre-toten.kommune.no",
+"phone": "61141971"
+},
+"975274055": {
+"email": "thune.skole@vestre-toten.kommune.no",
+"phone": "61153570"
+},
+"975274063": {
+"email": "boeverbru.skole@vestre-toten.kommune.no",
+"phone": "61153740"
+},
+"975274098": {
+"email": "stange.skole@ostre-toten.kommune.no"
+},
+"975274128": {
+"email": "vilberg.skole@ostre-toten.kommune.no",
+"phone": "61166230"
+},
+"975274136": {
+"email": "totenviken.skole@ostre-toten.kommune.no",
+"phone": "61164795"
+},
+"975274144": {
+"email": "hoffsvangen.skole@ostre-toten.kommune.no",
+"phone": "61143910"
+},
+"975274152": {
+"email": "kapp.skole@ostre-toten.kommune.no",
+"phone": "61147030"
+},
+"975274187": {
+"email": "fjerdum.skole@gausdal.kommune.no",
+"phone": "61104920"
+},
+"975274209": {
+"email": "forset.skole.postmottak@gausdal.kommune.no",
+"phone": "61285700"
+},
+"975274217": {
+"email": "follebu.skole@gausdal.kommune.no",
+"phone": "61104940"
+},
+"975274268": {
+"phone": "61101929"
+},
+"975274365": {
+"email": "kvam.skole@nord-fron.kommune.no",
+"phone": "61216450"
+},
+"975274373": {
+"email": "sodorp.skole@nord-fron.kommune.no",
+"phone": "61216500"
+},
+"975274438": {
+"email": "barhaug.skole@nord-fron.kommune.no",
+"phone": "61216530"
+},
+"975274454": {
+"email": "postmottak@sel.kommune.no"
+},
+"975274462": {
+"email": "otta.uskole@sel.kommune.no"
+},
+"975274470": {
+"email": "heidalskule@sel.kommune.no"
+},
+"975274519": {
+"email": "vagamo.skule@vaga.kommune.no",
+"phone": "61293800"
+},
+"975274527": {
+"email": "vaga.ungdomsskule@vaga.kommune.no",
+"phone": "61293900"
+},
+"975274578": {
+"email": "loar.skule@lom.kommune.no"
+},
+"975274586": {
+"email": "lom.ungdomsskule@lom.kommune.no"
+},
+"975274624": {
+"email": "post@skjaak.kommune.no",
+"phone": "61217000"
+},
+"975274667": {
+"email": "lesja.skule@lesja.kommune.no"
+},
+"975274683": {
+"email": "dovre.barneskole@dovre.kommune.no",
+"phone": "61242270"
+},
+"975274705": {
+"phone": "61148620"
+},
+"975274721": {
+"email": "blomhaug.skole@gjovik.kommune.no",
+"phone": "61148680"
+},
+"975274748": {
+"phone": "61158666"
+},
+"975274756": {
+"phone": "61158900"
+},
+"975274764": {
+"phone": "61158585"
+},
+"975274802": {
+"phone": "61158686"
+},
+"975274837": {
+"email": "hammartun.skole.postmottak@lillehammer.kommune.no",
+"phone": "61107843"
+},
+"975274845": {
+"phone": "61248850"
+},
+"975274853": {
+"email": "postmottak.vingar.skole@lillehammer.kommune.no",
+"phone": "61270120"
+},
+"975274888": {
+"email": "postmottak.jorstadmoen.skole@lillehammer.kommune.no",
+"phone": "61057920"
+},
+"975274896": {
+"email": "postmottak.sore.al.skole@lillehammer.kommune.no",
+"phone": "61267320"
+},
+"975274926": {
+"email": "post@utsira.kommune.no",
+"phone": "52750100"
+},
+"975274934": {
+"phone": "52811430"
+},
+"975274942": {
+"phone": "52811720"
+},
+"975275019": {
+"email": "kolnes@karmoy.kommune.no",
+"phone": "52812323"
+},
+"975275027": {
+"email": "havik@karmoy.kommune.no",
+"phone": "52812300"
+},
+"975275043": {
+"phone": "52811755"
+},
+"975275078": {
+"phone": "52811950"
+},
+"975275086": {
+"email": "akrab@karmoy.kommune.no",
+"phone": "52812222"
+},
+"975275094": {
+"phone": "52811544"
+},
+"975275108": {
+"email": "norheim@karmoy.kommune.no",
+"phone": "52814800"
+},
+"975275124": {
+"email": "sevland@karmoy.kommune.no",
+"phone": "52811766"
+},
+"975275140": {
+"email": "kopervik@karmoy.kommune.no",
+"phone": "52857586"
+},
+"975275167": {
+"email": "skudenes@karmoy.kommune.no",
+"phone": "52811425"
+},
+"975275175": {
+"email": "akrau@karmoy.kommune.no",
+"phone": "52811800"
+},
+"975275183": {
+"email": "forreadm@tysver.kommune.no",
+"phone": "52758100"
+},
+"975275248": {
+"email": "forlandadm@tysver.kommune.no",
+"phone": "52758260"
+},
+"975275256": {
+"phone": "52752551"
+},
+"975275272": {
+"phone": "51720630"
+},
+"975275299": {
+"email": "mosteroy.skole@stavanger.kommune.no",
+"phone": "51720300"
+},
+"975275353": {
+"email": "postmottak@stavanger.kommune.no",
+"phone": "51507090"
+},
+"975275361": {
+"phone": "52785625"
+},
+"975275388": {
+"phone": "52786236"
+},
+"975275418": {
+"email": "postmottak@hjelmeland.kommune.no"
+},
+"975275469": {
+"email": "postmottak@hjelmeland.kommune.no"
+},
+"975275485": {
+"email": "postmottak@hjelmeland.kommune.no"
+},
+"975275493": {
+"email": "postmottak@strand.kommune.no"
+},
+"975275507": {
+"email": "postmottak@strand.kommune.no",
+"phone": "51742630"
+},
+"975275515": {
+"email": "postmottak@strand.kommune.no"
+},
+"975275523": {
+"email": "postmottak@strand.kommune.no",
+"phone": "51742700"
+},
+"975275531": {
+"email": "forsand.skule@sandnes.kommune.no",
+"phone": "51700201"
+},
+"975275566": {
+"email": "epost@sola.kommune.no",
+"phone": "51944300"
+},
+"975275574": {
+"email": "epost@sola.kommune.no",
+"phone": "51641950"
+},
+"975275582": {
+"email": "epost@sola.kommune.no",
+"phone": "51944000"
+},
+"975275604": {
+"email": "epost@sola.kommune.no",
+"phone": "51944050"
+},
+"975275612": {
+"email": "epost@sola.kommune.no",
+"phone": "51944100"
+},
+"975275620": {
+"email": "algard.skole@gjesdal.kommune.no",
+"phone": "51612250"
+},
+"975275639": {
+"phone": "51614720"
+},
+"975275647": {
+"email": "oltedal.skole@gjesdal.kommune.no",
+"phone": "51614800"
+},
+"975275655": {
+"email": "dirdalskoleadm@gjesdal.kommune.no",
+"phone": "51614825"
+},
+"975275663": {
+"email": "bryne.skule@time.kommune.no",
+"phone": "51776400"
+},
+"975275671": {
+"email": "bryne.ungdomsskule@time.kommune.no",
+"phone": "51776440"
+},
+"975275698": {
+"email": "hognestad.skule@time.kommune.no",
+"phone": "51778343"
+},
+"975275728": {
+"email": "undheim.skule@time.kommune.no",
+"phone": "51778360"
+},
+"975275736": {
+"email": "klepp.ungdomsskule@klepp.kommune.no",
+"phone": "51429700"
+},
+"975275760": {
+"email": "bore.skule@klepp.kommune.no",
+"phone": "51788450"
+},
+"975275787": {
+"email": "engelsvoll.skule@klepp.kommune.no",
+"phone": "51786500"
+},
+"975275795": {
+"email": "tu.skule@klepp.kommune.no",
+"phone": "51786800"
+},
+"975275809": {
+"email": "orre.skule@klepp.kommune.no",
+"phone": "51789070"
+},
+"975275825": {
+"email": "post.bo.skule@ha.kommune.no",
+"phone": "51791350"
+},
+"975275833": {
+"email": "post.vigrestad.storskule@ha.kommune.no",
+"phone": "51799580"
+},
+"975275841": {
+"email": "post.narbo.ungdomsskule@ha.kommune.no",
+"phone": "51436030"
+},
+"975275868": {
+"email": "post.hoyland.skule@ha.kommune.no",
+"phone": "51791230"
+},
+"975275876": {
+"email": "post.varhaug.skule@ha.kommune.no",
+"phone": "51791700"
+},
+"975275892": {
+"email": "post.ogna.skule@ha.kommune.no",
+"phone": "51436060"
+},
+"975275906": {
+"email": "nygard@lund.kommune.no",
+"phone": "51409060"
+},
+"975275914": {
+"email": "ungdomsskolen@lund.kommune.no",
+"phone": "51409460"
+},
+"975275922": {
+"email": "heskestad.skule@lund.kommune.no"
+},
+"975275930": {
+"email": "kiellands.minne@lund.kommune.no"
+},
+"975275981": {
+"email": "havasen.skole@haugesund.kommune.no",
+"phone": "52743600"
+},
+"975276007": {
+"email": "hauge.skole@haugesund.kommune.no",
+"phone": "52743430"
+},
+"975276015": {
+"email": "lillesund.skole@haugesund.kommune.no",
+"phone": "52744500"
+},
+"975276023": {
+"email": "saltveit.skole@haugesund.kommune.no",
+"phone": "52744880"
+},
+"975276031": {
+"phone": "52743360"
+},
+"975276058": {
+"email": "rossabo.skole@haugesund.kommune.no",
+"phone": "52744570"
+},
+"975276066": {
+"email": "post@eigersund.kommune.no",
+"phone": "51461040"
+},
+"975276082": {
+"phone": "57674300"
+},
+"975276112": {
+"email": "post@vik.kommune.no"
+},
+"975276147": {
+"phone": "57629762"
+},
+"975276155": {
+"phone": "57629780"
+},
+"975276163": {
+"phone": "57652680"
+},
+"975276171": {
+"phone": "57628930"
+},
+"975276236": {
+"email": "post@laerdal.kommune.no",
+"phone": "57641200"
+},
+"975276244": {
+"email": "postmottak@ardal.kommune.no",
+"phone": "57665350"
+},
+"975276252": {
+"email": "postmottak@ardal.kommune.no"
+},
+"975276279": {
+"email": "postmottak@luster.kommune.no",
+"phone": "57685920"
+},
+"975276287": {
+"email": "postmottak@luster.kommune.no",
+"phone": "57685960"
+},
+"975276295": {
+"email": "postmottak@luster.kommune.no"
+},
+"975276317": {
+"email": "postmottak@luster.kommune.no",
+"phone": "57685970"
+},
+"975276325": {
+"email": "postmottak@luster.kommune.no",
+"phone": "57685940"
+},
+"975276333": {
+"email": "postmottak@luster.kommune.no",
+"phone": "57685740"
+},
+"975276341": {
+"email": "postmottak@luster.kommune.no",
+"phone": "57685820"
+},
+"975276376": {
+"email": "gjelsvik.skule@askvoll.kommune.no",
+"phone": "57730740"
+},
+"975276406": {
+"phone": "57733050"
+},
+"975276422": {
+"phone": "57730755"
+},
+"975276430": {
+"email": "askvoll.skule@askvoll.kommune.no",
+"phone": "57733300"
+},
+"975276481": {
+"phone": "57738075"
+},
+"975276511": {
+"email": "postmottak@sunnfjord.kommune.no",
+"phone": "57722000"
+},
+"975276538": {
+"email": "postmottak@sunnfjord.kommune.no",
+"phone": "57726550"
+},
+"975276546": {
+"email": "postmottak@sunnfjord.kommune.no",
+"phone": "57726440"
+},
+"975276554": {
+"email": "postmottak@sunnfjord.kommune.no",
+"phone": "57722000"
+},
+"975276570": {
+"email": "postmottak@sunnfjord.kommune.no",
+"phone": "57724427"
+},
+"975276597": {
+"email": "postmottak@sunnfjord.kommune.no",
+"phone": "57828730"
+},
+"975276600": {
+"email": "postmottak@sunnfjord.kommune.no",
+"phone": "57722000"
+},
+"975276686": {
+"phone": "57794730"
+},
+"975276708": {
+"phone": "57796500"
+},
+"975276716": {
+"email": "post@kinn.kommune.no",
+"phone": "57845400"
+},
+"975276732": {
+"email": "post@kinn.kommune.no",
+"phone": "57845440"
+},
+"975276767": {
+"phone": "57845370"
+},
+"975276791": {
+"email": "post@kinn.kommune.no",
+"phone": "57845300"
+},
+"975276856": {
+"phone": "57858218"
+},
+"975276864": {
+"phone": "57863420"
+},
+"975276996": {
+"phone": "57874155"
+},
+"975277011": {
+"phone": "57874550"
+},
+"975277054": {
+"phone": "57870600"
+},
+"975277062": {
+"phone": "57870800"
+},
+"975277089": {
+"phone": "57873900"
+},
+"975277097": {
+"phone": "57879840"
+},
+"975277100": {
+"phone": "70074300"
+},
+"975277127": {
+"phone": "70058765"
+},
+"975277194": {
+"phone": "71575550"
+},
+"975277232": {
+"phone": "71575830"
+},
+"975277240": {
+"phone": "71575400"
+},
+"975277259": {
+"phone": "71575500"
+},
+"975277267": {
+"email": "postmottak@vanylven.kommune.no",
+"phone": "70003000"
+},
+"975277348": {
+"email": "larsnes.oppvekstsenter@sande.kommune.no",
+"phone": "70026730"
+},
+"975277402": {
+"email": "hasund.skule@ulstein.kommune.no",
+"phone": "70009020"
+},
+"975277410": {
+"email": "ulsteinvik.barneskule@ulstein.kommune.no",
+"phone": "70017760"
+},
+"975277429": {
+"phone": "70017720"
+},
+"975277461": {
+"email": "hareid.skule@hareid.kommune.no",
+"phone": "70037630"
+},
+"975277496": {
+"email": "hjvaag.skule@hareid.kommune.no",
+"phone": "70037675"
+},
+"975277569": {
+"email": "rektor.folkestad@volda.kommune.no",
+"phone": "70058890"
+},
+"975277593": {
+"phone": "70055064"
+},
+"975277666": {
+"email": "velle.skule@orsta.kommune.no"
+},
+"975277674": {
+"email": "hovdenskule@orsta.kommune.no"
+},
+"975277763": {
+"email": "post@fjord.kommune.no"
+},
+"975277801": {
+"email": "skodje.barneskole@alesund.kommune.no"
+},
+"975277828": {
+"email": "valle.skule@alesund.kommune.no",
+"phone": "70244590"
+},
+"975277860": {
+"email": "borge.skole@porsgrunn.kommune.no",
+"phone": "35560660"
+},
+"975277879": {
+"email": "brevik.skole@porsgrunn.kommune.no"
+},
+"975277887": {
+"email": "gronli.skole@porsgrunn.kommune.no"
+},
+"975277895": {
+"email": "heistad.skole@porsgrunn.kommune.no"
+},
+"975277909": {
+"email": "klevstrand.skole@porsgrunn.kommune.no",
+"phone": "35565320"
+},
+"975277917": {
+"email": "langangen.skole@porsgrunn.kommune.no",
+"phone": "35569550"
+},
+"975277925": {
+"email": "myrene.skole@porsgrunn.kommune.no",
+"phone": "35565280"
+},
+"975277976": {
+"email": "vestsiden.skole@porsgrunn.kommune.no"
+},
+"975277984": {
+"email": "tveten.u.skole@porsgrunn.kommune.no",
+"phone": "35565200"
+},
+"975277992": {
+"email": "kjolnes.u.skole@porsgrunn.kommune.no"
+},
+"975278018": {
+"email": "mela.ungdomsskole@skien.kommune.no",
+"phone": "35519500"
+},
+"975278026": {
+"email": "bratsbergkleiva.skole@skien.kommune.no",
+"phone": "35905970"
+},
+"975278034": {
+"email": "buer.barneskole@skien.kommune.no",
+"phone": "35503880"
+},
+"975278042": {
+"email": "bolehogda.barneskole@skien.kommune.no",
+"phone": "35900850"
+},
+"975278077": {
+"email": "gjerpen.barneskole@skien.kommune.no",
+"phone": "35544650"
+},
+"975278093": {
+"email": "kjorbekkhogda.barneskole@skien.kommune.no",
+"phone": "35584250"
+},
+"975278115": {
+"email": "klyve.skole@skien.kommune.no",
+"phone": "35915770"
+},
+"975278123": {
+"email": "lunde.barneskole@skien.kommune.no",
+"phone": "35585900"
+},
+"975278131": {
+"email": "skotfoss.oppvekstsenter@skien.kommune.no",
+"phone": "35584340"
+},
+"975278174": {
+"email": "venstop.barneskole@skien.kommune.no",
+"phone": "35504280"
+},
+"975278182": {
+"email": "moflata.barneskole@skien.kommune.no",
+"phone": "35506260"
+},
+"975278190": {
+"email": "gjerpen.ungdomsskole@skien.kommune.no",
+"phone": "35509750"
+},
+"975278204": {
+"email": "menstad.ungdomsskole@skien.kommune.no",
+"phone": "35904140"
+},
+"975278247": {
+"email": "midtbygda@siljan.kommune.no",
+"phone": "35942880"
+},
+"975278271": {
+"email": "langesund.barneskole@bamble.kommune.no",
+"phone": "35967680"
+},
+"975278298": {
+"email": "ronholt.skole@bamble.kommune.no",
+"phone": "35965780"
+},
+"975278301": {
+"phone": "35965750"
+},
+"975278328": {
+"email": "kragero.skole@kragero.kommune.no"
+},
+"975278387": {
+"email": "sannidal.skole@kragero.kommune.no",
+"phone": "35992530"
+},
+"975278468": {
+"email": "bo.skule@drangedal.kommune.no",
+"phone": "35997770"
+},
+"975278476": {
+"email": "kroken.skole@drangedal.kommune.no",
+"phone": "35997730"
+},
+"975278492": {
+"email": "postmottak.bosk@mt.kommune.no",
+"phone": "35059450"
+},
+"975278530": {
+"email": "postmottak.fosk@mt.kommune.no",
+"phone": "35059400"
+},
+"975278646": {
+"phone": "35055300"
+},
+"975278727": {
+"email": "postmottak@fyresdal.kommune.no",
+"phone": "35067176"
+},
+"975278808": {
+"email": "edland.skule@vinje.kommune.no",
+"phone": "35062260"
+},
+"975278816": {
+"email": "aamot.skule@vinje.kommune.no",
+"phone": "35062200"
+},
+"975278824": {
+"email": "rauland.skule@vinje.kommune.no",
+"phone": "35062250"
+},
+"975278832": {
+"email": "oyfjell.oppvekstsenter@vinje.kommune.no",
+"phone": "35062180"
+},
+"975278840": {
+"email": "byasen-skole.postmottak@trondheim.kommune.no",
+"phone": "72547100"
+},
+"975278859": {
+"email": "lilleby-skole.postmottak@ou.trondheim.kommune.no",
+"phone": "72544710"
+},
+"975278867": {
+"email": "bispehaug-skole.postmottak@trondheim.kommune.no",
+"phone": "72544650"
+},
+"975278875": {
+"email": "asvang-skole.postmottak@trondheim.kommune.no",
+"phone": "72540100"
+},
+"975278883": {
+"email": "bratsberg-skole.postmottak@trondheim.kommune.no",
+"phone": "72543140"
+},
+"975278891": {
+"email": "charllund-bskole.postmottak@ou.trondheim.kommune.no",
+"phone": "72548900"
+},
+"975278905": {
+"email": "ila-skole.postmottak@trondheim.kommune.no",
+"phone": "72544000"
+},
+"975278921": {
+"email": "lade-skole.postmottak@trondheim.kommune.no",
+"phone": "72544900"
+},
+"975278948": {
+"email": "nyborg-skole.postmottak@trondheim.kommune.no",
+"phone": "72542360"
+},
+"975278956": {
+"email": "breidablikkskole.postmottak@trondheim.kommune.no",
+"phone": "72549220"
+},
+"975278964": {
+"email": "berg-skole.postmottak@trondheim.kommune.no",
+"phone": "72540370"
+},
+"975278972": {
+"email": "nypvang-skole.postmottak@trondheim.kommune.no",
+"phone": "72546620"
+},
+"975278980": {
+"email": "ranheim-skole.postmottak@trondheim.kommune.no",
+"phone": "72543170"
+},
+"975278999": {
+"email": "rye-skole.postmottak@ou.trondheim.kommune.no",
+"phone": "72543620"
+},
+"975279006": {
+"email": "solbakken-skole.postmottak@ou.trondheim.kommune.no",
+"phone": "72547350"
+},
+"975279014": {
+"email": "strindheim-skole.postmottak@trondheim.kommune.no",
+"phone": "72541000"
+},
+"975279022": {
+"email": "asheim-bskole.postmottak@trondheim.kommune.no",
+"phone": "72543500"
+},
+"975279030": {
+"email": "asveien-skole.postmottak@trondheim.kommune.no",
+"phone": "72544240"
+},
+"975279049": {
+"email": "asheim-uskole.postmottak@trondheim.kommune.no",
+"phone": "72543540"
+},
+"975279057": {
+"email": "ugla-skole.postmottak@trondheim.kommune.no",
+"phone": "72545580"
+},
+"975279065": {
+"email": "sverresb-skole.postmottak@trondheim.kommune.no",
+"phone": "72546940"
+},
+"975279073": {
+"email": "sunnland-skole.postmottak@ou.trondheim.kommune.no",
+"phone": "72545600"
+},
+"975279081": {
+"email": "spongdal-skole.postmottak@trondheim.kommune.no",
+"phone": "72545880"
+},
+"975279103": {
+"email": "blussuvoll-skole.postmottak@trondheim.kommune.no",
+"phone": "72546850"
+},
+"975279154": {
+"email": "postmottak@orkland.kommune.no",
+"phone": "72457156"
+},
+"975279235": {
+"email": "verdalsora.barneskole@verdal.kommune.no"
+},
+"975279316": {
+"email": "vinne.skole@verdal.kommune.no",
+"phone": "74065000"
+},
+"975279332": {
+"email": "stiklestad.skole@verdal.kommune.no"
+},
+"975279340": {
+"email": "verdalsora.uskole@verdal.kommune.no"
+},
+"975279448": {
+"email": "ekne-os@levanger.kommune.no",
+"phone": "74053150"
+},
+"975279456": {
+"email": "asen-os@levanger.kommune.no",
+"phone": "74053360"
+},
+"975279464": {
+"email": "nesheim-skole@levanger.kommune.no",
+"phone": "74053650"
+},
+"975279480": {
+"email": "postmottak@frosta.kommune.no",
+"phone": "74808970"
+},
+"975279499": {
+"email": "halsen.skole@stjordal.kommune.no",
+"phone": "74834666"
+},
+"975279502": {
+"email": "forradal.skole@stjordal.kommune.no"
+},
+"975279529": {
+"email": "elvran.skole@stjordal.kommune.no",
+"phone": "74833761"
+},
+"975279537": {
+"email": "skjelstadmark.skole@stjordal.kommune.no",
+"phone": "74837790"
+},
+"975279545": {
+"email": "lanke.skole@stjordal.kommune.no",
+"phone": "74834260"
+},
+"975279553": {
+"email": "haraldreina.skole@stjordal.kommune.no",
+"phone": "74833200"
+},
+"975279561": {
+"email": "hegra.barneskole@stjordal.kommune.no",
+"phone": "74834530"
+},
+"975279588": {
+"email": "otteroy.skole@namsos.kommune.no"
+},
+"975279618": {
+"email": "sorenget.skole@namsos.kommune.no",
+"phone": "74283112"
+},
+"975279626": {
+"email": "breilia.skole@hammerfest.kommune.no",
+"phone": "78402100"
+},
+"975279634": {
+"email": "postmottak@vardo.kommune.no",
+"phone": "78943300"
+},
+"975279669": {
+"phone": "78942870"
+},
+"975279693": {
+"phone": "78484440"
+},
+"975279707": {
+"phone": "78484810"
+},
+"975279758": {
+"email": "postmottak.leirbotn.skole@alta.kommune.no",
+"phone": "78438102"
+},
+"975279766": {
+"email": "postmottak.rafsbotn.skole@alta.kommune.no",
+"phone": "78481831"
+},
+"975279782": {
+"email": "postmottak.tvdalen.skole@alta.kommune.no",
+"phone": "78455115"
+},
+"975279790": {
+"email": "postmottak.elvebakken.skole@alta.kommune.no",
+"phone": "78444550"
+},
+"975279804": {
+"email": "postmottak.bossekop.skole@alta.kommune.no"
+},
+"975279839": {
+"phone": "78446360"
+},
+"975279960": {
+"phone": "78402000"
+},
+"975280047": {
+"phone": "78476574"
+},
+"975280101": {
+"email": "lakselv.barneskole@porsanger.kommune.no"
+},
+"975280136": {
+"email": "post.kjfj.skole@lebesby.kommune.no"
+},
+"975280152": {
+"email": "lebesbyrektor@lebesby.kommune.no"
+},
+"975280179": {
+"email": "rektor.mehamn@gamvik.kommune.no"
+},
+"975280292": {
+"email": "kirkenes.skole@sor-varanger.kommune.no",
+"phone": "78971700"
+},
+"975280349": {
+"email": "bugoynesoppv@svk.no",
+"phone": "78971750"
+},
+"975280365": {
+"email": "kruseloekka.ungdomsskole@sarpsborg.com",
+"phone": "69116250"
+},
+"975280373": {
+"email": "sandesundsveien.barneskole@sarpsborg.com",
+"phone": "69116030"
+},
+"975280411": {
+"phone": "69248480"
+},
+"975280438": {
+"phone": "69248055"
+},
+"975280446": {
+"phone": "69248000"
+},
+"975280454": {
+"phone": "69248000"
+},
+"975280489": {
+"email": "varteig.skole@sarpsborg.com",
+"phone": "69116670"
+},
+"975280497": {
+"email": "hafslund.barneskole@sarpsborg.com",
+"phone": "69108560"
+},
+"975280535": {
+"email": "hornnes.skole@sarpsborg.com"
+},
+"975280543": {
+"phone": "69108653"
+},
+"975280551": {
+"email": "hafslund.ungdomsskole@sarpsborg.com",
+"phone": "69108530"
+},
+"975280578": {
+"email": "hovin.skole@io.kommune.no"
+},
+"975280586": {
+"email": "spydeberg.skole@io.kommune.no"
+},
+"975280608": {
+"email": "korsgard.skole@io.kommune.no",
+"phone": "69681400"
+},
+"975280624": {
+"email": "moen.skole@io.kommune.no",
+"phone": "69681300"
+},
+"975280632": {
+"email": "rom.skole@io.kommune.no",
+"phone": "69681350"
+},
+"975280640": {
+"email": "kirkelund@skiptvet.kommune.no",
+"phone": "69806200"
+},
+"975280659": {
+"email": "bergenhus.skole@rakkestad.kommune.no"
+},
+"975280667": {
+"email": "os.skole@rakkestad.kommune.no"
+},
+"975280675": {
+"email": "kirkeng.skole@rakkestad.kommune.no"
+},
+"975280683": {
+"email": "lande.barneskole@sarpsborg.com"
+},
+"975280705": {
+"email": "jelsnes.barneskole@sarpsborg.com"
+},
+"975280713": {
+"email": "hafslundsoey.barneskole@sarpsborg.com",
+"phone": "69108500"
+},
+"975280721": {
+"email": "graalum.barneskole@sarpsborg.com",
+"phone": "69116090"
+},
+"975280748": {
+"email": "karlshus.bskole@rade.kommune.no",
+"phone": "69295250"
+},
+"975280780": {
+"phone": "69708640"
+},
+"975280802": {
+"email": "postmottak@valer.kommune.no",
+"phone": "69289222"
+},
+"975280810": {
+"email": "svinndal.skole@valer.kommune.no"
+},
+"975280837": {
+"email": "postmottak@arendal.kommune.no",
+"phone": "37006470"
+},
+"975280845": {
+"email": "postmottak@arendal.kommune.no",
+"phone": "37006400"
+},
+"975280853": {
+"email": "postmottak@arendal.kommune.no",
+"phone": "37013800"
+},
+"975280888": {
+"email": "postmottak@arendal.kommune.no",
+"phone": "37006600"
+},
+"975280896": {
+"email": "postmottak@arendal.kommune.no",
+"phone": "37013434"
+},
+"975280934": {
+"email": "post.skole@iveland.kommune.no"
+},
+"975280942": {
+"email": "post@e-h.kommune.no",
+"phone": "37931840"
+},
+"975280950": {
+"email": "post@e-h.kommune.no",
+"phone": "37931800"
+},
+"975280977": {
+"email": "post@e-h.kommune.no"
+},
+"975280993": {
+"phone": "37934790"
+},
+"975281019": {
+"phone": "37937500"
+},
+"975281035": {
+"phone": "37938500"
+},
+"975281086": {
+"email": "post@etne.kommune.no",
+"phone": "53758180"
+},
+"975281094": {
+"email": "post@etne.kommune.no",
+"phone": "53758520"
+},
+"975281124": {
+"email": "olen.skule@vindafjord.kommune.no",
+"phone": "53655780"
+},
+"975281132": {
+"email": "vik.skule@vindafjord.kommune.no",
+"phone": "53655730"
+},
+"975281159": {
+"phone": "53748330"
+},
+"975281167": {
+"phone": "53748380"
+},
+"975281213": {
+"phone": "53748360"
+},
+"975281221": {
+"email": "bremnes.ungdomsskule@bomlo.kommune.no",
+"phone": "53423520"
+},
+"975281264": {
+"email": "svortland.skule@bomlo.kommune.no",
+"phone": "53423700"
+},
+"975281272": {
+"email": "hillestveit.skule@bomlo.kommune.no"
+},
+"975281280": {
+"email": "moster.skule@bomlo.kommune.no",
+"phone": "53423600"
+},
+"975281299": {
+"email": "rubbestadneset.skule@bomlo.kommune.no",
+"phone": "53423630"
+},
+"975281302": {
+"email": "meling.skule@bomlo.kommune.no",
+"phone": "53423660"
+},
+"975281310": {
+"email": "gilje.skule@bomlo.kommune.no",
+"phone": "53423590"
+},
+"975281361": {
+"email": "rimbareid@fitjar.kommune.no",
+"phone": "53458560"
+},
+"975281396": {
+"phone": "53458595"
+},
+"975281418": {
+"phone": "53430880"
+},
+"975281450": {
+"email": "post@kvinnherad.kommune.no"
+},
+"975281574": {
+"email": "uskedalen.oppvekstsenter@kvinnherad.kommune.no",
+"phone": "53461840"
+},
+"975281582": {
+"email": "sunde.skule@kvinnherad.kommune.no"
+},
+"975281590": {
+"email": "malmanger.skule@kvinnherad.kommune.no"
+},
+"975281604": {
+"email": "valen.skule@kvinnherad.kommune.no"
+},
+"975281620": {
+"phone": "53461180"
+},
+"975281639": {
+"phone": "53461420"
+},
+"975281647": {
+"email": "bringedalsbygda.oppvekstsenter@kvinnherad.kommune.no"
+},
+"975281655": {
+"email": "halsnoy.skule@kvinnherad.kommune.no",
+"phone": "53461821"
+},
+"975281663": {
+"phone": "53461370"
+},
+"975281698": {
+"email": "jondal.skule@ullensvang.kommune.no",
+"phone": "53669550"
+},
+"975281728": {
+"email": "tyssedal.barneskole@ullensvang.kommune.no",
+"phone": "53654980"
+},
+"975281736": {
+"email": "roldal.skule@ullensvang.kommune.no",
+"phone": "53654880"
+},
+"975281744": {
+"email": "odda.ungdomsskole@ullensvang.kommune.no",
+"phone": "53654950"
+},
+"975281752": {
+"email": "vikebygd.skule@ullensvang.kommune.no",
+"phone": "53662192"
+},
+"975281779": {
+"email": "opedal.skule@ullensvang.kommune.no",
+"phone": "53661253"
+},
+"975281787": {
+"email": "hauso.skule@ullensvang.kommune.no",
+"phone": "53666213"
+},
+"975281817": {
+"email": "brakanes.skule@ulvik.kommune.no",
+"phone": "56527400"
+},
+"975281833": {
+"email": "vangen.skule@voss.kommune.no",
+"phone": "56519696"
+},
+"975281868": {
+"email": "palmafossen.skule@voss.herad.no",
+"phone": "56514735"
+},
+"975281876": {
+"email": "gjernes.skule@voss.herad.no",
+"phone": "56524740"
+},
+"975281884": {
+"email": "vossestrand.skule@voss.herad.no"
+},
+"975281930": {
+"email": "bulken.skule@voss.herad.no",
+"phone": "56514219"
+},
+"975281949": {
+"email": "bjorgum.skule@voss.kommune.no",
+"phone": "56517694"
+},
+"975281957": {
+"email": "evanger.skule@voss.herad.no",
+"phone": "56521370"
+},
+"975281973": {
+"email": "gullfjordungen.skule@voss.kommune.no",
+"phone": "56523287"
+},
+"975281981": {
+"email": "postfu@bjornafjorden.kommune.no",
+"phone": "56580800"
+},
+"975282007": {
+"email": "postadl@bjornafjorden.kommune.no",
+"phone": "56582926"
+},
+"975282023": {
+"phone": "56583202"
+},
+"975282031": {
+"email": "postes@bjornafjorden.kommune.no",
+"phone": "56580054"
+},
+"975282082": {
+"email": "ungdomsskulen@samnanger.kommune.no",
+"phone": "56589960"
+},
+"975282104": {
+"email": "postosu@bjornafjorden.kommune.no",
+"phone": "56575900"
+},
+"975282112": {
+"email": "postnob@bjornafjorden.kommune.no",
+"phone": "56575280"
+},
+"975282139": {
+"email": "postsof@bjornafjorden.kommune.no",
+"phone": "56303380"
+},
+"975282147": {
+"email": "postlunde@bjornafjorden.kommune.no",
+"phone": "56575980"
+},
+"975282155": {
+"email": "postoss@bjornafjorden.kommune.no",
+"phone": "57565363"
+},
+"975282163": {
+"email": "postnns@bjornafjorden.kommune.no",
+"phone": "56575850"
+},
+"975282171": {
+"email": "postlys@bjornafjorden.kommune.no",
+"phone": "56575215"
+},
+"975282236": {
+"phone": "71522643"
+},
+"975282309": {
+"phone": "72447895"
+},
+"975282317": {
+"phone": "72447509"
+},
+"975282325": {
+"email": "mausund.oppvekstsenter@froya.kommune.no"
+},
+"975282368": {
+"phone": "72446146"
+},
+"975282422": {
+"phone": "72514300"
+},
+"975282430": {
+"phone": "72492280"
+},
+"975282449": {
+"phone": "72492263"
+},
+"975282481": {
+"email": "postmottak@indrefosen.kommune.no"
+},
+"975282503": {
+"email": "postmottak@indrefosen.kommune.no",
+"phone": "73853171"
+},
+"975282538": {
+"phone": "72520750"
+},
+"975282554": {
+"email": "botngard.barneskole@orland.kommune.no",
+"phone": "72519650"
+},
+"975282597": {
+"email": "strand.skole@osen.kommune.no",
+"phone": "72578360"
+},
+"975282627": {
+"email": "post@oppdal.kommune.no",
+"phone": "72401000"
+},
+"975282651": {
+"phone": "72401720"
+},
+"975282686": {
+"email": "rennebu.skole@rennebu.kommune.no",
+"phone": "72428180"
+},
+"975282759": {
+"email": "brekkenskole@roros.kommune.no",
+"phone": "72406310"
+},
+"975282775": {
+"phone": "72409300"
+},
+"975282783": {
+"email": "storen.barneskole@midtre-gauldal.kommune.no",
+"phone": "72403310"
+},
+"975282805": {
+"email": "budal.skole@midtre-gauldal.kommune.no",
+"phone": "72403600"
+},
+"975282821": {
+"email": "singsaas.skole@midtre-gauldal.kommune.no",
+"phone": "72403535"
+},
+"975282848": {
+"phone": "72403276"
+},
+"975282864": {
+"email": "hommelvik.skole@malvik.kommune.no",
+"phone": "73972392"
+},
+"975282872": {
+"email": "postmottak.vikhammer.skole@malvik.kommune.no",
+"phone": "73972420"
+},
+"975282880": {
+"phone": "73972450"
+},
+"975282899": {
+"email": "bell.skole@selbu.kommune.no",
+"phone": "73810150"
+},
+"975282988": {
+"phone": "37149080"
+},
+"975282996": {
+"email": "postmottak@arendal.kommune.no",
+"phone": "37006630"
+},
+"975283003": {
+"email": "postmottak@arendal.kommune.no",
+"phone": "37006700"
+},
+"975283046": {
+"email": "postmottak@gjerstad.kommune.no",
+"phone": "37119785"
+},
+"975283070": {
+"email": "lyngmyr.skole@tvedestrand.kommune.no",
+"phone": "37199680"
+},
+"975283186": {
+"email": "postmottak@arendal.kommune.no",
+"phone": "37006452"
+},
+"975283194": {
+"email": "postmottak@arendal.kommune.no",
+"phone": "37006570"
+},
+"975283208": {
+"email": "postmottak@arendal.kommune.no",
+"phone": "37006522"
+},
+"975283216": {
+"email": "postmottak@arendal.kommune.no",
+"phone": "37006480"
+},
+"975283224": {
+"email": "postmottak@lillesand.kommune.no"
+},
+"975283259": {
+"email": "birkeland.skole@birkenes.kommune.no",
+"phone": "37281750"
+},
+"975283267": {
+"phone": "37281710"
+},
+"975283275": {
+"email": "engesland.skole@birkenes.kommune.no",
+"phone": "37281740"
+},
+"975283283": {
+"email": "valstrand.skole@birkenes.kommune.no",
+"phone": "37281720"
+},
+"975283291": {
+"email": "amli.skule@amli.kommune.no"
+},
+"975283372": {
+"email": "julsundet.skole@aukra.kommune.no"
+},
+"975283402": {
+"phone": "71266250"
+},
+"975283488": {
+"phone": "71268910"
+},
+"975283518": {
+"phone": "71299760"
+},
+"975283550": {
+"phone": "71513840"
+},
+"975283585": {
+"email": "rensvik.skole@kristiansund.kommune.no",
+"phone": "71575630"
+},
+"975283593": {
+"phone": "71575370"
+},
+"975283682": {
+"email": "postmottak.alvundfjord.skole@sunndal.kommune.no"
+},
+"975283704": {
+"email": "postmottak.loykja.skole@sunndal.kommune.no"
+},
+"975283739": {
+"email": "postmottak.sande.skole@sunndal.kommune.no"
+},
+"975283747": {
+"email": "postmottak.tredal.skole@sunndal.kommune.no"
+},
+"975283755": {
+"phone": "71647490"
+},
+"975283852": {
+"phone": "71663532"
+},
+"975283879": {
+"phone": "71662647"
+},
+"975283992": {
+"email": "uvdal.skole@nore-og-uvdal.kommune.no"
+},
+"975284018": {
+"email": "rodberg.skole@nore-og-uvdal.kommune.no"
+},
+"975284026": {
+"email": "post@giske.kommune.no",
+"phone": "70188000"
+},
+"975284034": {
+"email": "post@giske.kommune.no",
+"phone": "70188000"
+},
+"975284042": {
+"email": "post@giske.kommune.no"
+},
+"975284050": {
+"email": "post@giske.kommune.no",
+"phone": "70188000"
+},
+"975284069": {
+"email": "brattvag.barneskule@haram.kommune.no"
+},
+"975284115": {
+"email": "sovik.skule@haram.kommune.no",
+"phone": "70209230"
+},
+"975284158": {
+"email": "haramsoy.skule@haram.kommune.no"
+},
+"975284182": {
+"email": "helland.barneskule@vestnes.kommune.no"
+},
+"975284247": {
+"email": "tomrefjord.skule@vestnes.kommune.no"
+},
+"975284263": {
+"email": "eidsvaag.buskole@molde.kommune.no",
+"phone": "71231280"
+},
+"975284328": {
+"email": "midsund.skule@molde.kommune.no"
+},
+"975284352": {
+"email": "bragernes.skole@drammen.kommune.no",
+"phone": "32049600"
+},
+"975284360": {
+"email": "assiden.skole@drammen.kommune.no",
+"phone": "32045600"
+},
+"975284379": {
+"email": "oren.skole@drammen.kommune.no",
+"phone": "32049560"
+},
+"975284387": {
+"email": "skoger.skole@drammen.kommune.no",
+"phone": "32049380"
+},
+"975284395": {
+"email": "rodskog.skole@drammen.kommune.no"
+},
+"975284409": {
+"email": "vestbygda.skole@drammen.kommune.no",
+"phone": "32049400"
+},
+"975284417": {
+"email": "askollen.skole@drammen.kommune.no",
+"phone": "32045330"
+},
+"975284425": {
+"email": "konnerud.skole@drammen.kommune.no",
+"phone": "32045700"
+},
+"975284433": {
+"email": "danvik.skole@drammen.kommune.no",
+"phone": "32044800"
+},
+"975284441": {
+"email": "brandengen.skole@drammen.kommune.no",
+"phone": "32049530"
+},
+"975284476": {
+"email": "borresen.skole@drammen.kommune.no",
+"phone": "32049500"
+},
+"975284492": {
+"phone": "32161280"
+},
+"975284514": {
+"email": "hallingby.skole@ringerike.kommune.no"
+},
+"975284522": {
+"email": "royse@holeskolen.no",
+"phone": "32161240"
+},
+"975284573": {
+"email": "ulleral.skole@ringerike.kommune.no",
+"phone": "32115080"
+},
+"975284581": {
+"email": "nes.skole@ringerike.kommune.no",
+"phone": "32137609"
+},
+"975284603": {
+"email": "sokna.skole@ringerike.kommune.no",
+"phone": "32109610"
+},
+"975284611": {
+"email": "veien.skole@ringerike.kommune.no",
+"phone": "32170560"
+},
+"975284646": {
+"email": "tyristrand.skole@ringerike.kommune.no",
+"phone": "32115700"
+},
+"975284654": {
+"email": "kongsgardmoen.skole@kongsberg.kommune.no",
+"phone": "32866780"
+},
+"975284670": {
+"email": "vestsiden.skole@kongsberg.kommune.no"
+},
+"975284689": {
+"email": "skrim.skole@kongsberg.kommune.no",
+"phone": "32866750"
+},
+"975284697": {
+"email": "wennersborg.skole@kongsberg.kommune.no",
+"phone": "32866610"
+},
+"975284700": {
+"email": "eftelot.skole@kongsberg.kommune.no"
+},
+"975284719": {
+"email": "hvittingfoss.skole@kongsberg.kommune.no"
+},
+"975284727": {
+"email": "tislegard.skole@kongsberg.kommune.no"
+},
+"975284735": {
+"email": "flaa.skole@flaa.kommune.no",
+"phone": "32053635"
+},
+"975284743": {
+"email": "postmottak@nesbyen.kommune.no",
+"phone": "32068450"
+},
+"975284778": {
+"phone": "31408905"
+},
+"975284808": {
+"email": "nedre-aal.skule@aal.kommune.no",
+"phone": "32085415"
+},
+"975284816": {
+"email": "torpo.skule@aal.kommune.no",
+"phone": "32083210"
+},
+"975284859": {
+"email": "nordbygdene.skule@aal.kommune.no",
+"phone": "32085460"
+},
+"975284875": {
+"email": "aal.ungdomsskule@aal.kommune.no",
+"phone": "32085430"
+},
+"975284891": {
+"phone": "32092230"
+},
+"975284948": {
+"email": "sigdal.uskole@sigdal.kommune.no",
+"phone": "32711456"
+},
+"975284956": {
+"email": "prestfoss.skole@sigdal.kommune.no",
+"phone": "32711990"
+},
+"975284964": {
+"email": "nerstad.skole@sigdal.kommune.no",
+"phone": "32711458"
+},
+"975284972": {
+"email": "eggedal.skole@sigdal.kommune.no",
+"phone": "32711461"
+},
+"975284980": {
+"email": "kontor.vikersund@modum.kommune.no"
+},
+"975284999": {
+"email": "kontor.buskerud@modum.kommune.no",
+"phone": "32786738"
+},
+"975285006": {
+"email": "kontor.enger@modum.kommune.no",
+"phone": "32781730"
+},
+"975285014": {
+"email": "kontor.stalsberg@modum.kommune.no",
+"phone": "32778500"
+},
+"975285030": {
+"email": "hokksund.barneskole@ovre-eiker.kommune.no",
+"phone": "32755300"
+},
+"975285049": {
+"email": "darbu.skole@ovre-eiker.kommune.no",
+"phone": "32252430"
+},
+"975285057": {
+"email": "skotselv.skole@ovre-eiker.kommune.no",
+"phone": "32253800"
+},
+"975285065": {
+"email": "vestfossen.barneskole@ovre-eiker.kommune.no",
+"phone": "32252130"
+},
+"975285073": {
+"email": "roren.skole@ovre-eiker.kommune.no",
+"phone": "32252400"
+},
+"975285103": {
+"email": "folkestad.barneskole@asker.kommune.no",
+"phone": "32278130"
+},
+"975285111": {
+"email": "saetre.skole@asker.kommune.no",
+"phone": "32278330"
+},
+"975285138": {
+"email": "tofte.ungdomsskole@asker.kommune.no",
+"phone": "32278030"
+},
+"975285189": {
+"email": "post@storfjord.kommune.no",
+"phone": "77212920"
+},
+"975285200": {
+"email": "post@storfjord.kommune.no",
+"phone": "77212944"
+},
+"975285227": {
+"email": "lyngsdalen.oppvekstsenter@lyngen.kommune.no"
+},
+"975285332": {
+"email": "trollvik.skole@senja.kommune.no",
+"phone": "77871710"
+},
+"975285340": {
+"email": "karvik.skole@senja.kommune.no"
+},
+"975285359": {
+"email": "rossfjord.skole@senja.kommune.no"
+},
+"975285367": {
+"email": "silsand.barneskole@senja.kommune.no",
+"phone": "77871660"
+},
+"975285375": {
+"email": "botnhamn.skole@senja.kommune.no"
+},
+"975285383": {
+"email": "gibostad.skole@senja.kommune.no"
+},
+"975285405": {
+"email": "husoy.skole@senja.kommune.no"
+},
+"975285499": {
+"email": "gryllefjord.skole@senja.kommune.no"
+},
+"975285529": {
+"email": "vikstranda.skole@senja.kommune.no",
+"phone": "77853551"
+},
+"975285545": {
+"email": "post.olsborg@malselvskolen.no",
+"phone": "77832900"
+},
+"975285561": {
+"email": "rektor.bjorkeng@malselvskolen.no",
+"phone": "77832680"
+},
+"975285596": {
+"email": "post.fagerlidal@malselvskolen.no",
+"phone": "77832850"
+},
+"975285634": {
+"phone": "77185410"
+},
+"975285766": {
+"email": "grov.skole@tjeldsund.kommune.no",
+"phone": "77089220"
+},
+"975285782": {
+"email": "skanland.skole@tjeldsund.kommune.no",
+"phone": "77089800"
+},
+"975285839": {
+"email": "sandnes.sk@masfjorden.kommune.no",
+"phone": "56166360"
+},
+"975285847": {
+"email": "matre.sk@masfjorden.kommune.no",
+"phone": "56166150"
+},
+"975285855": {
+"phone": "56162150"
+},
+"975285863": {
+"phone": "56162200"
+},
+"975285871": {
+"email": "post@alver.kommune.no",
+"phone": "56375044"
+},
+"975285898": {
+"email": "post@alver.kommune.no",
+"phone": "56375040"
+},
+"975285901": {
+"email": "post@alver.kommune.no",
+"phone": "56375036"
+},
+"975285928": {
+"email": "post@alver.kommune.no",
+"phone": "56375038"
+},
+"975285936": {
+"email": "post@alver.kommune.no",
+"phone": "56375054"
+},
+"975285944": {
+"email": "post@alver.kommune.no",
+"phone": "56375046"
+},
+"975285952": {
+"email": "post@alver.kommune.no",
+"phone": "56375202"
+},
+"975285960": {
+"email": "post@alver.kommune.no",
+"phone": "56375056"
+},
+"975286037": {
+"email": "post@alver.kommune.no",
+"phone": "56349800"
+},
+"975286045": {
+"email": "post@alver.kommune.no",
+"phone": "56349060"
+},
+"975286061": {
+"phone": "55097982"
+},
+"975286118": {
+"email": "post@alver.kommune.no",
+"phone": "56171400"
+},
+"975286126": {
+"email": "post@alver.kommune.no",
+"phone": "56171300"
+},
+"975286134": {
+"email": "post@alver.kommune.no",
+"phone": "56174280"
+},
+"975286150": {
+"email": "post@alver.kommune.no",
+"phone": "56175700"
+},
+"975286169": {
+"email": "post@alver.kommune.no",
+"phone": "56174410"
+},
+"975286177": {
+"email": "osteroy.ungdomsskule@osteroy.kommune.no",
+"phone": "56192680"
+},
+"975286185": {
+"email": "valestrand.skule@osteroy.kommune.no",
+"phone": "56192760"
+},
+"975286193": {
+"email": "haus.skule@osteroy.kommune.no",
+"phone": "56192460"
+},
+"975286290": {
+"email": "fotlandsvag.skule@osteroy.kommune.no",
+"phone": "56192355"
+},
+"975286363": {
+"phone": "76912563"
+},
+"975286444": {
+"email": "bindalseidet.skole@bindalseidet.no",
+"phone": "75031327"
+},
+"975286460": {
+"email": "postmottak@bindal.kommune.no",
+"phone": "75032500"
+},
+"975286479": {
+"email": "salhus.skole@bronnoy.kommune.no",
+"phone": "75012170"
+},
+"975286576": {
+"email": "heroy.skole@heroy-no.kommune.no",
+"phone": "75058750"
+},
+"975286584": {
+"email": "bjarnetjonna.skole@alstahaug.kommune.no",
+"phone": "75075400"
+},
+"975286606": {
+"email": "sovik.skole@alstahaug.kommune.no",
+"phone": "75075430"
+},
+"975286614": {
+"email": "tjotta.skole@alstahaug.kommune.no",
+"phone": "75075532"
+},
+"975286738": {
+"email": "olderskog.skole@vefsn.kommune.no",
+"phone": "75101230"
+},
+"975286789": {
+"phone": "75184881"
+},
+"975286843": {
+"phone": "75052517"
+},
+"975286886": {
+"phone": "75067132"
+},
+"975286924": {
+"phone": "75197470"
+},
+"975286940": {
+"phone": "75197570"
+},
+"975286959": {
+"phone": "75197900"
+},
+"975286967": {
+"phone": "75197170"
+},
+"975286975": {
+"email": "rana.ungdomsskole@rana.kommune.no",
+"phone": "75144320"
+},
+"975287017": {
+"email": "basmo.barneskole@rana.kommune.no",
+"phone": "75145670"
+},
+"975287025": {
+"email": "gruben.barneskole@rana.kommune.no",
+"phone": "75144242"
+},
+"975287033": {
+"email": "storforshei.skole@rana.kommune.no",
+"phone": "75145860"
+},
+"975287041": {
+"email": "selfors.barneskole@rana.kommune.no",
+"phone": "75145750"
+},
+"975287068": {
+"email": "hauknes.skole@rana.kommune.no",
+"phone": "75145730"
+},
+"975287076": {
+"email": "utskarpen.skole@rana.kommune.no",
+"phone": "75145000"
+},
+"975287092": {
+"email": "skonseng.skole@rana.kommune.no",
+"phone": "75145840"
+},
+"975287122": {
+"email": "sleneset.oppvekst@luroy.kommune.no",
+"phone": "75091890"
+},
+"975287130": {
+"email": "kvaroy.oppvekst@luroy.kommune.no",
+"phone": "75091860"
+},
+"975287149": {
+"email": "kon.skole.adm@luroy.kommune.no",
+"phone": "75091880"
+},
+"975287165": {
+"email": "onlu.skole.adm@luroy.kommune.no",
+"phone": "75091870"
+},
+"975287173": {
+"email": "lovund.skole@luroy.kommune.no",
+"phone": "75091630"
+},
+"975287203": {
+"email": "tjongsfjord@skole.rodoy.no",
+"phone": "75098050"
+},
+"975287238": {
+"email": "nesoy.skole@rodoy.kommune.no",
+"phone": "75098080"
+},
+"975287246": {
+"email": "rodoy.skole@rodoy.kommune.no",
+"phone": "75098070"
+},
+"975287289": {
+"email": "oresvik.skole@rodoy.kommune.no",
+"phone": "75097128"
+},
+"975287297": {
+"email": "jektvik.skole@rodoy.kommune.no",
+"phone": "75098065"
+},
+"975287300": {
+"email": "glomfjord.skole@meloy.kommune.no",
+"phone": "75710150"
+},
+"975287327": {
+"email": "bolga.skole@meloy.kommune.no",
+"phone": "75710495"
+},
+"975287335": {
+"email": "enga.skole@meloy.kommune.no",
+"phone": "75710270"
+},
+"975287343": {
+"email": "halsa.skole@meloy.kommune.no",
+"phone": "75710330"
+},
+"975287351": {
+"email": "spildra.skole@meloy.kommune.no"
+},
+"975287408": {
+"email": "ornes.skole@meloy.kommune.no",
+"phone": "75710850"
+},
+"975287416": {
+"phone": "75682190"
+},
+"975287459": {
+"email": "post.straumen.skole@sorfold.kommune.no",
+"phone": "75685190"
+},
+"975287467": {
+"phone": "56155540"
+},
+"975287475": {
+"email": "davanger.skole@askoy.kommune.no",
+"phone": "56155580"
+},
+"975287483": {
+"email": "hanoy.skole@askoy.kommune.no",
+"phone": "56158911"
+},
+"975287491": {
+"email": "treet.skole@askoy.kommune.no",
+"phone": "56155560"
+},
+"975287505": {
+"email": "haugland.skole@askoy.kommune.no",
+"phone": "56158930"
+},
+"975287513": {
+"email": "hetlevik.skole@askoy.kommune.no",
+"phone": "56158870"
+},
+"975287556": {
+"email": "tveit.skole@askoy.kommune.no",
+"phone": "56158520"
+},
+"975287564": {
+"email": "strusshamn.skole@askoy.kommune.no",
+"phone": "56158800"
+},
+"975287572": {
+"email": "follese.skole@askoy.kommune.no",
+"phone": "56155470"
+},
+"975287580": {
+"email": "florvag.barneskole@askoy.kommune.no",
+"phone": "56155440"
+},
+"975287599": {
+"email": "erdal.barneskole@askoy.kommune.no",
+"phone": "56155500"
+},
+"975287602": {
+"email": "hop.skole@askoy.kommune.no",
+"phone": "56155660"
+},
+"975287610": {
+"email": "kleppe.skole@askoy.kommune.no",
+"phone": "56158850"
+},
+"975287629": {
+"email": "fjellungdomskule@oygarden.kommune.no",
+"phone": "55097700"
+},
+"975287653": {
+"phone": "55097550"
+},
+"975287661": {
+"email": "ulvesetskule-administrasjon@oygarden.kommune.no",
+"phone": "55097920"
+},
+"975287750": {
+"email": "landroadm@oygarden.kommune.no",
+"phone": "55097890"
+},
+"975287769": {
+"email": "sundungdomsskule@oygarden.kommune.no",
+"phone": "56122600"
+},
+"975287815": {
+"phone": "56122520"
+},
+"975287831": {
+"email": "strandaskule@oygarden.kommune.no",
+"phone": "56122540"
+},
+"975287866": {
+"email": "selbjorn@austevoll.kommune.no",
+"phone": "55081342"
+},
+"975287920": {
+"email": "storebo@austevoll.kommune.no",
+"phone": "55081324"
+},
+"975288005": {
+"phone": "75785700"
+},
+"975288080": {
+"email": "evenes.skole@evenes.kommune.no",
+"phone": "76981600"
+},
+"975288129": {
+"phone": "76185136"
+},
+"975288161": {
+"phone": "76185170"
+},
+"975288277": {
+"email": "sortland.ungdomsskole@sortland.kommune.no"
+},
+"975288358": {
+"phone": "76115400"
+},
+"975288382": {
+"email": "rosvik.skole@sorfold.kommune.no"
+},
+"975288447": {
+"phone": "75778601"
+},
+"975288463": {
+"email": "postmottak@steigen.kommune.no"
+},
+"975288536": {
+"phone": "76912822"
+},
+"975288587": {
+"phone": "76050506"
+},
+"975288641": {
+"email": "fygle.skole@vestvagoy.kommune.no",
+"phone": "76056900"
+},
+"975288668": {
+"email": "svarholt.skole@vestvagoy.kommune.no",
+"phone": "76056880"
+},
+"975288684": {
+"email": "leknes.skole@vestvagoy.kommune.no",
+"phone": "76056800"
+},
+"975288692": {
+"email": "ballstad.skole@vestvagoy.kommune.no",
+"phone": "76056860"
+},
+"975288706": {
+"email": "bostad.skole@vestvagoy.kommune.no",
+"phone": "76056750"
+},
+"975288714": {
+"email": "buksnes.skole@vestvagoy.kommune.no",
+"phone": "76056840"
+},
+"975288862": {
+"email": "raumyr.skole@kongsberg.kommune.no"
+},
+"975288927": {
+"email": "postmottak@rindal.kommune.no"
+},
+"975288935": {
+"email": "post.lunde.skole@kristiansand.kommune.no",
+"phone": "38055950"
+},
+"975289095": {
+"email": "grotvedt.skole@io.kommune.no",
+"phone": "69681250"
+},
+"975289109": {
+"email": "graalum.ungdomsskole@sarpsborg.com",
+"phone": "69108680"
+},
+"975289117": {
+"email": "spetalen.skole@rade.kommune.no"
+},
+"975289125": {
+"email": "uskole@rade.kommune.no",
+"phone": "69295200"
+},
+"975289133": {
+"email": "ostersundungdomsskole@lillestrom.kommune.no",
+"phone": "63887450"
+},
+"975289141": {
+"phone": "62563510"
+},
+"975289206": {
+"email": "postmottak.smestad.ungdomsskole@lillehammer.kommune.no",
+"phone": "61279560"
+},
+"975289214": {
+"email": "kjosterud.skole@drammen.kommune.no",
+"phone": "32049330"
+},
+"975289249": {
+"email": "finnoy.skule@stavanger.kommune.no",
+"phone": "51914422"
+},
+"975289257": {
+"phone": "53461340"
+},
+"975289265": {
+"phone": "53461320"
+},
+"975289273": {
+"email": "kinsarvik.skule@ullensvang.kommune.no",
+"phone": "53671590"
+},
+"975289281": {
+"email": "ungdomsskule@austevoll.kommune.no",
+"phone": "55081305"
+},
+"975289303": {
+"email": "post@laerdal.kommune.no",
+"phone": "57641200"
+},
+"975289346": {
+"email": "gloppen.ungdomsskule@gloppen.kommune.no"
+},
+"975289354": {
+"email": "post@fjord.kommune.no"
+},
+"975289389": {
+"email": "orland.ungdomsskole@orland.kommune.no"
+},
+"975289435": {
+"email": "orskog.skule@alesund.kommune.no",
+"phone": "70165950"
+},
+"975289443": {
+"email": "nardo-skole.postmottak@trondheim.kommune.no",
+"phone": "72541700"
+},
+"975289451": {
+"email": "skatval.skole@stjordal.kommune.no",
+"phone": "74832300"
+},
+"975289478": {
+"email": "straumenadm@tysver.kommune.no"
+},
+"975289486": {
+"email": "rommetveit.skule@stord.kommune.no",
+"phone": "53409690"
+},
+"975289494": {
+"email": "selbu.ungdomsskole@selbu.kommune.no",
+"phone": "73810300"
+},
+"975289516": {
+"email": "granmoen.skole@vefsn.kommune.no",
+"phone": "75101280"
+},
+"975289532": {
+"email": "borkenes.skole@kvafjord.kommune.no",
+"phone": "77023210"
+},
+"975289591": {
+"email": "floysbonn.ungdomsskole@nordrefollo.kommune.no",
+"phone": "66814100"
+},
+"975289605": {
+"email": "alvern.ungdomsskole@nesodden.kommune.no",
+"phone": "66966100"
+},
+"975289613": {
+"email": "vesong.uskole@ullensaker.kommune.no",
+"phone": "66109010"
+},
+"975289656": {
+"email": "botne.skole@holmestrand.kommune.no",
+"phone": "33059610"
+},
+"975289664": {
+"phone": "35048482"
+},
+"975289702": {
+"email": "voss.ungdomsskule@voss.herad.no",
+"phone": "56519555"
+},
+"975289710": {
+"phone": "57652892"
+},
+"975289729": {
+"email": "postmottak@luster.kommune.no",
+"phone": "57685760"
+},
+"975289737": {
+"email": "postmottak@sunnfjord.kommune.no",
+"phone": "57718531"
+},
+"975289745": {
+"email": "sula.ungdomsskule@sula.kommune.no"
+},
+"975289753": {
+"email": "postmottak@vanylven.kommune.no",
+"phone": "70030000"
+},
+"975289761": {
+"email": "post.vus@volda.kommune.no",
+"phone": "70074220"
+},
+"975289796": {
+"email": "hallset-skole.postmottak@trondheim.kommune.no",
+"phone": "72545300"
+},
+"975289818": {
+"email": "namdalseid.skole@namdalseid.kommune.no"
+},
+"975289842": {
+"phone": "75685232"
+},
+"975289850": {
+"email": "vegarshei.skule@vegarshei.kommune.no",
+"phone": "37168600"
+},
+"975289869": {
+"phone": "57858600"
+},
+"975289885": {
+"email": "dovre.ungdomsskole@dovre.kommune.no",
+"phone": "61242250"
+},
+"975289923": {
+"email": "gossen.buskole@aukra.kommune.no",
+"phone": "71171470"
+},
+"975289958": {
+"email": "sauland.skule@hjartdal.kommune.no",
+"phone": "35028300"
+},
+"975289966": {
+"email": "halsen.ungdomsskole@stjordal.kommune.no",
+"phone": "74835700"
+},
+"975289974": {
+"email": "giske.ungdomsskule@giske.kommune.no",
+"phone": "70188870"
+},
+"975289982": {
+"email": "vestfossen.ungdomskole@ovre-eiker.kommune.no"
+},
+"975289990": {
+"email": "siljanskole@siljan.kommune.no",
+"phone": "35942510"
+},
+"975290026": {
+"email": "ulstein.ungdomsskule@ulstein.kommune.no",
+"phone": "70017740"
+},
+"975290034": {
+"email": "haraldsvang.skole@haugesund.kommune.no",
+"phone": "52744760"
+},
+"975290050": {
+"email": "kippermoen.ungdomsskole@vefsn.kommune.no",
+"phone": "75101250"
+},
+"975290069": {
+"email": "sandnessjoen.ungdomsskole@alstahaug.kommune.no",
+"phone": "75075900"
+},
+"975290077": {
+"email": "lauvsnes.skole@flatanger.kommune.no"
+},
+"975290085": {
+"email": "kvislabakken.skole@stjordal.kommune.no",
+"phone": "74837850"
+},
+"975290093": {
+"email": "steinkjer.ungdomsskole@steinkjer.kommune.no",
+"phone": "74121800"
+},
+"975290107": {
+"email": "egge.barneskole@steinkjer.kommune.no"
+},
+"975290115": {
+"email": "namsos.ungdomsskole@namsos.kommune.no"
+},
+"975290123": {
+"email": "bangsund.skole@namsos.kommune.no"
+},
+"975290131": {
+"email": "hoknes.ungdomsskole@namsos.kommune.no",
+"phone": "74217730"
+},
+"975290158": {
+"email": "charllund-uskole.postmottak@trondheim.kommune.no",
+"phone": "72548960"
+},
+"975290182": {
+"email": "brattvag.ungdomsskule@haram.kommune.no"
+},
+"975290204": {
+"email": "postmottak@sunnfjord.kommune.no",
+"phone": "57722000"
+},
+"975290212": {
+"phone": "57781700"
+},
+"975290220": {
+"phone": "57781731"
+},
+"975290239": {
+"email": "post@kinn.kommune.no",
+"phone": "57756300"
+},
+"975290247": {
+"email": "kleppesto.barneskole@askoy.kommune.no",
+"phone": "56155400"
+},
+"975290255": {
+"email": "kleppesto.ungdomsskole@askoy.kommune.no",
+"phone": "56158700"
+},
+"975290263": {
+"email": "vage.skule@bomlo.kommune.no",
+"phone": "53423683"
+},
+"975290271": {
+"email": "sveio.skule@sveio.kommune.no",
+"phone": "53748300"
+},
+"975290298": {
+"email": "kvinesdal.ungdomsskole@kvinesdal.kommune.no",
+"phone": "38354150"
+},
+"975290301": {
+"phone": "35059300"
+},
+"975290328": {
+"email": "post.smu@modum.kommune.no",
+"phone": "32778300"
+},
+"975290336": {
+"email": "kontor.nmu@modum.kommune.no",
+"phone": "32781430"
+},
+"975290344": {
+"email": "fjell.skole@drammen.kommune.no",
+"phone": "32049640"
+},
+"975290360": {
+"email": "postmottak@eidskog.kommune.no",
+"phone": "62832000"
+},
+"975290379": {
+"phone": "62563445"
+},
+"975290387": {
+"email": "postmottak.bakke.skole@ullensaker.kommune.no",
+"phone": "66108952"
+},
+"975290395": {
+"email": "postmottak.doli.skole@ullensaker.kommune.no",
+"phone": "66109210"
+},
+"975290425": {
+"email": "kurland.barneskole@sarpsborg.com",
+"phone": "69108650"
+},
+"975290433": {
+"email": "lenangen.skole@lyngen.kommune.no"
+},
+"975290441": {
+"email": "postmottak@porsanger.kommune.no",
+"phone": "78465200"
+},
+"975290530": {
+"email": "rakkestad.ungdomsskole@rakkestad.kommune.no"
+},
+"975290549": {
+"email": "asen.skole@lorenskog.kommune.no",
+"phone": "67495011"
+},
+"975290557": {
+"email": "lokenasen.skole@lorenskog.kommune.no",
+"phone": "67495017"
+},
+"975290565": {
+"email": "risor.ungdomsskole@risor.kommune.no",
+"phone": "37143050"
+},
+"975290603": {
+"phone": "61158600"
+},
+"975290611": {
+"phone": "61245790"
+},
+"975290638": {
+"email": "skreia.ungdomsskole@ostre-toten.kommune.no"
+},
+"975290646": {
+"email": "ungdomsskolen@sondre-land.kommune.no",
+"phone": "61129199"
+},
+"975290654": {
+"email": "hov.ungdomsskole@ringerike.kommune.no",
+"phone": "32181650"
+},
+"975290662": {
+"email": "postmottak@notodden.kommune.no"
+},
+"975290697": {
+"email": "ungdomsskolen@lyngdal.kommune.no",
+"phone": "38334250"
+},
+"975290700": {
+"email": "nedstrandadm@tysver.kommune.no",
+"phone": "52758400"
+},
+"975290719": {
+"email": "frakkagjerdadm@tysver.kommune.no",
+"phone": "52758140"
+},
+"975290727": {
+"email": "postmottak@hareid.kommune.no",
+"phone": "70037600"
+},
+"975290816": {
+"email": "liskole@nittedal.kommune.no",
+"phone": "67059470"
+},
+"975290824": {
+"email": "heer.skole@frogn.kommune.no",
+"phone": "64905240"
+},
+"975290832": {
+"email": "tarnasen.skole@nordrefollo.kommune.no"
+},
+"975292738": {
+"email": "aronslokka.skole@drammen.kommune.no",
+"phone": "32049360"
+},
+"975292754": {
+"phone": "61189900"
+},
+"975292762": {
+"phone": "61188800"
+},
+"975292770": {
+"phone": "32161230"
+},
+"975292789": {
+"email": "stridsklev.skole@porsgrunn.kommune.no",
+"phone": "35565260"
+},
+"975292797": {
+"phone": "35015200"
+},
+"975292819": {
+"email": "post@eigersund.kommune.no",
+"phone": "51464910"
+},
+"975292827": {
+"email": "vikse.skule@sveio.kommune.no",
+"phone": "53748370"
+},
+"975292878": {
+"email": "adm.ungdomsskolen@averoy.kommune.no"
+},
+"975292886": {
+"email": "brundalen-skole.postmottak@trondheim.kommune.no",
+"phone": "72541100"
+},
+"975292932": {
+"email": "kroken.skole@tromso.kommune.no"
+},
+"975294595": {
+"email": "utleira-skole.postmottak@trondheim.kommune.no",
+"phone": "72543900"
+},
+"975294609": {
+"phone": "73973250"
+},
+"975294617": {
+"email": "selbustrand.skole@selbu.kommune.no",
+"phone": "73818626"
+},
+"975294625": {
+"email": "stokkan.ungdomsskole@stjordal.kommune.no",
+"phone": "74802000"
+},
+"975294633": {
+"email": "ormelen.skole@verdal.kommune.no",
+"phone": "74048280"
+},
+"975294676": {
+"email": "postmottak.komsaskole@alta.kommune.no",
+"phone": "78455631"
+},
+"975294749": {
+"email": "postmottak@sunnfjord.kommune.no",
+"phone": "57722000"
+},
+"975294765": {
+"email": "hannestad.barneskole@sarpsborg.com",
+"phone": "69108930"
+},
+"975294773": {
+"email": "postmottak.moelv.ungdomsskole@ringsaker.kommune.no",
+"phone": "62000868"
+},
+"975294781": {
+"phone": "61158777"
+},
+"975294811": {
+"email": "vear.skole@tonsberg.kommune.no",
+"phone": "33292500"
+},
+"975294897": {
+"email": "rektor.bardufoss@malselvskolen.no"
+},
+"975294919": {
+"email": "sorskogbygda.skole@elverum.kommune.no",
+"phone": "62433270"
+},
+"975294935": {
+"email": "kopperud.skole@gjovik.kommune.no",
+"phone": "61189940"
+},
+"975294943": {
+"email": "korta.skole@vestre-toten.kommune.no",
+"phone": "61153730"
+},
+"975294994": {
+"email": "kongerod.ungdomsskole@skien.kommune.no",
+"phone": "35915810"
+},
+"975295028": {
+"phone": "69289250"
+},
+"975295052": {
+"email": "fjellfoten.skole@nes.kommune.no",
+"phone": "66104440"
+},
+"975295060": {
+"phone": "62563460"
+},
+"975295079": {
+"email": "postmottak.brumunddal.ungdomsskole@ringsaker.kommune.no",
+"phone": "62336000"
+},
+"975295087": {
+"phone": "38383030"
+},
+"975295109": {
+"email": "kolltveitskule@oygarden.kommune.no",
+"phone": "55097600"
+},
+"975295826": {
+"email": "ringshaug.ungdomsskole@tonsberg.kommune.no",
+"phone": "33348400"
+},
+"975295850": {
+"email": "stigerasen.barneskole@skien.kommune.no",
+"phone": "35503070"
+},
+"975295877": {
+"email": "ulverud.skole@nittedal.kommune.no",
+"phone": "67066950"
+},
+"975295885": {
+"email": "sobakkenskole@elverum.kommune.no",
+"phone": "62436700"
+},
+"975295907": {
+"email": "postmottak.hempa.skole@ringsaker.kommune.no",
+"phone": "62351430"
+},
+"975296482": {
+"phone": "71575602"
+},
+"975296601": {
+"email": "postkuv@bjornafjorden.kommune.no",
+"phone": "56303160"
+},
+"975296628": {
+"email": "tindlund.barneskole@sarpsborg.com",
+"phone": "69108084"
+},
+"975296636": {
+"phone": "64980760"
+},
+"975296644": {
+"email": "postmottak@nannestad.kommune.no",
+"phone": "66105500"
+},
+"975296733": {
+"email": "galterud.skole@drammen.kommune.no",
+"phone": "32049430"
+},
+"975296849": {
+"email": "baksalen.skole@hammerfest.kommune.no",
+"phone": "78402200"
+},
+"975296857": {
+"email": "sorli.skole@nittedal.kommune.no",
+"phone": "67062270"
+},
+"975296911": {
+"email": "sandeasen.skole@tonsberg.kommune.no",
+"phone": "33406730"
+},
+"975297373": {
+"email": "postmottak@gjerdrum.kommune.no",
+"phone": "66106200"
+},
+"975297381": {
+"email": "rosseland.skule@time.kommune.no",
+"phone": "51776390"
+},
+"975297438": {
+"email": "post@alver.kommune.no",
+"phone": "56375052"
+},
+"975297446": {
+"email": "orstad.skule@klepp.kommune.no",
+"phone": "51785500"
+},
+"975297462": {
+"email": "vestby.ungdomsskole@vestby.kommune.no",
+"phone": "64980140"
+},
+"975297470": {
+"email": "post@lyngdal.kommune.no"
+},
+"975297489": {
+"email": "vormedal@karmoy.kommune.no",
+"phone": "52811880"
+},
+"975297497": {
+"email": "aafoss.barneskole@skien.kommune.no",
+"phone": "35506820"
+},
+"975297500": {
+"email": "mjaer.ungdomsskole@enebakk.kommune.no",
+"phone": "64992050"
+},
+"975297519": {
+"email": "steindal-skole.postmottak@trondheim.kommune.no",
+"phone": "72540330"
+},
+"975298515": {
+"email": "sorborgen-skole.postmottak@ou.trondheim.kommune.no",
+"phone": "72830100"
+},
+"975298566": {
+"email": "gulset.ungdomsskole@skien.kommune.no",
+"phone": "35583030"
+},
+"975298574": {
+"email": "vassbonn.skole@nordrefollo.kommune.no",
+"phone": "66813000"
+},
+"975298582": {
+"email": "stabbursmoen-skole.postmottak@ou.trondheim.kommune.no",
+"phone": "72549850"
+},
+"975298647": {
+"email": "agotnes.adm@oygarden.kommune.no",
+"phone": "55097800"
+},
+"975298655": {
+"email": "forsol.skole@hammerfest.kommune.no",
+"phone": "78402190"
+},
+"975298671": {
+"email": "bjoernemyr.skole@nesodden.kommune.no"
+},
+"975298736": {
+"email": "tonstad-skole.postmottak@trondheim.kommune.no",
+"phone": "72549700"
+},
+"975298779": {
+"email": "hoeggen-skole.postmottak@trondheim.kommune.no",
+"phone": "72540300"
+},
+"975299112": {
+"email": "epost@sola.kommune.no",
+"phone": "51644750"
+},
+"975299120": {
+"email": "brevik@vestby.kommune.no",
+"phone": "64982150"
+},
+"975299139": {
+"email": "finstad.skole@lorenskog.kommune.no",
+"phone": "67495014"
+},
+"975299155": {
+"phone": "71575300"
+},
+"975299163": {
+"email": "post@alver.kommune.no",
+"phone": "56349100"
+},
+"975299171": {
+"email": "flatasen-skole.postmottak@trondheim.kommune.no",
+"phone": "72543300"
+},
+"975299376": {
+"email": "vesterdalen.skole@kvinesdal.kommune.no"
+},
+"975299406": {
+"email": "hakadal.skole@nittedal.kommune.no",
+"phone": "67067710"
+},
+"975299414": {
+"email": "bjorlien@vestby.kommune.no",
+"phone": "64980020"
+},
+"975299430": {
+"email": "leikanger.barneskule@sogndal.kommune.no",
+"phone": "57652610"
+},
+"975299449": {
+"email": "post@sameskuvla.no",
+"phone": "77832830"
+},
+"975299465": {
+"email": "reindalen.skole@hammerfest.kommune.no",
+"phone": "78402220"
+},
+"975299473": {
+"email": "postmottak.gakori.skole@alta.kommune.no",
+"phone": "78481850"
+},
+"975299481": {
+"email": "svensedammen.skole@drammen.kommune.no",
+"phone": "32049300"
+},
+"975299503": {
+"email": "postmottak.borgen.skole@ullensaker.kommune.no"
+},
+"975299635": {
+"email": "brattas.skole@porsgrunn.kommune.no",
+"phone": "35565470"
+},
+"975299643": {
+"email": "lye.skule@time.kommune.no",
+"phone": "51776081"
+},
+"975299651": {
+"email": "baerland.skole@gjesdal.kommune.no",
+"phone": "51614600"
+},
+"975299686": {
+"email": "postmottak@tana.kommune.no"
+},
+"975299694": {
+"email": "alvimhaugen.barneskole@sarpsborg.com",
+"phone": "69116050"
+},
+"975299708": {
+"email": "haugsbygd.ungdomsskole@ringerike.kommune.no",
+"phone": "32181360"
+},
+"975299716": {
+"email": "helgerud.skole@ringerike.kommune.no",
+"phone": "32181550"
+},
+"975299724": {
+"email": "veienmarka.ungdomsskole@ringerike.kommune.no",
+"phone": "32140240"
+},
+"975299732": {
+"email": "saetre.ungdomsskole@asker.kommune.no",
+"phone": "32278170"
+},
+"975299791": {
+"email": "ravnanger.ungdomsskole@askoy.kommune.no",
+"phone": "56155600"
+},
+"975299821": {
+"email": "skj-uskole@skjervoy.kommune.no",
+"phone": "77775632"
+},
+"975299961": {
+"email": "post.varhaug.ungdomsskule@ha.kommune.no",
+"phone": "51798850"
+},
+"975300005": {
+"email": "postmottak@lillesand.kommune.no"
+},
+"975300021": {
+"email": "rasta.skole@lorenskog.kommune.no",
+"phone": "67495035"
+},
+"975300099": {
+"email": "gamlegrendasen.skole@kongsberg.kommune.no",
+"phone": "32866630"
+},
+"975300102": {
+"email": "rosten-skole.postmottak@trondheim.kommune.no",
+"phone": "72549360"
+},
+"975300285": {
+"email": "solas.skole@gjesdal.kommune.no",
+"phone": "51614610"
+},
+"975300293": {
+"phone": "71575570"
+},
+"975314758": {
+"email": "hjelteryggenskule@oygarden.kommune.no",
+"phone": "55097900"
+},
+"975315320": {
+"email": "kleiverud.skole@holmestrand.kommune.no",
+"phone": "33059600"
+},
+"975318303": {
+"email": "garderaasenskole@lillestrom.kommune.no",
+"phone": "63887110"
+},
+"975320200": {
+"email": "vikhammer.ungdomsskole@malvik.kommune.no",
+"phone": "73972480"
+},
+"975320499": {
+"phone": "35051320"
+},
+"975321630": {
+"email": "tjoednalio.skule@stord.kommune.no",
+"phone": "53409730"
+},
+"975322645": {
+"email": "ostli.skole@nordrefollo.kommune.no",
+"phone": "66812000"
+},
+"975324761": {
+"email": "stavset-skole.postmottak@trondheim.kommune.no",
+"phone": "72545200"
+},
+"975324842": {
+"email": "hamna.skole@tromso.kommune.no",
+"phone": "77752660"
+},
+"975326012": {
+"email": "postmottak@sunnfjord.kommune.no",
+"phone": "57834500"
+},
+"975327043": {
+"email": "vikasen-skole.postmottak@trondheim.kommune.no",
+"phone": "72543050"
+},
+"975358666": {
+"email": "skolen@vko.no",
+"phone": "74019910"
+},
+"975828867": {
+"email": "admin@elihuskolen.no",
+"phone": "33357550"
+},
+"975906892": {
+"phone": "67876870"
+},
+"975934993": {
+"email": "skole@drobakmontessori.no",
+"phone": "64930523"
+},
+"975960277": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22765100"
+},
+"975960315": {
+"email": "postmottak.kringsja@osloskolen.no",
+"phone": "22025800"
+},
+"976202422": {
+"email": "post@mollebakkenskole.no",
+"phone": "55207170"
+},
+"976207076": {
+"phone": "32877576"
+},
+"976207130": {
+"email": "post@ostmarkaskole.no"
+},
+"976207173": {
+"email": "post@mokollenskole.no",
+"phone": "33482400"
+},
+"976207270": {
+"email": "post@vatneli.no",
+"phone": "51604060"
+},
+"976207289": {
+"phone": "69276022"
+},
+"976207815": {
+"phone": "73523429"
+},
+"976210743": {
+"email": "post@engesvea-skole.no",
+"phone": "61256810"
+},
+"976429184": {
+"email": "post@bmskole.no",
+"phone": "67830840"
+},
+"976638654": {
+"email": "holumskogen.skole@nittedal.kommune.no",
+"phone": "67066980"
+},
+"976641345": {
+"email": "vinstra.ungdomsskole@nord-fron.kommune.no",
+"phone": "61216550"
+},
+"976654773": {
+"email": "fjellsdalen.skole@bergen.kommune.no",
+"phone": "53038000"
+},
+"976677218": {
+"email": "dalgard-skole.postmottak@ou.trondheim.kommune.no",
+"phone": "72545000"
+},
+"976677269": {
+"email": "singsaker-skole.postmottak@trondheim.kommune.no",
+"phone": "72546800"
+},
+"976811232": {
+"email": "postmottak.lutvann@osloskolen.no",
+"phone": "22820800"
+},
+"976824466": {
+"email": "gimsoy.skole@skien.kommune.no",
+"phone": "35588130"
+},
+"976827538": {
+"email": "austerdalen.skole@kvinesdal.kommune.no",
+"phone": "38357821"
+},
+"976831055": {
+"email": "vinnes.friskule@fusi.no",
+"phone": "56584172"
+},
+"976939190": {
+"phone": "22925120"
+},
+"976975677": {
+"email": "sveberg.skole@malvik.kommune.no",
+"phone": "73980060"
+},
+"977209234": {
+"email": "post@sauarfriskole.no"
+},
+"977264502": {
+"email": "vardasen.skole@asker.kommune.no",
+"phone": "66715100"
+},
+"977489784": {
+"email": "medkila.barneskole@harstad.kommune.no"
+},
+"977506077": {
+"email": "teinaa.skole@stavanger.kommune.no",
+"phone": "51912370"
+},
+"977506123": {
+"email": "lassa.skole@stavanger.kommune.no",
+"phone": "51507300"
+},
+"977509777": {
+"email": "nordstrand@steinerskolen.no",
+"phone": "23384797"
+},
+"978606741": {
+"email": "oygardenungdomsskule@oygarden.kommune.no",
+"phone": "56387725"
+},
+"979120087": {
+"email": "postmottak.nordberg@osloskolen.no",
+"phone": "22584900"
+},
+"979125917": {
+"email": "postmottak.groruddalen@osloskolen.no",
+"phone": "22918130"
+},
+"979126352": {
+"email": "postmottak.skullerud@osloskolen.no",
+"phone": "23167800"
+},
+"979126743": {
+"email": "postmottak.karlsrud@osloskolen.no",
+"phone": "23165300"
+},
+"979127413": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22136110"
+},
+"979127502": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23169200"
+},
+"979127642": {
+"email": "postmottak.engebraten@osloskolen.no",
+"phone": "23059300"
+},
+"979128134": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22516900"
+},
+"979150229": {
+"email": "lye.ungdomsskule@time.kommune.no",
+"phone": "51778370"
+},
+"979150296": {
+"phone": "57738080"
+},
+"979170238": {
+"phone": "69248440"
+},
+"979195052": {
+"email": "eberg-skole.postmottak@ou.trondheim.kommune.no",
+"phone": "72540400"
+},
+"979195192": {
+"email": "okstad-skole.postmottak@trondheim.kommune.no",
+"phone": "72549150"
+},
+"979195346": {
+"email": "haarstad-skole.postmottak@trondheim.kommune.no",
+"phone": "72549100"
+},
+"979197624": {
+"email": "groennaasen.skole@bodo.kommune.no",
+"phone": "75556560"
+},
+"979200293": {
+"email": "blakstad.skole@asker.kommune.no",
+"phone": "66786810"
+},
+"979276028": {
+"email": "skranevatnet.skole@bergen.kommune.no",
+"phone": "53035800"
+},
+"979314256": {
+"email": "kulstad.skole@vefsn.kommune.no",
+"phone": "75101210"
+},
+"979352816": {
+"phone": "71575842"
+},
+"979446292": {
+"email": "workinnmarka.skole@tromso.kommune.no"
+},
+"979446349": {
+"email": "reinen.skole@tromso.kommune.no"
+},
+"979446373": {
+"email": "storelva.skole@tromso.kommune.no",
+"phone": "77607550"
+},
+"979577222": {
+"email": "brakahaug.skole@haugesund.kommune.no",
+"phone": "52744852"
+},
+"979601980": {
+"email": "ormasen.skole@ovre-eiker.kommune.no",
+"phone": "32252120"
+},
+"979646275": {
+"email": "post.tunballen.skole@kristiansand.kommune.no",
+"phone": "38185440"
+},
+"979646410": {
+"email": "vestbyen.skole@namsos.kommune.no"
+},
+"979646429": {
+"phone": "76912900"
+},
+"979668066": {
+"email": "post@friskolen.no",
+"phone": "62547400"
+},
+"979718403": {
+"email": "kontor@monlyse.org",
+"phone": "23254050"
+},
+"979719825": {
+"phone": "35589166"
+},
+"979797699": {
+"email": "taeruddalenskole@lillestrom.kommune.no",
+"phone": "63876475"
+},
+"979826311": {
+"email": "ringvoll.skole@io.kommune.no",
+"phone": "69924570"
+},
+"979847548": {
+"email": "bogafjell.skole@sandnes.kommune.no",
+"phone": "51338700"
+},
+"979927533": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "22757400"
+},
+"979932634": {
+"email": "lokeberg.skole@baerum.kommune.no",
+"phone": "67592250"
+},
+"979950403": {
+"email": "fosslia.skole@stjordal.kommune.no",
+"phone": "74822910"
+},
+"979956916": {
+"email": "post.dvergsnes.skole@kristiansand.kommune.no"
+},
+"979984766": {
+"email": "post@bjorkly.no",
+"phone": "74272802"
+},
+"980017524": {
+"email": "rektor.bratteberg@volda.kommune.no",
+"phone": "70058785"
+},
+"980030253": {
+"email": "lurahammaren.u.skole@sandnes.kommune.no",
+"phone": "51338900"
+},
+"980074919": {
+"email": "postmottak@frogn.kommune.no",
+"phone": "64906800"
+},
+"980155307": {
+"email": "breimyra.skole@bergen.kommune.no",
+"phone": "53036950"
+},
+"980203883": {
+"email": "post@forusfriskole.no",
+"phone": "51678010"
+},
+"980297918": {
+"email": "post@kinn.kommune.no",
+"phone": "57756430"
+},
+"980419169": {
+"email": "epost@sola.kommune.no",
+"phone": "51944150"
+},
+"980447766": {
+"email": "presteheia.skole@kristiansand.kommune.no",
+"phone": "38127575"
+},
+"980515702": {
+"email": "solneset.skole@tromso.kommune.no"
+},
+"980785343": {
+"email": "hvalstad.skole@asker.kommune.no",
+"phone": "66715450"
+},
+"980851176": {
+"email": "hegra.ungdomsskole@stjordal.kommune.no",
+"phone": "74837820"
+},
+"980861597": {
+"phone": "78971941"
+},
+"980953602": {
+"email": "postmottak.bjornholt@osloskolen.no",
+"phone": "23463500"
+},
+"981039548": {
+"email": "postmottak@heroy.kommune.no",
+"phone": "70084650"
+},
+"981077997": {
+"email": "post@nhkg.no",
+"phone": "56351758"
+},
+"981458672": {
+"email": "gullhaug.skole@baerum.kommune.no",
+"phone": "67507200"
+},
+"981607228": {
+"email": "post@vollanskole.no",
+"phone": "72423020"
+},
+"981668383": {
+"email": "epost@lorenskogfriskole.no",
+"phone": "67922300"
+},
+"982011019": {
+"email": "post@akgskole.no",
+"phone": "78443080"
+},
+"982067405": {
+"email": "sotra@danielsen-skoler.no"
+},
+"982143136": {
+"email": "neskollen.skole@nes.kommune.no",
+"phone": "66104460"
+},
+"982163277": {
+"email": "post@orsnes-privatskole.no",
+"phone": "76073040"
+},
+"982164486": {
+"email": "madsebakken.skole@kongsberg.kommune.no",
+"phone": "32299010"
+},
+"982196574": {
+"email": "rotvoll@steinerskolen.no",
+"phone": "73202880"
+},
+"982254701": {
+"email": "postmottak.apallokka@osloskolen.no",
+"phone": "23466200"
+},
+"982548225": {
+"email": "postmottak@larvik.kommune.no",
+"phone": "33171380"
+},
+"982722861": {
+"phone": "73534247"
+},
+"982763053": {
+"email": "lonevag.skule@osteroy.kommune.no",
+"phone": "56192620"
+},
+"982944627": {
+"email": "jappa.skole@grimstad.kommune.no",
+"phone": "37250540"
+},
+"982944635": {
+"email": "post@skg.as",
+"phone": "51564220"
+},
+"982944694": {
+"email": "postmottak@arendal.kommune.no",
+"phone": "37013490"
+},
+"982980712": {
+"email": "smeaheia.skole@sandnes.kommune.no",
+"phone": "51338300"
+},
+"983083269": {
+"email": "lunde.skole@stavanger.kommune.no",
+"phone": "51913690"
+},
+"983170943": {
+"email": "bakkelokka.ungdomsskole@nesodden.kommune.no",
+"phone": "66966050"
+},
+"983210058": {
+"email": "markaplass-skole.postmottak@trondheim.kommune.no",
+"phone": "72543000"
+},
+"983451039": {
+"email": "post@fagerhaugoppvekst.no",
+"phone": "74840770"
+},
+"983522181": {
+"email": "post@hamar-montessoriskole.no",
+"phone": "62552633"
+},
+"983602533": {
+"email": "gimle.postmottak@halden.kommune.no",
+"phone": "69216100"
+},
+"983603386": {
+"email": "gulskogen.skole@drammen.kommune.no",
+"phone": "32049200"
+},
+"983618979": {
+"email": "vikevag.skule@stavanger.kommune.no",
+"phone": "51720600"
+},
+"983681123": {
+"email": "post@lkgskole.no",
+"phone": "38347000"
+},
+"984034547": {
+"email": "tastarustaa.skole@stavanger.kommune.no",
+"phone": "51914391"
+},
+"984065159": {
+"email": "skaredalen.skole@haugesund.kommune.no",
+"phone": "52743550"
+},
+"984095961": {
+"email": "post@montessoriskole.no"
+},
+"984103867": {
+"email": "post@alver.kommune.no",
+"phone": "56346270"
+},
+"984181345": {
+"email": "post.karuss.skole@kristiansand.kommune.no",
+"phone": "38064500"
+},
+"984299443": {
+"email": "postmottak.skogmo.skole@ullensaker.kommune.no"
+},
+"984446853": {
+"email": "post.tinntjonn.skole@kristiansand.kommune.no",
+"phone": "38055850"
+},
+"984577311": {
+"email": "vollen.ungdomsskole@asker.kommune.no",
+"phone": "66715250"
+},
+"984606060": {
+"phone": "78455260"
+},
+"984696124": {
+"email": "sorbo.skole@sandnes.kommune.no",
+"phone": "51338200"
+},
+"985090254": {
+"email": "postmottak@larvik.kommune.no",
+"phone": "33172700"
+},
+"985193495": {
+"email": "post@moldefriskole.no"
+},
+"985260044": {
+"email": "post.holte.skole@kristiansand.kommune.no",
+"phone": "38107900"
+},
+"985315469": {
+"email": "birkelid@oasenskole.no",
+"phone": "38183060"
+},
+"985548277": {
+"email": "flatestad.ungdomsskole@nordrefollo.kommune.no",
+"phone": "66823700"
+},
+"985696713": {
+"email": "rorastoppen.skole@tonsberg.kommune.no",
+"phone": "33406380"
+},
+"985713480": {
+"email": "post.lindeboskauen@kristiansand.kommune.no",
+"phone": "38007480"
+},
+"985803587": {
+"phone": "64974250"
+},
+"985921695": {
+"email": "postmottak@andoy.kommune.no"
+},
+"985922624": {
+"email": "post@vikeskule.no",
+"phone": "71180597"
+},
+"986078479": {
+"email": "post@steinerskoleniarendal.no",
+"phone": "37001123"
+},
+"986109110": {
+"phone": "37041844"
+},
+"986124403": {
+"email": "skolen@venabygdmontessori.no"
+},
+"986171096": {
+"email": "apeltun.skole@bergen.kommune.no",
+"phone": "53034110"
+},
+"986171487": {
+"email": "post@istelemark.no",
+"phone": "35291400"
+},
+"986236856": {
+"email": "grevlingen@vestby.kommune.no",
+"phone": "64985555"
+},
+"986256407": {
+"email": "post@holmsk.no",
+"phone": "57734253"
+},
+"986571108": {
+"email": "langnes.skole@tromso.kommune.no"
+},
+"986755063": {
+"email": "bodosjoen.skole@bodo.kommune.no",
+"phone": "75557300"
+},
+"986779795": {
+"email": "fredrikstad@wang.no",
+"phone": "69241261"
+},
+"986836195": {
+"phone": "51712080"
+},
+"986847367": {
+"email": "post@dvms.no"
+},
+"986859659": {
+"phone": "73514800"
+},
+"986967257": {
+"email": "skolepost@steinkjer-montessori.no",
+"phone": "74148850"
+},
+"986978070": {
+"phone": "51625070"
+},
+"987059443": {
+"email": "aamaas.friskule@tussa.com",
+"phone": "70060003"
+},
+"987105941": {
+"phone": "70080550"
+},
+"987110953": {
+"email": "oserod.skole@faerder.kommune.no",
+"phone": "33390000"
+},
+"987131780": {
+"email": "postmottak.kastellet@osloskolen.no",
+"phone": "23180020"
+},
+"987781475": {
+"email": "kontor@hosanger.no",
+"phone": "56191980"
+},
+"987865997": {
+"email": "postmottak@ude.oslo.kommune.no",
+"phone": "23254900"
+},
+"987900016": {
+"email": "kontor@jaertun.no",
+"phone": "51776880"
+},
+"987919558": {
+"email": "skole@solormontessori.no"
+},
+"988110833": {
+"email": "post.havlimyra.skole@kristiansand.kommune.no",
+"phone": "38079530"
+},
+"988427535": {
+"email": "post@brandalfriskule.no"
+},
+"988675512": {
+"email": "marikollen.skole@kongsvinger.kommune.no",
+"phone": "62874225"
+},
+"988968498": {
+"email": "ungdomsskulen@tryggheim.no",
+"phone": "51798070"
+},
+"989142283": {
+"phone": "56564650"
+},
+"989152394": {
+"email": "brekkasen.skole@melhus.kommune.no"
+},
+"989280902": {
+"email": "voyenenga.skole@baerum.kommune.no",
+"phone": "67181920"
+},
+"989325140": {
+"phone": "32161260"
+},
+"989337823": {
+"email": "skole@snasamontessori.no",
+"phone": "74152900"
+},
+"989516663": {
+"email": "fagereng.skole@tromso.kommune.no"
+},
+"990180253": {
+"email": "buggeland.skole@sandnes.kommune.no",
+"phone": "51336510"
+},
+"990258570": {
+"phone": "71513800"
+},
+"990334021": {
+"email": "post@aischool.no",
+"phone": "37018550"
+},
+"990804540": {
+"email": "mykje@karmoy.kommune.no",
+"phone": "52812420"
+},
+"991156224": {
+"email": "post.international.school@kristiansand.kommune.no"
+},
+"991595465": {
+"email": "post@eidskogmontessoriskole.no",
+"phone": "62837177"
+},
+"991639497": {
+"email": "vadso.ungdomsskole@vadso.kommune.no",
+"phone": "78942650"
+},
+"991673628": {
+"email": "post@finnskogenmontessori.no"
+},
+"992374179": {
+"email": "marienlyst.skole@drammen.kommune.no",
+"phone": "32049690"
+},
+"992382597": {
+"email": "hundsund.ungdomsskole@baerum.kommune.no",
+"phone": "67508000"
+},
+"992584602": {
+"email": "radalslien.skole@bergen.kommune.no",
+"phone": "53031370"
+},
+"992639490": {
+"email": "gystadmarka.skole@ullensaker.kommune.no",
+"phone": "66109421"
+},
+"992671483": {
+"email": "postmottak.nes.skole@ringsaker.kommune.no",
+"phone": "62336470"
+},
+"992780010": {
+"email": "post@bm-skole.no"
+},
+"993260002": {
+"email": "frakkagjerdbarneskole@tysver.kommune.no",
+"phone": "52758170"
+},
+"993630705": {
+"email": "post@trint.org"
+},
+"993930954": {
+"phone": "70212848"
+},
+"994392328": {
+"email": "lundehaugen.ungdomsskole@sandnes.kommune.no",
+"phone": "51337900"
+},
+"994427067": {
+"email": "breim.skule@gloppen.kommune.no"
+},
+"994427741": {
+"email": "nordstranda.skule@gloppen.kommune.no"
+},
+"994472801": {
+"email": "smola.ungdomsskole@smola.kommune.no",
+"phone": "71544500"
+},
+"994480197": {
+"email": "helle.skole@kragero.kommune.no",
+"phone": "35985030"
+},
+"994480227": {
+"email": "adm_drangedal10arig@drangedal.kommune.no",
+"phone": "35997700"
+},
+"994616269": {
+"email": "smestad.skole@ralingen.kommune.no",
+"phone": "64804140"
+},
+"994665995": {
+"email": "post@olvemontessori.no",
+"phone": "53487801"
+},
+"994735918": {
+"email": "bonsmoen.skole@eidsvoll.kommune.no",
+"phone": "66107900"
+},
+"994736000": {
+"email": "kjellerskole@lillestrom.kommune.no",
+"phone": "66932180"
+},
+"994967541": {
+"email": "post@kmskole.no"
+},
+"995199394": {
+"email": "post@sandoyamontessori.no",
+"phone": "35916000"
+},
+"995234181": {
+"email": "skole@trysilmontessori.no",
+"phone": "62809080"
+},
+"995296713": {
+"email": "post@tinnmontessori.no",
+"phone": "35090033"
+},
+"995332779": {
+"email": "post@lvmontessori.no"
+},
+"995339765": {
+"phone": "70219299"
+},
+"995354071": {
+"email": "tonsberg@wang.no"
+},
+"995355825": {
+"email": "info@drmskole.no",
+"phone": "32991015"
+},
+"995367351": {
+"phone": "70250116"
+},
+"995370832": {
+"email": "duosteroy@danielsen-skoler.no",
+"phone": "56395070"
+},
+"995431971": {
+"email": "tranevagenungdomsskule@oygarden.kommune.no",
+"phone": "55096300"
+},
+"995450321": {
+"email": "post@bergmontessoriskole.no"
+},
+"995677466": {
+"phone": "61281830"
+},
+"995682257": {
+"email": "post.krossen.skole@kristiansand.kommune.no",
+"phone": "38121000"
+},
+"995821664": {
+"email": "postmottak.fyrstikkalleen@osloskolen.no",
+"phone": "23463700"
+},
+"995865459": {
+"email": "sokndalskole@sokndal.kommune.no",
+"phone": "51470700"
+},
+"995876167": {
+"email": "post@ndmskole.no",
+"phone": "75055162"
+},
+"995946556": {
+"email": "tistedal.skole@halden.kommune.no",
+"phone": "69194100"
+},
+"996264491": {
+"email": "postmottak@nesseby.kommune.no"
+},
+"996377210": {
+"email": "postmottak.frydenberg@osloskolen.no",
+"phone": "23468500"
+},
+"996388158": {
+"phone": "61352600"
+},
+"996700380": {
+"phone": "55700250"
+},
+"996725936": {
+"email": "post@sorhalandbarneskole.no",
+"phone": "52820060"
+},
+"996749681": {
+"email": "post.fredrikstad@cisschools.no",
+"phone": "69002500"
+},
+"996755592": {
+"phone": "51110716"
+},
+"996773299": {
+"email": "post@gronfjelldalmontessori.no"
+},
+"996902749": {
+"email": "postmottak@sykkylven.kommune.no",
+"phone": "70246500"
+},
+"997052331": {
+"email": "stangnes.ungdomsskole@harstad.kommune.no",
+"phone": "77027641"
+},
+"997189116": {
+"email": "administrasjon@helgenmontessoriskole.no"
+},
+"997269926": {
+"email": "post@hortenmontessori.no"
+},
+"997271041": {
+"email": "post@fagerhaugoppvekst.no",
+"phone": "74840770"
+},
+"997621506": {
+"email": "postmottak.nordpolen@osloskolen.no",
+"phone": "22098060"
+},
+"998173108": {
+"email": "info@hm-skole.no"
+},
+"998211794": {
+"email": "post@kfskolen.no"
+},
+"998245508": {
+"email": "post@kjolsdalenmontessori.no",
+"phone": "57864950"
+},
+"998250722": {
+"email": "post@kragero-montessori.no"
+},
+"998258383": {
+"email": "post@askeris.no"
+},
+"998260965": {
+"email": "post@hamaroymontessori.no"
+},
+"998469635": {
+"email": "postmottak.morellbakken@osloskolen.no"
+},
+"998670799": {
+"email": "post@heim.kommune.no",
+"phone": "72460000"
+},
+"998992265": {
+"email": "storoya.skole@baerum.kommune.no"
+}
+}
+}

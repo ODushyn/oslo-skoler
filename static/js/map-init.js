@@ -12,21 +12,17 @@ function initMap() {
             // MapLibre limits latitude more strictly than Leaflet; keep panning inside it
             maxBounds: [[180, -Infinity], [-180, Infinity]],
             maxBoundsViscosity: 1,
-            zoomControl: true,
+            zoomControl: false, // added below in the top-right corner
             preferCanvas: true
         }
     );
 
     // Base map: OpenFreeMap vector tiles (free, no API key), drawn by MapLibre GL
     // inside Leaflet. Attribution is required by OpenFreeMap / OpenMapTiles / OpenStreetMap.
-    L.maplibreGL({
-        style: 'https://tiles.openfreemap.org/styles/liberty',
-        attributionControl: {
-            customAttribution: '<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> ' +
-                '<a href="https://www.openmaptiles.org/" target="_blank" rel="noopener">&copy; OpenMapTiles</a> ' +
-                'Data from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
-        }
-    }).addTo(map_a50579ea0c01426b15ce2ac53c4f579f);
+    baseMapLayer().addTo(map_a50579ea0c01426b15ce2ac53c4f579f);
+
+    map_a50579ea0c01426b15ce2ac53c4f579f.attributionControl.setPrefix(false);
+    L.control.zoom({ position: 'topright' }).addTo(map_a50579ea0c01426b15ce2ac53c4f579f);
 
     // Initialize marker cluster
     var marker_cluster_66d9cb3de4e330e0d20b4c240f24f016 = L.markerClusterGroup({

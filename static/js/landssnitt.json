@@ -1,0 +1,54 @@
+{
+ "barneskole": {
+  "2022-23": {
+   "engelsk": 50.0,
+   "lesing": 50.0,
+   "regning": 50.0,
+   "snitt": 50.0
+  },
+  "2023-24": {
+   "engelsk": 50.0,
+   "lesing": 49.0,
+   "regning": 50.0,
+   "snitt": 49.7
+  },
+  "2024-25": {
+   "engelsk": 51.0,
+   "lesing": 49.0,
+   "regning": 49.0,
+   "snitt": 49.7
+  },
+  "2025-26": {
+   "engelsk": 50.0,
+   "lesing": 49.0,
+   "regning": 49.0,
+   "snitt": 49.3
+  }
+ },
+ "ungdomsskole": {
+  "2022-23": {
+   "engelsk": 50.0,
+   "lesing": 50.0,
+   "regning": 50.0,
+   "snitt": 50.0
+  },
+  "2023-24": {
+   "engelsk": 50.0,
+   "lesing": 49.0,
+   "regning": 49.0,
+   "snitt": 49.3
+  },
+  "2024-25": {
+   "engelsk": 50.0,
+   "lesing": 49.0,
+   "regning": 48.0,
+   "snitt": 49.0
+  },
+  "2025-26": {
+   "engelsk": 51.0,
+   "lesing": 49.0,
+   "regning": 49.0,
+   "snitt": 49.7
+  }
+ }
+}
