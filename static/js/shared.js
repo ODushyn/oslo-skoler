@@ -33,7 +33,8 @@ function formatDecimal(value) {
 // own sprite does not have (gate, bollard, swimming_pool ...); they get an empty image, not a console warning.
 function baseMapLayer() {
     const layer = L.maplibreGL({
-        style: typeof THEME !== 'undefined' ? THEME.mapStyle() : 'https://tiles.openfreemap.org/styles/liberty',
+        // Empty at first: the real style is loaded on 'add', through baseMapStyle below
+        style: { version: 8, sources: {}, layers: [] },
         attributionControl: { customAttribution: MAP_ATTRIBUTION }
     });
     layer.once('add', () => {
@@ -41,8 +42,37 @@ function baseMapLayer() {
         gl.on('styleimagemissing', event => {
             if (!gl.hasImage(event.id)) gl.addImage(event.id, { width: 1, height: 1, data: new Uint8Array(4) });
         });
+        gl.setStyle(typeof THEME !== 'undefined' ? THEME.mapStyle() : 'https://tiles.openfreemap.org/styles/liberty',
+            { diff: false, transformStyle: (previous, style) => baseMapStyle(style) });
     });
     return layer;
+}
+
+// The OpenFreeMap style compares numbers that many map features lack (rank of a label, length of a road
+// number, height of a building). MapLibre then warns "Expected value to be of type number, but found null"
+// for every such feature. A missing number gets a fallback that gives the same result: the comparison is
+// still false, and a building without a height stays flat.
+function baseMapStyle(style) {
+    const LOW = -1e9;
+    const HIGH = 1e9;
+    const fallback = { '>': LOW, '>=': LOW, '<': HIGH, '<=': HIGH };
+    const isGet = value => Array.isArray(value) && value[0] === 'get' && value.length === 2;
+    const fix = expression => {
+        if (!Array.isArray(expression)) return expression;
+        const fixed = expression.map(fix);
+        if (fallback[fixed[0]] !== undefined && fixed.length === 3) {
+            if (isGet(fixed[1]) && typeof fixed[2] === 'number') fixed[1] = ['coalesce', fixed[1], fallback[fixed[0]]];
+            if (isGet(fixed[2]) && typeof fixed[1] === 'number') fixed[2] = ['coalesce', fixed[2], -fallback[fixed[0]]];
+        }
+        return fixed;
+    };
+    style.layers.forEach(layer => {
+        if (layer.filter) layer.filter = fix(layer.filter);
+        ['fill-extrusion-base', 'fill-extrusion-height'].forEach(key => {
+            if (layer.paint && isGet(layer.paint[key])) layer.paint[key] = ['coalesce', layer.paint[key], 0];
+        });
+    });
+    return style;
 }
 
 // "850 m", "1,2 km"
