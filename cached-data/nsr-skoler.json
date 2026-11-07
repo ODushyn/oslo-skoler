@@ -4195,7 +4195,7 @@
 "navn": "Østfold Fylkeskommunale skole avd Grepperød",
 "fulltNavn": "Østfold Fylkeskommunale skole avd Grepperød",
 "kommunenummer": "3114",
-"aktiv": false,
+"aktiv": true,
 "grunnskole": false,
 "privat": false,
 "offentlig": true
@@ -26684,7 +26684,7 @@
 "orgnr": "926686992",
 "navn": "Premium Pt AS",
 "fulltNavn": "Premium Pt AS",
-"kommunenummer": "0301",
+"kommunenummer": "3201",
 "aktiv": true,
 "grunnskole": false,
 "privat": true,
