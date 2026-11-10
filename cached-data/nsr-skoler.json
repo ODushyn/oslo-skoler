@@ -32555,7 +32555,7 @@
 "navn": "Kristin Helena Yoga AS",
 "fulltNavn": "Kristin Helena Yoga AS",
 "kommunenummer": "4204",
-"aktiv": true,
+"aktiv": false,
 "grunnskole": false,
 "privat": true,
 "offentlig": false
@@ -102905,7 +102905,7 @@
 "navn": "Treningsverkstedet.No Da",
 "fulltNavn": "Treningsverkstedet.No Da",
 "kommunenummer": "0301",
-"aktiv": true,
+"aktiv": false,
 "grunnskole": false,
 "privat": true,
 "offentlig": false
