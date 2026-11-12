@@ -34395,7 +34395,7 @@
 "navn": "Goboxing AS",
 "fulltNavn": "Goboxing AS",
 "kommunenummer": "4203",
-"aktiv": true,
+"aktiv": false,
 "grunnskole": false,
 "privat": true,
 "offentlig": false
@@ -38275,6 +38275,26 @@
 "navn": "Creativate You AS",
 "fulltNavn": "Creativate You AS",
 "kommunenummer": "3303",
+"aktiv": true,
+"grunnskole": false,
+"privat": true,
+"offentlig": false
+},
+{
+"orgnr": "938844593",
+"navn": "Fredens Vgs AS",
+"fulltNavn": "Fredens Vgs AS",
+"kommunenummer": "0301",
+"aktiv": true,
+"grunnskole": false,
+"privat": true,
+"offentlig": false
+},
+{
+"orgnr": "938844844",
+"navn": "Englefjes Yoga AS",
+"fulltNavn": "Englefjes Yoga AS",
+"kommunenummer": "3238",
 "aktiv": true,
 "grunnskole": false,
 "privat": true,
