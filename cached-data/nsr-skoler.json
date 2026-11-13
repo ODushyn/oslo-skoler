@@ -9112,8 +9112,8 @@
 },
 {
 "orgnr": "896944282",
-"navn": "Aftenskolen Sti",
-"fulltNavn": "Aftenskolen Sti",
+"navn": "Stiftelsen Norsk voksenopplæring",
+"fulltNavn": "Stiftelsen Norsk voksenopplæring",
 "kommunenummer": "4204",
 "aktiv": true,
 "grunnskole": false,
@@ -30372,8 +30372,8 @@
 },
 {
 "orgnr": "930724785",
-"navn": "Nettskolen Troms",
-"fulltNavn": "Nettskolen Troms",
+"navn": "Polarstjerna videregående Opplæring",
+"fulltNavn": "Polarstjerna videregående Opplæring",
 "kommunenummer": "5501",
 "aktiv": true,
 "grunnskole": false,
@@ -35675,7 +35675,7 @@
 "navn": "Heimro Coaching AS",
 "fulltNavn": "Heimro Coaching AS",
 "kommunenummer": "5603",
-"aktiv": true,
+"aktiv": false,
 "grunnskole": false,
 "privat": true,
 "offentlig": false
@@ -36495,7 +36495,7 @@
 "navn": "Esktrening Da",
 "fulltNavn": "Esktrening Da",
 "kommunenummer": "0301",
-"aktiv": true,
+"aktiv": false,
 "grunnskole": false,
 "privat": true,
 "offentlig": false
@@ -37325,6 +37325,16 @@
 "navn": "Prime Performance AS",
 "fulltNavn": "Prime Performance AS",
 "kommunenummer": "0301",
+"aktiv": true,
+"grunnskole": false,
+"privat": true,
+"offentlig": false
+},
+{
+"orgnr": "937653042",
+"navn": "Akademiet for Klassisk Kunst AS",
+"fulltNavn": "Akademiet for Klassisk Kunst AS",
+"kommunenummer": "3203",
 "aktiv": true,
 "grunnskole": false,
 "privat": true,
@@ -43882,8 +43892,8 @@
 },
 {
 "orgnr": "974117827",
-"navn": "Haugetun folkehøyskole",
-"fulltNavn": "Haugetun folkehøyskole",
+"navn": "Fredrikstad Folkehøyskole, Haugetun",
+"fulltNavn": "Fredrikstad Folkehøyskole, Haugetun",
 "kommunenummer": "3107",
 "aktiv": true,
 "grunnskole": false,
