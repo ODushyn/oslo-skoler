@@ -3,8 +3,9 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <!-- Content Security Policy: scripts only from this site and the two CDNs (pinned, with integrity hashes),
-         data only from the services the pages use. GitHub Pages cannot send it as a header. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: blob: https://thumb.wikimedia.org https://upload.wikimedia.org https://tiles.openfreemap.org; font-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tiles.openfreemap.org https://ws.geonorge.no https://wfs.geonorge.no https://data-nsr.udir.no https://api.entur.io https://formspree.io; worker-src 'self' blob:; child-src blob:; form-action https://formspree.io; base-uri 'self'; object-src 'none'" />
+         data only from the services the pages use. GitHub Pages cannot send it as a header.
+         This page also allows Google Analytics (googletagmanager.com, google-analytics.com). -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: blob: https://thumb.wikimedia.org https://upload.wikimedia.org https://tiles.openfreemap.org https://*.google-analytics.com https://*.googletagmanager.com; font-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tiles.openfreemap.org https://ws.geonorge.no https://wfs.geonorge.no https://data-nsr.udir.no https://api.entur.io https://formspree.io https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; worker-src 'self' blob:; child-src blob:; form-action https://formspree.io; base-uri 'self'; object-src 'none'" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Skolekartet – finn skole og se nasjonale prøver på kart</title>
@@ -49,6 +50,10 @@
     <!-- Marker Cluster CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css" integrity="sha384-lPzjPsFQL6te2x+VxmV6q1DpRxpRk0tmnl2cpwAO5y04ESyc752tnEWPKDfl1olr" crossorigin="anonymous"/>
 
+    <!-- Google Analytics (sets cookies, see personvern.html). The gtag setup is in static/js/analytics.js,
+         because the Content Security Policy allows no inline scripts. -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HHMNN59GDS"></script>
+    <script src="static/js/analytics.js?v=1"></script>
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="static/css/styles.css?v=210"/>

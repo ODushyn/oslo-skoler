@@ -140,18 +140,6 @@
 
     document.getElementById('site-header').outerHTML = header;
 
-    // Google Analytics was removed: delete the _ga cookies it left in earlier visitors' browsers
-    // (on this host and on the parent domain, where GA set them)
-    try {
-        const parts = location.hostname.split('.');
-        const domains = ['', location.hostname, parts.length > 1 ? `.${parts.slice(-2).join('.')}` : ''];
-        document.cookie.split(';').map(c => c.split('=')[0].trim()).filter(name => /^_ga(_|$)/.test(name)).forEach(name => {
-            domains.forEach(domain => {
-                document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/${domain ? `; domain=${domain}` : ''}`;
-            });
-        });
-    } catch (_) { /* cookies blocked */ }
-
     // "Lagrede skoler" in the header, with how many are saved (from localStorage, see shared.js)
     function updateSavedCount() {
         let count = 0;

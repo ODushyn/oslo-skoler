@@ -47,16 +47,14 @@
             <a class="ds-button page__back" data-variant="tertiary" data-size="sm" href="./" data-back>Tilbake</a>
             <article class="page__content">
             <h1 class="ds-heading" data-size="md">Personvern</h1>
-            <p class="ds-paragraph school-page__sources section-source" data-size="xs">Sist oppdatert 4. november 2026.</p>
-            <p class="ds-paragraph">Skolekartet er en informasjonstjeneste. Vi samler ikke inn opplysninger om deg, med ett unntak: tilbakemeldinger du selv velger å sende. Vi har ingen innlogging, ingen analyseverktøy og setter ingen informasjonskapsler (cookies).</p>
+            <p class="ds-paragraph school-page__sources section-source" data-size="xs">Sist oppdatert 16. november 2026.</p>
+            <p class="ds-paragraph">Skolekartet er en informasjonstjeneste. Vi samler ikke inn opplysninger om deg, med to unntak: besøksstatistikk fra Google Analytics på forsiden og tilbakemeldinger du selv velger å sende. Vi har ingen innlogging. Google Analytics setter informasjonskapsler (cookies).</p>
             <h2 class="ds-heading" data-size="xs">Hvem har ansvaret?</h2>
             <p class="ds-paragraph">Skolekartet er et privat, ikke-kommersielt prosjekt og har ansvaret for opplysningene som beskrives her. Spørsmål om personvern, eller ønske om å få slettet en tilbakemelding, kan sendes via <a class="ds-link" href="tilbakemelding">tilbakemeldingsskjemaet</a>.</p>
 
             <h2 class="ds-heading" data-size="xs">Dette samler vi ikke inn</h2>
             <ul class="ds-list">
                 <li>Vi har ingen innlogging eller brukerkontoer.</li>
-                <li>Vi bruker ingen analyseverktøy og teller ikke besøk.</li>
-                <li>Vi setter ingen informasjonskapsler.</li>
                 <li>Adressen du søker på, lagres ikke hos oss og legges aldri i lenker du kan dele.</li>
                 <li>Vi lagrer ikke hvilke skoler du ser på eller hva du søker etter.</li>
             </ul>
@@ -65,8 +63,11 @@
             <p class="ds-paragraph">Adressen du skriver, sendes direkte fra nettleseren din til Kartverkets adresse-API for å finne posisjonen. Kartverket ser da teksten og IP-adressen din. For gangtid sendes bare koordinatene for adressen og skolen til Enturs reiseplanlegger, ikke selve adressen. Adressen huskes i nettleserfanen så lenge den er åpen, slik at skolesiden kan vise gangtid og kartet kan vises likt når du går tilbake. Den forsvinner når fanen lukkes.</p>
             <p class="ds-paragraph">Velger du «Din posisjon» i adressefeltet eller på kartet, spør nettleseren deg først om lov. Posisjonen brukes bare i nettleseren din, akkurat som en adresse du har søkt på: den sendes ikke til Kartverket eller oss og legges ikke i lenker. For gangtid sendes bare koordinatene til Entur, som for en adresse. Du kan når som helst ta tilbake tillatelsen i nettleserens innstillinger.</p>
 
+            <h2 class="ds-heading" data-size="xs">Besøksstatistikk (Google Analytics)</h2>
+            <p class="ds-paragraph">Forsiden (kartet med søket) bruker Google Analytics (Google Ireland Limited) med målings-ID G-HHMNN59GDS for å telle besøk. Google Analytics setter informasjonskapsler i nettleseren din og sender opplysninger om besøket til Google: adressen til siden, nettleser, enhet, omtrentlig sted og IP-adressen din. Google kan overføre opplysningene til USA. Vi bruker tallene bare til å se hvor mange som bruker Skolekartet og hvordan. Du kan blokkere informasjonskapslene i nettleseren din, eller slette dem ved å slette nettstedsdata.</p>
+
             <h2 class="ds-heading" data-size="xs">Lagring på enheten din</h2>
-            <p class="ds-paragraph">Skolekartet lagrer bare det som trengs for funksjoner du selv bruker. Slik lagring krever ikke samtykke etter ekomloven § 3-15. Du kan slette alt ved å slette nettstedsdata i nettleseren.</p>
+            <p class="ds-paragraph">Skolekartet lagrer det som trengs for funksjoner du selv bruker. I tillegg setter Google Analytics informasjonskapsler på forsiden. Du kan slette alt ved å slette nettstedsdata i nettleseren.</p>
             <div class="table-scroll">
                 <table class="ds-table sources-table" data-size="sm" data-border>
                     <thead><tr><th>Nøkkel og type</th><th>Formål</th><th>Lagringstid</th></tr></thead>
@@ -77,6 +78,7 @@
                     <tr><td><code>skolekartet-adresse</code><br>sessionStorage</td><td>Adressen eller posisjonen du søkte på, for gangtid på skolesiden</td><td>Til fanen lukkes</td></tr>
                     <tr><td><code>skolekartet.kart, skolekartet.tilbake</code><br>sessionStorage</td><td>Kartet og listen slik de var, når du går tilbake fra en skoleside</td><td>Til fanen lukkes</td></tr>
                     <tr><td><code>skolekartet.feedback.…</code><br>sessionStorage</td><td>At du har svart på «Fant du det du lette etter?» på en side</td><td>Til fanen lukkes</td></tr>
+                    <tr><td><code>_ga, _ga_HHMNN59GDS</code><br>cookie</td><td>Skiller besøkende fra hverandre i besøksstatistikken (Google Analytics, bare forsiden)</td><td>2 år</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -90,6 +92,7 @@
             <p class="ds-paragraph">Når du bruker Skolekartet, henter nettleseren innhold fra disse tjenestene. De ser IP-adressen din, slik det er på de fleste nettsider, men får ikke vite hva du søker på, med unntak av Kartverket ved adressesøk.</p>
             <ul class="ds-list">
                 <li>GitHub Pages (GitHub Inc., USA): selve nettstedet</li>
+                <li>Google Analytics (Google Ireland Limited): besøksstatistikk på forsiden</li>
                 <li>OpenFreeMap: bakgrunnskartet</li>
                 <li>jsDelivr og cdnjs: Designsystemet og kartbibliotekene</li>
                 <li>Kartverket: adressesøk, postnummerområder og kartlag på kartsiden</li>
