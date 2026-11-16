@@ -1,6 +1,6 @@
 # Daily data refresh: checks Udir (Elevundersøkelsen) and Nasjonalt skoleregister, rebuilds the site
 # data when they have changed, and commits the result. GitHub Pages then publishes it.
-# What is checked, and why nasjonale prøver are not, is described in update_data.py.
+# What is checked, and why nasjonale prøver, GSI and skolekretser are not, is described in update_data.py.
 name: Oppdater data
 
 on:
@@ -31,8 +31,15 @@ jobs:
       - name: Check the sources and rebuild
         run: python update_data.py
 
+      # Sanity checks on the built data (tests/check_data.py); broken data is never committed
+      - name: Check the built data
+        id: check
+        if: always()
+        run: python tests/check_data.py
+
       - name: Commit the new data
-        if: always()   # also keep what was refreshed when one source could not be reached
+        # also keep what was refreshed when one source could not be reached, but not data that failed the check
+        if: always() && steps.check.outcome != 'failure'
         run: |
           git add cached-data static/js/school-data.json static/js/landssnitt.json static/js/kommunesnitt.json static/data static/js/data-status.json skoler sitemap.xml
           if git diff --cached --quiet; then

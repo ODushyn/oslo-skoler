@@ -14,7 +14,9 @@ When a source has changed, create_map.py and school_details.py rebuild the site 
 the pages for search engines under skoler/ and sitemap.xml.
 
 Nasjonale prøver are not in Udir's open API. They are published once a year and imported by hand
-with import_exam_result.py (see README).
+with import_exam_result.py (see README). GSI (gsi.py, new numbers each December), the skolekretser
+(skolekretser.py) and Oslo's feeder list (ungdomsskole_oslo.py) are not checked here either: refresh
+them by hand, then run create_map.py, school_details.py and site_pages.py.
 
 Writes static/js/data-status.json: the day all sources were last checked and the day each source
 last changed. The footer shows the check date. If a source cannot be reached, the old data is

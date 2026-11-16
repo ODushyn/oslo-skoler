@@ -6,6 +6,11 @@ let schoolsData = [];
 let schoolMarkers = new Map(); // Map of school unique key (name + kommune) -> marker
 
 document.addEventListener('DOMContentLoaded', function() {
+    // The map libraries come from a CDN: if they did not load, say so instead of waiting forever
+    if (typeof L === 'undefined' || typeof L.markerClusterGroup !== 'function') {
+        showLoadError();
+        return;
+    }
     // Initialize the map
     const { map, markerCluster } = initMap();
 
@@ -61,6 +66,7 @@ function showLoadError() {
     list.insertAdjacentHTML('beforebegin', `<div class="ds-alert load-error" data-color="danger" role="alert">
             <h2 class="ds-heading" data-size="xs">${t('Kunne ikke laste skolene')}</h2>
             <p class="ds-paragraph">${t('Sjekk nettforbindelsen og prøv igjen.')}</p>
+            <p class="ds-paragraph">${t('Du kan også bla i')} <a class="ds-link" href="${I18N.href('skoler/')}">${t('Skoler etter kommune')}</a>.</p>
             <button type="button" class="ds-button" data-variant="secondary" data-size="sm" id="retryLoad">${t('Prøv igjen')}</button>
         </div>`);
     document.getElementById('retryLoad').addEventListener('click', () => location.reload());
@@ -108,7 +114,7 @@ function createSchoolMarker(school) {
     });
     return bindSchoolPopup(L.marker([school.lat, school.lng], {
         icon: schoolIcon,
-        title: `${school.name}, ${SCHOOL_TYPE_LABEL[school.schoolType] || school.schoolType}`
+        title: `${school.name}, ${SCHOOL_TYPE_LABEL[school.schoolType] || school.schoolType}, ${scoreTitle(school)}`
     }), [school]);
 }
 
@@ -128,7 +134,7 @@ function createCombinedMarker(levels) {
     });
     return bindSchoolPopup(L.marker([barne.lat, barne.lng], {
         icon,
-        title: `${barne.name}, ${t('Barne- og ungdomsskole (1.–10. trinn)')}`
+        title: `${barne.name}, ${t('Barne- og ungdomsskole (1.–10. trinn)')}, ${levels.map(scoreTitle).join(' / ')}`
     }), levels);
 }
 

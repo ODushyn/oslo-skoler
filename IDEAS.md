@@ -6,7 +6,7 @@ Things we have looked at but not done yet. Newest first.
 
 The school and kommune pages under `skoler/` are built by `site_pages.py` (see README). Still to do:
 
-- Address and number of pupils on the static school page. They come from NSR's page for each school
+- Address on the static school page (the number of pupils can now come from `cached-data/gsi.json`). It comes from NSR's page for each school
   (`data-nsr.udir.no/v4/enhet/<orgnr>`), which only the browser reads today; the nightly refresh would have
   to download about 2 600 pages, or only the ones that changed.
 - English and Ukrainian addresses that search engines can read, with `hreflang`. Today the languages are

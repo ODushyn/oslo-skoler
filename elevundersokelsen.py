@@ -66,7 +66,8 @@ def _fetch_json(url):
 
 def _number(text):
     try:
-        return float(str(text).replace(',', '.'))
+        # Udir writes thousands with a space ("1 234"), sometimes a no-break space
+        return float(str(text).replace('\u00a0', '').replace(' ', '').replace(',', '.'))
     except (TypeError, ValueError):
         return None
 

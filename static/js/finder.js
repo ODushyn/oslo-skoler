@@ -48,6 +48,7 @@ const Finder = (() => {
     let map, cluster, entries = [], filtered = [];
     let addressMarker = null;
     let keepList = false;   // true after a school was picked from the list, until the user moves the map
+    let announceList = true;   // say the list's count once after the next render (see renderList)
     let listBounds = null;  // the map area the list was last built from
     let searchItems = [];   // what the search list shows: schools, kommuner, a postnummer and addresses
     let addressAbort = null;
@@ -98,6 +99,7 @@ const Finder = (() => {
         map.on('dragstart', () => { keepList = false; });
         ['pointerdown', 'wheel', 'keydown'].forEach(type => map.getContainer().addEventListener(type, releaseList, { passive: true }));
 
+        keyboardPopupFocus(map);
         // Keep the open school in the URL so a shared link opens the same school
         map.on('popupopen', event => {
             const marker = event.popup._source;
@@ -378,6 +380,7 @@ const Finder = (() => {
             state.sort = item.dataset.sort;
             state.shown = PAGE_SIZE;
             showSort(state.sort);
+            announceList = true;
             renderList();
             writeUrlState();
         });
@@ -648,6 +651,7 @@ const Finder = (() => {
     }
 
     function applyFilters() {
+        announceList = true;
         filtered = entries.filter(passes);
         cluster.clearLayers();
         cluster.addLayers(filtered.map(e => e.marker));
@@ -713,6 +717,19 @@ const Finder = (() => {
         return list.sort((a, b) => a.distance - b.distance);
     }
 
+    // The list is drawn again after a bookmark is pressed: keyboard focus goes back to the same bookmark,
+    // or to the list heading when the school has left the list (the saved list)
+    function refocusSave(key) {
+        const again = [...document.querySelectorAll('#kretsNote button[data-save], #schoolList button[data-save]')]
+            .find(button => button.dataset.save === key);
+        if (again) again.focus();
+        else {
+            const heading = el(state.savedOnly ? 'savedTitle' : 'resultsTitle');
+            heading.tabIndex = -1;
+            heading.focus();
+        }
+    }
+
     // Render again without letting go of a list that is held after a pick from it
     function refreshList() {
         const held = keepList;
@@ -735,6 +752,7 @@ const Finder = (() => {
     }
 
     function setSavedOnly(on) {
+        announceList = true;
         state.savedOnly = on;
         state.shown = PAGE_SIZE;
         // The saved schools are this browser's own list: not a page for search engines
@@ -827,6 +845,12 @@ const Finder = (() => {
         if (inCards(mapSlot())) closeMiniMap();
         openKey = null;
         renderKretsNote();
+        // Screen readers hear the new count once, after a choice; moving the map does not repeat it
+        if (announceList) {
+            const own = !el('kretsNote').hidden && el('kretsNote').querySelector('.own-school__name');
+            el('listStatus').textContent = [own ? `${t('Skolekrets for adressen')}: ${own.textContent}` : '', el('resultsTitle').textContent].filter(Boolean).join('. ');
+            announceList = false;
+        }
         el('schoolList').innerHTML = visible.map((e, i) => schoolCard(e, ref, i)).join('');
         // The first list replaces the loading placeholders
         el('schoolList').removeAttribute('aria-busy');
@@ -834,7 +858,10 @@ const Finder = (() => {
         el('schoolList').querySelectorAll('.school-card__save').forEach(button => {
             button.addEventListener('click', () => {
                 updateSaveButton(button, toggleSaved(button.dataset.save));
-                if (state.savedOnly) refreshList();
+                if (state.savedOnly) {
+                    refreshList();
+                    refocusSave(button.dataset.save);
+                }
             });
         });
         markExpandable(el('schoolList'));
@@ -1096,7 +1123,7 @@ const Finder = (() => {
     function scrollIntoViewIfCut(node) {
         requestAnimationFrame(() => {
             if (node.isConnected && node.getBoundingClientRect().bottom > window.innerHeight) {
-                node.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                node.scrollIntoView({ block: 'nearest', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
             }
         });
     }
@@ -1406,6 +1433,7 @@ const Finder = (() => {
     const inPostalArea = (address, school) => Boolean(address.area) && address.area.some(polygon => insideRings(school.lng, school.lat, polygon));
 
     function setAddress(result) {
+        announceList = true;
         state.address = result;
         // A postnummer is an area, not a place to walk from: the school page gets no walking time from it
         rememberAddress(result.postnummer ? null : result);
@@ -1449,12 +1477,14 @@ const Finder = (() => {
             if (state.address !== result || !found) return;
             state.krets = found;
             drawKretser(found.hits);
+            announceList = true;
             refreshList();
         });
     }
 
     function clearAddress() {
         if (!state.address) return;
+        announceList = true;
         state.address = null;
         rememberAddress(null);
         clearKrets();
@@ -1473,7 +1503,7 @@ const Finder = (() => {
     // ── Skolekrets pilot (Halden, Stavanger) ──────────────────────────────
     function loadKretser() {
         if (!kretsData) {
-            kretsData = fetch('static/js/skolekretser.json?v=2')
+            kretsData = fetch('static/js/skolekretser.json?v=3')
                 .then(r => (r.ok ? r.json() : null))
                 .catch(() => null);
         }
@@ -1527,7 +1557,7 @@ const Finder = (() => {
         const krets = state.krets;
         const own = krets ? krets.hits
             .map(k => {
-                const entry = k.school && entries.find(e => e.levels.some(l => l.name === k.school && l.kommune === k.kommune && l.schoolType === k.level));
+                const entry = k.school && entries.find(e => e.levels.some(l => l.name === k.school && sameKommune(l.kommune, k.kommune) && l.schoolType === k.level));
                 return { krets: k, entry, level: entry && entry.levels.find(l => l.schoolType === k.level) };
             })
             .filter(hit => hit.entry || hit.krets.school) : [];
@@ -1580,7 +1610,7 @@ const Finder = (() => {
                     <button type="button" class="ds-button filter-help" data-variant="tertiary" data-size="sm" data-icon="true"
                             popovertarget="ownInfo" aria-label="${t('Om skolekretsdataene')}">${icon('questionmarkCircle')}</button></p>
                 <div class="ds-popover own-schools__info" popover id="ownInfo" data-placement="bottom-start">
-                    <p class="ds-paragraph" data-size="sm">${t('Dette er en pilot på åpne data og kan avvike fra kommunens gjeldende grenser.')} ${escapeHtml(t(krets.info.caveat))}</p>
+                    <p class="ds-paragraph" data-size="sm">${t('Dette er en pilot og kan avvike fra kommunens gjeldende grenser.')} ${escapeHtml(t(krets.info.caveat))}</p>
                     <p class="ds-paragraph" data-size="sm">${t('Kilde:')} <a class="ds-link" href="${escapeHtml(safeUrl(krets.info.sourceUrl))}" target="_blank" rel="noopener">${escapeHtml(t(krets.info.source))}</a>.</p>
                     <p class="ds-paragraph" data-size="sm">${check}</p>
                     <p class="ds-paragraph" data-size="sm"><a class="ds-link" href="${I18N.href('om-skolekrets')}#pilot">${t('Se hvilke kommuner vi kan vise skolekretsen for, og hvor dataene kommer fra')}</a></p>
@@ -1660,6 +1690,7 @@ const Finder = (() => {
             if (save) {
                 updateSaveButton(save, toggleSaved(save.dataset.save));
                 refreshList();
+                refocusSave(save.dataset.save);
                 return;
             }
             const mapButton = event.target.closest('.school-card__map');

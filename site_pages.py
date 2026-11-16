@@ -5,7 +5,7 @@ static/js/school-page.js on top of the static text, as on skole.html.
 
     python site_pages.py
 
-Run after create_map.py and school_details.py (update_data.py does this every night). create_map.py calls
+Run after create_map.py and school_details.py (update_data.py does this when a source has changed). create_map.py calls
 assign_pages() so every school in static/js/school-data.json has its page path ("page").
 
     skoler/index.html                       all kommuner                  skolekartet.no/skoler/
@@ -40,6 +40,8 @@ KOMMUNE_FILE = Path('static/js/kommunesnitt.json')
 TEMPLATE = Path('skole.html')
 SITEMAP = Path('sitemap.xml')
 OG_IMAGE = SITE + 'static/img/og-skolekartet.png'
+OG_IMAGE_ALT = 'Skolekartet – finn skole og se nasjonale prøver, trivsel og skolekrets på kart'  # as on index.html
+WEBSITE_ID = SITE + '#website'  # the WebSite node in index.html's JSON-LD
 NEARBY = 6
 
 TYPE_LABEL = {'barneskole': 'barneskole', 'ungdomsskole': 'ungdomsskole'}
@@ -143,6 +145,8 @@ def page_frame(depth, title, description, canonical, json_ld, body_attrs, main_h
     Pages that are not school pages drop the map and school scripts."""
     prefix = '../' * depth
     page = TEMPLATE.read_text(encoding='utf-8')
+    # The template is noindex (skole?id= only repeats these pages); the pages under skoler/ are what we want found
+    page = re.sub(r'\n\s*<!-- skole\?id= duplicates[^\n]*\n\s*<meta name="robots" content="noindex, follow" />', '', page)
     page = re.sub(r'(\s(?:src|href)=")(?!https?:|#|/|mailto:|tel:|data:)([^"]*)"',
                   lambda m: f'{m.group(1)}{prefix}{"" if m.group(2) == "./" else m.group(2)}"', page)
     page = page.replace('<title>Skole – Skolekartet</title>', f'<title>{esc(title)}</title>')
@@ -158,8 +162,10 @@ def page_frame(depth, title, description, canonical, json_ld, body_attrs, main_h
     <meta property="og:image" content="{OG_IMAGE}" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="{esc(OG_IMAGE_ALT)}" />
     <meta property="og:locale" content="nb_NO" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image:alt" content="{esc(OG_IMAGE_ALT)}" />
     <script type="application/ld+json">{ld_text}</script>"""
     page = page.replace('<link rel="icon" type="image/svg+xml"', head + '\n    <link rel="icon" type="image/svg+xml"', 1)
     page = page.replace('<body>', f'<body{body_attrs}>', 1)
@@ -171,9 +177,9 @@ def page_frame(depth, title, description, canonical, json_ld, body_attrs, main_h
         page = re.sub(r'(<article class="page__content school-page"[^>]*>).*?(</article>)',
                       lambda m: m.group(1) + main_html + '\n            ' + m.group(2), page, flags=re.S)
     if not school_page:
-        page = re.sub(r'\n\s*<!-- Map for the school position.*?leaflet-maplibre-gl\.js"></script>', '', page, flags=re.S)
+        page = re.sub(r'\n\s*<!-- Map for the school position.*?leaflet-maplibre-gl\.js"[^>]*></script>', '', page, flags=re.S)
         page = re.sub(r'\n\s*<script (?:defer )?src="[^"]*(?:score-colors|school-page)\.js[^"]*"></script>', '', page)
-        page = page.replace(' school-page" id="schoolPage" aria-live="polite" aria-busy="true"', '"')
+        page = page.replace(' school-page" id="schoolPage" aria-busy="true"', '"')
     return page
 
 
@@ -301,7 +307,8 @@ def school_page(levels, details, nearby, data, national_all):
                 Utdanningsdirektoratet, Nasjonalt skoleregister (NLOD). Avstanden er målt i luftlinje.
                 <a class="ds-link" href="../../datakilder">Om datakildene</a>.</p>"""
 
-    school_ld = {'@type': 'School', '@id': canonical + '#skole', 'name': name, 'url': canonical,
+    school_ld = {'@type': 'School', '@id': canonical + '#skole', 'name': name, 'url': canonical, 'description': description,
+                 'containedInPlace': {'@type': 'AdministrativeArea', 'name': kommune},
                  'address': {'@type': 'PostalAddress', 'addressLocality': re.sub(r'\s*\(.*\)$', '', kommune), 'addressCountry': 'NO'},
                  'geo': {'@type': 'GeoCoordinates', 'latitude': school['lat'], 'longitude': school['lng']}}
     if website:
@@ -312,8 +319,11 @@ def school_page(levels, details, nearby, data, national_all):
                               'creditText': f"{photo.get('author', '')}, {photo.get('license', '')}, via Wikimedia Commons",
                               **({'license': photo['licenseUrl']} if web_url(photo.get('licenseUrl')) else {}),
                               **({'acquireLicensePage': photo['page']} if web_url(photo.get('page')) else {})}
+    # The page itself links the school to the site (School is an Organization/Place, so isPartOf goes on the WebPage)
+    page_ld = {'@type': 'WebPage', '@id': canonical, 'url': canonical, 'name': title, 'description': description,
+               'inLanguage': 'nb', 'isPartOf': {'@id': WEBSITE_ID}, 'about': {'@id': canonical + '#skole'}}
     json_ld = {'@context': 'https://schema.org', '@graph': [
-        school_ld, breadcrumbs_ld([(n, SITE + p if p is not None else None) for n, p in crumbs])]}
+        page_ld, school_ld, breadcrumbs_ld([(n, SITE + p if p is not None else None) for n, p in crumbs])]}
     body = f' data-school-id="{esc(school["name"] + "|" + kommune + "|" + school["schoolType"])}"'
     return page_frame(2, title, description, canonical, json_ld, body, main, school_page=True)
 
@@ -385,6 +395,7 @@ def kommune_page(kommune, schools_by_page, data, national_all, kommune_avg):
                     Utdanningsdirektoratet, Nasjonalt skoleregister (NLOD). <a class="ds-link" href="../../datakilder">Om datakildene</a>.</p>"""
     json_ld = {'@context': 'https://schema.org', '@graph': [
         {'@type': 'CollectionPage', '@id': canonical, 'name': f'Skoler i {kommune}', 'url': canonical, 'description': description,
+         'isPartOf': {'@id': WEBSITE_ID},
          'mainEntity': {'@type': 'ItemList', 'numberOfItems': count, 'itemListElement': [
              {'@type': 'ListItem', 'position': i + 1, 'url': SITE + page, 'name': levels[0]['name']}
              for i, (page, levels) in enumerate(pages)]}},
@@ -408,7 +419,8 @@ def index_page(kommuner, data):
                     eller <a class="ds-link" href="../">søk på adressen din på kartet</a>.</p>
                 <ul class="ds-list kommune-list">{items}</ul>"""
     json_ld = {'@context': 'https://schema.org', '@graph': [
-        {'@type': 'CollectionPage', '@id': canonical, 'name': 'Skoler etter kommune', 'url': canonical, 'description': description},
+        {'@type': 'CollectionPage', '@id': canonical, 'name': 'Skoler etter kommune', 'url': canonical, 'description': description,
+         'isPartOf': {'@id': WEBSITE_ID}},
         breadcrumbs_ld([(n, SITE + p if p is not None else None) for n, p in crumbs])]}
     return page_frame(1, title, description, canonical, json_ld, '', main, school_page=False)
 

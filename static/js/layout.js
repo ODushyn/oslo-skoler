@@ -77,7 +77,7 @@
                 </a>
                 <!-- The map and the two pages most people need, in the middle as on Digdir's own sites; on narrow
                      screens they are only in the menu -->
-                <nav class="site-primary" aria-label="Om tjenesten">
+                <nav class="site-primary" aria-label="Snarveier">
                     ${PRIMARY.map(l => `<a class="site-primary__link" href="${localHref(l.href)}"${ariaCurrent(l.href)}>${l.dots ? SCORE_DOTS : ''}${l.label}</a>`).join('')}
                 </nav>
                 <nav class="site-nav" aria-label="Hovedmeny">
