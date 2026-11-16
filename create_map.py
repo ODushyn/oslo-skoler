@@ -58,17 +58,20 @@ def parse_csv_to_objects(file_path, school_type=None):
     return data
 
 
-def determine_marker_color(engelsk, lesing, regning):
+def determine_marker_color(engelsk, lesing, regning, national=50.0):
     """
     Determine marker color based on average test scores.
     Only calculates average from valid (non-None) scores.
 
-    Based on the national scale where actual national mean=49.31:
+    `national` is the national average for the same level and school year (the mean of the three
+    subjects in Udir's row "Hele landet", see national_cuts). The scale was set so that the national
+    average was 50 in 2022 with a standard deviation of 10, so 45 and 55 are half a standard deviation
+    from that point:
     - Gray: All scores missing (no data available)
-    - Red: < 45 (significantly below national mean)
-    - Orange: 45-49.31 (below actual national mean)
-    - Light Green: 49.31-55 (above actual national mean)
-    - Dark Green: > 55 (significantly above national mean)
+    - Red: < 45 (well below the national average)
+    - Orange: 45 up to the national average
+    - Light Green: the national average up to 55
+    - Dark Green: >= 55 (well above the national average)
     """
     # Collect only valid scores (not None)
     valid_scores = [score for score in [engelsk, lesing, regning] if score is not None]
@@ -81,12 +84,26 @@ def determine_marker_color(engelsk, lesing, regning):
 
     if average < 45:
         return "red"
-    elif 45 <= average < 49.31:
+    elif average < national:
         return "orange"
-    elif 49.31 <= average < 55:
+    elif average < 55:
         return "lightgreen"
     else:
         return "darkgreen"
+
+
+def national_cuts(year=None):
+    """{'barneskole': 49.33.., 'ungdomsskole': 49.66..}: the national average on the national tests for the
+    year, as the mean of the three subjects (not rounded, so a school with exactly the national results is on
+    the line, not under it). From the raw Udir files, as static/js/landssnitt.json."""
+    import national_averages
+    year = year or CURRENT_YEAR
+    cuts = {}
+    for level, years in national_averages.national_averages().items():
+        scores = years.get(year, {})
+        valid = [scores.get(subject) for subject in ('engelsk', 'lesing', 'regning') if scores.get(subject) is not None]
+        cuts[level] = sum(valid) / len(valid) if valid else None
+    return cuts
 
 
 def calculate_map_config(schools):
@@ -141,9 +158,10 @@ def _gsi_national(cache):
 
 
 def prepare_school_data_for_export(schools, history=None, nsr_matcher=None, trivsel_cache=None, photo_cache=None,
-                                   mobbing_cache=None, gsi_cache=None):
+                                   mobbing_cache=None, gsi_cache=None, cuts=None):
     """Prepare school data with all necessary computed fields for JSON export."""
     prepared_data = []
+    cuts = cuts or {}
     if history is None:
         history = {}
 
@@ -157,8 +175,9 @@ def prepare_school_data_for_export(schools, history=None, nsr_matcher=None, triv
         has_data = len(valid_scores) > 0
         average = sum(valid_scores) / len(valid_scores) if valid_scores else None
 
-        # Determine marker color
-        marker_color = determine_marker_color(engelsk, lesing, regning)
+        # Determine marker color, against the national average for the same level and year
+        national = cuts.get(school.get('school_type'))
+        marker_color = determine_marker_color(engelsk, lesing, regning, national if national is not None else 50.0)
 
         # Map color names to hex codes
         color_map = {
@@ -198,6 +217,8 @@ def prepare_school_data_for_export(schools, history=None, nsr_matcher=None, triv
             'lng': school['lng'],
             'average': average,
             'hasData': has_data,
+            # National average for this level and year: the line between «over» and «under snittet»
+            'nationalAverage': national,
             'color': fill_color,
             'validScoresCount': len(valid_scores),
             'schoolType': school.get('school_type', 'unknown'),
@@ -389,10 +410,12 @@ def create_norway_schools_map(input_files=None,
     mobbing_cache = elevundersokelsen.load_mobbing()
     photo_cache = photos.load_cache()
     gsi_cache = gsi.load_cache()
+    cuts = national_cuts()
+    print(f"  - National averages {CURRENT_YEAR}: " + ', '.join(f"{level} {value:.2f}" for level, value in cuts.items() if value is not None))
 
     prepared_schools = prepare_school_data_for_export(schools, history=history, nsr_matcher=nsr_matcher,
                                                       trivsel_cache=trivsel_cache, photo_cache=photo_cache,
-                                                      mobbing_cache=mobbing_cache, gsi_cache=gsi_cache)
+                                                      mobbing_cache=mobbing_cache, gsi_cache=gsi_cache, cuts=cuts)
     matched = sum(1 for s in prepared_schools if s['eierform'])
     print(f"  - Owner type found for {matched} of {len(prepared_schools)} entries")
     print(f"  - Trivsel for {sum(1 for s in prepared_schools if s['trivsel'])} entries, "
@@ -412,6 +435,9 @@ def create_norway_schools_map(input_files=None,
             'currentYear': CURRENT_YEAR,
             # National share bullied, for the Mobbing tooltip on the map page (year and 7./10. trinn)
             'mobbing': {'year': mobbing_cache['year'], 'national': mobbing_cache['national']} if mobbing_cache else None,
+            # National trivsel (7./10. trinn) and the national average on the national tests per level
+            'trivsel': {'year': trivsel_cache['year'], 'national': trivsel_cache.get('national', {})} if trivsel_cache else None,
+            'resultater': {'year': CURRENT_YEAR, **cuts},
             # National lærertetthet and share with forsterket norsk, newest year, for the cards and filters
             'gsi': _gsi_national(gsi_cache),
         }
@@ -429,7 +455,7 @@ def create_norway_schools_map(input_files=None,
     print(f"  - Total schools: {len(schools)}")
     print(f"  - Map center: {map_config['center']}")
     print(f"  - Zoom level: {map_config['zoom']}")
-    print(f"\nColor distribution (based on Oslo mean 49.31):")
+    print("\nColor distribution (line at the national average for each level):")
 
     # Calculate color distribution
     color_counts = {}
@@ -439,8 +465,8 @@ def create_norway_schools_map(input_files=None,
 
     color_names = {
         '#d73027': 'Red (<45)',
-        '#fc8d59': 'Orange (45-49.31)',
-        '#91cf60': 'Light Green (49.31-55)',
+        '#fc8d59': 'Orange (45 to the national average)',
+        '#91cf60': 'Light Green (national average to 55)',
         '#1a9850': 'Dark Green (>=55)',
         '#999999': 'Gray (No data)'
     }

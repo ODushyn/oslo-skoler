@@ -37,6 +37,43 @@ const THEME = (() => {
         }
     }
 
+    // ── Visning (Figma D1): text size, contrast, motion, data saving and the «Lytt» button ──
+    // Kept in this browser. What the browser or the phone already says (higher contrast, less motion) is the
+    // default, so people who have set it there do not have to set it again.
+    const DISPLAY_KEY = 'skolekartet.visning';
+    const media = query => (window.matchMedia ? window.matchMedia(query).matches : false);
+    const DISPLAY_DEFAULTS = {
+        text: 'normal',                                            // normal | stor | ekstra
+        contrast: media('(prefers-contrast: more)') ? 'hoy' : 'standard',
+        motion: media('(prefers-reduced-motion: reduce)'),         // less movement and animation
+        saveData: false,                                           // the map only when asked for
+        listen: true                                               // the «Lytt til siden» button on information pages
+    };
+    function readDisplay() {
+        try {
+            const saved = JSON.parse(read(DISPLAY_KEY) || '{}') || {};
+            return {
+                text: ['normal', 'stor', 'ekstra'].includes(saved.text) ? saved.text : DISPLAY_DEFAULTS.text,
+                contrast: ['standard', 'hoy'].includes(saved.contrast) ? saved.contrast : DISPLAY_DEFAULTS.contrast,
+                motion: typeof saved.motion === 'boolean' ? saved.motion : DISPLAY_DEFAULTS.motion,
+                saveData: typeof saved.saveData === 'boolean' ? saved.saveData : DISPLAY_DEFAULTS.saveData,
+                listen: typeof saved.listen === 'boolean' ? saved.listen : DISPLAY_DEFAULTS.listen
+            };
+        } catch (error) {
+            return { ...DISPLAY_DEFAULTS };
+        }
+    }
+    let display = readDisplay();
+    function applyDisplay() {
+        const root = document.documentElement;
+        root.dataset.text = display.text;
+        root.dataset.contrast = display.contrast;
+        root.dataset.motion = display.motion ? 'less' : 'normal';
+        root.dataset.listen = display.listen ? 'on' : 'off';
+        root.dataset.savedata = display.saveData ? 'on' : 'off';
+    }
+    applyDisplay();
+
     let current = THEMES.some(theme => theme.id === read(STORAGE_KEY)) ? read(STORAGE_KEY) : DEFAULT;
     apply(current);
     // Dark mode is gone: forget a choice saved while it existed
@@ -67,22 +104,58 @@ const THEME = (() => {
         });
     }
 
-    // At the bottom of the "Meny" dropdown, under "Tema": the two themes, each with a dot in its brand1 colour
-    function menuItemsHtml() {
-        const items = THEMES.map(theme => `<li><button type="button" class="ds-button theme-menu__item" data-variant="tertiary" data-size="sm"
-                data-theme="${theme.id}"${theme.id === current ? ' aria-current="true"' : ''}>
-                <span class="theme-menu__dot theme-menu__dot--${theme.id}" aria-hidden="true"></span><span>${t(theme.name)}</span></button></li>`).join('');
-        return `<h2 class="site-menu__heading">${t('Tema')}</h2><ul>${items}</ul>`;
+    // D1 «Visning»: the panel opened from the «Visning» button (and shown at the bottom of «Meny» on phones)
+    const segment = (group, value, label, on) => `<button type="button" class="seg__item" role="radio" aria-checked="${on}" data-display="${group}" data-value="${value}">${t(label)}</button>`;
+    const segmented = (group, title, items, active) => `<div class="display-field" role="radiogroup" aria-label="${t(title)}"><h3 class="display-field__title">${t(title)}</h3>
+            <div class="seg">${items.map(([value, label]) => segment(group, value, label, value === active)).join('')}</div></div>`;
+    const toggle = (group, label, on) => `<div class="display-switch"><span id="sw-${group}">${t(label)}</span>
+            <button type="button" class="switch" role="switch" aria-checked="${on}" aria-labelledby="sw-${group}" data-switch="${group}"><span class="switch__knob"></span></button></div>`;
+    function panelHtml() {
+        return `<div class="display-panel">
+            <div class="display-panel__head"><h2 class="display-panel__title">${t('Visning')}</h2><span class="display-panel__rule" aria-hidden="true"></span>
+                <button type="button" class="display-panel__close" data-display-close><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M7 7l10 10M17 7 7 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>${t('Lukk')}</span></button></div>
+            ${segmented('text', 'Tekststørrelse', [['normal', 'Normal'], ['stor', 'Stor'], ['ekstra', 'Ekstra stor']], display.text)}
+            ${segmented('contrast', 'Kontrast', [['standard', 'Standard'], ['hoy', 'Høy kontrast']], display.contrast)}
+            ${segmented('theme', 'Fargetema', THEMES.map(theme => [theme.id, theme.name]), current)}
+            ${toggle('motion', 'Mindre bevegelse og animasjon', display.motion)}
+            ${toggle('saveData', 'Spar data – vis kart bare når jeg ber om det', display.saveData)}
+            ${toggle('listen', 'Vis «Lytt»-knapp for opplesning', display.listen)}
+            <p class="display-panel__note">${t('Innstillingene huskes på denne enheten. Du kan også bruke innstillingene i nettleseren eller telefonen – vi følger dem automatisk.')}</p>
+        </div>`;
+    }
+
+    function syncPanels() {
+        document.querySelectorAll('[data-display]').forEach(button => {
+            const group = button.dataset.display;
+            const active = group === 'theme' ? current : display[group];
+            button.setAttribute('aria-checked', String(button.dataset.value === active));
+        });
+        document.querySelectorAll('[data-switch]').forEach(button => button.setAttribute('aria-checked', String(Boolean(display[button.dataset.switch]))));
+    }
+
+    function setDisplay(group, value) {
+        if (group === 'theme') choose(value);
+        else {
+            display = { ...display, [group]: value };
+            write(DISPLAY_KEY, JSON.stringify(display));
+            applyDisplay();
+        }
+        syncPanels();
+        document.dispatchEvent(new CustomEvent('displaychange', { detail: { group, value } }));
     }
 
     document.addEventListener('click', event => {
-        const item = event.target.closest('.theme-menu__item');
-        if (!item) return;
-        choose(item.dataset.theme);
+        const option = event.target.closest('[data-display]');
+        if (option) { setDisplay(option.dataset.display, option.dataset.value); return; }
+        const sw = event.target.closest('[data-switch]');
+        if (sw) { setDisplay(sw.dataset.switch, !display[sw.dataset.switch]); return; }
+        const close = event.target.closest('[data-display-close]');
+        if (close) { const box = close.closest('[popover]'); if (box && box.hidePopover) box.hidePopover(); }
     });
 
     return {
-        menuItemsHtml,
+        panelHtml,
+        get display() { return display; },
         mapStyle: () => MAP_STYLE,
         get current() { return current; }
     };

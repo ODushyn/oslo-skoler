@@ -29,10 +29,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/src/index.css" integrity="sha384-CAE1Qe2Yp1euTdmOujy77VIT0GR/Yu8V+3taPP8Oo7GGV9hrQKrVigMB51hyUKYD" crossorigin="anonymous" />
 
 
-    <link rel="stylesheet" href="static/css/styles.css?v=208"/>
+    <link rel="stylesheet" href="static/css/styles.css?v=273"/>
 
-    <script src="static/js/i18n.js?v=101"></script>
-    <script src="static/js/theme.js?v=9"></script>
+    <script src="static/js/i18n.js?v=129"></script>
+    <script src="static/js/theme.js?v=11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-web@1.23.0/dist/umd/index.js" integrity="sha384-gB8nQDA1vTT5N2EUrwILb4EmNquufjYcGqx5Cmce63dC5l/zyDRlxPjzv4/pG6mE" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -40,14 +40,14 @@
 
     <!-- Header (shared, see static/js/layout.js) -->
     <div id="site-header"></div>
-    <script src="static/js/layout.js?v=32"></script>
+    <script src="static/js/layout.js?v=43"></script>
 
     <main id="main" tabindex="-1" class="page">
         <div class="site-container page__container">
             <a class="ds-button page__back" data-variant="tertiary" data-size="sm" href="./" data-back>Tilbake</a>
             <article class="page__content">
             <h1 class="ds-heading" data-size="md">Personvern</h1>
-            <p class="ds-paragraph school-page__sources section-source" data-size="xs">Sist oppdatert 4. november 2026.</p>
+            <p class="ds-paragraph school-page__sources section-source" data-size="xs">Sist oppdatert 14. november 2026.</p>
             <p class="ds-paragraph">Skolekartet er en informasjonstjeneste. Vi samler ikke inn opplysninger om deg, med ett unntak: tilbakemeldinger du selv velger å sende. Vi har ingen innlogging, ingen analyseverktøy og setter ingen informasjonskapsler (cookies).</p>
             <h2 class="ds-heading" data-size="xs">Hvem har ansvaret?</h2>
             <p class="ds-paragraph">Skolekartet er et privat, ikke-kommersielt prosjekt og har ansvaret for opplysningene som beskrives her. Spørsmål om personvern, eller ønske om å få slettet en tilbakemelding, kan sendes via <a class="ds-link" href="tilbakemelding">tilbakemeldingsskjemaet</a>.</p>
@@ -74,6 +74,10 @@
                     <tr><td><code>skolekartet.lagrede</code><br>localStorage</td><td>Skoler du selv lagrer med bokmerket («Lagre til senere»)</td><td>Til du fjerner skolene eller sletter nettstedsdata</td></tr>
                     <tr><td><code>skolekartet-lang</code><br>localStorage</td><td>Språket du har valgt</td><td>Til du velger et annet språk eller sletter nettstedsdata</td></tr>
                     <tr><td><code>skolekartet.tema</code><br>localStorage</td><td>Temaet du har valgt</td><td>Til du velger noe annet eller sletter nettstedsdata</td></tr>
+                    <tr><td><code>skolekartet.visning</code><br>localStorage</td><td>Valgene under «Visning»: tekststørrelse, kontrast, bevegelse, kart og opplesning</td><td>Til du velger noe annet eller sletter nettstedsdata</td></tr>
+                    <tr><td><code>skolekartet.notater</code><br>localStorage</td><td>Notatene du skriver om lagrede skoler</td><td>Til du sletter notatet eller nettstedsdata</td></tr>
+                    <tr><td><code>skolekartet-prioriteringer</code><br>sessionStorage</td><td>Det du har valgt under «Hva er viktig for dere?», så sammenligningen kan bruke det</td><td>Til fanen lukkes</td></tr>
+                    <tr><td><code>skolekartet-adresser</code><br>sessionStorage</td><td>Opptil tre adresser du sammenligner</td><td>Til fanen lukkes</td></tr>
                     <tr><td><code>skolekartet-adresse</code><br>sessionStorage</td><td>Adressen eller posisjonen du søkte på, for gangtid på skolesiden</td><td>Til fanen lukkes</td></tr>
                     <tr><td><code>skolekartet.kart, skolekartet.tilbake</code><br>sessionStorage</td><td>Kartet og listen slik de var, når du går tilbake fra en skoleside</td><td>Til fanen lukkes</td></tr>
                     <tr><td><code>skolekartet.feedback.…</code><br>sessionStorage</td><td>At du har svart på «Fant du det du lette etter?» på en side</td><td>Til fanen lukkes</td></tr>
@@ -81,6 +85,10 @@
                 </table>
             </div>
 
+            <h2 class="ds-heading" data-size="xs">Lenker du deler</h2>
+            <p class="ds-paragraph">Når du deler listen over lagrede skoler, inneholder lenken skolene, prioriteringene dere har valgt og notatene dere har skrevet. Adressen er aldri med. Den som får lenken, ser alt som står i den, og prioriteringene kan si noe om barnets behov. Del derfor lenken bare med dem du vil, og ikke skriv personopplysninger i notatene.</p>
+            <h2 class="ds-heading" data-size="xs">Opplesning</h2>
+            <p class="ds-paragraph">«Lytt til siden» bruker talesyntesen i nettleseren eller telefonen din. Noen nettlesere bruker stemmer på nett, og da sender nettleseren teksten på siden til leverandøren av stemmen. Vi får ikke vite noe om det.</p>
             <h2 class="ds-heading" data-size="xs">Tilbakemeldinger</h2>
             <p class="ds-paragraph">Det er frivillig å sende tilbakemelding. Svar på «Fant du det du lette etter?» og meldinger fra tilbakemeldingsskjemaet sendes via Formspree (Formspree Inc., USA), som behandler dem på våre vegne. Med svaret følger adressen til siden og sidetittelen. E-postadressen din følger bare med hvis du selv skriver den inn. Formspree registrerer også IP-adressen din. Formspree lagrer data hos Amazon Web Services i USA og oppgir at overføringen bygger på EUs standardkontraktsklausuler.</p>
             <p class="ds-paragraph">Vi bruker tilbakemeldingene bare til å rette feil, forbedre Skolekartet og svare deg hvis du har oppgitt e-post. Grunnlaget er vår berettigede interesse i å drive en tjeneste som fungerer (personvernforordningen artikkel 6 nr. 1 bokstav f). Vi publiserer ikke tilbakemeldinger og deler dem ikke med andre. Vi beholder dem så lenge de er nyttige for å forbedre tjenesten, og sletter dem når de ikke lenger trengs. Du kan når som helst be oss slette en tilbakemelding du har sendt.</p>

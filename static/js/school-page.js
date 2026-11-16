@@ -188,177 +188,200 @@
                     <td class="num">${national === undefined || national === null ? '–' : formatDecimal(national)}</td></tr>`;
         }).join('');
 
-    // Shortcuts to each part of the page, as in the Røde Kors "snarveier" block
-    const careLabel = isOslo ? 'AKS' : 'SFO';
     // Only what is about this school: AKS links from the school's website (Oslo) and the school's
     // groups for newcomers (Oslo). The general texts are on skolefritid and ny-i-norge.
     const showCare = hasBarnetrinn && isPublic && isOslo;
     const showNew = isPublic && isOslo;
-    const shortcuts = [
-        ['om-skolen', 'Om skolen'],
-        ['resultater', 'Resultater'],
-        ['kart', 'Kart'],
-        ['aktiviteter', 'Anlegg'],
-        ['mat', 'Mat'],
-        showCare ? ['etter-skoletid', careLabel] : null,
-        showNew ? ['ny-i-norge', 'Ny i Norge'] : null
-    ].filter(Boolean);
 
-    // Everything the top of the page needs is loaded first, and the page is drawn once, so the banner does not
+    // Everything the top of the page needs is loaded first, and the page is drawn once, so the head does not
     // grow when the address and links arrive (the loading placeholder holds the place until then)
     const [details, unit] = await Promise.all([detailsRequest, unitRequest]);
     root.removeAttribute('aria-busy');
+    // The page is full width (Figma C6): breadcrumbs, head and summary run edge to edge, the text in a 1120 px column
+    document.getElementById('main').classList.add('page--school');
+
+    // The page as in Figma, section 8 «Kombinert» (C6 · Skoleside): breadcrumbs, the head with the photo, a summary
+    // in the green band (the three numbers in words, what is worth knowing, questions to ask the school), then the
+    // sections with «På denne siden» beside them. Only what a source says about this school: the parts of the design
+    // we have no data for (step-free access, transport, deadlines, how well the school fits the family's choices)
+    // are left out rather than filled with guesses.
+    const reach = details.contact || {};
+    const addressText = unitAddress(unit);
+    const phoneText = reach.phone ? reach.phone.replace(/^(\d{2})(\d{2})(\d{2})(\d{2})$/, '$1 $2 $3 $4') : null;
+    const levelText = otherLevel ? t('Barne- og ungdomsskole · 1.–10. trinn')
+        : school.schoolType === 'barneskole' ? t('Barneskole · 1.–7. trinn') : t('Ungdomsskole · 8.–10. trinn');
+    const kicker = [levelText, ...tags, t('{kommune} kommune', { kommune: escapeHtml(school.kommune) })].join(' · ');
+    const n = levelNumbers([school]);
+    const mobWord = mobbingWord(n.mob, n.national);
+    const tocItems = [
+        ['oppsummering', 'Oppsummering'],
+        ['kart', 'Skolevei'],
+        ['trivsel-og-mobbing', 'Trivsel og mobbing'],
+        ['resultater', 'Resultater'],
+        ['kontakt', 'Kontakt'],
+        ['mer-om-skolen', 'Mer om skolen']
+    ];
     root.innerHTML = `
-        <section class="school-banner" aria-labelledby="schoolName">
-            ${saveButtonHtml(schoolKey(school), 'school-banner__save')}
-            <div class="school-banner__media" id="schoolMedia">${mediaPlaceholder()}</div>
-            <div class="school-banner__body">
-                <p class="school-banner__kicker">${escapeHtml(otherLevel ? t('Barne- og ungdomsskole (1.–10. trinn)') : typeLabel)} · <a class="ds-link" href="${I18N.href(`./?kommune=${encodeURIComponent(school.kommune)}`)}">${t('{kommune} kommune', { kommune: escapeHtml(school.kommune) })}</a></p>
-                <h1 class="ds-heading" data-size="lg" id="schoolName">${escapeHtml(school.name)}</h1>
-                <ul class="school-banner__tags" id="schoolTags" aria-label="${t('Kjennetegn')}">
-                    ${tags.map(tag => `<li><span class="ds-tag" data-color="neutral" data-size="sm">${tag}</span></li>`).join('')}
-                </ul>
-                <div class="school-banner__info">
-                    <!-- Contact (address, email, phone, each with a small button to act on it) on the left;
-                         website and "Følg skolen" under each other on the right -->
-                    <dl class="school-banner__facts">
-                        <div>
-                            <dt class="ds-sr-only">${t('Kontakt')}</dt>
-                            <dd><ul class="school-contact" id="bannerContactList">
-                                <li><span id="bannerAddress">${t('Henter adresse…')}</span></li>
-                            </ul></dd>
-                        </div>
-                        <div id="bannerContact" hidden>
-                            <dt>Nettside</dt>
-                            <dd id="bannerContactLinks"></dd>
-                        </div>
-                        <div id="bannerFollow" hidden>
-                            <dt>Følg skolen</dt>
-                            <dd><ul class="school-banner__links" id="bannerFollowLinks"></ul></dd>
-                        </div>
-                    </dl>
-                    <!-- Share and Google Maps, at the bottom right -->
-                    <div class="school-banner__actions">
-                        <button type="button" class="ds-button" data-variant="tertiary" data-size="sm" id="bannerShare">${icon('link')}<span>${t('Del')}</span></button>
-                        <a class="ds-button" data-variant="tertiary" data-size="sm" id="bannerGoogle" target="_blank" rel="noopener"
-                           href="${googleMapsUrl(`${school.name}, ${school.kommune}`)}">${icon('externalLink')}<span>Google Maps</span></a>
-                    </div>
+        <nav class="breadcrumbs" aria-label="${t('Du er her')}">
+            <ol>
+                <li><a class="ds-link" href="${I18N.href('./')}">${t('Finn skole')}</a></li>
+                <li><a class="ds-link" href="${I18N.href(`./?kommune=${encodeURIComponent(school.kommune)}`)}">${t('Skoler i {kommune} kommune', { kommune: escapeHtml(school.kommune) })}</a></li>
+                <li aria-current="page">${escapeHtml(school.name)}</li>
+            </ol>
+        </nav>
+
+        <section class="school-head" aria-labelledby="schoolName">
+            <div class="school-head__body">
+                <p class="school-head__kicker">${kicker}</p>
+                <h1 class="school-head__title" id="schoolName">${escapeHtml(school.name)}</h1>
+                ${addressText || phoneText ? `<p class="school-head__place">${[addressText ? escapeHtml(addressText) : null, phoneText ? escapeHtml(phoneText) : null].filter(Boolean).join(' · ')}</p>` : ''}
+                <ul class="school-head__tags" id="schoolTags" aria-label="${t('Kjennetegn')}"></ul>
+                <div class="school-head__actions">
+                    ${saveButtonHtml(schoolKey(school), 'school-head__save', true)}
+                    <a class="ds-button" data-variant="secondary" href="${I18N.href('sammenlign')}">${icon('arrowCirclepath')}<span>${t('Sammenlign')}</span></a>
+                    <button type="button" class="ds-button" data-variant="secondary" id="bannerShare">${icon('link')}<span>${t('Del')}</span></button>
+                    <button type="button" class="ds-button" data-variant="secondary" id="headPrint">${icon('openBook')}<span>${t('Skriv ut')}</span></button>
+                </div>
+            </div>
+            <div class="school-head__media" id="schoolMedia">${mediaPlaceholder()}</div>
+        </section>
+
+        <section class="school-recap" id="oppsummering" aria-labelledby="summaryHeading">
+            <div class="school-recap__inner">
+                <h2 class="school-recap__title" id="summaryHeading">${t('Oppsummering')}</h2>
+                ${summaryTilesHtml(n)}
+                <div class="school-recap__cards">
+                    ${summaryFactsHtml(details, n, mobWord)}
+                    ${questionsHtml(mobWord, reach)}
                 </div>
             </div>
         </section>
 
-        <nav class="snarveier" aria-labelledby="snarveierLabel">
-            <h2 class="ds-sr-only" id="snarveierLabel">Snarveier</h2>
-            <ul class="snarveier__list">
-                ${shortcuts.map(([id, label]) => `<li><a class="ds-link" href="#${id}">${icon('arrowDown')}${t(label)}</a></li>`).join('')}
-            </ul>
-        </nav>
+        <div class="school-layout">
+            <nav class="page-toc" aria-labelledby="tocHeading">
+                <h2 class="page-toc__title" id="tocHeading">${t('På denne siden')}</h2>
+                <ul class="page-toc__list">${tocItems.map(([target, label]) => `<li><a href="#${target}">${t(label)}</a></li>`).join('')}</ul>
+            </nav>
 
-        <div class="school-page__body">
-            <section id="om-skolen" class="key-figures" aria-labelledby="omHeading">
-                <h2 class="ds-heading" data-size="sm" id="omHeading">Om skolen</h2>
-                <p class="ds-paragraph key-figures__lead">Nøkkeltall fra Nasjonalt skoleregister (Udir).</p>
-                <div id="schoolSummary"><p class="ds-paragraph" data-size="sm">Henter opplysninger fra Nasjonalt skoleregister…</p></div>
-            </section>
-
-            <section id="resultater" aria-labelledby="resultaterHeading">
-                <h2 class="ds-heading" data-size="sm" id="resultaterHeading">Resultater, trivsel og mobbing</h2>
-                <p class="ds-paragraph school-page__sources section-source" data-size="xs">${t('Kilde: {np} og {eu}, Utdanningsdirektoratet (NLOD).', {
-                    np: `<a class="ds-link" href="${school.schoolType === 'barneskole'
-                        ? 'https://www.udir.no/tall-og-forskning/statistikk/statistikk-grunnskole/nasjonale-prover-5.-trinn/'
-                        : 'https://www.udir.no/tall-og-forskning/statistikk/statistikk-grunnskole/nasjonale-prover-8.-og-9.-trinn/'}" target="_blank" rel="noopener">${t('Nasjonale prøver')}</a>`,
-                    eu: `<a class="ds-link" href="${ELEVUNDERSOKELSEN_URL}" target="_blank" rel="noopener">Elevundersøkelsen</a>` })}</p>
-                ${otherLevel ? levelSwitchHtml() : ''}
-                <p class="ds-paragraph school-stats__hint" data-size="sm">Velg et kort for å se utviklingen over tid.</p>
-                <div class="school-stats" role="tablist" aria-label="Velg hva du vil se over tid">
-                    ${statTab('np', 'Nasjonale prøver', resultCard, true)}
-                    ${statTab('trivsel', 'Trivsel', trivselCard, false)}
-                    ${statTab('mobbing', 'Mobbing', mobbingCard, false)}
-                    ${statTab('laerere', 'Lærertetthet', staffCard, false)}
-                </div>
-                <div class="stat-panel" role="tabpanel" id="panel-np" aria-labelledby="tab-np" tabindex="0">
-                    ${npDotPlotHtml()}
-                    <h3 class="ds-heading" data-size="xs">Nasjonale prøver over tid</h3>
-                    <div class="table-scroll">
-                        <table class="ds-table school-history" data-size="sm" data-border>
-                            <thead><tr><th>År</th><th class="num">Engelsk</th><th class="num">Lesing</th><th class="num">Regning</th><th class="num">Snitt</th><th class="num">Hele landet</th></tr></thead>
-                            <tbody>${rows}</tbody>
-                        </table>
+            <div class="school-page__body">
+                <!-- One map for the school and the walking time: the map card shows only the time,
+                     the address field and the details sit under the map -->
+                <section id="kart" class="walk school-section" aria-labelledby="kartHeading">
+                    <h2 class="ds-heading school-section__title" id="kartHeading" tabindex="-1">${t('Skolevei')}</h2>
+                    <p class="ds-paragraph school-page__sources section-source" data-size="xs">${t('Posisjon: {source}.', { source: t(LOCATION_SOURCE[school.locationSource] || 'åpne kilder') })}</p>
+                    <div class="school-map-wrap" id="gangtid">
+                        <div class="school-map" id="schoolMap" role="img" aria-label="${t('Kart som viser hvor {name} ligger', { name: escapeHtml(school.name) })}"></div>
+                        <div class="map-walk" id="mapWalk" aria-live="polite" hidden></div>
                     </div>
-                    <p class="ds-paragraph table-caption" data-size="xs">${t('Skalapoeng, {type}. Landsgjennomsnittet var 50 i 2022. * betyr at resultatet ikke er publisert. Resultater for 2026–27 kommer når Udir publiserer dem.', { type: typeLabel.toLowerCase() })}</p>
-                    ${worseLegend()}
-                </div>
-                <div class="stat-panel" role="tabpanel" id="panel-trivsel" aria-labelledby="tab-trivsel" tabindex="0" hidden>
-                    <p class="ds-paragraph">Henter tall…</p>
-                </div>
-                <div class="stat-panel" role="tabpanel" id="panel-mobbing" aria-labelledby="tab-mobbing" tabindex="0" hidden>
-                    <p class="ds-paragraph">Henter tall…</p>
-                </div>
-                <div class="stat-panel" role="tabpanel" id="panel-laerere" aria-labelledby="tab-laerere" tabindex="0" hidden>
-                    <p class="ds-paragraph">Henter tall…</p>
-                </div>
-                <div id="surveyAll"></div>
-            </section>
+                    <p class="ds-paragraph map-caption" data-size="xs" id="kretsCaption" hidden></p>
+                    <div class="walk-below" id="walkContent"></div>
+                    ${isOslo && hasBarnetrinn ? `<div id="skolevei" data-source-scope>${skoleveiHtml({})}</div>` : ''}
+                </section>
 
-            <!-- One map for the school and the walking time: the map card shows only the time,
-                 the address field and the details sit under the map -->
-            <section id="kart" class="walk" aria-labelledby="kartHeading">
-                <h2 class="ds-heading" data-size="sm" id="kartHeading" tabindex="-1">Kart og gangtid</h2>
-                <p class="ds-paragraph school-page__sources section-source" data-size="xs">${t('Posisjon: {source}.', { source: t(LOCATION_SOURCE[school.locationSource] || 'åpne kilder') })}</p>
-                ${isOslo && hasBarnetrinn ? `<div id="skolevei" data-source-scope>${skoleveiHtml({})}</div>` : ''}
-                <div class="school-map-wrap" id="gangtid">
-                    <div class="school-map" id="schoolMap" role="img" aria-label="${t('Kart som viser hvor {name} ligger', { name: escapeHtml(school.name) })}"></div>
-                    <div class="map-walk" id="mapWalk" aria-live="polite" hidden></div>
-                </div>
-                <p class="ds-paragraph map-caption" data-size="xs" id="kretsCaption" hidden></p>
-                <div class="walk-below" id="walkContent"></div>
-            </section>
+                <section id="trivsel-og-mobbing" class="school-section" aria-labelledby="trivselHeading">
+                    <h2 class="ds-heading school-section__title" id="trivselHeading">${t('Trivsel og mobbing')}</h2>
+                    <div id="wellbeing">${wellbeingHtml(details.elevundersokelsen, n, mobWord)}</div>
+                </section>
 
-            <section id="naerheten" aria-labelledby="nearbyHeading">
-                <h2 class="ds-heading" data-size="sm" id="nearbyHeading">Andre skoler i nærheten</h2>
-                ${nearbyHtml()}
-            </section>
+                <section id="resultater" class="school-section" aria-labelledby="resultaterHeading">
+                    <h2 class="ds-heading school-section__title" id="resultaterHeading">${t('Resultater')}</h2>
+                    ${resultsLeadHtml()}
+                    <details class="more-item more-item--table" data-source-scope>
+                        <summary><span>${t('Vis tabell for alle fag og år')}</span>${icon('chevronDown')}</summary>
+                        <div class="more-item__body">
+                            <p class="ds-paragraph school-page__sources" data-size="xs">${t('Kilde: {np} og {eu}, Utdanningsdirektoratet (NLOD).', {
+                                np: `<a class="ds-link" href="${school.schoolType === 'barneskole'
+                                    ? 'https://www.udir.no/tall-og-forskning/statistikk/statistikk-grunnskole/nasjonale-prover-5.-trinn/'
+                                    : 'https://www.udir.no/tall-og-forskning/statistikk/statistikk-grunnskole/nasjonale-prover-8.-og-9.-trinn/'}" target="_blank" rel="noopener">${t('Nasjonale prøver')}</a>`,
+                                eu: `<a class="ds-link" href="${ELEVUNDERSOKELSEN_URL}" target="_blank" rel="noopener">Elevundersøkelsen</a>` })}</p>
+                            ${otherLevel ? levelSwitchHtml() : ''}
+                            <p class="ds-paragraph school-stats__hint" data-size="sm">Velg et kort for å se utviklingen over tid.</p>
+                            <div class="school-stats" role="tablist" aria-label="Velg hva du vil se over tid">
+                                ${statTab('np', 'Nasjonale prøver', resultCard, true)}
+                                ${statTab('trivsel', 'Trivsel', trivselCard, false)}
+                                ${statTab('mobbing', 'Mobbing', mobbingCard, false)}
+                                ${statTab('laerere', 'Lærertetthet', staffCard, false)}
+                            </div>
+                            <div class="stat-panel" role="tabpanel" id="panel-np" aria-labelledby="tab-np" tabindex="0">
+                                ${npDotPlotHtml()}
+                                <h3 class="ds-heading" data-size="xs">Nasjonale prøver over tid</h3>
+                                <div class="table-scroll">
+                                    <table class="ds-table school-history" data-size="sm" data-border>
+                                        <thead><tr><th>År</th><th class="num">Engelsk</th><th class="num">Lesing</th><th class="num">Regning</th><th class="num">Snitt</th><th class="num">Hele landet</th></tr></thead>
+                                        <tbody>${rows}</tbody>
+                                    </table>
+                                </div>
+                                <p class="ds-paragraph table-caption" data-size="xs">${t('Skalapoeng, {type}. Landsgjennomsnittet var 50 i 2022. * betyr at resultatet ikke er publisert. Resultater for 2026–27 kommer når Udir publiserer dem.', { type: typeLabel.toLowerCase() })}</p>
+                                ${worseLegend()}
+                            </div>
+                            <div class="stat-panel" role="tabpanel" id="panel-trivsel" aria-labelledby="tab-trivsel" tabindex="0" hidden>
+                                <p class="ds-paragraph">Henter tall…</p>
+                            </div>
+                            <div class="stat-panel" role="tabpanel" id="panel-mobbing" aria-labelledby="tab-mobbing" tabindex="0" hidden>
+                                <p class="ds-paragraph">Henter tall…</p>
+                            </div>
+                            <div class="stat-panel" role="tabpanel" id="panel-laerere" aria-labelledby="tab-laerere" tabindex="0" hidden>
+                                <p class="ds-paragraph">Henter tall…</p>
+                            </div>
+                            <div id="surveyAll"></div>
+                        </div>
+                    </details>
+                </section>
 
-            <section id="aktiviteter" class="icon-block" aria-labelledby="aktiviteterHeading">
-                <h2 class="ds-heading" data-size="sm" id="aktiviteterHeading">Aktiviteter og anlegg</h2>
-                <div id="aktiviteterContent"><p class="ds-paragraph" data-size="sm">${t('Henter…')}</p></div>
-            </section>
+                <section id="kontakt" class="school-section" aria-labelledby="kontaktHeading">
+                    <h2 class="ds-heading school-section__title" id="kontaktHeading">${t('Kontakt')}</h2>
+                    <div class="contact-card">
+                        <h3 class="contact-card__title">${t('Kontakt skolen')}</h3>
+                        <ul class="school-contact" id="bannerContactList">
+                            <li><span id="bannerAddress">${t('Henter adresse…')}</span></li>
+                        </ul>
+                        <div class="contact-card__actions">
+                            ${reach.phone ? `<a class="ds-button" data-variant="primary" href="tel:+47${escapeHtml(reach.phone)}" data-call="${escapeHtml(school.name)}">${icon('phone')}<span>${t('Ring {phone}', { phone: escapeHtml(phoneText) })}</span></a>` : ''}
+                            ${reach.email ? `<a class="ds-button" data-variant="secondary" href="mailto:${escapeHtml(reach.email)}">${icon('envelopeClosed')}<span>${t('Send e-post')}</span></a>` : ''}
+                        </div>
+                        <dl class="contact-card__links">
+                            <div id="bannerContact" hidden>
+                                <dt>${t('Nettside')}</dt>
+                                <dd id="bannerContactLinks"></dd>
+                            </div>
+                            <div id="bannerFollow" hidden>
+                                <dt>${t('Følg skolen')}</dt>
+                                <dd><ul class="school-banner__links" id="bannerFollowLinks"></ul></dd>
+                            </div>
+                        </dl>
+                        <p class="ds-paragraph contact-card__map"><a class="ds-link" id="bannerGoogle" target="_blank" rel="noopener"
+                            href="${googleMapsUrl(`${school.name}, ${school.kommune}`)}">${t('Åpne i Google Maps')}${icon('externalLink')}</a></p>
+                    </div>
+                </section>
 
-            <section id="mat" class="icon-block" aria-labelledby="matHeading">
-                <h2 class="ds-heading" data-size="sm" id="matHeading">Mat</h2>
-                <div id="matContent"><p class="ds-paragraph" data-size="sm">${t('Henter…')}</p></div>
-            </section>
-
-            ${showCare ? `<section id="etter-skoletid" aria-labelledby="careHeading">
-                <h2 class="ds-heading" data-size="sm" id="careHeading">${isOslo ? 'Aktivitetsskolen (AKS)' : 'Skolefritidsordning (SFO)'}</h2>
-                <div id="careContent">${careHtml({})}</div>
-            </section>` : ''}
-
-            ${showNew ? `<section id="ny-i-norge" aria-labelledby="newHeading">
-                <h2 class="ds-heading" data-size="sm" id="newHeading">Ny i Norge</h2>
-                <div id="newContent"><p class="ds-paragraph" data-size="sm">${t('Henter…')}</p></div>
-            </section>` : ''}
-
-
-            <!-- Where the pupils go after this school (or come from): last, with the last shortcut -->
-            <section id="videre" aria-labelledby="videreHeading" hidden>
-                <h2 class="ds-heading" data-size="sm" id="videreHeading"></h2>
-                <div class="next-school" id="videreContent"></div>
-            </section>
-
-            <section id="registeret" aria-labelledby="registerHeading">
-                <h2 class="ds-heading" data-size="sm" id="registerHeading">Mer fra skoleregisteret</h2>
-                <div id="registerSections"></div>
-            </section>
+                <section id="mer-om-skolen" class="school-section more" aria-labelledby="moreHeading">
+                    <h2 class="ds-heading school-section__title" id="moreHeading">${t('Mer om skolen')}</h2>
+                    ${moreItem('om-skolen', keyFiguresTitle(unit), `<div id="schoolSummary"><p class="ds-paragraph" data-size="sm">${t('Henter opplysninger fra Nasjonalt skoleregister…')}</p></div>`)}
+                    ${moreItem('aktiviteter', t('Aktiviteter og anlegg'), `<div id="aktiviteterContent"></div>`)}
+                    ${moreItem('mat', t('Mat'), `<div id="matContent"></div>`)}
+                    ${showCare ? moreItem('etter-skoletid', isOslo ? t('Aktivitetsskolen (AKS)') : t('Skolefritidsordning (SFO)'), `<div id="careContent">${careHtml({})}</div>`) : ''}
+                    ${showNew ? moreItem('ny-i-norge', t('Ny i Norge'), `<div id="newContent"></div>`) : ''}
+                    ${moreItem('naerheten', t('Andre skoler i nærheten'), nearbyHtml())}
+                    <!-- Where the pupils go after this school (or come from), when Oslo kommune says so -->
+                    <details class="more-item" id="videre" data-source-scope hidden>
+                        <summary><span id="videreHeading"></span>${icon('chevronDown')}</summary>
+                        <div class="more-item__body next-school" id="videreContent"></div>
+                    </details>
+                    ${moreItem('registeret', t('Registeropplysninger'), `<div id="registerSections"></div>`)}
+                </section>
+            </div>
         </div>`;
 
     showMap(school);
     renderWalk(rememberedAddress());
     bindStatTabs();
-    root.querySelector('.school-banner__save').addEventListener('click', event => {
+    bindToc();
+    root.querySelector('.school-head__save').addEventListener('click', event => {
         updateSaveButton(event.currentTarget, toggleSaved(schoolKey(school)));
     });
     document.getElementById('bannerShare').addEventListener('click', event => shareSchoolPage(school, event.currentTarget));
+    document.getElementById('headPrint').addEventListener('click', () => window.print());
+    bindQuestions();
     showSurveyHistory(details.survey || {});
     showStaffHistory(details.gsi);
     showComparisons(details.elevundersokelsen);
@@ -381,6 +404,180 @@
     renderNextSchool(details);
     document.getElementById('aktiviteterContent').innerHTML = aktiviteterHtml(details);
     document.getElementById('matContent').innerHTML = matHtml(details);
+
+    // ── C6: the head, the summary and the sections ─────────────────────
+    function unitAddress(entry) {
+        const a = entry && entry.Beliggenhetsadresse;
+        return a && a.Adresse ? `${a.Adresse}, ${a.Postnummer || ''} ${titleCase(a.Poststed)}`.trim() : null;
+    }
+
+    // «Nøkkeltall (658 elever, 136 ansatte, bokmål)», from the register
+    function keyFiguresTitle(entry) {
+        const parts = entry ? [
+            entry.Elevtall ? t('{count} elever', { count: new Intl.NumberFormat(I18N.locale).format(entry.Elevtall) }) : null,
+            entry.AntallAnsatte ? t('{count} ansatte', { count: new Intl.NumberFormat(I18N.locale).format(entry.AntallAnsatte) }) : null,
+            entry.Maalform ? escapeHtml(entry.Maalform.Navn).toLowerCase() : null
+        ].filter(Boolean) : [];
+        return parts.length ? `${t('Nøkkeltall')} (${parts.join(', ')})` : t('Nøkkeltall');
+    }
+
+    // One fold in «Mer om skolen»: the title as a row with a chevron, closed by default
+    function moreItem(id, title, body) {
+        return `<details class="more-item" id="${id}" data-source-scope>
+                <summary><span>${title}</span>${icon('chevronDown')}</summary>
+                <div class="more-item__body">${body}</div>
+            </details>`;
+    }
+
+    // The three numbers in words, as on the cards in the list: «Over snittet (49,3)», against the national average
+    function summaryTilesHtml(numbers) {
+        const tile = (label, value, word, compare) => {
+            const [text, tone] = word || ['Ikke oppgitt', 'none'];
+            return `<div class="summary-tile summary-tile--${tone}">
+                    <span class="summary-tile__label">${t(label)}</span>
+                    <strong class="summary-tile__value">${value}</strong>
+                    <span class="summary-tile__word">${t(text)}${compare ? ` (${compare})` : ''}</span>
+                </div>`;
+        };
+        const sources = [
+            school.hasData ? t('Nasjonale prøver {year}, {type}', { year, type: typeLabel.toLowerCase() }) : null,
+            school.trivsel || school.mobbing ? t('Elevundersøkelsen {year}, {trinn}. trinn', { year: (school.trivsel || school.mobbing).year, trinn: trinnShown }) : null
+        ].filter(Boolean);
+        return `<div class="summary-tiles">
+                ${tile('Nasjonale prøver', numbers.avg === null ? '–' : formatDecimal(numbers.avg), SCORE_WORD[scoreBand(numbers.avg, numbers.avgNational)], nationalNow ? formatDecimal(nationalNow) : '')}
+                ${tile('Trivsel', numbers.triv === null ? '–' : t('{value} av 5', { value: formatDecimal(numbers.triv) }), trivselWord(numbers.triv, numbers.trivNational), numbers.trivNational === null ? '' : formatDecimal(numbers.trivNational))}
+                ${tile('Mobbing', numbers.mob === null ? '–' : formatPercent(numbers.mob), mobWord && mobWord[0] === 'Over dobbelt så høyt' ? ['Over dobbelt så høyt som landet', 'warn'] : mobWord, '')}
+            </div>
+            ${sources.length ? `<p class="summary-tiles__source">${t('Kilde:')} ${sources.join(' · ')}</p>` : ''}`;
+    }
+
+    // What is worth knowing at a glance, each from a source named further down the page
+    function summaryFactsHtml(info, numbers, word) {
+        const facts = [];
+        if (info.hjertesone) facts.push(['good', t('Hjertesone: bilfri sone ved skolen')]);
+        if (word && word[0] === 'Over dobbelt så høyt') {
+            facts.push(['warn', t('Verdt å sjekke: Mobbing {share} – spør hva skolen gjør', { share: formatPercent(numbers.mob) })]);
+        }
+        if (info.velkomst && info.velkomst.groups && info.velkomst.groups.length) facts.push(['good', t('Mottaksgruppe for elever som er nye i Norge')]);
+        if (info.anlegg && info.anlegg.football) facts.push(['neutral', t('Fotballbane ved skolen')]);
+        if (school.gsi && school.gsi.elever) facts.push(['neutral', t('{count} elever', { count: new Intl.NumberFormat(I18N.locale).format(school.gsi.elever) })]);
+        return `<div class="summary-card summary-facts">
+                <h3 class="summary-card__title">${t('Verdt å vite')}</h3>
+                ${facts.length ? `<ul class="summary-facts__list">${facts.map(([tone, text]) => `<li class="summary-fact summary-fact--${tone}">${text}</li>`).join('')}</ul>`
+                    : `<p class="ds-paragraph" data-size="sm">${t('Vi har ikke flere opplysninger om denne skolen.')}</p>`}
+                <p class="summary-facts__note">${t('Kilde og dato for hvert punkt står lenger ned på siden.')}</p>
+            </div>`;
+    }
+
+    // Questions to ask the school: the first one from the bullying figures, the others always worth asking
+    function questionsHtml(word, contact) {
+        const questions = schoolQuestions(school, word);
+        return `<div class="summary-card summary-questions">
+                <h3 class="summary-card__title">${t('Spørsmål å stille skolen')}</h3>
+                <ol class="summary-questions__list" id="schoolQuestions">${questions.map(q => `<li>${q}</li>`).join('')}</ol>
+                <div class="summary-questions__actions">
+                    ${contact.phone ? `<a class="ds-button" data-variant="primary" href="tel:+47${escapeHtml(contact.phone)}" data-call="${escapeHtml(school.name)}">${icon('phone')}<span>${t('Ring skolen')}</span></a>` : ''}
+                    <button type="button" class="ds-button" data-variant="secondary" id="copyQuestions">${icon('link')}<span>${t('Kopier spørsmålene')}</span></button>
+                </div>
+            </div>`;
+    }
+
+    function bindQuestions() {
+        const button = document.getElementById('copyQuestions');
+        button.addEventListener('click', async () => {
+            const text = [...document.querySelectorAll('#schoolQuestions li')].map((li, i) => `${i + 1}. ${li.textContent}`).join('\n');
+            const count = document.querySelectorAll('#schoolQuestions li').length;
+            if (typeof UI !== 'undefined') { UI.copyText(`${school.name}\n${text}`, 'questions', count); return; }
+            try {
+                await navigator.clipboard.writeText(`${school.name}\n${text}`);
+                button.lastChild.textContent = t('Spørsmålene er kopiert');
+            } catch (error) {
+                window.prompt(t('Kopier spørsmålene:'), text);
+            }
+        });
+    }
+
+    // «Trivsel og mobbing»: the share in words, the school beside the kommune and the country, and the trend
+    function wellbeingHtml(survey, numbers, word) {
+        if (!school.mobbing && !school.trivsel) {
+            return `<p class="ds-paragraph">${t('Udir har ikke publisert trivsel og mobbing for skolen, ofte fordi for få elever svarte.')}</p>`;
+        }
+        const parts = [];
+        const mob = school.mobbing;
+        if (mob) {
+            const entry = surveyEntry(survey, 'mobbing', mob.year);
+            const kommuneValue = entry && entry.kommune !== null && entry.kommune !== undefined ? entry.kommune : null;
+            const history = (((survey && survey.rows.mobbing) || {})[trinnShown] || []).filter(r => r.value !== null && r.value !== undefined);
+            const rising = history.length >= 3 && history.every((r, i) => i === 0 || r.value > history[i - 1].value);
+            const relation = word ? {
+                'Over dobbelt så høyt': t('Det er over dobbelt så høyt som i hele landet'),
+                'Mer enn snittet': t('Det er mer enn i hele landet'),
+                'Mindre enn snittet': t('Det er mindre enn i hele landet'),
+                'Som snittet': t('Det er omtrent som i hele landet')
+            }[word[0]] : '';
+            const trend = rising ? ` ${t('og har økt de siste {count} årene ({values}).', { count: history.length, values: history.map(r => formatPercent(r.value)).join(' → ') })}` : '.';
+            parts.push(`<p class="ds-paragraph wellbeing__lead">${t('{share} av elevene på {trinn}. trinn sier de blir mobbet to til tre ganger i måneden eller oftere.', { share: formatPercent(mob.share), trinn: mob.trinn })}${relation ? ` ${relation}${trend}` : ''}</p>`);
+            const bars = [[escapeHtml(school.name), mob.share, true], [escapeHtml((survey && survey.kommune) || school.kommune), kommuneValue, false], [t('Hele landet'), (entry && entry.national) || mob.national, false]]
+                .filter(([, value]) => value !== null && value !== undefined);
+            const max = Math.max(...bars.map(([, value]) => value));
+            parts.push(`<figure class="wellbeing__bars">
+                    ${bars.map(([label, value, own]) => `<div class="bar-row"><span class="bar-row__label">${label}</span>
+                        <span class="bar-row__track"><span class="bar-row__bar${own ? ' bar-row__bar--own' : ''}" style="width:${Math.max(4, value / max * 100)}%"></span></span>
+                        <span class="bar-row__value">${formatPercent(value)}</span></div>`).join('')}
+                    <figcaption>${t('Elevundersøkelsen {year}, {trinn}. trinn. Udir skjuler tall for små grupper.', { year: mob.year, trinn: mob.trinn })}</figcaption>
+                </figure>`);
+        }
+        const triv = school.trivsel;
+        if (triv) {
+            const entry = surveyEntry(survey, 'trivsel', triv.year);
+            const kommuneValue = entry && entry.kommune !== null && entry.kommune !== undefined ? entry.kommune : null;
+            const national = entry && entry.national !== null && entry.national !== undefined ? entry.national : null;
+            const tWord = trivselWord(triv.score, triv.national);
+            const where = [kommuneValue !== null ? `${escapeHtml((survey && survey.kommune) || school.kommune)} (${formatDecimal(kommuneValue)})` : null,
+                           national !== null ? t('landet ({value})', { value: formatDecimal(national) }) : null].filter(Boolean).join(` ${t('og')} `);
+            const relation = tWord && where ? ` – ${t({ 'Over snittet': 'over', 'Under snittet': 'under', 'Som snittet': 'omtrent som' }[tWord[0]])} ${where}` : '';
+            parts.push(`<p class="ds-paragraph">${t('Trivsel: {value} av 5', { value: formatDecimal(triv.score) })}${relation}.</p>`);
+        }
+        if (word && word[0] === 'Over dobbelt så høyt') {
+            parts.push(`<div class="ds-alert" data-color="warning">
+                    <h3 class="ds-heading" data-size="2xs">${t('Verdt å spørre skolen om')}</h3>
+                    <p class="ds-paragraph">${t('Hva gjør dere for å forebygge mobbing nå, og hvordan følger dere opp elever som blir mobbet?')}</p>
+                </div>`);
+        }
+        return parts.join('');
+    }
+
+    // «Resultater»: the national tests in one sentence; the tables fold away under it
+    function resultsLeadHtml() {
+        if (!school.hasData) {
+            return `<p class="ds-paragraph">${t('Udir har ikke publisert resultater for skolen, ofte fordi gruppen er liten.')}</p>`;
+        }
+        const diff = nationalNow ? school.average - nationalNow : null;
+        const words = diff === null ? '' : diff >= 3 ? 'over landssnittet' : diff >= 0.5 ? 'litt over landssnittet' : diff > -0.5 ? 'omtrent som landssnittet'
+            : diff > -3 ? 'litt under landssnittet' : 'under landssnittet';
+        const grade = school.schoolType === 'barneskole' ? '5. trinn' : t('ungdomstrinnet');
+        return `<p class="ds-paragraph results-lead">${t('Nasjonale prøver på {grade}:', { grade })} ${words ? `${t(words)} (${formatDecimal(school.average)} ${t('mot')} ${formatDecimal(nationalNow)}).` : `${formatDecimal(school.average)}.`} ${t('Forskjeller på 1–2 poeng er usikre.')}</p>
+            <p class="ds-paragraph results-note" data-size="sm">${t('Elever med individuelt tilrettelagt opplæring kan være fritatt fra prøvene. Tallene sier derfor lite om hvordan skolen følger dem opp.')}</p>`;
+    }
+
+    // «På denne siden»: the section in view is marked, as in the design. A link to a fold in «Mer om skolen»
+    // (such as «Mer fra skoleregisteret») opens it.
+    function bindToc() {
+        root.addEventListener('click', event => {
+            const link = event.target.closest('a[href^="#"]');
+            const target = link && document.getElementById(link.getAttribute('href').slice(1));
+            if (target && target.tagName === 'DETAILS') target.open = true;
+        });
+        const links = [...root.querySelectorAll('.page-toc__list a')];
+        const sections = links.map(a => document.getElementById(a.getAttribute('href').slice(1))).filter(Boolean);
+        if (!('IntersectionObserver' in window)) return;
+        const mark = id => links.forEach(a => a.toggleAttribute('aria-current', a.getAttribute('href') === `#${id}`));
+        const observer = new IntersectionObserver(entries => {
+            const visible = entries.filter(e => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+            if (visible) mark(visible.target.id);
+        }, { rootMargin: '-20% 0px -70% 0px' });
+        sections.forEach(section => observer.observe(section));
+    }
 
     // Small icon link to where the figures come from
 
@@ -826,7 +1023,7 @@
     }
 
     // ── Icon blocks (Figma "ikonblokk"): a tile only where a source names this school ──
-    function tilesHtml(tiles) {
+    function iconTilesHtml(tiles) {
         return `<ul class="icon-block__grid">${tiles.map(tile => {
             const inner = `<span class="icon-tile__icon" aria-hidden="true">${tile.icon}</span>
                 <span class="icon-tile__label">${tile.label}</span>
@@ -840,7 +1037,7 @@
     // The block's own text, "Les mer" on the right and the source line
     function iconBlockHtml(tiles, empty, notes, more, sources) {
         return `
-            ${tiles.length ? tilesHtml(tiles) : `<p class="ds-paragraph">${empty}</p>`}
+            ${tiles.length ? iconTilesHtml(tiles) : `<p class="ds-paragraph">${empty}</p>`}
             ${notes.map(note => `<p class="ds-paragraph" data-size="sm">${note}</p>`).join('')}
             ${more ? `<p class="icon-block__more"><a class="ds-link" href="${escapeHtml(safeUrl(more))}" target="_blank" rel="noopener">${t('Les mer')}${icon('chevronRight')}</a></p>` : ''}
             <p class="ds-paragraph school-page__sources section-source" data-size="xs">${t('Kilde:')} ${sources.join('; ')}.</p>`;
@@ -909,7 +1106,7 @@
         const notes = [];
         if (isOslo && showCare) {
             tiles.push({ icon: icon('trayFood'), label: t('Mat på AKS'), href: AKS_PAGE,
-                         text: t('Et mellommåltid etter skolelunsjen. Matpengene er med i prisen.') });
+                         text: t('Matpengene er med i prisen, og hver skole bestemmer selv hva barna får.') });
             // Facts read from the school's own AKS pages; without them, a link to the menu
             const food = details.aksMat;
             const facts = (food && food.facts) || {};
@@ -980,10 +1177,6 @@
         document.getElementById('videreHeading').textContent = t(heading);
         document.getElementById('videreContent').innerHTML = html;
         document.getElementById('videre').hidden = false;
-        const list = document.querySelector('.snarveier__list');
-        const old = list.querySelector('a[href="#videre"]');
-        if (old) old.parentElement.remove();
-        list.insertAdjacentHTML('beforeend', `<li><a class="ds-link" href="#videre">${icon('arrowDown')}${t(heading)}</a></li>`);
     }
 
 
@@ -1239,7 +1432,7 @@
         const map = L.map('schoolMap', { center: [s.lat, s.lng], zoom: 15, scrollWheelZoom: false, zoomControl: false });
         L.control.zoom({ position: 'bottomright' }).addTo(map);
         schoolMap = map;
-        baseMapLayer().addTo(map);
+        addBaseMap(map);
         map.attributionControl.setPrefix(false);
         const size = s.schoolType === 'ungdomsskole' ? 40 : 30;
         L.marker([s.lat, s.lng], {

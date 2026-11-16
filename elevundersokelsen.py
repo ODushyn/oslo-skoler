@@ -80,8 +80,11 @@ def refresh_cache(path=CACHE_FILE):
              f'_EierformID(-10)_KjoennID(-10)')
     rows = _fetch_json(f'{API}/data?filter={query}&format=0')
 
-    schools = {}
+    schools, national = {}, {}
     for row in rows:
+        if row.get('EnhetNivaa') == 1 and row.get('Nasjonaltkode') == 'I':
+            national[row['TrinnKode']] = _number(row.get('Score'))
+            continue
         if row.get('EnhetNivaa') != 4 or not row.get('Organisasjonsnummer'):
             continue
         entry = schools.setdefault(row['Organisasjonsnummer'], {})
@@ -90,7 +93,7 @@ def refresh_cache(path=CACHE_FILE):
             'answers': _number(row.get('AntallBesvart')),
         }
 
-    data = {'year': latest['navn'], 'schools': dict(sorted(schools.items()))}
+    data = {'year': latest['navn'], 'national': national, 'schools': dict(sorted(schools.items()))}
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=0), encoding='utf-8')
     with_score = sum(1 for s in schools.values() for t in s.values() if t['score'] is not None)
@@ -259,7 +262,12 @@ def load_cache(path=CACHE_FILE):
     if not path.exists():
         print(f"{path} not found, downloading from Udir...")
         refresh_cache(path)
-    return json.loads(path.read_text(encoding='utf-8'))
+    cache = json.loads(path.read_text(encoding='utf-8'))
+    # National trivsel per trinn: saved since 2026-11; an older cache takes it from the history file
+    if not cache.get('national') and HISTORY_FILE.exists():
+        history = json.loads(HISTORY_FILE.read_text(encoding='utf-8')).get('trivsel', {}).get('national', {})
+        cache['national'] = {trinn: years.get(cache['year']) for trinn, years in history.items() if years.get(cache['year']) is not None}
+    return cache
 
 
 def trivsel_for(cache, orgnr, school_type):
@@ -271,7 +279,8 @@ def trivsel_for(cache, orgnr, school_type):
     if not result or result['score'] is None:
         return None
     return {'score': result['score'], 'trinn': trinn, 'year': cache['year'],
-            'answers': int(result['answers']) if result['answers'] else None}
+            'answers': int(result['answers']) if result['answers'] else None,
+            'national': cache.get('national', {}).get(trinn)}
 
 
 if __name__ == '__main__':

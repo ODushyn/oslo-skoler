@@ -19,7 +19,7 @@ function initMap() {
 
     // Base map: OpenFreeMap vector tiles (free, no API key), drawn by MapLibre GL
     // inside Leaflet. Attribution is required by OpenFreeMap / OpenMapTiles / OpenStreetMap.
-    baseMapLayer().addTo(map_a50579ea0c01426b15ce2ac53c4f579f);
+    addBaseMap(map_a50579ea0c01426b15ce2ac53c4f579f);
 
     map_a50579ea0c01426b15ce2ac53c4f579f.attributionControl.setPrefix(false);
     L.control.zoom({ position: 'topright' }).addTo(map_a50579ea0c01426b15ce2ac53c4f579f);

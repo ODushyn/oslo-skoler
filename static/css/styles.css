@@ -435,11 +435,47 @@ main:focus {
     border-radius: var(--ds-border-radius-sm);
 }
 
+/* Header v2: the three menu groups as buttons that open a dropdown, with a chevron; the group of the page
+   you are on is underlined like a current link */
+.site-primary__menu {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-size-1);
+    border: 0;
+    background: none;
+    font: inherit;
+    cursor: pointer;
+}
+
+.site-primary__menu[data-current="true"] {
+    color: var(--ds-color-brand1-text-default);
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-decoration-color: var(--ds-color-brand1-base-default);
+}
+
+.site-primary__chevron {
+    width: 1.1em;
+    height: 1.1em;
+}
+
 /* Below this width the links would run into the buttons on the right; they are in the menu as well */
 @media (max-width: 1279px) {
     .site-primary {
         display: none;
     }
+}
+
+/* From 1280 px the groups are in the middle of the header, so "Meny" is only for narrower screens */
+@media (min-width: 1280px) {
+    .site-nav .site-menu__button {
+        display: none;
+    }
+}
+
+/* "Visning" (theme): the label goes on narrow screens, like the other buttons in the header */
+.display-button.ds-button {
+    gap: var(--ds-size-2);
 }
 
 /* Below 1280 px the centred links are hidden: "Om fargefordelingen" stays in the header as its four colour
@@ -476,6 +512,26 @@ main:focus {
     flex-wrap: wrap; /* buttons move to the next line when the row is too narrow */
     align-items: flex-start;
     gap: var(--ds-size-2) var(--ds-size-4);
+}
+
+/* Trinn under the search: "Trinn:" and three chips in one row, wrapping on narrow screens. The legend is
+   for screen readers; the visible "Trinn:" sits in the row (a legend cannot be a flex item) */
+.level-switch {
+    margin: var(--ds-size-4) 0 0;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+}
+
+.level-switch__options {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ds-size-2);
+}
+
+.level-switch__label {
+    margin-inline-end: var(--ds-size-1);
 }
 
 /* The search field takes half the row (not narrower than 20rem); its messages stack under it */
@@ -921,7 +977,7 @@ main:focus {
 /* Three parts: what Skolekartet is, the service links, and feedback */
 .site-footer__grid {
     display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
     gap: var(--ds-size-6);
 }
 
@@ -2171,6 +2227,61 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 /* ── The address's own school (pilot), above the list ──────────────── */
 .results-pick {
     margin-bottom: var(--ds-size-5);
+}
+
+/* Before a search: how to start, in place of the list */
+.start-hint {
+    display: grid;
+    gap: var(--ds-size-3);
+}
+
+.start-hint[hidden],
+.school-list[hidden] {
+    display: none;
+}
+
+.start-hint .ds-heading {
+    margin: 0;
+}
+
+.start-hint__ways {
+    display: grid;
+    gap: var(--ds-size-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.start-hint__ways li {
+    display: grid;
+    gap: var(--ds-size-1);
+    padding: var(--ds-size-4);
+    border: 1px solid var(--ds-color-brand1-border-subtle);
+    border-radius: var(--ds-border-radius-md);
+    background: var(--ds-color-neutral-background-default);
+}
+
+.start-hint__map {
+    margin: 0;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+/* Phones only show the list, so the map tip is left out there */
+@media (max-width: 640px) {
+    .start-hint__map {
+        display: none;
+    }
+}
+
+/* "Se kretsgrensen på kartet" under the address's schools */
+.own-schools__map {
+    margin: 0;
+}
+
+.own-schools__map .ds-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-size-1);
 }
 
 .results-pick .results-note {
@@ -4102,3 +4213,4870 @@ body.has-page-feedback {
     gap: var(--ds-size-1);
 }
 
+/* ── Design from Figma section 10: search intro, «Vis bare», Liste/Kart, side column, cards with words ── */
+.search-panel__intro {
+    margin: calc(-1 * var(--ds-size-2)) 0 var(--ds-size-4);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.search-panel__intro[hidden],
+.read-cards[hidden] {
+    display: none;
+}
+
+.quick-filters__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-2);
+}
+
+.start-hint__locate.ds-button {
+    justify-self: start;
+    margin-top: var(--ds-size-2);
+}
+
+/* Liste / Kart */
+.view-switch {
+    display: inline-flex;
+}
+
+.view-switch .ds-button {
+    border-radius: 0;
+}
+
+.view-switch .ds-button:first-child {
+    border-start-start-radius: var(--ds-border-radius-md);
+    border-end-start-radius: var(--ds-border-radius-md);
+}
+
+.view-switch .ds-button:last-child {
+    border-start-end-radius: var(--ds-border-radius-md);
+    border-end-end-radius: var(--ds-border-radius-md);
+    margin-inline-start: -1px;
+}
+
+.view-switch .ds-button[aria-pressed="true"] {
+    background: var(--ds-color-brand1-base-default);
+    border-color: var(--ds-color-brand1-base-default);
+    color: var(--ds-color-brand1-base-contrast-default);
+}
+
+.results-grid {
+    position: relative;
+}
+
+.results-side {
+    display: grid;
+    gap: var(--ds-size-4);
+    align-content: start;
+}
+
+.results-grid[data-view="liste"] {
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);
+}
+
+/* Liste: the map waits out of sight at its real size (it decides which schools the list shows) */
+.results-grid[data-view="liste"] > .results-map {
+    position: absolute;
+    top: 0;
+    left: -200vw;
+    width: 57.5rem;
+    height: 54rem;
+    visibility: hidden;
+}
+
+.results-grid[data-view="kart"] > .results-side {
+    display: none;
+}
+
+.side-card.ds-card {
+    display: grid;
+    gap: var(--ds-size-3);
+}
+
+.side-card .ds-heading,
+.side-card .ds-paragraph {
+    margin: 0;
+}
+
+.side-card__list {
+    display: grid;
+    gap: var(--ds-size-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.side-card__list li {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-size-2);
+}
+
+.side-card__list .ds-icon {
+    color: var(--ds-color-brand1-base-default);
+    flex: none;
+}
+
+.side-card__note {
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+/* «Slik leser du kortene og fargene» */
+.read-cards {
+    margin-bottom: var(--ds-size-4);
+    padding: var(--ds-size-3) var(--ds-size-4);
+    border-radius: var(--ds-border-radius-md);
+    background: var(--ds-color-neutral-surface-tinted);
+}
+
+.read-cards summary {
+    cursor: pointer;
+    color: var(--ds-color-brand1-text-default);
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.read-cards .ds-paragraph {
+    margin: var(--ds-size-2) 0 0;
+}
+
+/* The card: an edge in the colour of the results (the same as the marker on the map), no icon badge */
+.school-card.ds-card {
+    grid-template-columns: minmax(0, 1fr);
+    border-inline-start: 6px solid var(--score-bg, var(--ds-color-neutral-border-default));
+    --dsc-card-padding: var(--ds-size-4);
+}
+
+.school-card__name {
+    color: var(--ds-color-brand1-text-default);
+    font-size: 1.25rem;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.school-list .school-card__body {
+    gap: var(--ds-size-2);
+    padding-right: 7rem;
+}
+
+/* The three numbers in words */
+.school-tiles {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--ds-size-2);
+    margin-top: var(--ds-size-1);
+}
+
+.school-tile {
+    display: grid;
+    gap: 2px;
+    padding: var(--ds-size-2) var(--ds-size-3);
+    border-radius: var(--ds-border-radius-sm);
+    font-size: var(--ds-font-size-minus-1);
+    line-height: 1.3;
+}
+
+.school-tile__head {
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.school-tile__head strong {
+    color: var(--ds-color-neutral-text-default);
+}
+
+.school-tile--good {
+    background: var(--ds-color-success-surface-tinted);
+}
+
+.school-tile--neutral {
+    background: var(--ds-color-neutral-surface-tinted);
+}
+
+.school-tile--warn {
+    background: var(--ds-color-warning-surface-tinted);
+}
+
+.school-tile--none {
+    border: 1px dashed var(--ds-color-neutral-border-default);
+}
+
+/* «Verdt å sjekke: Mobbing 26,1 % – spør hva skolen gjør» */
+.school-fact {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-size-2);
+    justify-self: start;
+    padding: var(--ds-size-1) var(--ds-size-3);
+    border-radius: var(--ds-border-radius-sm);
+    background: var(--ds-color-warning-surface-tinted);
+    font-size: var(--ds-font-size-minus-1);
+}
+
+/* «Lagre» with its word, in the top right corner of the card */
+.school-card__save.ds-button[data-label="true"] {
+    gap: var(--ds-size-1);
+    top: var(--ds-size-3);
+    right: var(--ds-size-3);
+    color: var(--ds-color-brand1-text-default);
+}
+
+.school-card__save.ds-button[data-label="true"] .ds-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+/* «Skolekrets for adressen»: one white card with the address's schools as rows */
+.own-schools {
+    padding: var(--ds-size-5);
+    border: 1px solid var(--ds-color-brand1-border-subtle);
+    border-radius: var(--ds-border-radius-lg);
+    background: var(--ds-color-neutral-background-default);
+}
+
+.own-school.ds-card {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.own-school .school-marker {
+    display: none;
+}
+
+.own-school-item + .own-school-item {
+    padding-top: var(--ds-size-4);
+    border-top: 1px solid var(--ds-color-neutral-border-subtle);
+}
+
+@media (max-width: 640px) {
+    .results-side {
+        display: none;
+    }
+
+    .results-grid[data-view="liste"] {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* Phones in Kart: the map under the list head, the full width */
+    .results-grid[data-view="kart"] > .results-map {
+        position: static;
+        width: auto;
+        height: 70vh;
+        visibility: visible;
+    }
+
+    .school-list .school-card__body {
+        padding-right: 0;
+    }
+
+    .school-card__save.ds-button[data-label="true"] {
+        position: static;
+        justify-self: start;
+    }
+
+    .school-tile {
+        padding: var(--ds-size-2);
+    }
+}
+
+/* Footer v2: «Fant du det du lette etter?» as an open row at the top of the footer */
+.site-footer__feedback:empty {
+    display: none;
+}
+
+.page-feedback.page-feedback--inline {
+    position: static;
+    width: auto;
+    margin-bottom: var(--ds-size-6);
+    padding: var(--ds-size-3) var(--ds-size-5);
+    border: 1px solid var(--ds-color-neutral-border-subtle);
+    border-radius: var(--ds-border-radius-lg);
+    box-shadow: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ds-size-2) var(--ds-size-5);
+}
+
+.page-feedback--inline .page-feedback__toggle {
+    pointer-events: none;
+    background: none;
+    color: var(--ds-color-neutral-text-default);
+    padding: 0;
+}
+
+.page-feedback--inline .page-feedback__toggle .ds-icon {
+    display: none;
+}
+
+.page-feedback--inline .page-feedback__body {
+    padding: 0;
+}
+
+/* The filter panel (Figma, section 10, F3): words first, the intervals folded away */
+.filter-note .ds-paragraph {
+    margin: var(--ds-size-1) 0 0;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.walk-filter__hint[hidden] {
+    display: none;
+}
+
+.walk-filter__hint {
+    margin: 0 0 var(--ds-size-2);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.filter-more-group {
+    border-top: 1px solid var(--ds-color-neutral-border-subtle);
+    padding-top: var(--ds-size-3);
+}
+
+.filter-more-group > summary {
+    cursor: pointer;
+    color: var(--ds-color-brand1-text-default);
+    font-weight: var(--ds-font-weight-medium);
+    margin-bottom: var(--ds-size-3);
+}
+
+.filter-more-group[open] > summary {
+    margin-bottom: var(--ds-size-4);
+}
+
+.filter-more-group > .filter-group + .filter-group {
+    margin-top: var(--ds-size-5);
+}
+
+/* Pages with a wide body (sammenlign) */
+.page-wide {
+    max-width: 76rem;
+    margin-inline: auto;
+}
+
+/* Sammenlign: the short answers, then the schools side by side (one below the other on phones) */
+.compare-answers__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: var(--ds-size-3);
+    margin-bottom: var(--ds-size-6);
+}
+
+.compare-answer.ds-card {
+    display: flex;
+    gap: var(--ds-size-3);
+    align-items: flex-start;
+}
+
+.compare-answer__mark {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: var(--ds-color-neutral-surface-tinted);
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.compare-answer__body {
+    display: grid;
+    gap: 2px;
+}
+
+.compare-answer__topic,
+.compare-answer__text,
+.compare-school__meta,
+.compare-note {
+    color: var(--ds-color-neutral-text-subtle);
+    font-size: var(--ds-font-size-minus-1);
+}
+
+.compare-schools {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: var(--ds-size-4);
+}
+
+.compare-school.ds-card {
+    display: grid;
+    gap: var(--ds-size-3);
+    align-content: start;
+    border-block-start: 6px solid var(--score-bg, var(--ds-color-neutral-border-default));
+}
+
+.compare-school .school-tiles {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.compare-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-3);
+    margin-top: var(--ds-size-4);
+}
+
+@media print {
+    .compare-actions,
+    .compare-school .ds-button,
+    #compareBack {
+        display: none;
+    }
+}
+
+/* ── Header v2, measured on Figma section 10 (1440 px) ───────────────────
+   76 px high, 32 px at the sides, logo – 40 px – the three groups – the tools on the right */
+.site-header__lang-short { display: none; }
+.lang-switch__short { display: none; }
+
+@media (min-width: 1280px) {
+    .site-header > .site-container.site-header__inner {
+        max-width: none;
+        min-height: 76px;
+        padding: 0 32px;
+        gap: 40px;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+    }
+
+    .site-logo {
+        gap: 10px;
+        font-size: 21px;
+        line-height: 31.5px;
+    }
+
+    .site-logo__mark {
+        width: 44px;
+        height: 44px;
+    }
+
+    .site-primary {
+        position: static;
+        transform: none;
+        flex: 1;
+        gap: 8px;
+    }
+
+    .site-primary__menu {
+        position: relative;
+        padding: 12px 14px;
+        font-size: 18px;
+        line-height: 27px;
+        font-weight: var(--ds-font-weight-semibold);
+        color: var(--ds-color-neutral-text-default);
+        text-decoration: none;
+    }
+
+    .site-primary__menu:hover {
+        text-decoration: none;
+        color: var(--ds-color-brand1-text-default);
+    }
+
+    /* The group of this page: a 4 px bar under the word */
+    .site-primary__menu[data-current="true"] {
+        color: var(--ds-color-neutral-text-default);
+        text-decoration: none;
+    }
+
+    .site-primary__menu[data-current="true"]::after {
+        content: "";
+        position: absolute;
+        left: 14px;
+        right: 14px;
+        bottom: 0;
+        height: 4px;
+        background: var(--ds-color-brand1-base-default);
+    }
+
+    .site-nav {
+        gap: 8px;
+        flex-wrap: nowrap;
+    }
+
+    .site-nav .saved-link.ds-button,
+    .site-nav .display-button.ds-button,
+    .site-nav .lang-switch.ds-button {
+        min-height: 48px;
+        padding: 0 14px;
+        gap: 8px;
+        border-radius: 6px;
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: var(--ds-font-weight-semibold);
+        color: var(--ds-color-brand1-text-subtle);
+    }
+
+    .site-nav .display-button.ds-button {
+        border: 1px solid var(--ds-color-brand1-text-subtle);
+        background: transparent;
+    }
+
+    .site-nav .lang-switch.ds-button {
+        gap: 6px;
+    }
+
+    .lang-switch__long { display: inline; }
+    .lang-switch__short { display: none; }
+
+    .saved-link__count {
+        min-width: auto;
+        height: 24px;
+        padding: 0 8px;
+        border-radius: 999px;
+        background: var(--ds-color-brand1-base-default);
+        color: var(--ds-color-brand1-base-contrast-default);
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: var(--ds-font-weight-semibold);
+    }
+}
+
+@media (max-width: 1279px) {
+    .lang-switch__long { display: none; }
+    .lang-switch__short { display: inline; }
+}
+
+/* Phones (Figma m0–m6): only the logo and «Meny»; saved schools and Visning are in the menu */
+@media (max-width: 640px) {
+    .site-nav .saved-link,
+    .site-nav .display-button {
+        display: none;
+    }
+}
+
+/* ── Footer v2, measured on Figma section 10 ──────────────────────────────
+   48 px above, 32 px at the sides; the feedback row, four columns 360 / 240 / 260 / 340 with 48 px between,
+   and «© 2026 Skolekartet» under a line */
+.site-footer {
+    padding: 48px 0 40px;
+    background: var(--ds-color-neutral-background-tinted);
+}
+
+.site-footer > .site-container {
+    max-width: none;
+    padding-inline: 32px;
+}
+
+.site-footer__feedback {
+    margin-bottom: 32px;
+}
+
+.site-footer__grid {
+    grid-template-columns: 360px 240px 260px 340px;
+    gap: 48px;
+}
+
+.site-footer .ds-heading[data-size="2xs"] {
+    margin: 0 0 12px;
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.site-footer__grid > div .ds-paragraph {
+    margin: 0 0 12px;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.site-footer__grid .footer-status {
+    font-size: 14px;
+    line-height: 21px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.site-footer .footer-links {
+    gap: 14px;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.site-footer .footer-contact li {
+    gap: 10px;
+}
+
+.site-footer .footer-contact .ds-icon {
+    width: 22px;
+    height: 22px;
+}
+
+.site-footer__bottom {
+    margin-top: 32px;
+    padding-top: 20px;
+}
+
+.site-footer__bottom .ds-paragraph {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+@media (max-width: 1279px) {
+    .site-footer__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .site-footer > .site-container {
+        padding-inline: 16px;
+    }
+
+    .site-footer__grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/* «Fant du det du lette etter?» in the footer: white row, 20 / 24 px inside, 12 px corners */
+.page-feedback.page-feedback--inline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    margin: 0;
+    padding: 20px 24px;
+    border: 1px solid var(--ds-color-neutral-border-subtle);
+    border-radius: 12px;
+    background: var(--ds-color-neutral-background-default);
+}
+
+.page-feedback--inline .page-feedback__title {
+    margin: 0;
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.page-feedback--inline .page-feedback__body {
+    display: contents;
+}
+
+.page-feedback__answers {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+}
+
+.page-feedback__answer.ds-button {
+    min-height: 44px;
+    padding: 0 20px;
+    border: 2px solid var(--ds-color-brand1-text-subtle);
+    border-radius: 6px;
+    background: var(--ds-color-neutral-background-default);
+    color: var(--ds-color-brand1-text-subtle);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.page-feedback__hint {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.page-feedback--inline .page-feedback__form {
+    flex: 1 1 100%;
+}
+
+/* ── Filter panel, measured on Figma section 10 (F3): 600 px wide ─────────── */
+#filterPanel[open] {
+    max-width: 600px;
+}
+
+#filterPanel .filter-dialog__head {
+    padding: 24px 32px;
+}
+
+#filterPanel .filter-dialog__head .ds-heading {
+    margin: 0;
+    font-size: 24px;
+    line-height: 31.2px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+#filterClose.ds-button {
+    min-height: 48px;
+    padding: 0 12px;
+    gap: 8px;
+    border-radius: 6px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-color-brand1-text-subtle);
+}
+
+#filterPanel .filter-bar {
+    gap: 28px;
+    padding: 24px 32px;
+}
+
+#filterPanel .filter-intro {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+#filterPanel .filter-group--main {
+    padding: 0;
+    background: none;
+    border-radius: 0;
+}
+
+#filterPanel .filter-legend,
+#filterPanel .filter-note .filter-legend {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 12px;
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-color-neutral-text-default);
+}
+
+.filter-legend__help.ds-link {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-regular);
+}
+
+/* The choices as pills: 44 px high, a 1.5 px grey border; chosen ones green with a tick */
+#filterPanel .quick-filters__options {
+    gap: 10px;
+}
+
+#filterPanel .quick-filters__options .ds-chip,
+#ownerFilter .filter-option {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 16px;
+    border: 1.5px solid var(--ds-color-neutral-border-default);
+    border-radius: 999px;
+    background: var(--ds-color-neutral-background-default);
+    color: var(--ds-color-neutral-text-default);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-regular);
+    cursor: pointer;
+}
+
+#filterPanel .quick-filters__options .ds-chip > input,
+#ownerFilter .filter-option > input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+#filterPanel .quick-filters__options .ds-chip:has(input:checked),
+#ownerFilter .filter-option:has(input:checked) {
+    padding-left: 12px;
+    border-color: var(--ds-color-brand1-base-default);
+    background: var(--ds-color-brand1-base-default);
+    color: var(--ds-color-brand1-base-contrast-default);
+}
+
+#filterPanel .quick-filters__options .ds-chip:has(input:checked)::before,
+#ownerFilter .filter-option:has(input:checked) label::before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    flex: none;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.75a9.25 9.25 0 1 1 0 18.5 9.25 9.25 0 0 1 0-18.5Zm0 1.5a7.75 7.75 0 1 0 0 15.5 7.75 7.75 0 0 0 0-15.5Zm3.47 4.72a.75.75 0 0 1 1.06 1.06l-5.5 5.5a.75.75 0 0 1-1.06 0l-2.5-2.5a.75.75 0 1 1 1.06-1.06L10.5 13.94l4.97-4.97Z'/%3E%3C/svg%3E") center / contain no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.75a9.25 9.25 0 1 1 0 18.5 9.25 9.25 0 0 1 0-18.5Zm0 1.5a7.75 7.75 0 1 0 0 15.5 7.75 7.75 0 0 0 0-15.5Zm3.47 4.72a.75.75 0 0 1 1.06 1.06l-5.5 5.5a.75.75 0 0 1-1.06 0l-2.5-2.5a.75.75 0 1 1 1.06-1.06L10.5 13.94l4.97-4.97Z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+#ownerFilter .filter-checks__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#ownerFilter .filter-option label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: inherit;
+    font-size: 16px;
+}
+
+#ownerFilter .chip-icon {
+    display: none;
+}
+
+#filterPanel .filter-note .ds-paragraph {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--ds-color-neutral-text-default);
+}
+
+/* «Gangtid til skolen»: radios 24 px, the words 18 px, 12 px between the rows */
+#walkFilter .filter-checks__options {
+    display: grid;
+    gap: 12px;
+}
+
+#walkFilter .filter-option label {
+    font-size: 18px;
+    line-height: 27px;
+}
+
+/* «Profil og kommune», «Flere tall»: folded rows under a line */
+#filterPanel .filter-more-group {
+    padding: 0;
+    border-top: 1px solid var(--ds-color-neutral-border-subtle);
+}
+
+#filterPanel .filter-more-group > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 0;
+    padding: 14px 0;
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-color-neutral-text-default);
+    list-style: none;
+}
+
+#filterPanel .filter-more-group > summary::-webkit-details-marker {
+    display: none;
+}
+
+#filterPanel .filter-more-group > summary::after {
+    content: "";
+    width: 22px;
+    height: 22px;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5.97 9.47a.75.75 0 0 1 1.06 0L12 14.44l4.97-4.97a.75.75 0 1 1 1.06 1.06l-5.5 5.5a.75.75 0 0 1-1.06 0l-5.5-5.5a.75.75 0 0 1 0-1.06Z'/%3E%3C/svg%3E") center / contain no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5.97 9.47a.75.75 0 0 1 1.06 0L12 14.44l4.97-4.97a.75.75 0 1 1 1.06 1.06l-5.5 5.5a.75.75 0 0 1-1.06 0l-5.5-5.5a.75.75 0 0 1 0-1.06Z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+#filterPanel .filter-more-group[open] > summary::after {
+    transform: rotate(180deg);
+}
+
+/* The bottom row: «7 skoler passer valgene», «Nullstill», «Vis 7 skoler» */
+#filterPanel .filter-dialog__foot {
+    gap: 12px;
+    padding: 20px 32px;
+}
+
+.filter-dialog__count {
+    flex: 1;
+    margin: 0;
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+#filterPanel .filter-dialog__foot > .ds-button {
+    flex: none;
+    min-height: 52px;
+    padding: 0 20px;
+    border-radius: 6px;
+}
+
+#filterResetDialog.ds-button {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+#filterDone.ds-button {
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+@media (max-width: 640px) {
+    #filterPanel .filter-dialog__head,
+    #filterPanel .filter-bar,
+    #filterPanel .filter-dialog__foot {
+        padding-inline: 16px;
+    }
+
+    .filter-dialog__count {
+        display: none;
+    }
+
+    #filterPanel .filter-dialog__foot > .ds-button {
+        flex: 1;
+    }
+}
+
+/* «Slik leser du kortene og fargene» under «Vis bare»: a list with the colour circles */
+/* «Slik leser du kortene og fargene» (Figma 10.1, F2): a grey 900 × 64 box on the left of the toolbar, 12 px corners,
+   20 px inside, «⌄» after the words. With 8 px under it the row is 72 px, and Sorter and Liste | Kart sit in its middle.
+   Open, the colours drop down under it over the page, so the row and the list keep their places */
+.results-toolbar .read-cards {
+    position: relative;
+    flex: 0 1 900px;
+    margin: 0 auto 8px 0;
+    padding: 0;
+    border-radius: 12px;
+    background: var(--ds-color-neutral-background-tinted);
+}
+
+.results-toolbar .read-cards summary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 20px;
+    border-radius: 12px;
+    list-style: none;
+    color: var(--ds-color-brand1-text-subtle);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+    cursor: pointer;
+}
+
+.results-toolbar .read-cards summary::-webkit-details-marker {
+    display: none;
+}
+
+.results-toolbar .read-cards__chevron {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.15s;
+}
+
+.results-toolbar .read-cards[open] .read-cards__chevron {
+    transform: rotate(180deg);
+}
+
+.results-toolbar .read-cards__panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: 1001;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 20px;
+    border: 1px solid var(--ds-color-neutral-border-subtle);
+    border-radius: 12px;
+    background: var(--ds-color-neutral-background-default);
+    box-shadow: 0 6px 18px rgb(0 0 0 / 0.12);
+}
+
+.results-toolbar .read-cards__panel .read-cards__list {
+    margin: 0;
+}
+
+.results-toolbar .read-cards__panel .ds-paragraph {
+    margin: 12px 0 0;
+}
+
+.read-cards__list {
+    display: grid;
+    gap: 8px;
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.read-cards__list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.read-cards__list .color-dot {
+    flex: none;
+    width: 14px;
+    height: 14px;
+}
+
+/* ── Front page, measured on Figma section 10.1 (F2, 1440 px) ──────────────
+   Search band 32 / 64 px inside, the toolbar above both columns, the list 900 px and the side column 380 px */
+.search-panel {
+    padding: 32px 0;
+    background: var(--ds-color-brand1-background-tinted);
+}
+
+.search-panel > .site-container,
+.results > .site-container {
+    max-width: none;
+    padding-inline: 64px;
+}
+
+.search-panel .ds-heading {
+    margin: 0 0 16px;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.search-panel .search-bar {
+    gap: 12px;
+    align-items: center;
+}
+
+.search-panel .search-bar__field {
+    flex: 0 0 700px;
+}
+
+.search-panel #addressSearch.ds-input {
+    min-height: 58px;
+    border-radius: 8px;
+    font-size: 18px;
+}
+
+.search-panel #filterToggle.ds-button {
+    min-height: 48px;
+    padding: 0 16px;
+    gap: 8px;
+    border: 2px solid var(--ds-color-brand1-text-subtle);
+    border-radius: 6px;
+    background: var(--ds-color-neutral-background-default);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+/* Trinn: «Trinn:» and three 44 px buttons with 8 px corners; the chosen one green */
+.search-panel .level-switch {
+    margin: 16px 0 0;
+}
+
+.search-panel .level-switch__options {
+    gap: 10px;
+    margin: 0;
+}
+
+.search-panel .level-switch__label {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.search-panel .level-switch .ds-chip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    box-sizing: border-box;
+    min-height: 44px;
+    padding: 0 16px;
+    border: 1.5px solid var(--ds-color-brand1-text-subtle);
+    border-radius: 8px;
+    background: var(--ds-color-neutral-background-default);
+    color: var(--ds-color-brand1-text-subtle);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.search-panel .level-switch .ds-chip > input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.search-panel .level-switch .ds-chip:has(input:checked) {
+    border-color: var(--ds-color-brand1-base-default);
+    background: var(--ds-color-brand1-base-default);
+    color: var(--ds-color-brand1-base-contrast-default);
+}
+
+.search-panel .level-switch .ds-chip:has(:focus-visible) {
+    outline: 3px solid var(--ds-color-focus-outer);
+    outline-offset: 2px;
+}
+
+/* The toolbar: «Sorter: Nærmest» and Liste | Kart, on the right above both columns */
+.results {
+    padding-block: 0 64px;
+}
+
+.results-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    padding-top: 24px;
+    padding-bottom: 8px;
+}
+
+.results-toolbar[hidden] {
+    display: none;
+}
+
+.results-toolbar .results-sort {
+    order: 1;
+}
+
+.results-toolbar .view-switch {
+    order: 2;
+    border: 2px solid var(--ds-color-brand1-text-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.results-toolbar .sort-switch.ds-button {
+    min-height: 48px;
+    padding: 0 16px;
+    gap: 8px;
+    border: 2px solid var(--ds-color-brand1-text-subtle);
+    border-radius: 6px;
+    background: var(--ds-color-neutral-background-default);
+    color: var(--ds-color-brand1-text-subtle);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.results-toolbar .sort-switch .ds-icon {
+    order: 3;
+    width: 20px;
+    height: 20px;
+}
+
+.results-toolbar .view-switch .ds-button {
+    min-height: 44px;
+    padding: 0 16px;
+    gap: 8px;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    background: var(--ds-color-neutral-background-default);
+    color: var(--ds-color-brand1-text-subtle);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.results-toolbar .view-switch .ds-button[aria-pressed="true"] {
+    background: var(--ds-color-brand1-base-default);
+    color: var(--ds-color-brand1-base-contrast-default);
+}
+
+.results-toolbar .view-switch .ds-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* The two columns: the list 900 px, 32 px between, the side column 380 px */
+.results-grid[data-view="liste"] {
+    grid-template-columns: minmax(0, 900px) 380px;
+    gap: 32px;
+    justify-content: space-between;
+    padding-top: 16px;
+}
+
+.results-list {
+    display: grid;
+    gap: 20px;
+    align-content: start;
+}
+
+.results-list > * {
+    margin: 0;
+}
+
+.results-head .ds-heading {
+    font-size: 21px;
+    line-height: 28px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+/* «Skolekrets for adressen»: white, a 1 px green border, 12 px corners, 24 px inside, 18 px between */
+.own-schools {
+    display: grid;
+    gap: 18px;
+    padding: 24px;
+    border: 1px solid var(--ds-color-brand1-border-subtle);
+    border-radius: 12px;
+    background: var(--ds-color-neutral-background-default);
+}
+
+.own-schools__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 12px;
+}
+
+.own-schools__title {
+    margin: 0;
+    font-size: 22px;
+    line-height: 32px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.own-schools__source {
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.own-schools__rule {
+    width: 100%;
+    height: 1px;
+    margin: 0;
+    border: 0;
+    background: var(--ds-color-neutral-border-subtle);
+}
+
+.own-school-item,
+.own-school-item + .own-school-item {
+    display: grid;
+    gap: 8px;
+    padding: 0;
+    border: 0;
+}
+
+.own-school__level {
+    margin: 0;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.own-school__line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 12px;
+}
+
+.own-school__name {
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    font-size: 20px;
+    line-height: 29px;
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--ds-color-brand1-base-default);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.own-school__name--plain {
+    text-decoration: none;
+    cursor: default;
+}
+
+.own-school__meta {
+    font-size: 15px;
+    line-height: 22px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.own-schools__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 24px;
+    font-size: 15px;
+    line-height: 22px;
+}
+
+.own-schools__links .own-schools__finn {
+    margin: 0;
+    font-size: 15px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.own-schools__map.ds-link {
+    font-weight: var(--ds-font-weight-medium);
+}
+
+/* Tiles: 6 / 10 px inside, 6 px corners, 14 px text, 8 px between */
+.school-tiles {
+    gap: 8px;
+    margin: 0;
+}
+
+.school-tile {
+    gap: 0;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 21px;
+}
+
+/* The card: 1 px grey border, 12 px corners, a 6 px edge, 24 / 28 px inside */
+.school-card.ds-card {
+    --dsc-card-padding: 24px 28px;
+    padding: 24px 28px;
+    border: 1px solid var(--ds-color-neutral-border-subtle);
+    border-inline-start: 6px solid var(--score-bg, var(--ds-color-neutral-border-default));
+    border-radius: 12px;
+}
+
+.school-list {
+    gap: 20px;
+}
+
+.school-list .school-card__body {
+    gap: 4px;
+    padding-right: 126px;
+}
+
+.school-card__name {
+    font-size: 21px;
+    line-height: 28px;
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--ds-color-brand1-text-subtle);
+}
+
+.school-card__meta {
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.school-card__body .school-tiles {
+    margin-top: 12px;
+}
+
+.school-card__save.ds-button[data-label="true"] {
+    top: 24px;
+    right: 28px;
+    min-height: 44px;
+    padding: 0 16px;
+    gap: 8px;
+    border: 2px solid var(--ds-color-brand1-text-subtle);
+    border-radius: 6px;
+    background: var(--ds-color-neutral-background-default);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+/* The side column: 24 px between the cards, 24 px inside, 12 px corners */
+.results-side {
+    gap: 24px;
+}
+
+.side-card.ds-card {
+    gap: 14px;
+    padding: 24px;
+    border: 1px solid var(--ds-color-neutral-border-subtle);
+    border-radius: 12px;
+}
+
+.side-card .ds-heading[data-size="2xs"] {
+    font-size: 21px;
+    line-height: 28px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.side-card__list {
+    gap: 14px;
+}
+
+.side-card__list li {
+    gap: 10px;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.side-card__list .ds-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.side-card .side-card__primary.ds-button,
+.side-card .side-card__secondary.ds-button {
+    width: 100%;
+    min-height: 52px;
+    padding: 0 20px;
+    gap: 8px;
+    border-radius: 6px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.side-card .side-card__primary.ds-button {
+    font-size: 18px;
+    line-height: 27px;
+}
+
+.side-card .side-card__secondary.ds-button {
+    border: 2px solid var(--ds-color-brand1-text-subtle);
+}
+
+.side-card__keep {
+    display: grid;
+    gap: 6px;
+    padding: 12px;
+    border-radius: 8px;
+    background: var(--ds-color-brand1-background-tinted);
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.side-card__keep strong {
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.side-card__keep p {
+    margin: 0;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.side-card__keep .ds-button {
+    justify-self: start;
+    min-height: 39px;
+    padding: 8px 12px;
+    border: 1px solid var(--ds-color-brand1-border-subtle);
+    border-radius: 6px;
+    background: var(--ds-color-neutral-background-default);
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.side-card__map {
+    display: block;
+    width: 100%;
+    height: 240px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.side-card--map.ds-card {
+    gap: 12px;
+}
+
+.side-card.ds-card > * {
+    margin: 0;
+}
+
+.side-card--map .side-card__secondary.ds-button {
+    min-height: 48px;
+}
+
+.side-card--map .ds-paragraph {
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.side-card--map .ds-link {
+    font-size: 15px;
+    line-height: 22px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+@media (max-width: 1279px) {
+    .search-panel > .site-container,
+    .results > .site-container {
+        padding-inline: var(--ds-size-6);
+    }
+
+    .search-panel .search-bar__field {
+        flex: 1 1 20rem;
+    }
+
+    .results-grid[data-view="liste"] {
+        grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);
+    }
+}
+
+@media (max-width: 640px) {
+    .search-panel > .site-container,
+    .results > .site-container {
+        padding-inline: 16px;
+    }
+
+    .school-card.ds-card {
+        padding: 16px;
+    }
+
+    .school-list .school-card__body {
+        padding-right: 0;
+    }
+}
+
+/* ── Start (Figma 10.1, F0, measured) ─────────────────────────────────────
+   The intro 17 px, the empty field with a 1 px border; three cards 289 × 238 in a row with 16 px between */
+.search-panel .search-panel__intro {
+    margin: 0 0 16px;
+    font-size: 17px;
+    line-height: 25px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.search-panel #addressSearch.ds-input {
+    min-height: 56px;
+}
+
+.search-panel .level-switch[hidden] {
+    display: none;
+}
+
+.start-hint {
+    display: grid;
+    align-content: start;
+    gap: 20px;
+}
+
+.start-hint__title {
+    margin: 0;
+    font-size: 22px;
+    line-height: 32px;
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-color-brand1-text-default);
+}
+
+.start-hint__ways {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.start-hint__ways li {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    box-sizing: border-box;
+    min-height: 238px;
+    padding: 20px;
+    border: 1px solid var(--ds-color-brand1-border-subtle);
+    border-radius: 12px;
+    background: var(--ds-color-neutral-background-default);
+}
+
+.start-hint__ways li > .ds-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    color: var(--ds-color-brand1-base-default);
+}
+
+.start-hint__text {
+    display: grid;
+    gap: 10px;
+}
+
+.start-hint__text strong {
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-color-brand1-text-default);
+}
+
+.start-hint__desc {
+    font-size: 15px;
+    line-height: 22px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+/* The longer texts on wide screens, the shorter on phones (Figma 10.1, F0 and m0) */
+.start-hint__narrow {
+    display: none;
+}
+
+.start-hint__locate {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 0;
+    padding: 10px 14px;
+    border: 2px solid var(--ds-color-brand1-base-default);
+    border-radius: 8px;
+    background: none;
+    color: var(--ds-color-brand1-base-default);
+    font: inherit;
+    font-size: 15px;
+    line-height: 22px;
+    font-weight: var(--ds-font-weight-semibold);
+    cursor: pointer;
+}
+
+.start-hint__locate .ds-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.start-hint__locate--top {
+    display: none;
+}
+
+@media (max-width: 1023px) {
+    .start-hint__ways {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .start-hint__ways li {
+        min-height: 0;
+    }
+}
+
+/* Phones (Figma 10.1, m0): one column, «Bruk min posisjon» on top, the ways as rows with the icon on the left */
+@media (max-width: 640px) {
+    .results-grid[data-view="liste"] {
+        grid-template-columns: minmax(0, 1fr);
+        padding-top: 16px;
+    }
+
+    /* The search band: 16 px inside, 12 px between, no Filter button before a search */
+    .search-panel {
+        padding: 16px 0;
+    }
+
+    .search-panel .ds-heading {
+        margin: 0 0 12px;
+        font-size: 22px;
+        line-height: 32px;
+        font-weight: var(--ds-font-weight-semibold);
+        color: var(--ds-color-brand1-text-default);
+    }
+
+    .search-panel .search-panel__intro {
+        margin: 0 0 12px;
+        font-size: 15px;
+        line-height: 22px;
+    }
+
+    .search-panel #addressSearch.ds-input {
+        min-height: 51px;
+        font-size: 16px;
+    }
+
+    .search-panel[data-start] .search-bar__actions {
+        display: none;
+    }
+
+    .start-hint__wide {
+        display: none;
+    }
+
+    .start-hint__narrow {
+        display: inline;
+    }
+
+    .start-hint {
+        gap: 12px;
+    }
+
+    .start-hint__locate--top {
+        display: flex;
+        width: 100%;
+        padding: 12px 0;
+        font-size: 16px;
+        line-height: 23px;
+    }
+
+    .start-hint__ways li > .start-hint__locate {
+        display: none;
+    }
+
+    .start-hint__title {
+        font-size: 18px;
+        line-height: 26px;
+    }
+
+    .start-hint__ways {
+        gap: 12px;
+    }
+
+    .start-hint__ways li {
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+        padding: 14px;
+        border-radius: 10px;
+    }
+
+    .start-hint__ways li > .ds-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    .start-hint__text {
+        gap: 2px;
+    }
+
+    .start-hint__text strong {
+        font-size: 16px;
+        line-height: 23px;
+    }
+
+    .start-hint__desc {
+        font-size: 14px;
+        line-height: 20px;
+    }
+}
+
+/* Side column (Figma 10.1, F1): the map picture shows the schools on the map; the saved card's empty states */
+.side-card__map-button {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: none;
+    cursor: pointer;
+}
+
+.side-card__empty {
+    margin: 0;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.side-card.ds-card > .side-card__hint {
+    margin: -6px 0 0;
+    font-size: 14px;
+    line-height: 21px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.side-card .ds-button:disabled {
+    opacity: 1;
+    cursor: not-allowed;
+    border-color: var(--ds-color-neutral-border-subtle);
+    background: var(--ds-color-neutral-background-tinted);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+/* Search suggestions in fixed groups (Figma 10.1, F1 «Forslag»): 700 wide, rows 10/16 with a 22px icon,
+   group names in small capitals, a «Ingen treff» per group and a hint line at the bottom */
+#addressResults {
+    gap: 0;
+    padding: 8px 0;
+    border: 1px solid var(--ds-color-neutral-border-subtle);
+    border-radius: 8px;
+    background: var(--ds-color-neutral-background-default);
+    box-shadow: 0 6px 18px rgb(0 0 0 / 0.16);
+}
+
+#addressResults .search-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-sizing: border-box;
+    min-height: 63px;
+    margin: 0;
+    padding: 10px 16px;
+    border-radius: 0;
+}
+
+#addressResults .search-option > .ds-icon {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    color: var(--ds-color-brand1-base-default);
+}
+
+#addressResults .search-option__text {
+    display: grid;
+    min-width: 0;
+}
+
+#addressResults .search-result-name {
+    font-size: 16px;
+    line-height: 23px;
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--ds-color-brand1-text-default);
+}
+
+#addressResults .search-result-kommune {
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+#addressResults .search-option:is(:hover, [aria-selected="true"], :focus-visible) {
+    background: var(--ds-color-brand1-background-tinted);
+}
+
+#addressResults .search-group {
+    margin: 0;
+    padding: 10px 16px 4px;
+    font-size: 12px;
+    line-height: 17px;
+    font-weight: var(--ds-font-weight-semibold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+#addressResults .search-group__empty {
+    margin: 0;
+    padding: 0 16px 8px;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--ds-color-neutral-text-subtle);
+    opacity: 0.85;
+}
+
+#addressResults .search-group__hint {
+    margin: 0;
+    padding: 10px 16px 6px;
+    background: var(--ds-color-neutral-background-tinted);
+    font-size: 13px;
+    line-height: 19px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+/* ── Header on phones, measured on Figma section 10.1 (m0, 390 px) ─────────
+   73 px with the line: the logo mark 40 px, «Skolekartet» 21 px, and «Meny» 101 × 48 with its word.
+   The languages are in «Meny» there (the last group) */
+.site-menu__lang {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .site-header > .site-container.site-header__inner {
+        min-height: 72px;
+        padding: 12px 16px;
+        gap: 10px;
+        flex-wrap: nowrap;
+    }
+
+    .site-header .site-logo {
+        gap: 10px;
+        font-size: 21px;
+        line-height: 31.5px;
+        font-weight: var(--ds-font-weight-semibold);
+    }
+
+    .site-header .site-logo__mark {
+        width: 40px;
+        height: 40px;
+    }
+
+    .site-header .site-logo__mark svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .site-nav .lang-switch.ds-button {
+        display: none;
+    }
+
+    .site-menu__lang {
+        display: block;
+    }
+
+    .site-nav .site-menu__button.ds-button {
+        min-height: 48px;
+        padding: 0 12px;
+        gap: 8px;
+        border: 2px solid var(--ds-color-brand1-text-subtle);
+        border-radius: 6px;
+        background: transparent;
+        color: var(--ds-color-brand1-text-subtle);
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: var(--ds-font-weight-semibold);
+    }
+
+    .site-nav .site-menu__button .ds-icon {
+        width: 22px;
+        height: 22px;
+    }
+
+    .site-nav .site-menu__button .site-nav__label {
+        position: static;
+        width: auto;
+        height: auto;
+        overflow: visible;
+        clip: auto;
+    }
+}
+
+/* After an address is chosen (Figma 10.1, F2): the field 58 px with a 2 px green border */
+@media (min-width: 641px) {
+    .search-panel #addressSearch.ds-input:not(:placeholder-shown) {
+        min-height: 58px;
+        border: 2px solid var(--ds-color-brand1-base-default);
+    }
+}
+
+/* Phones: «Sorter» and Liste | Kart wrap instead of running off the screen */
+@media (max-width: 640px) {
+    .results-toolbar {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+}
+
+
+/* Filter and «Slik leser du kortene og fargene» 12 px apart, as the field and Filter */
+.search-panel .search-bar__actions {
+    gap: 12px;
+}
+
+/* «Les mer om skolen» on every card: on the list cards under the tiles, in room kept at the bottom of the card */
+.school-list .school-card.ds-card {
+    padding-bottom: 58px;
+}
+
+.school-card__more.ds-link {
+    position: absolute;
+    left: 34px;
+    bottom: 22px;
+    font-size: 15px;
+    line-height: 22px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.own-school__more.ds-link {
+    justify-self: start;
+    font-size: 15px;
+    line-height: 22px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+/* Phones: «Lagre» and «Les mer om skolen» side by side under the card */
+@media (max-width: 640px) {
+    .school-list .school-card.ds-card {
+        padding-bottom: 16px;
+    }
+
+    .school-list__item {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px 16px;
+    }
+
+    .school-list__item > .school-card,
+    .school-list__item > .school-card__details {
+        flex: 0 0 100%;
+    }
+
+    .school-card__more.ds-link {
+        position: static;
+    }
+}
+
+/* «Lagre»: a round 44 px button with only the bookmark, no background, in the card's top right corner (the list) and
+   in each row's top right corner (the address's schools); the word is for screen readers (aria-label) */
+.school-card__save.ds-button,
+.own-school__save.ds-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--ds-color-brand1-text-subtle);
+}
+
+.own-school__save.ds-button {
+    top: 0;
+    right: 0;
+}
+
+.school-card__save.ds-button:hover,
+.own-school__save.ds-button:hover {
+    background: var(--ds-color-brand1-surface-tinted);
+}
+
+.school-card__save.ds-button .ds-icon,
+.own-school__save.ds-button .ds-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.own-school-item {
+    position: relative;
+}
+
+.school-list .school-card__body,
+.own-school-item .own-school__line {
+    padding-right: 56px;
+}
+
+/* Liste and Kart keep the toolbar and the list in the same place: both 1440 px at most, the list 16 px under the
+   toolbar. In Kart the cards get 560 px, so the three tiles keep their words on one or two lines */
+@media (min-width: 1441px) {
+    .results > .results-grid,
+    .results > .results-toolbar {
+        box-sizing: border-box;
+        max-width: 1440px;
+        margin-inline: 0;
+    }
+}
+
+@media (min-width: 641px) {
+    .results-grid[data-view="kart"] {
+        grid-template-columns: 560px minmax(0, 1fr);
+        gap: 32px;
+        padding-top: 16px;
+    }
+}
+
+@media (max-width: 640px) {
+    .school-card__save.ds-button {
+        position: static;
+    }
+
+    .school-list .school-card__body {
+        padding-right: 0;
+    }
+}
+
+/* Filter chips keep their width when chosen: an empty circle before the words, the ticked circle when chosen,
+   so the chips do not wrap to a new row and the panel does not jump under the pointer */
+#filterPanel .quick-filters__options .ds-chip,
+#ownerFilter .filter-option {
+    padding-left: 12px;
+}
+
+#filterPanel .quick-filters__options .ds-chip:not(:has(input:checked))::before,
+#ownerFilter .filter-option:not(:has(input:checked)) label::before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    flex: none;
+    background: var(--ds-color-neutral-border-default);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.75a9.25 9.25 0 1 1 0 18.5 9.25 9.25 0 0 1 0-18.5Zm0 1.5a7.75 7.75 0 1 0 0 15.5 7.75 7.75 0 0 0 0-15.5Z'/%3E%3C/svg%3E") center / contain no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.75a9.25 9.25 0 1 1 0 18.5 9.25 9.25 0 0 1 0-18.5Zm0 1.5a7.75 7.75 0 1 0 0 15.5 7.75 7.75 0 0 0 0-15.5Z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* ── School page, Figma section 8 «Kombinert» (C6 · Skoleside), 1440 px ─────────
+   Breadcrumbs 48 px, the head (text 720, photo 352, 48 between), the green «Oppsummering» band, then
+   «På denne siden» (248) and the sections (816) with 56 px between, all in a 1120 px column */
+.page--school {
+    padding: 0;
+}
+
+.page--school .page__container {
+    max-width: none;
+    padding-inline: 0;
+}
+
+.page--school .page__back {
+    display: none;
+}
+
+.page--school .school-page {
+    max-width: none;
+}
+
+.school-page .breadcrumbs,
+.school-head,
+.school-recap__inner,
+.school-layout {
+    box-sizing: border-box;
+    width: min(1120px, 100% - 32px);
+    margin-inline: auto;
+}
+
+.school-page .breadcrumbs ol {
+    margin: 0;
+    padding: 24px 0 0;
+    gap: 0 8px;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.school-page .breadcrumbs li + li::before {
+    margin-inline-end: 8px;
+}
+
+.school-head {
+    display: grid;
+    grid-template-columns: minmax(0, 720px) 352px;
+    justify-content: space-between;
+    gap: 48px;
+    padding: 24px 0 40px;
+}
+
+.school-head__body {
+    display: grid;
+    align-content: start;
+    gap: 14px;
+}
+
+.school-head__body > * {
+    margin: 0;
+}
+
+.school-head__kicker {
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.school-head__title {
+    font-size: 30px;
+    line-height: 39px;
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--ds-color-neutral-text-default);
+}
+
+.school-head__place {
+    font-size: 18px;
+    line-height: 27px;
+}
+
+.school-head__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.school-head__tags:empty {
+    display: none;
+}
+
+.school-head__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.school-head__actions .ds-button {
+    min-height: 48px;
+    padding: 0 16px;
+    gap: 8px;
+    border-radius: 4px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.school-head__actions .ds-button[data-variant="secondary"] {
+    border: 1px solid var(--ds-color-brand1-text-subtle);
+    color: var(--ds-color-brand1-text-subtle);
+}
+
+/* «Lagre» as in the design: a filled green button, «Lagret» when saved */
+.school-head__actions .school-head__save.ds-button {
+    border: 1px solid var(--ds-color-brand1-base-default);
+    background: var(--ds-color-brand1-base-default);
+    color: var(--ds-color-brand1-base-contrast-default);
+}
+
+.school-head__media {
+    min-width: 0;
+}
+
+.school-head__media .carousel__slide img,
+.school-head__media .school-banner__placeholder {
+    aspect-ratio: 352 / 236;
+    border-radius: 12px;
+}
+
+.school-head__media .carousel__nav {
+    aspect-ratio: 352 / 236;
+}
+
+.school-head__media .carousel__slide figcaption {
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 21px;
+}
+
+/* The summary band */
+.school-recap {
+    background: var(--ds-color-brand1-background-tinted);
+}
+
+.school-recap__inner {
+    display: grid;
+    gap: 20px;
+    padding: 40px 0;
+}
+
+.school-recap__title {
+    margin: 0;
+    font-size: 24px;
+    line-height: 31px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.summary-tiles {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+}
+
+.summary-tile {
+    display: grid;
+    padding: 6px 8px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.summary-tile__value {
+    font-size: 16px;
+    line-height: 19px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.summary-tile--good { background: #daeddd; color: #023409; }
+.summary-tile--neutral { background: #e8e8e9; color: #5b5d60; }
+.summary-tile--warn { background: #fae6c6; color: #3c2807; }
+.summary-tile--none { background: transparent; color: var(--ds-color-neutral-text-subtle); border: 1px dashed var(--ds-color-neutral-border-default); }
+
+.summary-tiles__source {
+    margin: -8px 0 0;
+    font-size: 14px;
+    line-height: 21px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.school-recap__cards {
+    display: grid;
+    grid-template-columns: minmax(0, 560px) minmax(0, 528px);
+    justify-content: space-between;
+    gap: 32px;
+    align-items: start;
+    margin-top: 4px;
+}
+
+.summary-card {
+    display: grid;
+    gap: 12px;
+    padding: 28px;
+    border-radius: 12px;
+    background: var(--ds-color-neutral-background-default);
+}
+
+.summary-card__title {
+    margin: 0;
+    font-size: 21px;
+    line-height: 27px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.summary-facts__list {
+    display: grid;
+    gap: 12px;
+    justify-items: start;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.summary-fact {
+    padding: 4px 8px;
+    border-radius: 2px;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.summary-fact--good { background: #daeddd; color: #023409; }
+.summary-fact--warn { background: #fae6c6; color: #3c2807; }
+.summary-fact--neutral { background: #e8e8e9; color: #292c30; }
+
+.summary-facts__note {
+    margin: 0;
+    font-size: 14px;
+    line-height: 21px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.summary-questions__list {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding-left: 24px;
+    font-size: 18px;
+    line-height: 27px;
+}
+
+.summary-questions__list li::marker {
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.summary-questions__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.summary-questions__actions .ds-button,
+.contact-card__actions .ds-button {
+    min-height: 48px;
+    padding: 0 16px;
+    gap: 8px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+/* «På denne siden» and the sections */
+.school-layout {
+    display: grid;
+    grid-template-columns: 248px minmax(0, 816px);
+    justify-content: space-between;
+    gap: 56px;
+    padding: 48px 0 64px;
+    align-items: start;
+}
+
+.page-toc {
+    position: sticky;
+    top: 24px;
+    display: grid;
+    gap: 4px;
+    padding: 20px;
+    border: 1px solid var(--ds-color-neutral-border-default);
+    border-radius: 12px;
+}
+
+.page-toc__title {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.page-toc__list {
+    display: grid;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.page-toc__list a {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--ds-color-brand1-text-subtle);
+}
+
+.page-toc__list a[aria-current] {
+    background: var(--ds-color-brand1-surface-tinted);
+    color: var(--ds-color-brand1-text-default);
+    font-weight: var(--ds-font-weight-semibold);
+    text-decoration: none;
+}
+
+.page--school .school-page__body {
+    display: grid;
+    gap: 56px;
+    max-width: none;
+    margin: 0;
+}
+
+.page--school .school-page__body > section {
+    display: grid;
+    gap: 16px;
+    align-content: start;
+    margin: 0;
+    scroll-margin-top: 24px;
+}
+
+.page--school .school-page__body > section > * {
+    margin-block: 0;
+}
+
+.page__content .school-page__body .school-section__title,
+.page--school .school-section__title {
+    margin: 0;
+    font-size: 24px;
+    line-height: 31px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.wellbeing__lead,
+.results-lead {
+    font-size: 18px;
+    line-height: 27px;
+}
+
+.wellbeing__bars {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 24px;
+    border: 1px solid var(--ds-color-neutral-border-default);
+    border-radius: 12px;
+}
+
+.wellbeing__bars figcaption {
+    font-size: 14px;
+    line-height: 21px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.bar-row {
+    display: grid;
+    grid-template-columns: 160px minmax(0, 1fr) 48px;
+    align-items: center;
+    gap: 16px;
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.bar-row__track {
+    display: block;
+    height: 12px;
+}
+
+.bar-row__bar {
+    display: block;
+    height: 100%;
+    background: var(--ds-color-neutral-text-subtle);
+}
+
+.bar-row__bar--own {
+    background: #3a2b00;
+}
+
+.bar-row__value {
+    font-weight: var(--ds-font-weight-semibold);
+    text-align: right;
+}
+
+.contact-card {
+    display: grid;
+    gap: 12px;
+    padding: 28px;
+    border: 1px solid var(--ds-color-neutral-border-default);
+    border-radius: 12px;
+}
+
+.contact-card > *,
+.contact-card__links > * {
+    margin: 0;
+}
+
+.contact-card__title {
+    font-size: 21px;
+    line-height: 27px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.contact-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.contact-card__links {
+    display: grid;
+    gap: 4px;
+    margin: 0;
+}
+
+.contact-card__links dt {
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.contact-card__links dd {
+    margin: 0;
+}
+
+/* «Mer om skolen»: rows that unfold, a chevron at the end */
+.more {
+    gap: 0;
+}
+
+.more > .school-section__title {
+    margin-bottom: 8px;
+}
+
+.more-item {
+    border-bottom: 1px solid var(--ds-color-neutral-border-default);
+}
+
+.more-item[hidden] {
+    display: none;
+}
+
+.more-item > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 18px 0;
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: var(--ds-font-weight-semibold);
+    list-style: none;
+    cursor: pointer;
+}
+
+.more-item > summary::-webkit-details-marker {
+    display: none;
+}
+
+.more-item > summary .ds-icon {
+    flex: none;
+    width: 24px;
+    height: 24px;
+    color: var(--ds-color-brand1-text-subtle);
+    transition: transform 0.15s;
+}
+
+.more-item[open] > summary .ds-icon {
+    transform: rotate(180deg);
+}
+
+.more-item__body {
+    display: grid;
+    gap: 12px;
+    padding-bottom: 20px;
+}
+
+.more-item--table {
+    margin-top: 4px;
+    border-top: 1px solid var(--ds-color-neutral-border-default);
+}
+
+.more-item--table > summary {
+    color: var(--ds-color-brand1-text-subtle);
+}
+
+@media (max-width: 1023px) {
+    .school-head {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+    }
+
+    .school-head__media {
+        max-width: 352px;
+    }
+
+    .school-recap__cards,
+    .school-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .page-toc {
+        position: static;
+    }
+
+    .summary-tiles {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .school-head__title {
+        font-size: 26px;
+        line-height: 34px;
+    }
+
+    .summary-card {
+        padding: 20px;
+    }
+
+    .bar-row {
+        grid-template-columns: 96px minmax(0, 1fr) 44px;
+        gap: 8px;
+    }
+}
+
+#wellbeing {
+    display: grid;
+    gap: 16px;
+}
+
+#wellbeing > * {
+    margin: 0;
+}
+
+.page--school .ds-alert {
+    margin: 0;
+}
+
+.contact-card__links > div {
+    display: grid;
+    grid-template-columns: none;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+}
+
+.contact-card__links dd {
+    margin: 0;
+    padding: 0;
+}
+
+/* ── School card in the list, Figma «Idé E – Ikon med ord under» with the colour edge of «Idé D» ──
+   Card 1 px grey border, 8 px corners, 12 px inside (8 on the left, where the 5 px edge sits), 12 px between:
+   the edge in the school's colour, the type as an icon with a word under it (84 px), then the name, the facts and the
+   numbers in one row; «Snitt» as a chip */
+.school-list .school-card.school-row {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding: 12px 12px 12px 8px;
+    border: 1px solid var(--ds-color-neutral-border-default);
+    border-radius: 8px;
+    background: var(--ds-color-neutral-background-default);
+    color: var(--ds-color-neutral-text-default);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.school-list .school-card.school-row:hover {
+    border-color: var(--ds-color-brand1-text-subtle);
+}
+
+.school-list .school-card.school-row[aria-current] {
+    border-color: var(--ds-color-brand1-base-default);
+    background: var(--ds-color-brand1-background-tinted);
+}
+
+.school-list .school-card.school-row:focus-visible {
+    outline: 3px solid var(--ds-color-focus-outer, #1e2b3c);
+    outline-offset: 2px;
+}
+
+.school-list .school-card--own.school-row {
+    background: var(--ds-color-brand1-background-tinted);
+}
+
+.row-stripe {
+    flex: none;
+    width: 5px;
+    border-radius: 3px;
+    background: var(--score-bg, var(--ds-color-neutral-border-default));
+}
+
+.row-type {
+    flex: none;
+    display: grid;
+    align-content: start;
+    justify-items: center;
+    gap: 2px;
+    width: 84px;
+    text-align: center;
+}
+
+.row-type__icons {
+    display: inline-flex;
+    gap: 2px;
+    padding: 6px 8px;
+    border-radius: 999px;
+    background: var(--ds-color-neutral-surface-default);
+    color: var(--ds-color-neutral-text-default);
+}
+
+.row-type__icons .ds-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.row-type__word {
+    font-size: 14px;
+    line-height: 21px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.row-body {
+    flex: 1;
+    min-width: 0;
+    display: grid;
+    align-content: start;
+    gap: 4px;
+}
+
+.row-name {
+    padding-right: 40px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+    overflow-wrap: anywhere;
+}
+
+.row-meta {
+    font-size: 14px;
+    line-height: 21px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.row-stats {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 14px;
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.row-avg {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.row-avg--good { background: #daeddd; color: #023409; }
+.row-avg--warn { background: #fae6c6; color: #3c2807; }
+.row-avg--none { background: var(--ds-color-neutral-surface-default); border: 1px dashed var(--ds-color-neutral-text-subtle); color: var(--ds-color-neutral-text-subtle); padding: 1px 8px; }
+
+/* The bookmark, a round icon button in the top right corner */
+.school-list__item .school-card__save.ds-button {
+    top: 8px;
+    right: 8px;
+    width: 36px;
+    min-width: 36px;
+    height: 36px;
+    min-height: 36px;
+}
+
+.school-list__item .school-card__save.ds-button .ds-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* «Les mer om skolen» at the end of the row of numbers, so the card keeps the design's height */
+.school-list .school-list__item {
+    padding: 0;
+}
+
+.school-list .school-card__more.ds-link {
+    left: auto;
+    right: 14px;
+    bottom: 12px;
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.school-list .school-card.school-row {
+    padding-bottom: 12px;
+}
+
+@media (max-width: 640px) {
+    .school-list .school-card.school-row {
+        padding: 12px 12px 12px 8px;
+    }
+
+    .row-type {
+        width: 64px;
+    }
+
+    .school-list .school-card__more.ds-link {
+        position: static;
+        font-size: 15px;
+    }
+}
+
+/* Next to the map the cards are narrower (560 px): «Les mer om skolen» gets a row of its own under the numbers */
+@media (min-width: 641px) {
+    .results-grid[data-view="kart"] .school-list .school-card.school-row {
+        padding-bottom: 36px;
+    }
+
+    .results-grid[data-view="kart"] .school-list .school-card__more.ds-link {
+        right: auto;
+        left: 121px;
+        bottom: 10px;
+    }
+}
+
+/* ── Dialogs, sheets and confirmations (Figma 5 · PROTOTYPE, rows I and J; static/js/ui.js) ──────────
+   Panel 520 px (620 for the share dialog), 1 px #c9ccd1 border, 16 px corners, 32 px inside, 16 px between,
+   a shadow 0 8 32 at 18 %; title 24 px bold; buttons 52 px with 8 px corners. On phones: a «dialog» is a sheet from
+   the bottom (16 px top corners, 24 / 20 px inside, a 40 × 4 handle, title 20 px), a «confirm» a card 16 px from
+   the top and the sides */
+html.ui-locked {
+    overflow: hidden;
+}
+
+.ui-dialog {
+    box-sizing: border-box;
+    display: none;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 24px;
+    border: 0;
+    background: transparent;
+    color: var(--ds-color-neutral-text-default);
+    overflow: auto;
+}
+
+.ui-dialog[open] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ui-dialog[data-kind="confirm"] {
+    align-items: flex-start;
+}
+
+.ui-dialog::backdrop {
+    background: rgb(0 0 0 / 0.45);
+}
+
+.ui-dialog__panel {
+    box-sizing: border-box;
+    display: grid;
+    gap: 16px;
+    width: 100%;
+    max-width: 520px;
+    padding: 32px;
+    border: 1px solid #c9ccd1;
+    border-radius: 16px;
+    background: var(--ds-color-neutral-background-default);
+    box-shadow: 0 8px 32px rgb(0 0 0 / 0.18);
+}
+
+.ui-dialog[data-size="lg"] .ui-dialog__panel {
+    max-width: 620px;
+}
+
+.ui-dialog__handle {
+    display: none;
+}
+
+.ui-dialog__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.ui-dialog__title {
+    margin: 0;
+    white-space: pre-wrap;
+    font-size: 24px;
+    line-height: 35px;
+    font-weight: var(--ds-font-weight-bold, 700);
+}
+
+.ui-dialog__close {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 8px;
+    background: none;
+    color: var(--ds-color-brand1-base-default);
+    font: inherit;
+    font-size: 18px;
+    font-weight: var(--ds-font-weight-semibold);
+    cursor: pointer;
+}
+
+.ui-dialog__body {
+    display: grid;
+    gap: 16px;
+    font-size: 18px;
+    line-height: 26px;
+}
+
+.ui-dialog__body > * {
+    margin: 0;
+}
+
+.ui-dialog__actions {
+    display: grid;
+    gap: 16px;
+}
+
+.ui-button {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 52px;
+    padding: 0 20px;
+    border: 2px solid var(--ds-color-brand1-base-default);
+    border-radius: 8px;
+    font: inherit;
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: var(--ds-font-weight-semibold);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.ui-button--primary {
+    background: var(--ds-color-brand1-base-default);
+    color: var(--ds-color-brand1-base-contrast-default);
+}
+
+.ui-button--secondary {
+    background: var(--ds-color-neutral-background-default);
+    color: var(--ds-color-brand1-base-default);
+}
+
+.ui-button:focus-visible,
+.ui-dialog__close:focus-visible {
+    outline: 3px solid var(--ds-color-focus-outer, #1e2b3c);
+    outline-offset: 2px;
+}
+
+.ui-narrow {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .ui-dialog {
+        padding: 16px;
+    }
+
+    .ui-dialog[data-kind="dialog"] {
+        padding: 0;
+        align-items: flex-end;
+    }
+
+    .ui-dialog__panel {
+        padding: 24px 20px;
+    }
+
+    .ui-dialog[data-kind="dialog"] .ui-dialog__panel {
+        max-width: none;
+        border-radius: 16px 16px 0 0;
+        border-bottom: 0;
+        box-shadow: none;
+    }
+
+    .ui-dialog__handle {
+        display: block;
+        width: 40px;
+        height: 4px;
+        margin: 0 auto;
+        border-radius: 2px;
+        background: #8a8f96;
+    }
+
+    .ui-dialog__title {
+        font-size: 20px;
+        line-height: 29px;
+    }
+
+    .ui-dialog__body {
+        font-size: 17px;
+        line-height: 25px;
+    }
+
+    .ui-wide {
+        display: none;
+    }
+
+    .ui-narrow {
+        display: inline;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .ui-dialog[open] .ui-dialog__panel {
+        animation: ui-dialog-in 0.15s ease-out;
+    }
+
+    @keyframes ui-dialog-in {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: none; }
+    }
+}
+
+/* ══ The flow of the prototype (Figma 5 · PROTOTYPE): A1 start, A4 priorities, A6 results ═══════════════════
+   Measured at 1440 px: the text column 660 and the help card 396 with 64 between, in a 1120 px column */
+.link-button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--ds-color-brand1-text-subtle);
+    font: inherit;
+    font-size: 16px;
+    line-height: 24px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.hero-button {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 52px;
+    padding: 0 20px;
+    border: 2px solid var(--ds-color-brand1-base-default);
+    border-radius: 6px;
+    font: inherit;
+    cursor: pointer;
+}
+
+.hero-button .ds-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.hero-button--primary {
+    border-width: 0;
+    padding: 0 20px;
+    background: var(--ds-color-brand1-base-default);
+    color: var(--ds-color-brand1-base-contrast-default);
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.hero-button--secondary {
+    border-color: var(--ds-color-brand1-text-subtle);
+    background: var(--ds-color-neutral-background-default);
+    color: var(--ds-color-brand1-text-subtle);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.hero-button:focus-visible,
+.link-button:focus-visible,
+.needs-card:focus-visible {
+    outline: 3px solid var(--ds-color-focus-outer, #1e2b3c);
+    outline-offset: 2px;
+}
+
+.hero {
+    background: var(--ds-color-brand1-background-tinted);
+}
+
+.hero[hidden], .needs[hidden], .prio[hidden], .results-band[hidden] {
+    display: none;
+}
+
+.hero__inner {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: minmax(0, 660px) minmax(0, 396px);
+    justify-content: space-between;
+    gap: 64px;
+    align-items: start;
+    width: min(1120px, 100% - 32px);
+    margin-inline: auto;
+    padding: 64px 0;
+}
+
+.hero__main {
+    display: grid;
+    gap: 20px;
+}
+
+.hero__main > * {
+    margin: 0;
+}
+
+.hero__step {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-color-brand1-text-subtle);
+}
+
+.hero__title {
+    margin: 0;
+    font-size: 30px;
+    line-height: 39px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.hero__lead {
+    font-size: 18px;
+    line-height: 27px;
+}
+
+.hero__card {
+    display: grid;
+    gap: 12px;
+    padding: 32px;
+    border: 1px solid #bbbcbd;
+    border-radius: 12px;
+    background: var(--ds-color-neutral-background-default);
+}
+
+.hero__card > * {
+    margin: 0;
+}
+
+.hero__card-title {
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.hero__hint {
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.hero__field .ds-input,
+.hero__field input {
+    box-sizing: border-box;
+    min-height: 60px;
+    border: 1px solid var(--ds-color-neutral-border-strong, #77797b);
+    border-radius: 6px;
+    font-size: 18px;
+}
+
+.hero__field input:focus-visible {
+    outline: 0;
+    border: 3px solid var(--ds-color-neutral-text-default);
+}
+
+.hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.hero__field .locate-inline {
+    display: none;
+}
+
+.hero__link {
+    justify-self: start;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--ds-color-brand1-text-subtle);
+    font: inherit;
+    font-size: 16px;
+    line-height: 24px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.start-error {
+    padding: 16px 20px;
+    border-left: 4px solid #a56d13;
+    border-radius: 6px;
+    background: #fae6c6;
+    color: #3c2807;
+}
+
+.start-error p {
+    margin: 4px 0 0;
+}
+
+.start-error__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    margin-top: 8px;
+}
+
+.start-error .link-button {
+    color: inherit;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.hero__help {
+    display: grid;
+    gap: 24px;
+    padding: 32px;
+    border-radius: 12px;
+    background: var(--ds-color-neutral-background-default);
+}
+
+.hero__help-title {
+    margin: 0;
+    font-size: 21px;
+    line-height: 27px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.hero__help-list {
+    display: grid;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.hero__help-list li {
+    display: flex;
+    gap: 16px;
+}
+
+.hero__help-icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #dcece8;
+    color: #053227;
+}
+
+.hero__help-icon .ds-icon {
+    width: 26px;
+    height: 26px;
+}
+
+.hero__help-list strong {
+    display: block;
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.hero__help-list p {
+    margin: 4px 0 0;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.needs__inner {
+    box-sizing: border-box;
+    display: grid;
+    gap: 24px;
+    width: min(1120px, 100% - 32px);
+    margin-inline: auto;
+    padding: 56px 0;
+}
+
+.needs__inner > * {
+    margin: 0;
+}
+
+.needs__title {
+    font-size: 24px;
+    line-height: 31px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.needs__lead {
+    font-size: 18px;
+    line-height: 27px;
+}
+
+.needs__cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.needs-card {
+    box-sizing: border-box;
+    display: grid;
+    gap: 8px;
+    height: 100%;
+    padding: 28px;
+    border: 1px solid #bbbcbd;
+    border-radius: 12px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.needs-card:hover {
+    border-color: var(--ds-color-brand1-text-subtle);
+}
+
+.needs-card__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-color-brand1-text-subtle);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.needs-card__title .ds-icon {
+    width: 22px;
+    height: 22px;
+}
+
+.needs-card__text {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+/* A4 */
+.prio__inner {
+    box-sizing: border-box;
+    display: grid;
+    gap: 28px;
+    width: min(1120px, 100% - 32px);
+    margin-inline: auto;
+    padding: 40px 0 56px;
+}
+
+.prio__inner > * {
+    margin: 0;
+}
+
+.prio__back {
+    justify-self: start;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--ds-color-brand1-text-subtle);
+    font: inherit;
+    font-size: 16px;
+    line-height: 24px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.prio__title {
+    font-size: 30px;
+    line-height: 39px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.prio__head {
+    display: grid;
+    gap: 12px;
+}
+
+.prio__head > * {
+    margin: 0;
+}
+
+.prio__lead {
+    max-width: 900px;
+    font-size: 18px;
+    line-height: 27px;
+}
+
+.prio__place {
+    display: inline-flex;
+    justify-self: start;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: var(--ds-color-brand1-background-tinted);
+    color: #053227;
+    font-size: 18px;
+    line-height: 27px;
+}
+
+.prio__place .ds-icon {
+    width: 22px;
+    height: 22px;
+}
+
+.prio__group {
+    display: grid;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.prio__group legend {
+    padding: 0;
+    margin-bottom: 0;
+    font-size: 21px;
+    line-height: 28px;
+    font-weight: var(--ds-font-weight-medium);
+    float: left;
+    width: 100%;
+}
+
+.prio__options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 548px));
+    gap: 16px 24px;
+    clear: both;
+}
+
+.prio-option {
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    border: 1px solid #77797b;
+    border-radius: 12px;
+    background: var(--ds-color-neutral-background-default);
+    cursor: pointer;
+}
+
+.prio-option:has(input:checked) {
+    border: 3px solid var(--ds-color-brand1-base-default);
+    background: var(--ds-color-brand1-background-tinted);
+}
+
+.prio-option:has(input:focus-visible) {
+    outline: 3px solid var(--ds-color-focus-outer, #1e2b3c);
+    outline-offset: 2px;
+}
+
+.prio-option > input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.prio-option__box {
+    flex: none;
+    box-sizing: border-box;
+    width: 28px;
+    height: 28px;
+    margin-top: 0;
+    border: 2px solid #5b5d60;
+    border-radius: 4px;
+    background: var(--ds-color-neutral-background-default);
+}
+
+.prio-option:has(input:checked) .prio-option__box {
+    border-color: var(--ds-color-brand1-base-default);
+    background: var(--ds-color-brand1-base-default) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 22px no-repeat;
+}
+
+.prio-option__body {
+    display: grid;
+    gap: 4px;
+}
+
+.prio-option__title {
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.prio-option__text {
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.prio__bar {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    padding: 24px;
+    border-radius: 12px;
+    background: #f3f3f4;
+}
+
+.prio__count {
+    flex: 1;
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.prio__skip {
+    font-weight: var(--ds-font-weight-semibold);
+    text-decoration: none;
+}
+
+.prio__note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.prio__note .ds-icon {
+    flex: none;
+    width: 24px;
+    height: 24px;
+}
+
+/* A6: the band over the results */
+.results-band.search-panel {
+    padding: 32px 0;
+}
+
+.results-band__title {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    margin-bottom: 16px;
+}
+
+.results-band__h1 {
+    margin: 0;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.results-band__link {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--ds-color-brand1-text-subtle);
+    font: inherit;
+    font-size: 16px;
+    line-height: 24px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.band-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 10px;
+    margin-bottom: 16px;
+}
+
+.band-row[hidden] {
+    display: none;
+}
+
+.band-row__label {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.band-row__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.band-chip {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 16px;
+    border: 1.5px solid var(--ds-color-brand1-text-subtle);
+    border-radius: 999px;
+    background: var(--ds-color-neutral-background-default);
+    color: #053227;
+    font: inherit;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.band-chip .ds-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.band-chip--on {
+    border-radius: 8px;
+    border-color: var(--ds-color-brand1-base-default);
+    background: var(--ds-color-brand1-base-default);
+    color: var(--ds-color-brand1-base-contrast-default);
+}
+
+.band-chip--prio {
+    padding-right: 10px;
+    cursor: pointer;
+}
+
+.band-row__add {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 6px;
+    background: none;
+    color: var(--ds-color-brand1-text-subtle);
+    font: inherit;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+    cursor: pointer;
+}
+
+.band-row__add .ds-icon {
+    width: 22px;
+    height: 22px;
+}
+
+/* The toolbar: the count and the order in words on the left, Sorter, Filter and Liste | Kart on the right */
+.results-toolbar {
+    align-items: center;
+}
+
+.results-toolbar .toolbar-text {
+    flex: 1;
+    margin: 0 auto 0 0;
+    font-size: 18px;
+    line-height: 27px;
+}
+
+.results-toolbar .results-sort { order: 1; }
+.results-toolbar #filterToggle { order: 2; }
+.results-toolbar .view-switch { order: 3; }
+
+.results-toolbar #filterToggle.ds-button {
+    min-height: 48px;
+    padding: 0 16px;
+    gap: 8px;
+    border: 2px solid var(--ds-color-brand1-text-subtle);
+    border-radius: 6px;
+    background: var(--ds-color-neutral-background-default);
+    color: var(--ds-color-brand1-text-subtle);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.results-toolbar #filterToggle .ds-icon {
+    width: 22px;
+    height: 22px;
+}
+
+/* A6 «Slik leser du kortene» */
+.legend-box {
+    display: grid;
+    gap: 12px;
+    padding: 20px;
+    border-radius: 12px;
+    background: #f3f3f4;
+}
+
+.legend-box[hidden] {
+    display: none;
+}
+
+.legend-box__title {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.legend-box__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.fact {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.fact .ds-icon {
+    flex: none;
+    width: 22px;
+    height: 22px;
+}
+
+.fact--ok { background: #daeddd; color: #023409; }
+.fact--unknown { background: #e8e8e9; color: #5b5d60; }
+.fact--warn { background: #fae6c6; color: #3c2807; }
+
+/* A6 «Skolekort» */
+.school-list .school-card.school-sk {
+    box-sizing: border-box;
+    display: grid;
+    gap: 16px;
+    width: 100%;
+    margin: 0;
+    padding: 24px 28px 52px;
+    border: 1px solid #bbbcbd;
+    border-radius: 12px;
+    background: var(--ds-color-neutral-background-default);
+    color: var(--ds-color-neutral-text-default);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.school-list .school-card.school-sk:hover {
+    border-color: var(--ds-color-brand1-text-subtle);
+}
+
+.school-list .school-card.school-sk[aria-current] {
+    border-color: var(--ds-color-brand1-base-default);
+    background: var(--ds-color-brand1-background-tinted);
+}
+
+.school-list .school-card.school-sk:focus-visible {
+    outline: 3px solid var(--ds-color-focus-outer, #1e2b3c);
+    outline-offset: 2px;
+}
+
+.sk-name {
+    padding-right: 130px;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--ds-color-brand1-text-subtle);
+}
+
+.sk-meta {
+    margin-top: -12px;
+    padding-right: 130px;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.sk-fit {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+    line-height: 27px;
+}
+
+.sk-bar {
+    display: inline-flex;
+    gap: 4px;
+}
+
+.sk-bar__seg {
+    width: 24px;
+    height: 10px;
+    border-radius: 3px;
+    background: #e8e8e9;
+}
+
+.sk-bar__seg.is-on {
+    background: var(--ds-color-brand1-base-default);
+}
+
+.sk-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* «Lagre / Lagret» with its word, in the top right corner (green and filled when saved) */
+.school-list__item .school-card__save.ds-button {
+    top: 24px;
+    right: 28px;
+    width: auto;
+    min-width: 0;
+    height: 44px;
+    min-height: 44px;
+    padding: 0 16px;
+    gap: 8px;
+    border: 1px solid var(--ds-color-brand1-text-subtle);
+    border-radius: 4px;
+    background: var(--ds-color-neutral-background-default);
+    color: var(--ds-color-brand1-text-subtle);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.school-list__item .school-card__save.ds-button[aria-pressed="true"] {
+    border-color: var(--ds-color-brand1-base-default);
+    background: var(--ds-color-brand1-base-default);
+    color: var(--ds-color-brand1-base-contrast-default);
+}
+
+.school-list .school-card__more.ds-link {
+    right: auto;
+    left: 28px;
+    bottom: 16px;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.school-list .school-card.school-sk .school-tiles {
+    margin: 0;
+}
+
+.empty-state {
+    display: grid;
+    gap: 12px;
+    padding: 28px;
+    border: 1px solid #bbbcbd;
+    border-radius: 12px;
+    list-style: none;
+}
+
+.empty-state > * {
+    margin: 0;
+}
+
+.empty-state__title {
+    font-size: 21px;
+    line-height: 27px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.empty-state__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.ui-dialog__sub {
+    margin: 4px 0 0;
+    font-size: 14px;
+    line-height: 21px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.ui-dialog__body ul {
+    margin: 0;
+    padding-left: 22px;
+}
+
+/* the list head only matters on phones (the sticky filter button) */
+@media (min-width: 641px) {
+    .results-grid .results-head {
+        display: none;
+    }
+}
+
+/* Phones */
+@media (max-width: 1023px) {
+    .hero__inner {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 32px;
+        padding: 40px 0;
+    }
+
+    .needs__cards {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .prio__options {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .hero__title,
+    .prio__title {
+        font-size: 26px;
+        line-height: 34px;
+    }
+
+    .hero__card,
+    .hero__help {
+        padding: 20px;
+    }
+
+    .hero__actions > .hero-button {
+        flex: 1 1 100%;
+    }
+
+    .sk-name,
+    .sk-meta {
+        padding-right: 0;
+    }
+
+    .school-list .school-card.school-sk {
+        padding: 20px 16px 16px;
+    }
+
+    .school-list__item .school-card__save.ds-button {
+        position: static;
+    }
+
+    .prio__bar {
+        flex-wrap: wrap;
+    }
+
+    .results-toolbar .toolbar-text {
+        flex: 1 1 100%;
+    }
+}
+
+/* ══ «Lagrede skoler» (Figma R6): share panel and comparison table. Measured at 1440 px: 1120 px column, 24 px between
+   the blocks; the table has a 250 px label column and 290 px per school ═══════════════════════════════════════ */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.saved-page {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    max-width: 1184px;
+    margin: 0 auto;
+    padding: 32px 32px 64px;
+}
+
+#compare {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.saved-page__back {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--ds-color-brand1-text-subtle);
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.saved-page__back .ds-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.saved-page__title {
+    margin: 0;
+    font-size: 30px;
+    line-height: 39px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.saved-page__lead {
+    max-width: 900px;
+    margin: 0;
+    font-size: 18px;
+    line-height: 27px;
+}
+
+.saved-page__h2 {
+    margin: 0;
+    font-size: 24px;
+    line-height: 31px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.saved-page__sub {
+    margin: -8px 0 0;
+    color: var(--ds-color-neutral-text-subtle);
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.saved-page__source {
+    margin: 0;
+    color: var(--ds-color-neutral-text-subtle);
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.saved-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+a.hero-button {
+    text-decoration: none;
+}
+
+.share-panel {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 28px;
+    border: 1px solid #96c5b9;
+    border-radius: 12px;
+    background: #edf5f3;
+}
+
+.share-panel[hidden] {
+    display: none;
+}
+
+.share-panel__title {
+    margin: 0;
+    font-size: 21px;
+    line-height: 27px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.share-panel__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+}
+
+.share-panel__link {
+    box-sizing: border-box;
+    flex: 1 1 280px;
+    min-width: 0;
+    height: 52px;
+    padding: 0 16px;
+    border: 1px solid #77797b;
+    border-radius: 6px;
+    background: #fff;
+    color: var(--ds-color-neutral-text-default);
+    font: inherit;
+    font-size: 18px;
+}
+
+.share-panel__note {
+    max-width: 1000px;
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+/* The messages of the prototype: a coloured block with a 6 px bar on the left */
+.saved-note {
+    box-sizing: border-box;
+    display: flex;
+    gap: 16px;
+    padding: 20px 24px 20px 20px;
+    border-radius: 12px;
+    border-left: 6px solid;
+    font-size: 18px;
+    line-height: 27px;
+}
+
+.saved-note > .ds-icon {
+    flex: none;
+    width: 28px;
+    height: 28px;
+}
+
+.saved-note > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.saved-note p {
+    margin: 0;
+}
+
+.saved-note p:has(> a), .saved-note p:has(> .link-button) {
+    line-height: 24px;
+}
+
+.saved-note strong {
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.saved-note--warn { border-color: #3c2807; background: #fae6c6; }
+.saved-note--warn strong, .saved-note--warn > .ds-icon { color: #3c2807; }
+.saved-note--info { border-color: #0062ba; background: #eef4fa; }
+.saved-note--info strong, .saved-note--info > .ds-icon { color: #002c54; }
+.saved-note--ok { border-color: #0d7a5f; background: #edf5f3; }
+.saved-note--ok strong, .saved-note--ok > .ds-icon { color: #0b6a53; }
+
+.saved-note__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 24px;
+}
+
+.saved-note a,
+.saved-note .link-button {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.cmp-wrap {
+    overflow-x: auto;
+    border: 1px solid #bbbcbd;
+    border-radius: 12px;
+}
+
+.cmp {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.cmp--2 { min-width: 640px; }
+.cmp--3 { min-width: 860px; }
+.cmp--4 { min-width: 1100px; }
+
+.cmp th, .cmp td {
+    box-sizing: border-box;
+    padding: 20px;
+    border-bottom: 1px solid #bbbcbd;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-regular);
+    text-align: left;
+    vertical-align: top;
+}
+
+.cmp tr:last-child th, .cmp tr:last-child td { border-bottom: 0; }
+.cmp td, .cmp th[scope="col"] { border-left: 1px solid #bbbcbd; }
+.cmp tbody tr:nth-child(odd) { background: #f3f3f4; }
+.cmp__label { width: 250px; }
+
+.cmp th[scope="row"], .cmp tr > :first-child {
+    border-left: 0;
+    font-size: 18px;
+    font-weight: var(--ds-font-weight-semibold);
+    line-height: 27px;
+}
+
+.cmp-head th[scope="col"] {
+    display: table-cell;
+    font-weight: var(--ds-font-weight-regular);
+}
+
+.cmp-name {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--ds-color-brand1-text-subtle);
+    font-size: 21px;
+    line-height: 28px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.cmp-meta {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.cmp-small {
+    display: block;
+    margin-top: 4px;
+    color: var(--ds-color-neutral-text-subtle);
+    font-size: 14px;
+    font-weight: var(--ds-font-weight-regular);
+    line-height: 21px;
+}
+
+.cmp-remove {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 8px;
+    border: 0;
+    border-radius: 6px;
+    background: none;
+    color: var(--ds-color-brand1-text-subtle);
+    font: inherit;
+    cursor: pointer;
+}
+
+.cmp-remove .ds-icon { width: 22px; height: 22px; }
+.cmp-remove:hover { background: rgba(11, 106, 83, 0.08); }
+
+.cmp td .fact {
+    display: flex;
+    width: fit-content;
+    max-width: 100%;
+    padding: 8px 14px 8px 10px;
+    gap: 8px;
+    border-radius: 8px;
+}
+
+.cmp td .fact + .fact { margin-top: 10px; }
+
+.cmp-note {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 98px;
+    padding: 12px;
+    border: 1px solid #77797b;
+    border-radius: 6px;
+    background: #fff;
+    color: var(--ds-color-neutral-text-default);
+    font: inherit;
+    resize: vertical;
+}
+
+.saved-page a:focus-visible,
+.saved-page button:focus-visible,
+.saved-page input:focus-visible,
+.saved-page textarea:focus-visible,
+.cmp-wrap:focus-visible {
+    outline: 3px solid var(--ds-color-focus-outer, #1e2b3c);
+    outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+    .saved-page { padding: 24px 16px 48px; }
+    .saved-page__title { font-size: 26px; line-height: 34px; }
+    .saved-page__lead { font-size: 16px; line-height: 24px; }
+    .saved-actions .hero-button { flex: 1 1 100%; }
+    .share-panel { padding: 20px 16px; }
+    .share-panel__row .hero-button { flex: 1 1 100%; }
+    .cmp__label { width: 150px; }
+    .cmp th[scope="row"], .cmp tr > :first-child { font-size: 16px; line-height: 24px; }
+    .cmp--2 { min-width: 560px; } .cmp--3 { min-width: 720px; } .cmp--4 { min-width: 900px; }
+}
+
+@media print {
+    .share-panel, .saved-actions, .saved-page__back { display: none !important; }
+    .cmp-wrap { overflow: visible; }
+}
+
+/* ══ E1 «Barn med særskilte behov» (Figma 5 · PROTOTYPE): an information page with a card on the side.
+   Measured at 1440 px: text column 780, card 280 with 60 between; 20 px between the blocks, 36 px above a heading ════ */
+.page--article { padding: 0; }
+
+.article-crumbs {
+    box-sizing: border-box;
+    max-width: 1184px;
+    margin: 0 auto;
+    padding: 24px 32px 0;
+}
+
+.article-crumbs ol { margin: 0; }
+
+.article-layout {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: minmax(0, 780px) 280px;
+    gap: 60px;
+    align-items: start;
+    max-width: 1184px;
+    margin: 0 auto;
+    padding: 24px 32px 80px;
+}
+
+.article {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 18px;
+    line-height: 27px;
+}
+
+.article > * { margin: 0; }
+
+.article__title {
+    font-size: 30px;
+    line-height: 39px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.article__meta {
+    color: var(--ds-color-neutral-text-subtle);
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.article__draft {
+    padding: 12px 16px;
+    border-left: 6px solid #3c2807;
+    border-radius: 8px;
+    background: #fae6c6;
+    color: #3c2807;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.article__h2 {
+    margin-top: 16px;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.brief {
+    padding: 28px;
+    border: 1px solid #96c5b9;
+    border-radius: 12px;
+    background: #edf5f3;
+}
+
+.brief__title { margin: 0 0 12px; font-size: 21px; line-height: 28px; font-weight: var(--ds-font-weight-medium); }
+.brief__list { display: flex; flex-direction: column; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.brief__list li { display: flex; gap: 12px; align-items: flex-start; }
+.brief__list .ds-icon { flex: none; width: 24px; height: 24px; margin-top: 1.5px; color: #0b6a53; }
+
+.listen-button {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 52px;
+    margin-top: -4px;
+    padding: 0 20px;
+    border: 2px solid var(--ds-color-brand1-text-subtle);
+    border-radius: 6px;
+    background: var(--ds-color-neutral-background-default);
+    color: var(--ds-color-brand1-text-subtle);
+    font: inherit;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+    cursor: pointer;
+}
+
+.listen-button[hidden] { display: none; }
+.listen-button .ds-icon { width: 22px; height: 22px; }
+.listen-button[aria-pressed="true"] { background: var(--ds-color-brand1-text-subtle); color: #fff; }
+
+.steps, .numbered, .bullets { margin: 0; padding: 0; list-style: none; }
+.steps li { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 24px; }
+.steps__no {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--ds-color-brand1-text-subtle);
+    color: #fff;
+    font-weight: var(--ds-font-weight-semibold);
+}
+.steps strong { font-weight: var(--ds-font-weight-semibold); }
+.steps p { margin: 6px 0 0; }
+
+.bullets, .numbered { display: flex; flex-direction: column; gap: 10px; }
+.bullets li, .numbered li { display: flex; gap: 12px; }
+.bullets li::before { content: "•"; flex: none; font-weight: var(--ds-font-weight-semibold); }
+.numbered { counter-reset: q; }
+.numbered li { counter-increment: q; }
+.numbered li::before { content: counter(q) "."; flex: none; font-weight: var(--ds-font-weight-semibold); }
+
+.notice {
+    display: flex;
+    gap: 16px;
+    padding: 20px 24px 20px 20px;
+    border-left: 6px solid;
+    border-radius: 12px;
+}
+.notice > div { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.notice p { margin: 0; }
+.notice p:has(> a) { line-height: 24px; }
+.notice a { font-size: 16px; }
+.notice strong { font-weight: var(--ds-font-weight-semibold); }
+.notice__icon .ds-icon { flex: none; width: 28px; height: 28px; }
+.notice--info { border-color: #0062ba; background: #eef4fa; }
+.notice--info strong, .notice--info .notice__icon { color: #002c54; }
+.notice--ok { border-color: #023409; background: #daeddd; }
+.notice--ok strong, .notice--ok .notice__icon { color: #023409; }
+
+.helpers { margin: 0; padding: 0; list-style: none; }
+.helpers li { border-bottom: 1px solid #bbbcbd; }
+.helpers a { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 0; color: inherit; text-decoration: none; }
+.helpers__text { display: flex; flex-direction: column; gap: 4px; }
+.helpers__text strong { color: var(--ds-color-brand1-text-subtle); font-weight: var(--ds-font-weight-semibold); text-decoration: underline; text-underline-offset: 3px; }
+.helpers__text span { color: var(--ds-color-neutral-text-subtle); font-size: 16px; line-height: 24px; }
+.helpers__icon { flex: none; display: grid; place-items: center; width: 24px; height: 24px; color: var(--ds-color-brand1-text-subtle); }
+.helpers__icon .ds-icon { width: 24px; height: 24px; }
+
+.checklist { display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.checklist label { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; }
+.checklist input { position: absolute; opacity: 0; }
+.checklist__box {
+    flex: none;
+    width: 24px;
+    height: 24px;
+    margin-top: 1.5px;
+    border: 2px solid #77797b;
+    border-radius: 4px;
+    background: #fff;
+}
+.checklist input:checked + .checklist__box {
+    border-color: #0d7a5f;
+    background: #0d7a5f url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 12.5l4 4 8-9' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 18px no-repeat;
+}
+.checklist input:checked ~ span:last-child { text-decoration: line-through; color: var(--ds-color-neutral-text-subtle); }
+.checklist input:focus-visible + .checklist__box { outline: 3px solid var(--ds-color-focus-outer, #1e2b3c); outline-offset: 2px; }
+
+.related {
+    box-sizing: border-box;
+    position: sticky;
+    top: 24px;
+    padding: 28px;
+    border: 1px solid #bbbcbd;
+    border-radius: 12px;
+    background: #f3f3f4;
+}
+.related__title { margin: 0 0 12px; font-size: 18px; line-height: 27px; font-weight: var(--ds-font-weight-semibold); }
+.related li { line-height: 24px; }
+.related ul { display: flex; flex-direction: column; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.related a { font-size: 16px; line-height: 24px; }
+
+@media (max-width: 960px) {
+    .article-layout { grid-template-columns: minmax(0, 1fr); gap: 32px; padding: 16px 16px 56px; }
+    .article-crumbs { padding: 24px 16px 0; }
+    .article__title { font-size: 26px; line-height: 34px; }
+    .related { position: static; }
+}
+
+/* ══ «Visning» (Figma D1): the panel, and what its choices do ═══════════════════════════════════════════════ */
+.display-dropdown.ds-dropdown,
+.display-dropdown {
+    box-sizing: border-box;
+    width: min(420px, calc(100vw - 16px));
+    max-height: calc(100vh - 96px);
+    overflow-y: auto;
+    padding: 28px;
+    border: 1px solid #bbbcbd;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.display-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.display-panel__head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+}
+
+.display-panel__title {
+    margin: 0;
+    font-size: 21px;
+    line-height: 28px;
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.display-panel__rule { flex: 1; }
+
+.display-panel__close {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 8px;
+    border: 0;
+    border-radius: 6px;
+    background: none;
+    color: var(--ds-color-brand1-text-subtle);
+    font: inherit;
+    font-size: 16px;
+    line-height: 24px;
+    cursor: pointer;
+}
+
+.display-panel__close .ds-icon { width: 22px; height: 22px; }
+
+.display-field { display: flex; flex-direction: column; gap: 10px; }
+
+.display-field__title {
+    margin: 0;
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: var(--ds-font-weight-regular);
+}
+
+.seg {
+    display: flex;
+    padding: 2px;
+    border: 2px solid var(--ds-color-brand1-text-subtle);
+    border-radius: 8px;
+}
+
+.seg__item {
+    flex: 1 1 0;
+    min-height: 48px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: 5px;
+    background: #fff;
+    color: var(--ds-color-brand1-text-subtle);
+    font: inherit;
+    font-size: 16px;
+    line-height: 24px;
+    cursor: pointer;
+}
+
+.seg__item[aria-checked="true"] {
+    background: var(--ds-color-brand1-base-default);
+    color: var(--ds-color-brand1-base-contrast-default);
+}
+
+.display-switch {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 18px;
+    line-height: 27px;
+}
+
+.switch {
+    position: relative;
+    flex: none;
+    width: 56px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: #77797b;
+    cursor: pointer;
+}
+
+.switch[aria-checked="true"] { background: var(--ds-color-brand1-base-default); }
+
+.switch__knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform 0.15s ease;
+}
+
+.switch[aria-checked="true"] .switch__knob { transform: translateX(24px); }
+
+.display-panel__note {
+    margin: 0;
+    color: var(--ds-color-neutral-text-subtle);
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.display-panel button:focus-visible,
+.display-dropdown button:focus-visible {
+    outline: 3px solid var(--ds-color-focus-outer, #1e2b3c);
+    outline-offset: 2px;
+}
+
+/* On phones the panel is a sheet from the bottom of the screen (Figma J2) */
+@media (max-width: 640px) {
+    .display-dropdown.display-dropdown {
+        position: fixed;
+        inset: auto 0 0 0;
+        width: auto;
+        max-height: 88vh;
+        margin: 0;
+        padding: 20px 16px 24px;
+        border-radius: 16px 16px 0 0;
+    }
+}
+
+/* In «Meny» (phones) the panel is part of the menu */
+.site-menu > .display-panel { margin-top: 16px; padding-top: 16px; border-top: 1px solid #bbbcbd; }
+
+/* Text size: the whole page is enlarged, header, text and tables alike */
+html[data-text="stor"] body { zoom: 1.15; }
+html[data-text="ekstra"] body { zoom: 1.3; }
+
+/* «Lytt til siden» and «Spar data» */
+html[data-listen="off"] .listen-button { display: none; }
+
+.map-saver {
+    position: absolute;
+    inset: 0;
+    z-index: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px;
+    background: #f3f3f4;
+    text-align: center;
+}
+
+.map-saver p { margin: 0; max-width: 28ch; color: var(--ds-color-neutral-text-default); }
+
+/* Less movement and animation: what the visitor chose here, as the phone's own setting already does */
+html[data-motion="less"] *,
+html[data-motion="less"] *::before,
+html[data-motion="less"] *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+}
+
+/* High contrast: black text on white, dark borders and links that are underlined; focus is thicker */
+html[data-contrast="hoy"] {
+    --ds-color-neutral-text-default: #000;
+    --ds-color-neutral-text-subtle: #1e2b3c;
+    --ds-color-neutral-border-default: #1e2b3c;
+    --ds-color-neutral-border-subtle: #1e2b3c;
+    --ds-color-neutral-border-strong: #000;
+    --ds-color-brand1-text-subtle: #054a3a;
+    --ds-color-brand1-text-default: #054a3a;
+    --ds-color-brand1-base-default: #054a3a;
+    --ds-color-brand1-base-hover: #033b2e;
+    --ds-color-brand1-border-default: #054a3a;
+}
+
+html[data-contrast="hoy"] body { color: #000; background: #fff; }
+html[data-contrast="hoy"] a { text-decoration: underline; text-underline-offset: 3px; }
+html[data-contrast="hoy"] :focus-visible { outline-width: 4px !important; outline-color: #000 !important; }
+html[data-contrast="hoy"] :is(.cmp-wrap, .cmp th, .cmp td, .share-panel, .brief, .related, .helpers li, .school-sk, .saved-page .saved-note, .notice, .seg, .display-dropdown, .share-panel__link, .cmp-note) { border-color: #1e2b3c; }
+html[data-contrast="hoy"] :is(.saved-page__sub, .saved-page__source, .article__meta, .cmp-small, .helpers__text span, .display-panel__note, .fact--unknown) { color: #1e2b3c; }
+html[data-contrast="hoy"] .fact--ok { background: #cfe8d3; color: #022b07; }
+html[data-contrast="hoy"] .fact--warn { background: #f5d79b; color: #2b1c03; }
+html[data-contrast="hoy"] .fact--unknown { background: #dcdcdd; }
+
+/* A6 band: the rows 16 px apart and nothing under the last one (Figma «Søk og prioriteringer», gap 16) */
+.results-band > .site-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.results-band .results-band__title,
+.results-band .band-row,
+.results-band .active-filters {
+    margin: 0;
+}
+
+/* A1: the second link under the field (Figma, «Iterasjon 2 – flere adresser»): a plus and 18 px underlined text */
+.hero__link--icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    line-height: 27px;
+}
+
+.hero__link--icon .ds-icon { flex: none; width: 22px; height: 22px; }
+a.band-row__add { text-decoration: none; }
+
+/* «Sammenlign adresser» and the dialog «Legg til en adresse» */
+.cmp-name--plain { color: var(--ds-color-neutral-text-default); }
+.address-prio { margin: 0; }
+.cmp thead, .cmp-head .link-button { font-weight: var(--ds-font-weight-semibold); }
+.addr-input { width: 100%; box-sizing: border-box; margin-top: 12px; }
+.addr-list { margin: 8px 0 0; padding: 0; list-style: none; max-height: 240px; overflow-y: auto; }
+.addr-list li { padding: 12px; border-radius: 6px; cursor: pointer; }
+.addr-list li:hover, .addr-list li:focus-visible { background: #edf5f3; outline: none; }
+.addr-list__none { color: var(--ds-color-neutral-text-subtle); cursor: default !important; }
+.addr-error { margin: 8px 0 0; color: #3c2807; font-weight: var(--ds-font-weight-semibold); }
+.addr-error[hidden] { display: none; }
+
+/* ══ Phones, A6 (Figma H1, 390 px wide): a compact band with the address, two priorities and «Liste | Kart»; Sorter and
+   Filter in one row; «N lagret» and «Sammenlign» fixed at the bottom ═══════════════════════════════════════════ */
+.band-pin, .results-message__short, .saved-bar-mobile { display: none; }
+.band-row__more { display: none; }
+.results-band__link .narrow { display: none; }
+
+@media (max-width: 640px) {
+    .results-band.search-panel { padding: 12px 0 12px; }
+    .results-band > .site-container { gap: 12px; padding-inline: 17px; }
+    .results-band .results-band__title { flex-wrap: nowrap; align-items: center; gap: 8px; }
+    .results-band__h1 { display: flex; align-items: center; gap: 8px; min-width: 0; font-size: 16px; line-height: 24px; font-weight: var(--ds-font-weight-semibold); }
+    .results-band__h1 .band-pin { display: inline-flex; flex: none; }
+    .results-band__h1 .band-pin .ds-icon { width: 20px; height: 20px; }
+    .results-band__h1 .band-prefix { display: none; }
+    .results-band__link { flex: none; font-size: 16px; font-weight: var(--ds-font-weight-regular); }
+    .results-band__link .wide { display: none; }
+    .results-band__link .narrow { display: inline; }
+    #addressRow, #changePriorities, .band-chip-extra, .band-row__label { display: none !important; }
+    .band-row__more { display: inline-flex; align-self: flex-start; }
+    .band-row__more.link-button { font-size: 16px; line-height: 24px; }
+    #priorityRow { gap: 12px; }
+    #priorityChips { gap: 8px; }
+
+    /* «Liste | Kart» across the band */
+    .results-band .view-switch { display: flex; width: 100%; box-sizing: border-box; height: 52px; }
+    .results-band .view-switch .ds-button { flex: 1 1 0; justify-content: center; min-height: 48px; }
+
+    /* Sorter and Filter in one row, then only the count */
+    .results-toolbar { flex-wrap: wrap; justify-content: flex-start; gap: 14px 10px; padding: 18px 17px 0; }
+    .results-toolbar .results-sort { flex: 0 1 221px; }
+    .results-toolbar .results-sort .sort-switch, .results-toolbar .filter-toggle { width: 100%; justify-content: center; }
+    .results-toolbar .filter-toggle { flex: 0 0 125px; width: 125px; }
+    .results-toolbar .toolbar-text { order: 5; flex: 1 1 100%; font-size: 0; line-height: 0; }
+    .results-toolbar .toolbar-text::before { content: attr(data-short); font-size: 16px; line-height: 24px; }
+
+    /* The message is one short line: who decides, and where to look it up */
+    .results-message { border-left: 0; border-radius: 10px; padding: 16px; font-size: 16px; line-height: 24px; align-items: flex-start; }
+    .results-message > .ds-icon { width: 24px; height: 24px; }
+    .results-message > div > strong, .results-message > div > p:not(.results-message__short) { display: none; }
+    .results-message .results-message__short { display: block; }
+    .results-message .results-message__short a { font-size: 16px; }
+
+    /* The bookmark on a card is a square with only the icon */
+    .school-list .school-card__save.ds-button[data-label="true"] { width: 48px; height: 48px; min-height: 48px; padding: 0; justify-content: center; border: 2px solid var(--ds-color-brand1-text-subtle); border-radius: 8px; }
+    .school-list .school-card__save.ds-button[data-label="true"] > span { display: none; }
+    .school-list .school-card__save.ds-button[data-label="true"] .ds-icon { width: 24px; height: 24px; }
+
+    /* «N lagret» + «Sammenlign» at the bottom of the screen */
+    .saved-bar-mobile:not([hidden]) {
+        position: fixed;
+        inset: auto 0 0 0;
+        z-index: 40;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 17px;
+        border-top: 1px solid #bbbcbd;
+        background: #fff;
+    }
+    .saved-bar-mobile strong { font-size: 16px; line-height: 24px; font-weight: var(--ds-font-weight-semibold); }
+    .saved-bar-mobile .ds-button { min-height: 48px; padding: 0 20px; font-weight: var(--ds-font-weight-semibold); }
+    .saved-bar-mobile .ds-button[aria-disabled="true"] { opacity: 0.5; pointer-events: none; }
+    body:has(.saved-bar-mobile:not([hidden])) { padding-bottom: 76px; }
+}
+
+/* «Liste | Kart» also when it sits in the band (phones) */
+.results-band .view-switch {
+    border: 2px solid var(--ds-color-brand1-text-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+}
+.results-band .view-switch .ds-button {
+    min-height: 44px;
+    padding: 0 16px;
+    gap: 8px;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    background: var(--ds-color-neutral-background-default);
+    color: var(--ds-color-brand1-text-subtle);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: var(--ds-font-weight-semibold);
+}
+.results-band .view-switch .ds-button[aria-pressed="true"] {
+    background: var(--ds-color-brand1-base-default);
+    color: var(--ds-color-brand1-base-contrast-default);
+}
+.results-band .view-switch .ds-icon { width: 20px; height: 20px; }
+
+@media (max-width: 640px) {
+    /* H1: the bookmark sits in the top right corner of the card, the name keeps clear of it */
+    .school-list .school-card__save.ds-button[data-label="true"] { position: absolute; top: 19px; right: 19px; }
+    .school-list .school-sk .sk-name, .school-list .school-sk .sk-meta { padding-right: 64px; }
+}
+
+/* Comparison table on phones: the row labels stay in view while the schools scroll sideways, each school has room for its facts */
+.cmp tbody tr { background: #fff; }
+.cmp tbody tr:nth-child(odd) { background: #f3f3f4; }
+@media (max-width: 760px) {
+    .cmp__label { width: 124px; }
+    .cmp tr > :first-child { position: sticky; left: 0; z-index: 1; background: inherit; padding-inline: 12px; box-shadow: 1px 0 0 #bbbcbd; }
+    .cmp--2 { min-width: 604px; }
+    .cmp--3 { min-width: 844px; }
+    .cmp--4 { min-width: 1084px; }
+    .cmp td, .cmp th { padding: 16px 14px; }
+}
+
+/* «Meny» never grows past the screen: it scrolls inside (phones) */
+@media (max-width: 1279px) {
+    #siteMenu { max-height: calc(100vh - 88px); overflow-y: auto; }
+}
+
+/* Figma J2: «Visning» is a sheet from the bottom of the screen on phones (the dropdown's own placement is overridden) */
+@media (max-width: 640px) {
+    #displayMenu.display-dropdown {
+        position: fixed !important;
+        inset: auto 0 0 0 !important;
+        transform: none !important;
+        width: auto !important;
+        max-height: 88vh;
+        margin: 0 !important;
+    }
+}
+
+/* Tablets: the list and its side column do not fit side by side below 1024 px, so the side column goes under the list */
+@media (min-width: 641px) and (max-width: 1023px) {
+    .results-grid[data-view="liste"] { grid-template-columns: minmax(0, 1fr); }
+    .results-grid[data-view="liste"] > .results-side { max-width: 560px; }
+    .results-band .view-switch { width: auto; }
+}
+
+/* J13: the player while a page is read aloud, at the bottom of the screen */
+.listen-bar:not([hidden]) {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 60;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 16px;
+    padding: 16px max(16px, calc((100vw - 1120px) / 2));
+    border-top: 1px solid #bbbcbd;
+    background: #fff;
+    box-shadow: 0 -4px 16px rgb(0 0 0 / 0.08);
+}
+.listen-bar__status { margin: 0; font-size: 18px; line-height: 27px; font-weight: var(--ds-font-weight-semibold); }
+.listen-bar__actions { display: flex; gap: 12px; }
+@media (max-width: 640px) { .listen-bar__actions { width: 100%; } .listen-bar__actions .hero-button { flex: 1; } }
+
+/* J11: the number in «Ring skolen» */
+.ui-call__number { margin: 0 0 4px; font-size: 24px; line-height: 32px; font-weight: var(--ds-font-weight-semibold); }
+
+/* J5: «Sorter» has a heading and «Lukk» only where it is a sheet (phones) */
+.sort-menu .sheet-head { display: none; }
+@media (max-width: 640px) {
+    #sortMenu.sort-menu {
+        position: fixed !important;
+        inset: auto 0 0 0 !important;
+        transform: none !important;
+        width: auto !important;
+        margin: 0 !important;
+        padding: 20px 16px 24px;
+        border-radius: 16px 16px 0 0;
+    }
+    .sort-menu .sheet-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .sheet-head__title { margin: 0; font-size: 21px; line-height: 28px; font-weight: var(--ds-font-weight-medium); }
+    .sheet-head__close { min-height: 44px; padding: 0 8px; border: 0; background: none; color: var(--ds-color-brand1-text-subtle); font: inherit; font-size: 16px; cursor: pointer; }
+    .sort-menu .sort-menu__item.ds-button { min-height: 52px; font-size: 18px; justify-content: flex-start; }
+}
+.ui-copy { box-sizing: border-box; width: 100%; margin-top: 12px; padding: 12px; border: 1px solid #77797b; border-radius: 6px; font: inherit; font-size: 16px; }

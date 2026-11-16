@@ -197,6 +197,15 @@
 
     document.querySelectorAll('[data-layer]').forEach(input => input.addEventListener('change', () => setLayer(input.dataset.layer, input.checked)));
 
+    // A link can turn layers on, as "Se kretsgrensen på kartet" on the front page: kart?lag=skolekretser#lat,lng,zoom
+    (new URLSearchParams(location.search).get('lag') || '').split(',').forEach(name => {
+        const input = name && document.querySelector(`[data-layer="${CSS.escape(name)}"]`);
+        if (input && !input.checked) {
+            input.checked = true;
+            setLayer(name, true);
+        }
+    });
+
     // The layer panel opens under its button; Esc or the close button closes it
     // The skolekrets layer names the kommuner in skolekretser.json, read when the panel first opens
     let kretsLabelDone = false;

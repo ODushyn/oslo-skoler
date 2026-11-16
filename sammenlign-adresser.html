@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="no" data-color-scheme="light" data-color="brand1">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <!-- Content Security Policy: scripts only from this site and the two CDNs (pinned, with integrity hashes),
+         data only from the services the pages use. GitHub Pages cannot send it as a header. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: blob: https://thumb.wikimedia.org https://upload.wikimedia.org https://tiles.openfreemap.org; font-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tiles.openfreemap.org https://ws.geonorge.no https://wfs.geonorge.no https://data-nsr.udir.no https://api.entur.io https://formspree.io; worker-src 'self' blob:; child-src blob:; form-action https://formspree.io; base-uri 'self'; object-src 'none'" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Sammenlign adresser – Skolekartet</title>
+    <meta name="description" content="Se hvordan skoletilbudet blir på hver adresse, ut fra de samme prioriteringene." />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="canonical" href="https://skolekartet.no/sammenlign-adresser" />
+    <!-- Link previews (Open Graph, X/Twitter): one shared image for the whole site -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Skolekartet" />
+    <meta property="og:url" content="https://skolekartet.no/sammenlign-adresser" />
+    <meta property="og:title" content="Sammenlign adresser – Skolekartet" />
+    <meta property="og:description" content="Se hvordan skoletilbudet blir på hver adresse, ut fra de samme prioriteringene." />
+    <meta property="og:image" content="https://skolekartet.no/static/img/og-skolekartet.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Skolekartet – finn skole og se nasjonale prøver, trivsel og skolekrets på kart" />
+    <meta property="og:locale" content="nb_NO" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Designsystemet (Digdir): font, theme and component CSS -->
+    <link rel="stylesheet" id="dsTheme" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/theme/designsystemet.css" integrity="sha384-IT4guVJwkq1uL/GwNWhv2zk3uUZ18gRVe1qOVMWTTjaEkDut+i02gT9l/cnPrDSm" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/src/index.css" integrity="sha384-CAE1Qe2Yp1euTdmOujy77VIT0GR/Yu8V+3taPP8Oo7GGV9hrQKrVigMB51hyUKYD" crossorigin="anonymous" />
+
+
+    <link rel="stylesheet" href="static/css/styles.css?v=273"/>
+
+    <script src="static/js/i18n.js?v=129"></script>
+    <script src="static/js/theme.js?v=11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-web@1.23.0/dist/umd/index.js" integrity="sha384-gB8nQDA1vTT5N2EUrwILb4EmNquufjYcGqx5Cmce63dC5l/zyDRlxPjzv4/pG6mE" crossorigin="anonymous"></script>
+</head>
+<body>
+    <a class="ds-skip-link" href="#main">Hopp til hovedinnhold</a>
+
+    <!-- Header (shared, see static/js/layout.js) -->
+    <div id="site-header"></div>
+    <script src="static/js/layout.js?v=43"></script>
+
+    <main id="main" tabindex="-1" class="page page--saved">
+        <!-- «Sammenlign adresser» (Figma 5 · PROTOTYPE, C2 and the dialog I21): up to three addresses side by side, with
+             the same priorities. The addresses stay in this tab (sessionStorage) and are never put in a link (addresses.js). -->
+        <div class="saved-page" id="addressPage">
+            <a class="saved-page__back" href="./" id="addressBack">
+                <svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Tilbake til skolene</span></a>
+            <h1 class="saved-page__title">Sammenlign adresser</h1>
+            <p class="saved-page__lead">Ser dere på flere boliger? Her ser dere hvordan skoletilbudet blir på hver adresse, ut fra de samme prioriteringene.</p>
+            <div id="addressCompare" aria-live="polite"><p class="ds-paragraph">Laster skoler…</p></div>
+        </div>
+    </main>
+
+    <!-- Footer (shared, see static/js/layout.js) -->
+    <div id="site-footer"></div>
+    <script src="static/js/score-colors.js?v=2"></script>
+    <script src="static/js/shared.js?v=37"></script>
+    <script src="static/js/priorities.js?v=4"></script>
+    <script src="static/js/ui.js?v=3"></script>
+    <script src="static/js/addresses.js?v=3"></script>
+
+</body>
+</html>

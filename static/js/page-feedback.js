@@ -176,6 +176,44 @@
 
     // Step one starts without moving focus, so the page loads as usual
     stepOne();
+
+    // Footer v2 (Figma, section 10): on pages with the shared footer the question is a row at the top of the
+    // footer, open from the start, instead of a tab at the bottom of the screen
+    const placeInFooter = () => {
+        const row = document.querySelector('.site-footer__feedback');
+        if (!row) return false;
+        row.appendChild(block);
+        block.classList.add('page-feedback--inline');
+        document.body.classList.remove('has-page-feedback');
+        setOpen(true);
+        inlineStepOne();
+        return true;
+    };
+
+    // In the footer: «Ja» and «Nei» as two buttons that answer at once, then the optional text as before
+    function inlineStepOne() {
+        show(`
+            <div class="page-feedback__answers">
+                <button type="button" class="ds-button page-feedback__answer" data-answer="ja">${t('Ja')}</button>
+                <button type="button" class="ds-button page-feedback__answer" data-answer="nei">${t('Nei')}</button>
+                <p class="ds-paragraph page-feedback__hint">${t('Du kan også skrive til oss – se «Kontakt oss».')}</p>
+            </div>
+            ${errorHtml()}`);
+        body.querySelectorAll('[data-answer]').forEach(button => button.addEventListener('click', async () => {
+            answer = button.dataset.answer;
+            button.setAttribute('aria-busy', 'true');
+            try {
+                await send();
+                try { sessionStorage.setItem(STORAGE_KEY, answer); } catch (_) { /* storage blocked */ }
+                status.textContent = t('Svaret ditt er sendt.');
+                stepTwo();
+            } catch (_) {
+                body.querySelector('.page-feedback__error').hidden = false;
+                button.removeAttribute('aria-busy');
+            }
+        }));
+    }
+    if (!placeInFooter()) requestAnimationFrame(placeInFooter);
     const legend = body.querySelector('legend');
     if (legend) legend.setAttribute('data-step-heading', '');
 })();

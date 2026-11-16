@@ -29,6 +29,64 @@ function formatDecimal(value) {
 }
 
 // "11,3 %" in Norwegian, "11.3%" in English (HTML, keeps the sign on the same line)
+// ── The three numbers in words (the design's tiles, Figma section 10) ─────
+// Used on the front page (finder.js) and the comparison (compare.js)
+// Compared with the national level, all from the data (create_map.py): results against the national average
+// for the school's level and year (school.nationalAverage, the line between orange and light green on the map;
+// 45 and 55 are the outer colour bands), trivsel against the national average for the same trinn from
+// Elevundersøkelsen (school.trivsel.national, ±0,2 counts as the same), mobbing against the national share for
+// the same trinn (a quarter more or less counts as the same; twice as much is said in words)
+function scoreBand(avg, national) {
+    if (avg === null || avg === undefined) return 'none';
+    // 50 is the scale's own national average (2022); only used if the data has no national average
+    const line = national === null || national === undefined ? 50 : national;
+    return avg >= 55 ? 'very-high' : avg >= line ? 'high' : avg >= 45 ? 'low' : 'very-low';
+}
+const SCORE_WORD = { 'very-high': ['Godt over snittet', 'good'], high: ['Over snittet', 'good'], low: ['Litt under snittet', 'warn'], 'very-low': ['Godt under snittet', 'warn'] };
+function trivselWord(value, national) {
+    if (value === null || national === null || national === undefined) return null;
+    if (value >= national + 0.19) return ['Over snittet', 'good'];
+    if (value <= national - 0.19) return ['Under snittet', 'warn'];
+    return ['Som snittet', 'neutral'];
+}
+function mobbingWord(value, national) {
+    if (value === null || !national) return null;
+    const ratio = value / national;
+    if (ratio >= 2) return ['Over dobbelt så høyt', 'warn'];
+    if (ratio >= 1.25) return ['Mer enn snittet', 'warn'];
+    if (ratio <= 0.75) return ['Mindre enn snittet', 'good'];
+    return ['Som snittet', 'neutral'];
+}
+function levelNumbers(levels) {
+    const meanOf = values => { const known = values.filter(v => v !== null && v !== undefined); return known.length ? known.reduce((x, y) => x + y, 0) / known.length : null; };
+    return {
+        avg: meanOf(levels.map(l => (l.hasData ? l.average : null))),
+        // The national average for the same levels (a 1–10 school shown as one: the mean of both)
+        avgNational: meanOf(levels.map(l => (l.hasData ? l.nationalAverage : null))),
+        triv: meanOf(levels.map(l => (l.trivsel ? l.trivsel.score : null))),
+        trivNational: meanOf(levels.map(l => (l.trivsel ? l.trivsel.national : null))),
+        mob: meanOf(levels.map(l => (l.mobbing ? l.mobbing.share : null))),
+        national: meanOf(levels.map(l => (l.mobbing ? l.mobbing.national : null)))
+    };
+}
+function tileHtml(label, value, word) {
+    const [text, tone] = word || ['Ikke oppgitt', 'none'];
+    return `<span class="school-tile school-tile--${tone}"><span class="school-tile__head">${t(label)} <strong>${value}</strong></span><span class="school-tile__word">${t(text)}</span></span>`;
+}
+function tilesHtml(levels) {
+    const n = levelNumbers(levels);
+    const band = scoreBand(n.avg, n.avgNational);
+    return `<span class="school-tiles">${tileHtml('Prøver', n.avg === null ? '–' : formatDecimal(n.avg), SCORE_WORD[band])}${
+        tileHtml('Trivsel', n.triv === null ? '–' : formatDecimal(n.triv), trivselWord(n.triv, n.trivNational))}${
+        tileHtml('Mobbing', n.mob === null ? '–' : formatPercent(n.mob), mobbingWord(n.mob, n.national))}</span>`;
+}
+function factHtml(levels) {
+    const n = levelNumbers(levels);
+    const word = mobbingWord(n.mob, n.national);
+    if (!word || word[0] !== 'Over dobbelt så høyt') return '';
+    return `<span class="school-fact">${icon('exclamationmarkTriangle')}<span><strong>${t('Verdt å sjekke:')}</strong> ${t('Mobbing {share} – spør hva skolen gjør', { share: formatPercent(n.mob) })}</span></span>`;
+}
+
 // The base map: OpenFreeMap vector tiles, drawn by MapLibre GL inside Leaflet. The style names a few icons its
 // own sprite does not have (gate, bollard, swimming_pool ...); they get an empty image, not a console warning.
 function baseMapLayer() {
@@ -44,6 +102,25 @@ function baseMapLayer() {
         });
         gl.setStyle(typeof THEME !== 'undefined' ? THEME.mapStyle() : 'https://tiles.openfreemap.org/styles/liberty',
             { diff: false, transformStyle: (previous, style) => baseMapStyle(style) });
+    });
+    return layer;
+}
+
+// «Spar data» (Visning): with it on, a map starts without the base map; the tiles are fetched when the visitor asks
+function addBaseMap(map) {
+    const layer = baseMapLayer();
+    if (typeof THEME === 'undefined' || !THEME.display.saveData) {
+        layer.addTo(map);
+        return layer;
+    }
+    const box = document.createElement('div');
+    box.className = 'map-saver';
+    box.innerHTML = `<p>${t('Kartet er skjult for å spare data.')}</p><button type="button" class="hero-button hero-button--secondary">${t('Vis kart')}</button>`;
+    L.DomEvent.disableClickPropagation(box);
+    map.getContainer().appendChild(box);
+    box.querySelector('button').addEventListener('click', () => {
+        layer.addTo(map);
+        box.remove();
     });
     return layer;
 }
@@ -139,12 +216,16 @@ const ICON_PATHS = {
     externalLink: '<path d="M20.5319 3.47126C20.603 3.5428 20.6568 3.62511 20.6931 3.71291C20.7298 3.80134 20.75 3.89831 20.75 4V11.5C20.75 11.9142 20.4142 12.25 20 12.25C19.5858 12.25 19.25 11.9142 19.25 11.5V5.81066L10.5303 14.5303C10.2374 14.8232 9.76256 14.8232 9.46967 14.5303C9.17678 14.2374 9.17678 13.7626 9.46967 13.4697L18.1893 4.75H12.5C12.0858 4.75 11.75 4.41421 11.75 4C11.75 3.58579 12.0858 3.25 12.5 3.25H20C20.2063 3.25 20.3931 3.33329 20.5287 3.46808L20.5303 3.46967L20.5319 3.47126ZM4.75 9C4.75 8.86193 4.86193 8.75 5 8.75H12C12.4142 8.75 12.75 8.41421 12.75 8C12.75 7.58579 12.4142 7.25 12 7.25H5C4.0335 7.25 3.25 8.0335 3.25 9V19C3.25 19.9665 4.0335 20.75 5 20.75H15C15.9665 20.75 16.75 19.9665 16.75 19V12C16.75 11.5858 16.4142 11.25 16 11.25C15.5858 11.25 15.25 11.5858 15.25 12V19C15.25 19.1381 15.1381 19.25 15 19.25H5C4.86193 19.25 4.75 19.1381 4.75 19V9Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/>',
     envelopeClosed: '<path d="M3 5.25C2.58579 5.25 2.25 5.58579 2.25 6V19C2.25 19.4142 2.58579 19.75 3 19.75H21C21.4142 19.75 21.75 19.4142 21.75 19V6C21.75 5.58579 21.4142 5.25 21 5.25H3ZM3.75 17.1893L9.02277 11.9166L3.75 8.40139V17.1893ZM10.2956 12.7651L4.81066 18.25H19.1893L13.7044 12.7651L12.416 13.624C12.1641 13.792 11.8359 13.792 11.584 13.624L10.2956 12.7651ZM14.9772 11.9166L20.25 8.40139V17.1893L14.9772 11.9166ZM3.97708 6.75L12 12.0986L20.0229 6.75H3.97708Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/>',
     buildings3: '<path d="M6.25 3C6.25 2.58579 6.58579 2.25 7 2.25H17C17.4142 2.25 17.75 2.58579 17.75 3V9.25H21C21.4142 9.25 21.75 9.58579 21.75 10V21C21.75 21.4142 21.4142 21.75 21 21.75H3C2.58579 21.75 2.25 21.4142 2.25 21V10C2.25 9.58579 2.58579 9.25 3 9.25H6.25V3ZM17.75 20.25V10.75H20.25V20.25H17.75ZM16.25 3.75V20.25H7.75V3.75H16.25ZM6.25 10.75V20.25H3.75V10.75H6.25ZM10 5.75C10.4142 5.75 10.75 6.08579 10.75 6.5V8.5C10.75 8.91421 10.4142 9.25 10 9.25C9.58579 9.25 9.25 8.91421 9.25 8.5V6.5C9.25 6.08579 9.58579 5.75 10 5.75ZM13 5.75C13.4142 5.75 13.75 6.08579 13.75 6.5V8.5C13.75 8.91421 13.4142 9.25 13 9.25C12.5858 9.25 12.25 8.91421 12.25 8.5V6.5C12.25 6.08579 12.5858 5.75 13 5.75ZM10.75 12.5C10.75 12.0858 10.4142 11.75 10 11.75C9.58579 11.75 9.25 12.0858 9.25 12.5V14.5C9.25 14.9142 9.58579 15.25 10 15.25C10.4142 15.25 10.75 14.9142 10.75 14.5V12.5ZM13 11.75C13.4142 11.75 13.75 12.0858 13.75 12.5V14.5C13.75 14.9142 13.4142 15.25 13 15.25C12.5858 15.25 12.25 14.9142 12.25 14.5V12.5C12.25 12.0858 12.5858 11.75 13 11.75Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/>',
+    hatSchool: '<path fill-rule="evenodd" clip-rule="evenodd" d="M11.69 4.31a.75.75 0 0 1 .62 0l10 4.5a.75.75 0 0 1 0 1.38l-3.06 1.38V16a.75.75 0 0 1-.3.6c-1.84 1.38-4.07 2.15-6.95 2.15s-5.11-.77-6.95-2.15a.75.75 0 0 1-.3-.6v-4.43L2.75 10.6V15a.75.75 0 0 1-1.5 0V9.5c0-.3.17-.56.44-.68l10-4.51ZM6.25 12.24v3.37c1.5 1 3.34 1.64 5.75 1.64s4.25-.64 5.75-1.64v-3.37l-5.44 2.45a.75.75 0 0 1-.62 0l-5.44-2.45ZM4.07 9.5 12 13.07 19.93 9.5 12 5.93 4.07 9.5Z" fill="currentColor"/>',
     house: '<path d="M11.4697 2.46967C11.7626 2.17678 12.2374 2.17678 12.5303 2.46967L19.5303 9.46967C19.671 9.61032 19.75 9.80109 19.75 10V21C19.75 21.4142 19.4142 21.75 19 21.75H14C13.5858 21.75 13.25 21.4142 13.25 21V16.75H10.75V21C10.75 21.4142 10.4142 21.75 10 21.75H5C4.58579 21.75 4.25 21.4142 4.25 21V10C4.25 9.80109 4.32902 9.61032 4.46967 9.46967L11.4697 2.46967ZM5.75 10.3107V20.25H9.25V16C9.25 15.5858 9.58579 15.25 10 15.25H14C14.4142 15.25 14.75 15.5858 14.75 16V20.25H18.25V10.3107L12 4.06066L5.75 10.3107Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/>',
     arrowCirclepath: '<path d="M18.7463 7.25C17.2522 5.1318 14.787 3.75 12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 11.5858 20.5858 11.25 21 11.25C21.4142 11.25 21.75 11.5858 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C15.1606 2.25 17.969 3.75399 19.75 6.08327V3.5C19.75 3.08579 20.0858 2.75 20.5 2.75C20.9142 2.75 21.25 3.08579 21.25 3.5V8C21.25 8.41421 20.9142 8.75 20.5 8.75H16C15.5858 8.75 15.25 8.41421 15.25 8C15.25 7.58579 15.5858 7.25 16 7.25H18.7463Z" fill="currentColor"/>',
     bookmark: '<path d="M8 4.75C7.86193 4.75 7.75 4.86193 7.75 5V18.1893L11.4697 14.4697C11.7626 14.1768 12.2374 14.1768 12.5303 14.4697L16.25 18.1893V5C16.25 4.86193 16.1381 4.75 16 4.75H8ZM6.25 5C6.25 4.0335 7.0335 3.25 8 3.25H16C16.9665 3.25 17.75 4.0335 17.75 5V20C17.75 20.3033 17.5673 20.5768 17.287 20.6929C17.0068 20.809 16.6842 20.7448 16.4697 20.5303L12 16.0607L7.53033 20.5303C7.31583 20.7448 6.99324 20.809 6.71299 20.6929C6.43273 20.5768 6.25 20.3033 6.25 20V5Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/>',
     bookmarkFill: '<path d="M6.25 5C6.25 4.0335 7.0335 3.25 8 3.25H16C16.9665 3.25 17.75 4.0335 17.75 5V20C17.75 20.3033 17.5673 20.5768 17.287 20.6929C17.0068 20.809 16.6842 20.7448 16.4697 20.5303L12 16.0607L7.53033 20.5303C7.31583 20.7448 6.99324 20.809 6.71299 20.6929C6.43273 20.5768 6.25 20.3033 6.25 20V5Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/>',
+    share: '<path d="M8.5 11l7-4M8.5 13l7 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="6" cy="12" r="2.4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.5" cy="6" r="2.4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.5" cy="18" r="2.4" stroke="currentColor" stroke-width="1.6"/>',
     link: '<path d="M14.909 5.15169C15.7877 4.27301 17.2123 4.27301 18.091 5.15168L18.8484 5.90905C19.727 6.78773 19.727 8.21234 18.8483 9.09102L13.8839 14.0555C13.3957 14.5436 12.6043 14.5436 12.1161 14.0555L11.0303 12.9697C10.7374 12.6768 10.2626 12.6768 9.96967 12.9697C9.67678 13.2626 9.67678 13.7375 9.96967 14.0304L11.0555 15.1162C12.1294 16.1901 13.8706 16.1901 14.9445 15.1161L19.909 10.1517C21.3735 8.68722 21.3735 6.31285 19.909 4.84839L19.1517 4.09102L18.6213 4.62135L19.1516 4.09102C17.6872 2.62656 15.3128 2.62656 13.8483 4.09103L12.9697 4.9697C12.6768 5.2626 12.6768 5.73747 12.9697 6.03036C13.2626 6.32326 13.7374 6.32326 14.0303 6.03036L14.909 5.15169ZM12.9446 8.88382C11.8706 7.80988 10.1294 7.80989 9.05549 8.88383L4.09103 13.8483C2.62656 15.3128 2.62656 17.6871 4.09102 19.1516L4.60425 18.6384L4.09103 19.1516L4.84839 19.909C6.31285 21.3734 8.68722 21.3734 10.1517 19.909L11.0304 19.0303C11.3233 18.7374 11.3233 18.2625 11.0304 17.9696C10.7375 17.6767 10.2626 17.6767 9.9697 17.9696L9.09103 18.8483C8.21235 19.727 6.78773 19.727 5.90905 18.8483L5.15169 18.0909C4.27301 17.2123 4.27301 15.7876 5.15169 14.909L10.1162 9.94449C10.6043 9.45633 11.3958 9.45633 11.8839 9.94449L12.9697 11.0303C13.2626 11.3232 13.7375 11.3232 14.0304 11.0303C14.3233 10.7374 14.3233 10.2625 14.0304 9.96961L12.9446 8.88382Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/>',
     xMark: '<path d="M6.53033 5.46967C6.23744 5.17678 5.76256 5.17678 5.46967 5.46967C5.17678 5.76256 5.17678 6.23744 5.46967 6.53033L10.9393 12L5.46967 17.4697C5.17678 17.7626 5.17678 18.2374 5.46967 18.5303C5.76256 18.8232 6.23744 18.8232 6.53033 18.5303L12 13.0607L17.4697 18.5303C17.7626 18.8232 18.2374 18.8232 18.5303 18.5303C18.8232 18.2374 18.8232 17.7626 18.5303 17.4697L13.0607 12L18.5303 6.53033C18.8232 6.23744 18.8232 5.76256 18.5303 5.46967C18.2374 5.17678 17.7626 5.17678 17.4697 5.46967L12 10.9393L6.53033 5.46967Z" fill="currentColor"/>',
+    // A warning triangle for «Verdt å sjekke» on the school cards (drawn for this site in the Aksel style)
+    exclamationmarkTriangle: '<path fill-rule="evenodd" clip-rule="evenodd" d="M12 3.25a.75.75 0 0 1 .65.37l9 15.5A.75.75 0 0 1 21 20.25H3a.75.75 0 0 1-.65-1.13l9-15.5A.75.75 0 0 1 12 3.25Zm0 2.24L4.3 18.75h15.4L12 5.49ZM12 9.25a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-1.5 0v-4a.75.75 0 0 1 .75-.75Zm0 6.25a.9.9 0 1 1 0 1.8.9.9 0 0 1 0-1.8Z" fill="currentColor"/>',
     questionmarkCircle: '<path d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12ZM11.0498 16.9C11.0498 16.3753 11.4751 15.95 11.9998 15.95C12.5245 15.95 12.9498 16.3753 12.9498 16.9C12.9498 17.4247 12.5245 17.85 11.9998 17.85C11.4751 17.85 11.0498 17.4247 11.0498 16.9ZM10.25 9.5C10.25 8.5335 11.0335 7.75 12 7.75H12.1361C13.0274 7.75 13.75 8.47255 13.75 9.36387C13.75 9.85413 13.5271 10.3178 13.1443 10.6241L12.7028 10.9773C11.7845 11.7119 11.25 12.8241 11.25 14C11.25 14.4142 11.5858 14.75 12 14.75C12.4142 14.75 12.75 14.4142 12.75 14C12.75 13.2797 13.0774 12.5985 13.6398 12.1486L14.0814 11.7954C14.82 11.2045 15.25 10.3098 15.25 9.36387C15.25 7.64413 13.8559 6.25 12.1361 6.25H12C10.2051 6.25 8.75 7.70507 8.75 9.5C8.75 9.91421 9.08579 10.25 9.5 10.25C9.91421 10.25 10.25 9.91421 10.25 9.5Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/>',
     // Brand marks from Simple Icons 16.36.0 (CC0)
     facebook: '<path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z" fill="currentColor"/>',
@@ -251,7 +332,8 @@ function isSaved(key) {
 }
 
 // Save or unsave; tells the page with a "savedschools" event so counters and bookmarks follow
-function toggleSaved(key) {
+// `announce`: false when the page already says what happened (it reloads, or the dialog's «Angre» did it)
+function toggleSaved(key, announce = true) {
     const saved = savedSchools();
     if (saved.has(key)) saved.delete(key); else saved.add(key);
     try {
@@ -259,28 +341,44 @@ function toggleSaved(key) {
     } catch (error) {
         // Storage blocked: the bookmark still changes for this visit
     }
-    document.dispatchEvent(new CustomEvent('savedschools', { detail: { key, saved: saved.has(key), count: saved.size } }));
+    document.dispatchEvent(new CustomEvent('savedschools', { detail: { key, saved: saved.has(key), count: saved.size, announce } }));
     return saved.has(key);
 }
 
 // The bookmark button ("Lagre til senere"): a toggle with one fixed name, its state in aria-pressed (and in the tooltip)
-function saveButtonHtml(key, className = '') {
+// `withLabel`: an outlined button with the word ("Lagre" / "Lagret") next to the bookmark, as on the
+// school cards in the list (Figma, section 10); otherwise only the icon
+const saveButtonInner = (on, withLabel) => icon(on ? 'bookmarkFill' : 'bookmark') + (withLabel ? `<span>${t(on ? 'Lagret' : 'Lagre')}</span>` : '');
+
+function saveButtonHtml(key, className = '', withLabel = false) {
     const on = isSaved(key);
-    return `<button type="button" class="ds-button ${className}" data-variant="tertiary" data-size="sm" data-icon="true"
+    return `<button type="button" class="ds-button ${className}" data-variant="${withLabel ? 'secondary' : 'tertiary'}" data-size="sm"${withLabel ? ' data-label="true"' : ' data-icon="true"'}
                 data-save="${escapeHtml(key)}" aria-pressed="${on}" aria-label="${t('Lagre til senere')}"
-                data-tooltip="${t(on ? 'Lagret. Klikk for å fjerne' : 'Lagre til senere')}">${icon(on ? 'bookmarkFill' : 'bookmark')}</button>`;
+                data-tooltip="${t(on ? 'Lagret. Klikk for å fjerne' : 'Lagre til senere')}">${saveButtonInner(on, withLabel)}</button>`;
 }
+
+// Every bookmark on the page follows a change made somewhere else (the dialog's «Angre», another tab's click)
+document.addEventListener('savedschools', () => {
+    document.querySelectorAll('button[data-save]').forEach(button => {
+        const on = isSaved(button.dataset.save);
+        if (button.getAttribute('aria-pressed') !== String(on)) updateSaveButton(button, on);
+    });
+});
 
 function updateSaveButton(button, on) {
     button.setAttribute('aria-pressed', String(on));
     button.setAttribute('data-tooltip', t(on ? 'Lagret. Klikk for å fjerne' : 'Lagre til senere'));
-    button.innerHTML = icon(on ? 'bookmarkFill' : 'bookmark');
+    button.innerHTML = saveButtonInner(on, button.dataset.label === 'true');
 }
 
-// Share a school page: the system share sheet where there is one, else copy the link
+// Share a school page (Figma J9 «Del skolen»): SMS, copy or e-mail; without ui.js the system share sheet or copy
 async function shareSchoolPage(school, button) {
     const name = school.name;
     const url = new URL(schoolUrl(school), location.href).href;
+    if (typeof UI !== 'undefined') {
+        UI.shareSheet({ title: t('Del skolen'), url, subject: name });
+        return;
+    }
     try {
         if (navigator.share) {
             await navigator.share({ title: name, url });
@@ -479,4 +577,47 @@ async function placePostalArea(result) {
         result.lng = middle.lng;
     }
     return result;
+}
+
+// The questions worth asking a school (school page and comparison): the first one from the bullying figures
+// (`word` = mobbingWord of the school), the others always worth asking
+function schoolQuestions(school, word) {
+    const bullying = word && (word[0] === 'Over dobbelt så høyt' || word[0] === 'Mer enn snittet');
+    const oslo = school.kommune === 'Oslo';
+    return [
+        bullying ? 'Hva gjør dere for å få ned mobbingen, og hvordan følger dere opp?' : 'Hvordan jobber dere med trivsel og mot mobbing?',
+        'Hvordan får elever som er sterke faglig – og de som trenger mer hjelp – utfordringer som passer?',
+        oslo ? 'Er alle rom trinnfrie – også gymsal og AKS?' : 'Er alle rom trinnfrie – også gymsal og SFO?',
+        'Kan foreldre komme trinnfritt inn til møter og henting?'
+    ].map(q => t(q));
+}
+
+// ── Skolekrets (open data from the kommuner that publish it; see skolekretser.py) ──
+// The krets that hold a point: { kommune, info, hits: [{ school, level, kommune, rings }] }, or null where the kommune has
+// no published data. The same data is drawn on the map («Kart med kartlag»).
+let kretsDataPromise = null;
+function loadKretsData() {
+    if (!kretsDataPromise) {
+        kretsDataPromise = fetch(I18N.url('static/js/skolekretser.json?v=2'))
+            .then(response => (response.ok ? response.json() : null))
+            .catch(() => null);
+    }
+    return kretsDataPromise;
+}
+
+async function lookupKrets(place) {
+    const data = await loadKretsData();
+    if (!data || !place || !data.kommuner[place.kommune]) return null;
+    const hits = data.kretser
+        .filter(k => k.kommune === place.kommune && insideRings(place.lng, place.lat, k.rings))
+        .sort((a, b) => (a.level === 'barneskole' ? -1 : 1) - (b.level === 'barneskole' ? -1 : 1));
+    return { kommune: place.kommune, info: data.kommuner[place.kommune], hits };
+}
+
+// Is this school the krets school for the point? true / false, or null where there is no data to say
+function kretsStatus(krets, school) {
+    if (!krets) return null;
+    const own = krets.hits.filter(k => k.level === school.schoolType);
+    if (!own.length) return null;
+    return own.some(k => k.school === school.name && k.kommune === school.kommune);
 }

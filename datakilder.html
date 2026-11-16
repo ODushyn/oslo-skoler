@@ -29,10 +29,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/src/index.css" integrity="sha384-CAE1Qe2Yp1euTdmOujy77VIT0GR/Yu8V+3taPP8Oo7GGV9hrQKrVigMB51hyUKYD" crossorigin="anonymous" />
 
 
-    <link rel="stylesheet" href="static/css/styles.css?v=208"/>
+    <link rel="stylesheet" href="static/css/styles.css?v=273"/>
 
-    <script src="static/js/i18n.js?v=101"></script>
-    <script src="static/js/theme.js?v=9"></script>
+    <script src="static/js/i18n.js?v=129"></script>
+    <script src="static/js/theme.js?v=11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-web@1.23.0/dist/umd/index.js" integrity="sha384-gB8nQDA1vTT5N2EUrwILb4EmNquufjYcGqx5Cmce63dC5l/zyDRlxPjzv4/pG6mE" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -40,7 +40,7 @@
 
     <!-- Header (shared, see static/js/layout.js) -->
     <div id="site-header"></div>
-    <script src="static/js/layout.js?v=32"></script>
+    <script src="static/js/layout.js?v=43"></script>
 
     <main id="main" tabindex="-1" class="page">
         <div class="site-container page__container">
@@ -109,7 +109,7 @@
             <p class="ds-paragraph">Vi viser ikke bilder eller kart fra Google Maps, fordi de ikke har åpen lisens. Skolesiden har bare en lenke som åpner skolens adresse i Google Maps.</p>
 
             <h2 class="ds-heading" data-size="xs" id="oppdatering">Hvor ofte tallene oppdateres</h2>
-            <p class="ds-paragraph">Vi henter nye tall når kilden har publisert dem, aldri oftere. Nederst på hver side står datoen da tallene sist ble sjekket mot kildene.</p>
+            <p class="ds-paragraph">Vi henter nye tall når kilden har publisert dem, aldri oftere. Elevundersøkelsen og skoleregisteret sjekkes hver natt, og datoen står nederst på hver side. De andre kildene legger vi inn for hånd.</p>
             <div class="table-scroll">
                 <table class="ds-table sources-table" data-size="sm" data-border>
                     <thead><tr><th>Data</th><th>Kilden publiserer</th><th>Hos oss</th></tr></thead>
@@ -117,9 +117,9 @@
                     <tr><td>Navn, adresse, eierform og elevtall (Nasjonalt skoleregister)</td><td>Løpende</td><td>Sjekkes hver natt</td></tr>
                     <tr><td>Elevundersøkelsen: trivsel, mobbing og de andre indikatorene</td><td>Én gang i året</td><td>Sjekkes hver natt og lastes ned når Udir har publisert nye tall</td></tr>
                     <tr><td>Nasjonale prøver</td><td>Én gang i året</td><td>Legges inn når Udir har publisert resultatene</td></tr>
-                    <tr><td>Lærertetthet, elevtall og forsterket opplæring i norsk (GSI)</td><td>Én gang i året, i desember</td><td>Lastes ned når Udir har publisert nye tall</td></tr>
+                    <tr><td>Lærertetthet, elevtall og forsterket opplæring i norsk (GSI)</td><td>Én gang i året, i desember</td><td>Lastes ned for hånd når Udir har publisert nye tall</td></tr>
                     <tr><td>Skolekretser (pilot)</td><td>Når kommunen oppdaterer kartdataene</td><td>Legges inn for hånd</td></tr>
-                    <tr><td>Opplysninger fra skolenes og kommunenes nettsider</td><td>Når skolen eller kommunen endrer siden</td><td>Hentes jevnlig. Datoen står ved opplysningen på skolesiden</td></tr>
+                    <tr><td>Opplysninger fra skolenes og kommunenes nettsider</td><td>Når skolen eller kommunen endrer siden</td><td>Hentes for hånd. Datoen står ved opplysningen på skolesiden</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -132,7 +132,7 @@
                 <li><strong>Tallene er fra forrige skoleår.</strong> Udir publiserer resultatene noen måneder etter at prøvene og undersøkelsen er gjennomført. Tallene du ser, kan derfor være opptil et år gamle. Det er vanlig for slik statistikk.</li>
                 <li><strong>Ett år er et øyeblikksbilde.</strong> Resultatene kan variere mye fra år til år, særlig på små skoler. Se utviklingen over flere år på skolesiden.</li>
                 <li><strong>Skolekrets bare i noen kommuner.</strong> Vi viser skolekrets for adressen bare der kommunen har åpne kartdata, og i Oslo, der vi har fått tillatelse. Ellers viser vi den nærmeste skolen, som trolig er nærskolen, men det avgjør kommunen.</li>
-                <li><strong>Avstand og gangtid er beregnet.</strong> Avstanden er i luftlinje, og gangtiden er et anslag fra Enturs reiseplanlegger.</li>
+                <li><strong>Avstand og gangtid er beregnet.</strong> Avstanden er i luftlinje. På kortene og i filteret er gangtiden et anslag ut fra avstanden. På skolesiden beregner Enturs reiseplanlegger gangruten.</li>
             </ul>
 
             <h2 class="ds-heading" data-size="xs" id="retting">Retting av feil</h2>

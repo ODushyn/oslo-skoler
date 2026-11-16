@@ -55,6 +55,18 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://skolekartet.no/barn-med-sarskilte-behov</loc>
+    <lastmod>2026-11-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://skolekartet.no/sammenlign-adresser</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
     <loc>https://skolekartet.no/skolehverdag</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>yearly</changefreq>

@@ -51,9 +51,9 @@
 
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="static/css/styles.css?v=208"/>
-    <script src="static/js/i18n.js?v=101"></script>
-    <script src="static/js/theme.js?v=9"></script>
+    <link rel="stylesheet" href="static/css/styles.css?v=273"/>
+    <script src="static/js/i18n.js?v=129"></script>
+    <script src="static/js/theme.js?v=11"></script>
 
     <!-- Leaflet JS -->
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js" integrity="sha384-okbbMvvx/qfQkmiQKfd5VifbKZ/W8p1qIsWvE1ROPUfHWsDcC8/BnHohF7vPg2T6" crossorigin="anonymous"></script>
@@ -75,17 +75,23 @@
 
     <!-- Header (shared, see static/js/layout.js) -->
     <div id="site-header"></div>
-    <script src="static/js/layout.js?v=32"></script>
+    <script src="static/js/layout.js?v=43"></script>
 
-    <main id="main" tabindex="-1">
-        <!-- One search for addresses, schools, kommuner and postnummer; filters below -->
-        <section class="search-panel" aria-labelledby="searchHint">
-            <div class="site-container">
-                <h1 class="ds-heading" data-size="sm" id="searchHint">Leter du etter en skole?</h1>
-
-                <div class="search-bar" role="search">
-                    <div class="search-bar__field">
-                        <ds-field class="ds-field" id="addressField">
+    <main id="main" tabindex="-1" data-mode="start">
+        <!-- Figma 5 · PROTOTYPE, A1 «Forside – hvor bor dere?»: step 1 of 2, the address (or kommune or school name) -->
+        <section class="hero" id="startPage" aria-labelledby="searchHint">
+            <div class="hero__inner">
+                <div class="hero__main">
+                    <p class="hero__step">Steg 1 av 2</p>
+                    <h1 class="hero__title" id="searchHint">Finn en skole som passer barnet ditt</h1>
+                    <p class="hero__lead">Svar på to korte spørsmål, så viser vi skolene i nærheten og hvordan de passer for dere – også når barnet trenger tilrettelegging.</p>
+                    <div class="hero__card" role="search" aria-labelledby="whereTitle">
+                        <h2 class="hero__card-title" id="whereTitle">Hvor bor dere?</h2>
+                        <p class="hero__hint" id="whereHint">Skriv adresse, kommune eller navnet på en skole.</p>
+                        <!-- A3: the position could not be used -->
+                        <div class="start-error" id="startError" role="alert" hidden></div>
+                        <div class="search-bar__field hero__field">
+                            <ds-field class="ds-field" id="addressField">
                             <label class="ds-label ds-sr-only" for="addressSearch">Søk på adresse, skole, kommune eller postnummer</label>
                             <div class="address-input">
                                 <ds-suggestion class="ds-suggestion" id="addressSuggestion">
@@ -99,17 +105,59 @@
                                         id="locateButton" aria-label="Bruk min posisjon" data-tooltip="Bruk min posisjon" hidden><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="6.25" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="2.25" fill="currentColor"/><path d="M12 2.75V5.75M12 18.25V21.25M2.75 12H5.75M18.25 12H21.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
                             </div>
                         </ds-field>
+                        </div>
+                        <div class="hero__actions">
+                            <button type="button" class="hero-button hero-button--primary" id="nextStep">Neste: hva er viktig for dere? <svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M9.47 5.97a.75.75 0 0 1 1.06 0l5.5 5.5a.75.75 0 0 1 0 1.06l-5.5 5.5a.75.75 0 1 1-1.06-1.06L14.44 12 9.47 7.03a.75.75 0 0 1 0-1.06Z" fill="currentColor"/></svg></button>
+                            <button type="button" class="hero-button hero-button--secondary" id="startLocate" data-locate><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="6.25" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="2.25" fill="currentColor"/><path d="M12 2.75V5.75M12 18.25V21.25M2.75 12H5.75M18.25 12H21.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Bruk min posisjon</button>
+                        </div>
                     </div>
-                    <!-- The filter button; on phones at the right edge. Filters are removed with the chips below
-                         ("Fjern alle" at their end) or in the panel ("Nullstill") -->
-                    <div class="search-bar__actions">
-                        <button type="button" class="ds-button filter-toggle" data-variant="secondary"
-                                id="filterToggle" aria-expanded="false" aria-controls="filterPanel">
-                            <svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M3.25 7C3.25 6.58579 3.58579 6.25 4 6.25H20C20.4142 6.25 20.75 6.58579 20.75 7C20.75 7.41421 20.4142 7.75 20 7.75L4 7.75C3.58579 7.75 3.25 7.41421 3.25 7ZM6.25 12C6.25 11.5858 6.58579 11.25 7 11.25H17C17.4142 11.25 17.75 11.5858 17.75 12C17.75 12.4142 17.4142 12.75 17 12.75H7C6.58579 12.75 6.25 12.4142 6.25 12ZM10 16.25C9.58579 16.25 9.25 16.5858 9.25 17C9.25 17.4142 9.58579 17.75 10 17.75H14C14.4142 17.75 14.75 17.4142 14.75 17C14.75 16.5858 14.4142 16.25 14 16.25H10Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg><span class="search-bar__label" id="filterToggleLabel">Filter</span><span class="ds-badge" data-size="sm" id="filterCount" hidden></span>
-                        </button>
-                    </div>
+                    <button type="button" class="hero__link" id="showAllList">Jeg vil heller se alle skoler i en liste</button>
+                    <a class="hero__link hero__link--icon" href="sammenlign-adresser#ny"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 5.25a.75.75 0 0 1 .75.75v5.25H18a.75.75 0 0 1 0 1.5h-5.25V18a.75.75 0 0 1-1.5 0v-5.25H6a.75.75 0 0 1 0-1.5h5.25V6a.75.75 0 0 1 .75-.75Z" fill="currentColor"/></svg><span>Ser dere på flere boliger? Sammenlign opptil tre adresser</span></a>
                 </div>
+                <aside class="hero__help" aria-labelledby="helpTitle">
+                    <h2 class="hero__help-title" id="helpTitle">Slik hjelper vi dere</h2>
+                    <ul class="hero__help-list">
+                        <li><span class="hero__help-icon" aria-hidden="true"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="4.5" r="1.75" fill="currentColor"/><path d="M12 8.5v5h4l2 4.5M12 11h4.5M7.5 12.5a5 5 0 1 0 7.2 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><strong>Tilrettelegging først</strong><p>Velg hva barnet trenger – vi sorterer skolene etter det, ikke etter prøveresultater.</p></div></li>
+                        <li><span class="hero__help-icon" aria-hidden="true"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="18" cy="5.5" r="2.5" stroke="currentColor" stroke-width="1.5"/><circle cx="6" cy="12" r="2.5" stroke="currentColor" stroke-width="1.5"/><circle cx="18" cy="18.5" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M8.2 10.8l7.6-4M8.2 13.2l7.6 4" stroke="currentColor" stroke-width="1.5"/></svg></span><div><strong>Del med familien</strong><p>Lagre, sammenlign og send listen til den som skal bestemme, på deres egen telefon.</p></div></li>
+                        <li><span class="hero__help-icon" aria-hidden="true"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M12 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.75" r="1.1" fill="currentColor"/></svg></span><div><strong>Ærlige om hva vi ikke vet</strong><p>Mangler vi opplysninger, står det tydelig – sammen med spørsmålet du kan stille skolen.</p></div></li>
+                    </ul>
+                </aside>
+            </div>
+        </section>
 
+        <section class="needs" id="startNeeds" aria-labelledby="needsTitle">
+            <div class="needs__inner">
+                <h2 class="needs__title" id="needsTitle">Trenger barnet tilrettelegging?</h2>
+                <p class="needs__lead">Her finner du rettigheter, hvem som bestemmer og hva du kan spørre skolen om.</p>
+                <ul class="needs__cards">
+                    <li><a class="needs-card" href="barn-med-sarskilte-behov"><span class="needs-card__title">Barn med særskilte behov <svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M9.47 5.97a.75.75 0 0 1 1.06 0l5.5 5.5a.75.75 0 0 1 0 1.06l-5.5 5.5a.75.75 0 1 1-1.06-1.06L14.44 12 9.47 7.03a.75.75 0 0 1 0-1.06Z" fill="currentColor"/></svg></span><span class="needs-card__text">Rettigheter, PP-tjenesten, sakkyndig vurdering og skoleskyss.</span></a></li>
+                    <li><a class="needs-card" href="om-skolekrets"><span class="needs-card__title">Skolekrets og skoleplass <svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M9.47 5.97a.75.75 0 0 1 1.06 0l5.5 5.5a.75.75 0 0 1 0 1.06l-5.5 5.5a.75.75 0 1 1-1.06-1.06L14.44 12 9.47 7.03a.75.75 0 0 1 0-1.06Z" fill="currentColor"/></svg></span><span class="needs-card__text">Hvem som bestemmer skoleplass – og hvordan du søker annen skole.</span></a></li>
+                    <li><a class="needs-card" href="skolefritid"><span class="needs-card__title">SFO og AKS <svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M9.47 5.97a.75.75 0 0 1 1.06 0l5.5 5.5a.75.75 0 0 1 0 1.06l-5.5 5.5a.75.75 0 1 1-1.06-1.06L14.44 12 9.47 7.03a.75.75 0 0 1 0-1.06Z" fill="currentColor"/></svg></span><span class="needs-card__text">Også etter 4. trinn for barn med særskilte behov.</span></a></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- A4 «Hva er viktig for dere?»: step 2 of 2, drawn by finder.js (renderPrioPage) -->
+        <section class="prio" id="prioPage" aria-labelledby="prioTitle" hidden></section>
+
+        <!-- A6 / A7: the band over the results (address, priorities, filters that are on) and the filter panel -->
+        <section class="search-panel results-band" id="resultsBand" aria-labelledby="bandTitle" hidden>
+            <div class="site-container">
+                <div class="results-band__title">
+                    <h1 class="results-band__h1" id="bandTitle">Skoler</h1>
+                    <button type="button" class="results-band__link" id="changeAddress">Endre adresse</button>
+                </div>
+                <div class="band-row" id="addressRow" hidden>
+                    <span class="band-row__label">Adresser:</span>
+                    <ul class="band-row__chips" id="addressChips"></ul>
+                    <a class="band-row__add" id="addAddressLink" href="sammenlign-adresser#ny"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 5.25a.75.75 0 0 1 .75.75v5.25H18a.75.75 0 0 1 0 1.5h-5.25V18a.75.75 0 0 1-1.5 0v-5.25H6a.75.75 0 0 1 0-1.5h5.25V6a.75.75 0 0 1 .75-.75Z" fill="currentColor"/></svg><span>Legg til adresse (maks 3)</span></a>
+                </div>
+                <div class="band-row" id="priorityRow" hidden>
+                    <span class="band-row__label">Prioritert:</span>
+                    <ul class="band-row__chips" id="priorityChips"></ul>
+                    <button type="button" class="band-row__more link-button" id="priMore"></button>
+                    <button type="button" class="band-row__add" id="changePriorities"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 5.25a.75.75 0 0 1 .75.75v5.25H18a.75.75 0 0 1 0 1.5h-5.25V18a.75.75 0 0 1-1.5 0v-5.25H6a.75.75 0 0 1 0-1.5h5.25V6a.75.75 0 0 1 .75-.75Z" fill="currentColor"/></svg>Endre prioriteringer</button>
+                </div>
                 <!-- The filters that are on, as chips: each removes its filter (finder.js) -->
                 <ul class="active-filters" id="activeFilters" aria-label="Aktive filtre" hidden></ul>
 
@@ -117,213 +165,240 @@
                      search pages; on phones the panel takes the whole width. The results update as you choose. -->
                 <dialog class="ds-dialog filter-dialog" data-placement="right" id="filterPanel" aria-labelledby="filterDialogTitle">
                     <div class="filter-dialog__head">
-                        <h2 class="ds-heading" data-size="xs" id="filterDialogTitle">Filter</h2>
-                        <button type="button" class="ds-button" data-variant="tertiary" data-size="sm" data-icon id="filterClose"
-                                aria-label="Lukk filter" data-tooltip="Lukk filter"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M6.53 5.47a.75.75 0 0 0-1.06 1.06L10.94 12l-5.47 5.47a.75.75 0 1 0 1.06 1.06L12 13.06l5.47 5.47a.75.75 0 1 0 1.06-1.06L13.06 12l5.47-5.47a.75.75 0 0 0-1.06-1.06L12 10.94z" fill="currentColor"/></svg></button>
+                        <h2 class="ds-heading" data-size="xs" id="filterDialogTitle">Filtrer skoler</h2>
+                        <button type="button" class="ds-button" data-variant="tertiary" data-size="sm" id="filterClose"
+                                aria-label="Lukk filter"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M6.53 5.47a.75.75 0 0 0-1.06 1.06L10.94 12l-5.47 5.47a.75.75 0 1 0 1.06 1.06L12 13.06l5.47 5.47a.75.75 0 1 0 1.06-1.06L13.06 12l5.47-5.47a.75.75 0 0 0-1.06-1.06L12 10.94z" fill="currentColor"/></svg><span>Lukk</span></button>
                     </div>
                     <div class="filter-bar" role="group" aria-label="Filtrer skoler">
-                    <!-- The site's main measure first, on a light green background -->
-                    <fieldset class="ds-fieldset filter-group filter-checks filter-group--main">
-                        <legend class="ds-label filter-legend" data-size="sm">Snitt nasjonale prøver
-                            <button type="button" class="ds-button filter-help" data-variant="tertiary" data-size="sm" data-icon id="snittHelp"
-                            data-tooltip="Snittet er gjennomsnittet av skolens skalapoeng i engelsk, lesing og regning på nasjonale prøver 2025–26. Fag uten publisert resultat telles ikke med. Skalaen er satt slik at landsgjennomsnittet var 50 i 2022." data-placement="top"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12ZM11.0498 16.9C11.0498 16.3753 11.4751 15.95 11.9998 15.95C12.5245 15.95 12.9498 16.3753 12.9498 16.9C12.9498 17.4247 12.5245 17.85 11.9998 17.85C11.4751 17.85 11.0498 17.4247 11.0498 16.9ZM10.25 9.5C10.25 8.5335 11.0335 7.75 12 7.75H12.1361C13.0274 7.75 13.75 8.47255 13.75 9.36387C13.75 9.85413 13.5271 10.3178 13.1443 10.6241L12.7028 10.9773C11.7845 11.7119 11.25 12.8241 11.25 14C11.25 14.4142 11.5858 14.75 12 14.75C12.4142 14.75 12.75 14.4142 12.75 14C12.75 13.2797 13.0774 12.5985 13.6398 12.1486L14.0814 11.7954C14.82 11.2045 15.25 10.3098 15.25 9.36387C15.25 7.64413 13.8559 6.25 12.1361 6.25H12C10.2051 6.25 8.75 7.70507 8.75 9.5C8.75 9.91421 9.08579 10.25 9.5 10.25C9.91421 10.25 10.25 9.91421 10.25 9.5Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></button>
-                        </legend>
-                        <div class="filter-checks__options">
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-score-very-high" name="score" value="very-high" checked />
-                                <label class="ds-label" data-weight="regular" for="f-score-very-high"><span class="color-dot score-very-high" aria-hidden="true"></span>55 og over</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-score-high" name="score" value="high" checked />
-                                <label class="ds-label" data-weight="regular" for="f-score-high"><span class="color-dot score-high" aria-hidden="true"></span>49,3–55</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-score-low" name="score" value="low" checked />
-                                <label class="ds-label" data-weight="regular" for="f-score-low"><span class="color-dot score-low" aria-hidden="true"></span>45–49,3</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-score-very-low" name="score" value="very-low" checked />
-                                <label class="ds-label" data-weight="regular" for="f-score-very-low"><span class="color-dot score-very-low" aria-hidden="true"></span>Under 45</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-score-none" name="score" value="none" checked />
-                                <label class="ds-label" data-weight="regular" for="f-score-none"><span class="color-dot score-none" aria-hidden="true"></span>Ingen data</label>
-                            </ds-field>
-                        </div>
-                        <!-- The page that explains the colours opens in a new tab, so the filters stay as they are -->
-                        <p class="ds-paragraph filter-more" data-size="sm"><a class="ds-link" href="om-fargefordelingen" target="_blank" rel="noopener">Om fargefordelingen<svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M20.5319 3.47126C20.603 3.5428 20.6568 3.62511 20.6931 3.71291C20.7298 3.80134 20.75 3.89831 20.75 4V11.5C20.75 11.9142 20.4142 12.25 20 12.25C19.5858 12.25 19.25 11.9142 19.25 11.5V5.81066L10.5303 14.5303C10.2374 14.8232 9.76256 14.8232 9.46967 14.5303C9.17678 14.2374 9.17678 13.7626 9.46967 13.4697L18.1893 4.75H12.5C12.0858 4.75 11.75 4.41421 11.75 4C11.75 3.58579 12.0858 3.25 12.5 3.25H20C20.2063 3.25 20.3931 3.33329 20.5287 3.46808L20.5303 3.46967L20.5319 3.47126ZM4.75 9C4.75 8.86193 4.86193 8.75 5 8.75H12C12.4142 8.75 12.75 8.41421 12.75 8C12.75 7.58579 12.4142 7.25 12 7.25H5C4.0335 7.25 3.25 8.0335 3.25 9V19C3.25 19.9665 4.0335 20.75 5 20.75H15C15.9665 20.75 16.75 19.9665 16.75 19V12C16.75 11.5858 16.4142 11.25 16 11.25C15.5858 11.25 15.25 11.5858 15.25 12V19C15.25 19.1381 15.1381 19.25 15 19.25H5C4.86193 19.25 4.75 19.1381 4.75 19V9Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></a></p>
+                    <!-- Figma section 10 (F3), measured: the intro, learning and well-being in words, facilities (OpenStreetMap),
+                         what we have no data for, owner, walking time; profile, kommune and the intervals folded away -->
+                    <p class="ds-paragraph filter-intro" data-size="sm">Velg det som er viktig. Ingenting er valgt fra start – listen viser alle skoler til du velger noe.</p>
+                    <fieldset class="ds-fieldset filter-group filter-group--main" id="presetFilter">
+                        <legend class="ds-label filter-legend" data-size="sm">Læring og trivsel <a class="ds-link filter-legend__help" href="om-fargefordelingen" target="_blank" rel="noopener">Hva betyr dette?</a></legend>
+                        <div class="quick-filters__options" id="presetOptions"></div>
                     </fieldset>
-                    <fieldset class="ds-fieldset filter-group filter-checks">
-                        <legend class="ds-label filter-legend" data-size="sm">Skoletype
-                        </legend>
-                        <div class="filter-checks__options">
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-type-barneskole" name="type" value="barneskole" checked />
-                                <label class="ds-label" data-weight="regular" for="f-type-barneskole"><span class="chip-icon" data-type-icon="barneskole"></span>Barneskole</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-type-ungdomsskole" name="type" value="ungdomsskole" checked />
-                                <label class="ds-label" data-weight="regular" for="f-type-ungdomsskole"><span class="chip-icon" data-type-icon="ungdomsskole"></span>Ungdomsskole</label>
-                            </ds-field>
-                        </div>
+                    <fieldset class="ds-fieldset filter-group" id="anleggFilter">
+                        <legend class="ds-label filter-legend" data-size="sm">Anlegg ved skolen</legend>
+                        <div class="quick-filters__options" id="anleggOptions"></div>
                     </fieldset>
-                    <fieldset class="ds-fieldset filter-group filter-checks">
+                    <div class="filter-group filter-note">
+                        <p class="ds-label filter-legend" data-size="sm">Tilgjengelighet og tilrettelegging</p>
+                        <p class="ds-paragraph" data-size="sm">Vi har ennå ikke åpne data om trinnfri inngang, heis, spesialgruppe eller teleslynge, så du kan ikke filtrere på det. Spør skolen direkte – telefon og e-post står på skolesiden.</p>
+                    </div>
+                    <fieldset class="ds-fieldset filter-group" id="levelSwitch">
+                    <legend class="ds-label filter-legend" data-size="sm">Skoletype</legend>
+                    <div class="quick-filters__options">
+                        
+                    <label class="ds-chip"><input type="radio" name="trinn" value="barneskole" />Barneskole (1.–7.)</label>
+                    <label class="ds-chip"><input type="radio" name="trinn" value="ungdomsskole" />Ungdomsskole (8.–10.)</label>
+                    <label class="ds-chip"><input type="radio" name="trinn" value="begge" checked />Begge</label>
+                    </div>
+                    </fieldset>
+                    <fieldset class="ds-fieldset filter-group filter-checks filter-pills" id="ownerFilter">
                         <legend class="ds-label filter-legend" data-size="sm">Eierform
                         </legend>
                         <div class="filter-checks__options">
                             <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-owner-offentlig" name="owner" value="offentlig" checked />
+                                <input class="ds-input" type="checkbox" id="f-owner-offentlig" name="owner" value="offentlig" />
                                 <label class="ds-label" data-weight="regular" for="f-owner-offentlig"><span class="chip-icon" data-owner-icon="offentlig"></span>Offentlig</label>
                             </ds-field>
                             <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-owner-privat" name="owner" value="privat" checked />
+                                <input class="ds-input" type="checkbox" id="f-owner-privat" name="owner" value="privat" />
                                 <label class="ds-label" data-weight="regular" for="f-owner-privat"><span class="chip-icon" data-owner-icon="privat"></span>Privat</label>
                             </ds-field>
                         </div>
                     </fieldset>
-                    <ds-field class="ds-field filter-group">
-                        <label class="ds-label" data-size="sm" for="kommuneFilter">Kommune</label>
-                        <select class="ds-input" id="kommuneFilter" data-size="sm">
-                            <option value="">Alle kommuner</option>
-                        </select>
-                    </ds-field>
-                    <!-- Profil: one choice, so radio buttons; the profiles with schools are added by finder.js -->
-                    <fieldset class="ds-fieldset filter-group filter-checks" id="profileFilter">
-                        <legend class="ds-label filter-legend" data-size="sm">Profil</legend>
-                        <div class="filter-checks__options" id="profileOptions">
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="radio" id="f-profile-alle" name="profile" value="" checked />
-                                <label class="ds-label" data-weight="regular" for="f-profile-alle">Alle</label>
-                            </ds-field>
-                        </div>
-                    </fieldset>
-                    <fieldset class="ds-fieldset filter-group filter-checks">
-                        <legend class="ds-label filter-legend" data-size="sm">Trivsel (1–5)
-                            <button type="button" class="ds-button filter-help" data-variant="tertiary" data-size="sm" data-icon
-                            data-tooltip="Elevenes gjennomsnittlige svar på «Trives du på skolen?» i Elevundersøkelsen, på en skala fra 1 til 5. 7. trinn for barneskoler og 10. trinn for ungdomsskoler. Små grupper er skjult av Udir." data-placement="top"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12ZM11.0498 16.9C11.0498 16.3753 11.4751 15.95 11.9998 15.95C12.5245 15.95 12.9498 16.3753 12.9498 16.9C12.9498 17.4247 12.5245 17.85 11.9998 17.85C11.4751 17.85 11.0498 17.4247 11.0498 16.9ZM10.25 9.5C10.25 8.5335 11.0335 7.75 12 7.75H12.1361C13.0274 7.75 13.75 8.47255 13.75 9.36387C13.75 9.85413 13.5271 10.3178 13.1443 10.6241L12.7028 10.9773C11.7845 11.7119 11.25 12.8241 11.25 14C11.25 14.4142 11.5858 14.75 12 14.75C12.4142 14.75 12.75 14.4142 12.75 14C12.75 13.2797 13.0774 12.5985 13.6398 12.1486L14.0814 11.7954C14.82 11.2045 15.25 10.3098 15.25 9.36387C15.25 7.64413 13.8559 6.25 12.1361 6.25H12C10.2051 6.25 8.75 7.70507 8.75 9.5C8.75 9.91421 9.08579 10.25 9.5 10.25C9.91421 10.25 10.25 9.91421 10.25 9.5Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></button>
-                        </legend>
+                    <fieldset class="ds-fieldset filter-group filter-checks" id="walkFilter">
+                        <legend class="ds-label filter-legend" data-size="sm">Gangtid til skolen (anslag ut fra luftlinje)</legend>
+                        <p class="ds-paragraph walk-filter__hint" data-size="sm" id="walkHint">Søk på en adresse først, så kan du velge hvor langt barnet skal gå.</p>
                         <div class="filter-checks__options">
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-trivsel-u38" name="trivsel" value="u38" checked />
-                                <label class="ds-label" data-weight="regular" for="f-trivsel-u38">Under 3,8</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-trivsel-38" name="trivsel" value="38" checked />
-                                <label class="ds-label" data-weight="regular" for="f-trivsel-38">3,8–3,9</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-trivsel-40" name="trivsel" value="40" checked />
-                                <label class="ds-label" data-weight="regular" for="f-trivsel-40">4,0–4,1</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-trivsel-42" name="trivsel" value="42" checked />
-                                <label class="ds-label" data-weight="regular" for="f-trivsel-42">4,2–4,3</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-trivsel-44" name="trivsel" value="44" checked />
-                                <label class="ds-label" data-weight="regular" for="f-trivsel-44">4,4 og over</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-trivsel-none" name="trivsel" value="none" checked />
-                                <label class="ds-label" data-weight="regular" for="f-trivsel-none">Ingen data</label>
-                            </ds-field>
+                            <ds-field class="ds-field filter-option"><input class="ds-input" type="radio" id="f-walk-0" name="walk" value="0" checked /><label class="ds-label" data-weight="regular" for="f-walk-0">Alle</label></ds-field>
+                            <ds-field class="ds-field filter-option"><input class="ds-input" type="radio" id="f-walk-10" name="walk" value="10" /><label class="ds-label" data-weight="regular" for="f-walk-10">Inntil 10 min</label></ds-field>
+                            <ds-field class="ds-field filter-option"><input class="ds-input" type="radio" id="f-walk-15" name="walk" value="15" /><label class="ds-label" data-weight="regular" for="f-walk-15">Inntil 15 min</label></ds-field>
+                            <ds-field class="ds-field filter-option"><input class="ds-input" type="radio" id="f-walk-30" name="walk" value="30" /><label class="ds-label" data-weight="regular" for="f-walk-30">Inntil 30 min</label></ds-field>
                         </div>
                     </fieldset>
-                    <fieldset class="ds-fieldset filter-group filter-checks">
-                        <legend class="ds-label filter-legend" data-size="sm">Mobbing (andel elever)
-                            <button type="button" class="ds-button filter-help" data-variant="tertiary" data-size="sm" data-icon id="mobbingHelp"
-                            data-tooltip="Andelen elever som svarer at de er blitt mobbet to eller tre ganger i måneden eller oftere, av andre elever, digitalt eller av voksne på skolen. Elevundersøkelsen 2025–26, 7. trinn for barneskoler og 10. trinn for ungdomsskoler. Landsgjennomsnittet er 11,3 % på 7. trinn og 9,6 % på 10. trinn. Små grupper er skjult av Udir." data-placement="top"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12ZM11.0498 16.9C11.0498 16.3753 11.4751 15.95 11.9998 15.95C12.5245 15.95 12.9498 16.3753 12.9498 16.9C12.9498 17.4247 12.5245 17.85 11.9998 17.85C11.4751 17.85 11.0498 17.4247 11.0498 16.9ZM10.25 9.5C10.25 8.5335 11.0335 7.75 12 7.75H12.1361C13.0274 7.75 13.75 8.47255 13.75 9.36387C13.75 9.85413 13.5271 10.3178 13.1443 10.6241L12.7028 10.9773C11.7845 11.7119 11.25 12.8241 11.25 14C11.25 14.4142 11.5858 14.75 12 14.75C12.4142 14.75 12.75 14.4142 12.75 14C12.75 13.2797 13.0774 12.5985 13.6398 12.1486L14.0814 11.7954C14.82 11.2045 15.25 10.3098 15.25 9.36387C15.25 7.64413 13.8559 6.25 12.1361 6.25H12C10.2051 6.25 8.75 7.70507 8.75 9.5C8.75 9.91421 9.08579 10.25 9.5 10.25C9.91421 10.25 10.25 9.91421 10.25 9.5Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></button>
-                        </legend>
-                        <div class="filter-checks__options">
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-mobbing-u5" name="mobbing" value="u5" checked />
-                                <label class="ds-label" data-weight="regular" for="f-mobbing-u5">Under 5 %</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-mobbing-5" name="mobbing" value="5" checked />
-                                <label class="ds-label" data-weight="regular" for="f-mobbing-5">5–9,9 %</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-mobbing-10" name="mobbing" value="10" checked />
-                                <label class="ds-label" data-weight="regular" for="f-mobbing-10">10–14,9 %</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-mobbing-15" name="mobbing" value="15" checked />
-                                <label class="ds-label" data-weight="regular" for="f-mobbing-15">15 % og over</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-mobbing-none" name="mobbing" value="none" checked />
-                                <label class="ds-label" data-weight="regular" for="f-mobbing-none">Ingen data</label>
-                            </ds-field>
-                        </div>
-                    </fieldset>
-                    <fieldset class="ds-fieldset filter-group filter-checks">
-                        <legend class="ds-label filter-legend" data-size="sm">Lærertetthet (elever per lærer)
-                            <button type="button" class="ds-button filter-help" data-variant="tertiary" data-size="sm" data-icon id="laererHelp"
-                            data-tooltip="Antall elever per lærer i ordinær undervisning, fra Grunnskolens informasjonssystem (GSI) 2025–26. Lavere tall betyr flere lærere per elev. 5.–7. trinn for barneskoler og 8.–10. trinn for ungdomsskoler. Landsgjennomsnittet er 16,2 på 5.–7. trinn og 17,5 på 8.–10. trinn." data-placement="top"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12ZM11.0498 16.9C11.0498 16.3753 11.4751 15.95 11.9998 15.95C12.5245 15.95 12.9498 16.3753 12.9498 16.9C12.9498 17.4247 12.5245 17.85 11.9998 17.85C11.4751 17.85 11.0498 17.4247 11.0498 16.9ZM10.25 9.5C10.25 8.5335 11.0335 7.75 12 7.75H12.1361C13.0274 7.75 13.75 8.47255 13.75 9.36387C13.75 9.85413 13.5271 10.3178 13.1443 10.6241L12.7028 10.9773C11.7845 11.7119 11.25 12.8241 11.25 14C11.25 14.4142 11.5858 14.75 12 14.75C12.4142 14.75 12.75 14.4142 12.75 14C12.75 13.2797 13.0774 12.5985 13.6398 12.1486L14.0814 11.7954C14.82 11.2045 15.25 10.3098 15.25 9.36387C15.25 7.64413 13.8559 6.25 12.1361 6.25H12C10.2051 6.25 8.75 7.70507 8.75 9.5C8.75 9.91421 9.08579 10.25 9.5 10.25C9.91421 10.25 10.25 9.91421 10.25 9.5Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></button>
-                        </legend>
-                        <div class="filter-checks__options">
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-laerer-u14" name="laerer" value="u14" checked />
-                                <label class="ds-label" data-weight="regular" for="f-laerer-u14">Under 14</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-laerer-14" name="laerer" value="14" checked />
-                                <label class="ds-label" data-weight="regular" for="f-laerer-14">14–15,9</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-laerer-16" name="laerer" value="16" checked />
-                                <label class="ds-label" data-weight="regular" for="f-laerer-16">16–17,9</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-laerer-18" name="laerer" value="18" checked />
-                                <label class="ds-label" data-weight="regular" for="f-laerer-18">18 og over</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-laerer-none" name="laerer" value="none" checked />
-                                <label class="ds-label" data-weight="regular" for="f-laerer-none">Ingen data</label>
-                            </ds-field>
-                        </div>
-                    </fieldset>
-                    <fieldset class="ds-fieldset filter-group filter-checks">
-                        <legend class="ds-label filter-legend" data-size="sm">Forsterket opplæring i norsk (andel elever)
-                            <button type="button" class="ds-button filter-help" data-variant="tertiary" data-size="sm" data-icon id="norskHelp"
-                            data-tooltip="Andelen elever ved skolen som får forsterket opplæring i norsk, fra Grunnskolens informasjonssystem (GSI) 2025–26. Landsgjennomsnittet er 7,5 %." data-placement="top"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12ZM11.0498 16.9C11.0498 16.3753 11.4751 15.95 11.9998 15.95C12.5245 15.95 12.9498 16.3753 12.9498 16.9C12.9498 17.4247 12.5245 17.85 11.9998 17.85C11.4751 17.85 11.0498 17.4247 11.0498 16.9ZM10.25 9.5C10.25 8.5335 11.0335 7.75 12 7.75H12.1361C13.0274 7.75 13.75 8.47255 13.75 9.36387C13.75 9.85413 13.5271 10.3178 13.1443 10.6241L12.7028 10.9773C11.7845 11.7119 11.25 12.8241 11.25 14C11.25 14.4142 11.5858 14.75 12 14.75C12.4142 14.75 12.75 14.4142 12.75 14C12.75 13.2797 13.0774 12.5985 13.6398 12.1486L14.0814 11.7954C14.82 11.2045 15.25 10.3098 15.25 9.36387C15.25 7.64413 13.8559 6.25 12.1361 6.25H12C10.2051 6.25 8.75 7.70507 8.75 9.5C8.75 9.91421 9.08579 10.25 9.5 10.25C9.91421 10.25 10.25 9.91421 10.25 9.5Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></button>
-                        </legend>
-                        <div class="filter-checks__options">
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-norsk-u5" name="norsk" value="u5" checked />
-                                <label class="ds-label" data-weight="regular" for="f-norsk-u5">Under 5 %</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-norsk-5" name="norsk" value="5" checked />
-                                <label class="ds-label" data-weight="regular" for="f-norsk-5">5–9,9 %</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-norsk-10" name="norsk" value="10" checked />
-                                <label class="ds-label" data-weight="regular" for="f-norsk-10">10–19,9 %</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-norsk-20" name="norsk" value="20" checked />
-                                <label class="ds-label" data-weight="regular" for="f-norsk-20">20 % og over</label>
-                            </ds-field>
-                            <ds-field class="ds-field filter-option">
-                                <input class="ds-input" type="checkbox" id="f-norsk-none" name="norsk" value="none" checked />
-                                <label class="ds-label" data-weight="regular" for="f-norsk-none">Ingen data</label>
-                            </ds-field>
-                        </div>
-                    </fieldset>
+                    
+                    <details class="filter-more-group">
+                        <summary>Profil og kommune</summary>
+                        <ds-field class="ds-field filter-group">
+                            <label class="ds-label" data-size="sm" for="kommuneFilter">Kommune</label>
+                            <select class="ds-input" id="kommuneFilter" data-size="sm">
+                                <option value="">Alle kommuner</option>
+                            </select>
+                        </ds-field>
+                        <!-- Profil: one choice, so radio buttons; the profiles with schools are added by finder.js -->
+                        <fieldset class="ds-fieldset filter-group filter-checks" id="profileFilter">
+                            <legend class="ds-label filter-legend" data-size="sm">Profil</legend>
+                            <div class="filter-checks__options" id="profileOptions">
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="radio" id="f-profile-alle" name="profile" value="" checked />
+                                    <label class="ds-label" data-weight="regular" for="f-profile-alle">Alle</label>
+                                </ds-field>
+                            </div>
+                        </fieldset>
+                    </details>
+                    <details class="filter-more-group">
+                        <summary>Flere tall: intervaller, elever per lærer og norskopplæring</summary>
+                        <fieldset class="ds-fieldset filter-group filter-checks filter-group--main">
+                            <legend class="ds-label filter-legend" data-size="sm">Snitt nasjonale prøver
+                                <button type="button" class="ds-button filter-help" data-variant="tertiary" data-size="sm" data-icon id="snittHelp"
+                                data-tooltip="Snittet er gjennomsnittet av skolens skalapoeng i engelsk, lesing og regning på nasjonale prøver 2025–26. Fag uten publisert resultat telles ikke med. Skalaen er satt slik at landsgjennomsnittet var 50 i 2022." data-placement="top"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12ZM11.0498 16.9C11.0498 16.3753 11.4751 15.95 11.9998 15.95C12.5245 15.95 12.9498 16.3753 12.9498 16.9C12.9498 17.4247 12.5245 17.85 11.9998 17.85C11.4751 17.85 11.0498 17.4247 11.0498 16.9ZM10.25 9.5C10.25 8.5335 11.0335 7.75 12 7.75H12.1361C13.0274 7.75 13.75 8.47255 13.75 9.36387C13.75 9.85413 13.5271 10.3178 13.1443 10.6241L12.7028 10.9773C11.7845 11.7119 11.25 12.8241 11.25 14C11.25 14.4142 11.5858 14.75 12 14.75C12.4142 14.75 12.75 14.4142 12.75 14C12.75 13.2797 13.0774 12.5985 13.6398 12.1486L14.0814 11.7954C14.82 11.2045 15.25 10.3098 15.25 9.36387C15.25 7.64413 13.8559 6.25 12.1361 6.25H12C10.2051 6.25 8.75 7.70507 8.75 9.5C8.75 9.91421 9.08579 10.25 9.5 10.25C9.91421 10.25 10.25 9.91421 10.25 9.5Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></button>
+                            </legend>
+                            <div class="filter-checks__options">
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-score-very-high" name="score" value="very-high" />
+                                    <label class="ds-label" data-weight="regular" for="f-score-very-high"><span class="color-dot score-very-high" aria-hidden="true"></span>55 og over</label>
+                                </ds-field>
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-score-high" name="score" value="high" />
+                                    <label class="ds-label" data-weight="regular" for="f-score-high"><span class="color-dot score-high" aria-hidden="true"></span>Landssnittet – 55</label>
+                                </ds-field>
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-score-low" name="score" value="low" />
+                                    <label class="ds-label" data-weight="regular" for="f-score-low"><span class="color-dot score-low" aria-hidden="true"></span>45 – landssnittet</label>
+                                </ds-field>
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-score-very-low" name="score" value="very-low" />
+                                    <label class="ds-label" data-weight="regular" for="f-score-very-low"><span class="color-dot score-very-low" aria-hidden="true"></span>Under 45</label>
+                                </ds-field>
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-score-none" name="score" value="none" />
+                                    <label class="ds-label" data-weight="regular" for="f-score-none"><span class="color-dot score-none" aria-hidden="true"></span>Ingen data</label>
+                                </ds-field>
+                            </div>
+                            <!-- The page that explains the colours opens in a new tab, so the filters stay as they are -->
+                            <p class="ds-paragraph filter-more" data-size="sm"><a class="ds-link" href="om-fargefordelingen" target="_blank" rel="noopener">Om fargefordelingen<svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M20.5319 3.47126C20.603 3.5428 20.6568 3.62511 20.6931 3.71291C20.7298 3.80134 20.75 3.89831 20.75 4V11.5C20.75 11.9142 20.4142 12.25 20 12.25C19.5858 12.25 19.25 11.9142 19.25 11.5V5.81066L10.5303 14.5303C10.2374 14.8232 9.76256 14.8232 9.46967 14.5303C9.17678 14.2374 9.17678 13.7626 9.46967 13.4697L18.1893 4.75H12.5C12.0858 4.75 11.75 4.41421 11.75 4C11.75 3.58579 12.0858 3.25 12.5 3.25H20C20.2063 3.25 20.3931 3.33329 20.5287 3.46808L20.5303 3.46967L20.5319 3.47126ZM4.75 9C4.75 8.86193 4.86193 8.75 5 8.75H12C12.4142 8.75 12.75 8.41421 12.75 8C12.75 7.58579 12.4142 7.25 12 7.25H5C4.0335 7.25 3.25 8.0335 3.25 9V19C3.25 19.9665 4.0335 20.75 5 20.75H15C15.9665 20.75 16.75 19.9665 16.75 19V12C16.75 11.5858 16.4142 11.25 16 11.25C15.5858 11.25 15.25 11.5858 15.25 12V19C15.25 19.1381 15.1381 19.25 15 19.25H5C4.86193 19.25 4.75 19.1381 4.75 19V9Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></a></p>
+                        </fieldset>
+                        <fieldset class="ds-fieldset filter-group filter-checks">
+                            <legend class="ds-label filter-legend" data-size="sm">Trivsel (1–5)
+                                <button type="button" class="ds-button filter-help" data-variant="tertiary" data-size="sm" data-icon
+                                data-tooltip="Elevenes gjennomsnittlige svar på «Trives du på skolen?» i Elevundersøkelsen, på en skala fra 1 til 5. 7. trinn for barneskoler og 10. trinn for ungdomsskoler. Små grupper er skjult av Udir." data-placement="top"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12ZM11.0498 16.9C11.0498 16.3753 11.4751 15.95 11.9998 15.95C12.5245 15.95 12.9498 16.3753 12.9498 16.9C12.9498 17.4247 12.5245 17.85 11.9998 17.85C11.4751 17.85 11.0498 17.4247 11.0498 16.9ZM10.25 9.5C10.25 8.5335 11.0335 7.75 12 7.75H12.1361C13.0274 7.75 13.75 8.47255 13.75 9.36387C13.75 9.85413 13.5271 10.3178 13.1443 10.6241L12.7028 10.9773C11.7845 11.7119 11.25 12.8241 11.25 14C11.25 14.4142 11.5858 14.75 12 14.75C12.4142 14.75 12.75 14.4142 12.75 14C12.75 13.2797 13.0774 12.5985 13.6398 12.1486L14.0814 11.7954C14.82 11.2045 15.25 10.3098 15.25 9.36387C15.25 7.64413 13.8559 6.25 12.1361 6.25H12C10.2051 6.25 8.75 7.70507 8.75 9.5C8.75 9.91421 9.08579 10.25 9.5 10.25C9.91421 10.25 10.25 9.91421 10.25 9.5Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></button>
+                            </legend>
+                            <div class="filter-checks__options">
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-trivsel-u38" name="trivsel" value="u38" />
+                                    <label class="ds-label" data-weight="regular" for="f-trivsel-u38">Under 3,8</label>
+                                </ds-field>
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-trivsel-38" name="trivsel" value="38" />
+                                    <label class="ds-label" data-weight="regular" for="f-trivsel-38">3,8–3,9</label>
+                                </ds-field>
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-trivsel-40" name="trivsel" value="40" />
+                                    <label class="ds-label" data-weight="regular" for="f-trivsel-40">4,0–4,1</label>
+                                </ds-field>
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-trivsel-42" name="trivsel" value="42" />
+                                    <label class="ds-label" data-weight="regular" for="f-trivsel-42">4,2–4,3</label>
+                                </ds-field>
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-trivsel-44" name="trivsel" value="44" />
+                                    <label class="ds-label" data-weight="regular" for="f-trivsel-44">4,4 og over</label>
+                                </ds-field>
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-trivsel-none" name="trivsel" value="none" />
+                                    <label class="ds-label" data-weight="regular" for="f-trivsel-none">Ingen data</label>
+                                </ds-field>
+                            </div>
+                        </fieldset>
+                        <fieldset class="ds-fieldset filter-group filter-checks">
+                            <legend class="ds-label filter-legend" data-size="sm">Mobbing (andel elever)
+                                <button type="button" class="ds-button filter-help" data-variant="tertiary" data-size="sm" data-icon id="mobbingHelp"
+                                data-tooltip="Andelen elever som svarer at de er blitt mobbet to eller tre ganger i måneden eller oftere, av andre elever, digitalt eller av voksne på skolen. Elevundersøkelsen 2025–26, 7. trinn for barneskoler og 10. trinn for ungdomsskoler. Landsgjennomsnittet er 11,3 % på 7. trinn og 9,6 % på 10. trinn. Små grupper er skjult av Udir." data-placement="top"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12ZM11.0498 16.9C11.0498 16.3753 11.4751 15.95 11.9998 15.95C12.5245 15.95 12.9498 16.3753 12.9498 16.9C12.9498 17.4247 12.5245 17.85 11.9998 17.85C11.4751 17.85 11.0498 17.4247 11.0498 16.9ZM10.25 9.5C10.25 8.5335 11.0335 7.75 12 7.75H12.1361C13.0274 7.75 13.75 8.47255 13.75 9.36387C13.75 9.85413 13.5271 10.3178 13.1443 10.6241L12.7028 10.9773C11.7845 11.7119 11.25 12.8241 11.25 14C11.25 14.4142 11.5858 14.75 12 14.75C12.4142 14.75 12.75 14.4142 12.75 14C12.75 13.2797 13.0774 12.5985 13.6398 12.1486L14.0814 11.7954C14.82 11.2045 15.25 10.3098 15.25 9.36387C15.25 7.64413 13.8559 6.25 12.1361 6.25H12C10.2051 6.25 8.75 7.70507 8.75 9.5C8.75 9.91421 9.08579 10.25 9.5 10.25C9.91421 10.25 10.25 9.91421 10.25 9.5Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></button>
+                            </legend>
+                            <div class="filter-checks__options">
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-mobbing-u5" name="mobbing" value="u5" />
+                                    <label class="ds-label" data-weight="regular" for="f-mobbing-u5">Under 5 %</label>
+                                </ds-field>
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-mobbing-5" name="mobbing" value="5" />
+                                    <label class="ds-label" data-weight="regular" for="f-mobbing-5">5–9,9 %</label>
+                                </ds-field>
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-mobbing-10" name="mobbing" value="10" />
+                                    <label class="ds-label" data-weight="regular" for="f-mobbing-10">10–14,9 %</label>
+                                </ds-field>
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-mobbing-15" name="mobbing" value="15" />
+                                    <label class="ds-label" data-weight="regular" for="f-mobbing-15">15 % og over</label>
+                                </ds-field>
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-mobbing-none" name="mobbing" value="none" />
+                                    <label class="ds-label" data-weight="regular" for="f-mobbing-none">Ingen data</label>
+                                </ds-field>
+                            </div>
+                        </fieldset>
+                        <fieldset class="ds-fieldset filter-group filter-checks">
+                            <legend class="ds-label filter-legend" data-size="sm">Lærertetthet (elever per lærer)
+                                <button type="button" class="ds-button filter-help" data-variant="tertiary" data-size="sm" data-icon id="laererHelp"
+                                data-tooltip="Antall elever per lærer i ordinær undervisning, fra Grunnskolens informasjonssystem (GSI) 2025–26. Lavere tall betyr flere lærere per elev. 5.–7. trinn for barneskoler og 8.–10. trinn for ungdomsskoler. Landsgjennomsnittet er 16,2 på 5.–7. trinn og 17,5 på 8.–10. trinn." data-placement="top"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12ZM11.0498 16.9C11.0498 16.3753 11.4751 15.95 11.9998 15.95C12.5245 15.95 12.9498 16.3753 12.9498 16.9C12.9498 17.4247 12.5245 17.85 11.9998 17.85C11.4751 17.85 11.0498 17.4247 11.0498 16.9ZM10.25 9.5C10.25 8.5335 11.0335 7.75 12 7.75H12.1361C13.0274 7.75 13.75 8.47255 13.75 9.36387C13.75 9.85413 13.5271 10.3178 13.1443 10.6241L12.7028 10.9773C11.7845 11.7119 11.25 12.8241 11.25 14C11.25 14.4142 11.5858 14.75 12 14.75C12.4142 14.75 12.75 14.4142 12.75 14C12.75 13.2797 13.0774 12.5985 13.6398 12.1486L14.0814 11.7954C14.82 11.2045 15.25 10.3098 15.25 9.36387C15.25 7.64413 13.8559 6.25 12.1361 6.25H12C10.2051 6.25 8.75 7.70507 8.75 9.5C8.75 9.91421 9.08579 10.25 9.5 10.25C9.91421 10.25 10.25 9.91421 10.25 9.5Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></button>
+                            </legend>
+                            <div class="filter-checks__options">
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-laerer-u14" name="laerer" value="u14" />
+                                    <label class="ds-label" data-weight="regular" for="f-laerer-u14">Under 14</label>
+                                </ds-field>
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-laerer-14" name="laerer" value="14" />
+                                    <label class="ds-label" data-weight="regular" for="f-laerer-14">14–15,9</label>
+                                </ds-field>
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-laerer-16" name="laerer" value="16" />
+                                    <label class="ds-label" data-weight="regular" for="f-laerer-16">16–17,9</label>
+                                </ds-field>
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-laerer-18" name="laerer" value="18" />
+                                    <label class="ds-label" data-weight="regular" for="f-laerer-18">18 og over</label>
+                                </ds-field>
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-laerer-none" name="laerer" value="none" />
+                                    <label class="ds-label" data-weight="regular" for="f-laerer-none">Ingen data</label>
+                                </ds-field>
+                            </div>
+                        </fieldset>
+                        <fieldset class="ds-fieldset filter-group filter-checks">
+                            <legend class="ds-label filter-legend" data-size="sm">Forsterket opplæring i norsk (andel elever)
+                                <button type="button" class="ds-button filter-help" data-variant="tertiary" data-size="sm" data-icon id="norskHelp"
+                                data-tooltip="Andelen elever ved skolen som får forsterket opplæring i norsk, fra Grunnskolens informasjonssystem (GSI), siste år skolen har tall for. Landsgjennomsnittet i 2025–26 er 7,5 %." data-placement="top"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 3.75C7.44365 3.75 3.75 7.44365 3.75 12C3.75 16.5563 7.44365 20.25 12 20.25C16.5563 20.25 20.25 16.5563 20.25 12C20.25 7.44365 16.5563 3.75 12 3.75ZM2.25 12C2.25 6.61522 6.61522 2.25 12 2.25C17.3848 2.25 21.75 6.61522 21.75 12C21.75 17.3848 17.3848 21.75 12 21.75C6.61522 21.75 2.25 17.3848 2.25 12ZM11.0498 16.9C11.0498 16.3753 11.4751 15.95 11.9998 15.95C12.5245 15.95 12.9498 16.3753 12.9498 16.9C12.9498 17.4247 12.5245 17.85 11.9998 17.85C11.4751 17.85 11.0498 17.4247 11.0498 16.9ZM10.25 9.5C10.25 8.5335 11.0335 7.75 12 7.75H12.1361C13.0274 7.75 13.75 8.47255 13.75 9.36387C13.75 9.85413 13.5271 10.3178 13.1443 10.6241L12.7028 10.9773C11.7845 11.7119 11.25 12.8241 11.25 14C11.25 14.4142 11.5858 14.75 12 14.75C12.4142 14.75 12.75 14.4142 12.75 14C12.75 13.2797 13.0774 12.5985 13.6398 12.1486L14.0814 11.7954C14.82 11.2045 15.25 10.3098 15.25 9.36387C15.25 7.64413 13.8559 6.25 12.1361 6.25H12C10.2051 6.25 8.75 7.70507 8.75 9.5C8.75 9.91421 9.08579 10.25 9.5 10.25C9.91421 10.25 10.25 9.91421 10.25 9.5Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></button>
+                            </legend>
+                            <div class="filter-checks__options">
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-norsk-u5" name="norsk" value="u5" />
+                                    <label class="ds-label" data-weight="regular" for="f-norsk-u5">Under 5 %</label>
+                                </ds-field>
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-norsk-5" name="norsk" value="5" />
+                                    <label class="ds-label" data-weight="regular" for="f-norsk-5">5–9,9 %</label>
+                                </ds-field>
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-norsk-10" name="norsk" value="10" />
+                                    <label class="ds-label" data-weight="regular" for="f-norsk-10">10–19,9 %</label>
+                                </ds-field>
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-norsk-20" name="norsk" value="20" />
+                                    <label class="ds-label" data-weight="regular" for="f-norsk-20">20 % og over</label>
+                                </ds-field>
+                                <ds-field class="ds-field filter-option">
+                                    <input class="ds-input" type="checkbox" id="f-norsk-none" name="norsk" value="none" />
+                                    <label class="ds-label" data-weight="regular" for="f-norsk-none">Ingen data</label>
+                                </ds-field>
+                            </div>
+                        </fieldset>
+                    </details>
                     </div>
                     <div class="filter-dialog__foot">
+                        <p class="ds-paragraph filter-dialog__count" id="filterCountText" aria-live="polite"></p>
+                        <button type="button" class="ds-button" data-variant="tertiary" id="filterResetDialog">Nullstill</button>
                         <button type="button" class="ds-button" data-variant="primary" id="filterDone">Vis skolene</button>
-                        <button type="button" class="ds-button" data-variant="tertiary" id="filterResetDialog" data-aksel="arrowCirclepath">Nullstill</button>
                     </div>
                 </dialog>
             </div>
         </section>
 
         <!-- Results: school list next to the map -->
-        <section class="results" aria-label="Skoler og kart">
+        <section class="results" aria-label="Skoler og kart" hidden>
             <!-- The way back from the saved schools (opened from "Lagrede skoler" in the header), on its
                  own row so the list and the map start at the same height -->
             <div class="site-container saved-bar" id="savedBar" hidden>
@@ -333,10 +408,48 @@
                 </div>
                 <p class="ds-paragraph" data-size="sm" id="savedText" hidden></p>
             </div>
+            <!-- Figma 10.1 (F2), measured: sorting and Liste/Kart in one row above both columns, on the right -->
+            <div class="site-container results-toolbar" id="resultsToolbar">
+                <p class="toolbar-text" id="toolbarText" aria-live="polite"></p>
+                <div class="results-sort">
+                            <button type="button" class="ds-button sort-switch" data-variant="secondary" popovertarget="sortMenu" id="sortButton"><span>Sorter:</span> <span id="sortLabel">Nærmest</span><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5.97 9.47a.75.75 0 0 1 1.06 0L12 14.44l4.97-4.97a.75.75 0 1 1 1.06 1.06l-5.5 5.5a.75.75 0 0 1-1.06 0l-5.5-5.5a.75.75 0 0 1 0-1.06Z" fill="currentColor"/></svg></button>
+                            <div class="ds-dropdown sort-menu" popover id="sortMenu" data-placement="bottom-end">
+                                <div class="sheet-head"><h2 class="sheet-head__title">Sorter</h2><button type="button" class="sheet-head__close" popovertarget="sortMenu" popovertargetaction="hide"><span aria-hidden="true">✕</span> Lukk</button></div>
+                                <ul>
+                                <li><button type="button" class="ds-button sort-menu__item" data-variant="tertiary" data-size="sm" data-sort="fit" data-label="Passer best" hidden>Passer best for dere</button></li>
+                                <li><button type="button" class="ds-button sort-menu__item" data-variant="tertiary" data-size="sm" data-sort="distance" data-label="Nærmest" aria-current="true">Nærmest først</button></li>
+                                <li><button type="button" class="ds-button sort-menu__item" data-variant="tertiary" data-size="sm" data-sort="known" data-label="Mest bekreftet">Mest bekreftet informasjon</button></li>
+                                <li><button type="button" class="ds-button sort-menu__item" data-variant="tertiary" data-size="sm" data-sort="name" data-label="Navn">Navn A–Å</button></li>
+                                <li><button type="button" class="ds-button sort-menu__item" data-variant="tertiary" data-size="sm" data-sort="avg-desc" data-label="Høyest snitt">Høyest snitt</button></li>
+                                <li><button type="button" class="ds-button sort-menu__item" data-variant="tertiary" data-size="sm" data-sort="avg-asc" data-label="Lavest snitt">Lavest snitt</button></li>
+                                <li><button type="button" class="ds-button sort-menu__item" data-variant="tertiary" data-size="sm" data-sort="triv-desc" data-label="Høyest trivsel">Høyest trivsel</button></li>
+                                <li><button type="button" class="ds-button sort-menu__item" data-variant="tertiary" data-size="sm" data-sort="triv-asc" data-label="Lavest trivsel">Lavest trivsel</button></li>
+                                <li><button type="button" class="ds-button sort-menu__item" data-variant="tertiary" data-size="sm" data-sort="mob-asc" data-label="Minst mobbing">Minst mobbing</button></li>
+                                <li><button type="button" class="ds-button sort-menu__item" data-variant="tertiary" data-size="sm" data-sort="mob-desc" data-label="Mest mobbing">Mest mobbing</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                <button type="button" class="ds-button filter-toggle" data-variant="secondary" id="filterToggle" aria-expanded="false" aria-controls="filterPanel">
+                    <svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M3.25 7C3.25 6.58579 3.58579 6.25 4 6.25H20C20.4142 6.25 20.75 6.58579 20.75 7C20.75 7.41421 20.4142 7.75 20 7.75L4 7.75C3.58579 7.75 3.25 7.41421 3.25 7ZM6.25 12C6.25 11.5858 6.58579 11.25 7 11.25H17C17.4142 11.25 17.75 11.5858 17.75 12C17.75 12.4142 17.4142 12.75 17 12.75H7C6.58579 12.75 6.25 12.4142 6.25 12ZM10 16.25C9.58579 16.25 9.25 16.5858 9.25 17C9.25 17.4142 9.58579 17.75 10 17.75H14C14.4142 17.75 14.75 17.4142 14.75 17C14.75 16.5858 14.4142 16.25 14 16.25H10Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg><span id="filterLabel">Filter</span><span class="ds-badge" data-size="sm" id="filterCount" hidden></span>
+                </button>
+                <div class="view-switch" role="group" aria-label="Vis som">
+                            <button type="button" class="ds-button" data-variant="secondary" data-view="liste" aria-pressed="false"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M8 6.25a.75.75 0 0 0 0 1.5h12a.75.75 0 0 0 0-1.5H8Zm0 5a.75.75 0 0 0 0 1.5h12a.75.75 0 0 0 0-1.5H8Zm-.75 5.75a.75.75 0 0 1 .75-.75h12a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1-.75-.75ZM4 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm-1 6a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm1 4a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z" fill="currentColor"/></svg>Liste</button>
+                            <button type="button" class="ds-button" data-variant="secondary" data-view="kart" aria-pressed="true"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.7 3.3a.75.75 0 0 1 .6 0L15 5.94l5.2-2.6A.75.75 0 0 1 21.25 4v14a.75.75 0 0 1-.41.67l-5.5 2.75a.75.75 0 0 1-.64.02L9 18.81l-5.2 2.6A.75.75 0 0 1 2.75 20.75V6.75a.75.75 0 0 1 .41-.67l5.5-2.75.04-.03ZM8.25 5.21l-4 2v12.33l4-2V5.21Zm1.5 12.13 4.5 2.08V7.16L9.75 5.08v12.26Zm6 1.95 4-2V5.21l-4 2v12.08Z" fill="currentColor"/></svg>Kart</button>
+                        </div>
+            </div>
             <div class="site-container results-grid" id="resultsGrid">
                 <div class="results-list">
                     <!-- The address's own school (pilot) or a note that the list is by distance -->
                     <div class="results-pick" id="kretsNote" aria-live="polite" hidden></div>
+                    <!-- A6 «Slik leser du kortene»: what the three kinds of facts on a card mean -->
+                    <div class="legend-box" id="readCards">
+                        <h2 class="legend-box__title">Slik leser du kortene</h2>
+                        <ul class="legend-box__list">
+                            <li class="fact fact--ok"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M8 12.5l2.7 2.7L16.2 9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span><strong>Bekreftet:</strong> kilde og dato står på skolesiden</span></li>
+                            <li class="fact fact--unknown"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M9.6 9.6a2.4 2.4 0 1 1 3.4 2.2c-.6.3-1 .8-1 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="16.6" r="1" fill="currentColor"/></svg><span><strong>Ukjent:</strong> vi har ikke data – spør skolen</span></li>
+                            <li class="fact fact--warn"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 4 21 19.5H3L12 4Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 10v4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="17" r="1" fill="currentColor"/></svg><span><strong>Verdt å sjekke:</strong> bør tas opp med skolen</span></li>
+                        </ul>
+                    </div>
                     <div class="results-head">
                         <div>
                             <h2 class="ds-heading" data-size="xs" id="resultsTitle" aria-live="polite">Skoler</h2>
@@ -350,22 +463,6 @@
                                 id="filterToggleSticky" aria-controls="filterPanel" aria-expanded="false" hidden>
                             <svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M3.25 7C3.25 6.58579 3.58579 6.25 4 6.25H20C20.4142 6.25 20.75 6.58579 20.75 7C20.75 7.41421 20.4142 7.75 20 7.75L4 7.75C3.58579 7.75 3.25 7.41421 3.25 7ZM6.25 12C6.25 11.5858 6.58579 11.25 7 11.25H17C17.4142 11.25 17.75 11.5858 17.75 12C17.75 12.4142 17.4142 12.75 17 12.75H7C6.58579 12.75 6.25 12.4142 6.25 12ZM10 16.25C9.58579 16.25 9.25 16.5858 9.25 17C9.25 17.4142 9.58579 17.75 10 17.75H14C14.4142 17.75 14.75 17.4142 14.75 17C14.75 16.5858 14.4142 16.25 14 16.25H10Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg><span>Filter</span><span class="ds-badge" data-size="sm" id="filterCountSticky" hidden></span>
                         </button>
-                        <div class="results-sort">
-                            <button type="button" class="ds-button sort-switch" data-variant="tertiary" data-size="sm" popovertarget="sortMenu" id="sortButton">
-                                <svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.4697 21.0303C16.7626 21.3232 17.2374 21.3232 17.5303 21.0303L21.0303 17.5303C21.3232 17.2374 21.3232 16.7626 21.0303 16.4697C20.7374 16.1768 20.2626 16.1768 19.9697 16.4697L17.75 18.6893L17.75 9.5C17.75 9.08579 17.4142 8.75 17 8.75C16.5858 8.75 16.25 9.08579 16.25 9.5L16.25 18.6893L14.0303 16.4697C13.7374 16.1768 13.2626 16.1768 12.9697 16.4697C12.6768 16.7626 12.6768 17.2374 12.9697 17.5303L16.4697 21.0303ZM4.03033 7.53033L6.25 5.31066L6.25 14.5C6.25 14.9142 6.58579 15.25 7 15.25C7.41421 15.25 7.75 14.9142 7.75 14.5L7.75 5.31066L9.96967 7.53033C10.2626 7.82322 10.7374 7.82322 11.0303 7.53033C11.3232 7.23744 11.3232 6.76256 11.0303 6.46967L7.53033 2.96967C7.23744 2.67678 6.76256 2.67678 6.46967 2.96967L2.96967 6.46967C2.67678 6.76256 2.67678 7.23744 2.96967 7.53033C3.26256 7.82322 3.73744 7.82322 4.03033 7.53033Z" fill="currentColor"/></svg><span class="sort-switch__prefix">Sorter: </span><span id="sortLabel">Nærmest</span><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5.96967 9.46967C6.26256 9.17678 6.73744 9.17678 7.03033 9.46967L12 14.4393L16.9697 9.46967C17.2626 9.17678 17.7374 9.17678 18.0303 9.46967C18.3232 9.76256 18.3232 10.2374 18.0303 10.5303L12.5303 16.0303C12.2374 16.3232 11.7626 16.3232 11.4697 16.0303L5.96967 10.5303C5.67678 10.2374 5.67678 9.76256 5.96967 9.46967Z" fill="currentColor"/></svg></button>
-                            <div class="ds-dropdown sort-menu" popover id="sortMenu" data-placement="bottom-end">
-                                <ul>
-                                <li><button type="button" class="ds-button sort-menu__item" data-variant="tertiary" data-size="sm" data-sort="distance" data-label="Nærmest" aria-current="true">Nærmest</button></li>
-                                <li><button type="button" class="ds-button sort-menu__item" data-variant="tertiary" data-size="sm" data-sort="name" data-label="Navn">Navn</button></li>
-                                <li><button type="button" class="ds-button sort-menu__item" data-variant="tertiary" data-size="sm" data-sort="avg-desc" data-label="Høyest snitt">Høyest snitt</button></li>
-                                <li><button type="button" class="ds-button sort-menu__item" data-variant="tertiary" data-size="sm" data-sort="avg-asc" data-label="Lavest snitt">Lavest snitt</button></li>
-                                <li><button type="button" class="ds-button sort-menu__item" data-variant="tertiary" data-size="sm" data-sort="triv-desc" data-label="Høyest trivsel">Høyest trivsel</button></li>
-                                <li><button type="button" class="ds-button sort-menu__item" data-variant="tertiary" data-size="sm" data-sort="triv-asc" data-label="Lavest trivsel">Lavest trivsel</button></li>
-                                <li><button type="button" class="ds-button sort-menu__item" data-variant="tertiary" data-size="sm" data-sort="mob-asc" data-label="Minst mobbing">Minst mobbing</button></li>
-                                <li><button type="button" class="ds-button sort-menu__item" data-variant="tertiary" data-size="sm" data-sort="mob-desc" data-label="Mest mobbing">Mest mobbing</button></li>
-                                </ul>
-                            </div>
-                        </div>
                     </div>
                     <!-- Card-sized placeholders while the schools load (finder.js draws the list over them),
                          so the footer does not jump down when the list arrives -->
@@ -381,18 +478,35 @@
                 <div class="results-map" id="resultsMap">
                     <div class="folium-map" id="map_a50579ea0c01426b15ce2ac53c4f579f" aria-label="Kart over skoler"></div>
                 </div>
+                <!-- Liste: the saved schools and a way to the map next to the list (finder.js, renderSide) -->
+                <aside class="results-side" id="resultsSide" aria-label="Lagrede skoler og kart">
+                    <section class="ds-card side-card" id="sideSaved" aria-labelledby="sideSavedTitle"></section>
+                    <section class="ds-card side-card side-card--map" aria-labelledby="sideMapTitle">
+                        <h2 class="ds-heading" data-size="2xs" id="sideMapTitle">Kart</h2>
+                        <!-- A still picture of the map (OpenFreeMap, © OpenMapTiles, © OpenStreetMap). It and «Vis i kart» show the
+                             schools on the map, as «Liste / Kart» above the list; the map with layers is in the header menu -->
+                        <button type="button" class="side-card__map-button" data-view="kart" tabindex="-1" aria-hidden="true"><img class="side-card__map" src="static/img/kartutsnitt.png" width="330" height="240" alt="" title="© OpenStreetMap" loading="lazy" /></button>
+                        <p class="ds-paragraph" data-size="sm" id="sideMapText"></p>
+                        <button type="button" class="ds-button side-card__secondary" data-variant="secondary" data-view="kart"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.7 3.3a.75.75 0 0 1 .6 0L15 5.94l5.2-2.6A.75.75 0 0 1 21.25 4v14a.75.75 0 0 1-.41.67l-5.5 2.75a.75.75 0 0 1-.64.02L9 18.81l-5.2 2.6A.75.75 0 0 1 2.75 20.75V6.75a.75.75 0 0 1 .41-.67l5.5-2.75.04-.03ZM8.25 5.21l-4 2v12.33l4-2V5.21Zm1.5 12.13 4.5 2.08V7.16L9.75 5.08v12.26Zm6 1.95 4-2V5.21l-4 2v12.08Z" fill="currentColor"/></svg>Vis i kart</button>
+                    </section>
+                </aside>
             </div>
         </section>
     </main>
+
+    <!-- Phones (Figma H1): «3 lagret» and «Sammenlign» stay at the bottom of the screen while the results are shown (finder.js) -->
+    <div class="saved-bar-mobile" id="savedBarMobile" hidden></div>
 
     <!-- Footer (shared, see static/js/layout.js) -->
     <div id="site-footer"></div>
 
     <script src="static/js/score-colors.js?v=2"></script>
-    <script src="static/js/shared.js?v=28"></script>
+    <script src="static/js/shared.js?v=37"></script>
+    <script src="static/js/ui.js?v=3"></script>
+    <script src="static/js/priorities.js?v=4"></script>
     <script src="static/js/map-init.js?v=14"></script>
-    <script src="static/js/finder.js?v=105"></script>
-    <script src="static/js/main.js?v=41"></script>
+    <script src="static/js/finder.js?v=140"></script>
+    <script src="static/js/main.js?v=43"></script>
 </body>
 </html>
 

@@ -40,6 +40,13 @@ import velkomst
 
 SCHOOL_DATA = Path('static/js/school-data.json')
 OUTPUT_DIR = Path('static/data/skoler')
+# orgnr -> [football pitch 0/1, sports hall 0/1, metres to the nearest pool or null] (finder.js, filter)
+FACILITY_INDEX_FILE = Path('static/js/anlegg-index.json')
+
+
+def facility_row(facilities):
+    pool = facilities.get('pool')
+    return [int(bool(facilities.get('football'))), int(bool(facilities.get('hall'))), pool.get('distance') if pool else None]
 KRETS_FILE = Path('static/js/skolekretser.json')
 
 
@@ -116,6 +123,7 @@ def main():
         old.unlink()
 
     counts = {'gallery': 0, 'facebook': 0, 'instagram': 0, 'aks': 0, 'hjertesone': 0, 'velkomst': 0, 'devices': 0}
+    facility_index = {}
     for orgnr in orgnrs:
         gallery = []
         if orgnr in single:
@@ -167,6 +175,11 @@ def main():
         for key in ('facebook', 'instagram', 'aks', 'hjertesone', 'velkomst', 'devices'):
             counts[key] += key in detail
         (OUTPUT_DIR / f'{orgnr}.json').write_text(json.dumps(detail, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
+        if detail.get('anlegg'):
+            facility_index[orgnr] = facility_row(detail['anlegg'])
+
+    # The facilities of every school in one small file, for «Anlegg ved skolen» in the front page's filter
+    FACILITY_INDEX_FILE.write_text(json.dumps(facility_index, separators=(',', ':')), encoding='utf-8')
 
     print(f"Wrote {len(orgnrs)} files to {OUTPUT_DIR}: {counts['gallery']} with several photos, "
           f"{counts['facebook']} Facebook, {counts['instagram']} Instagram, {counts['aks']} AKS, "

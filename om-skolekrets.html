@@ -29,10 +29,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/src/index.css" integrity="sha384-CAE1Qe2Yp1euTdmOujy77VIT0GR/Yu8V+3taPP8Oo7GGV9hrQKrVigMB51hyUKYD" crossorigin="anonymous" />
 
 
-    <link rel="stylesheet" href="static/css/styles.css?v=208"/>
+    <link rel="stylesheet" href="static/css/styles.css?v=273"/>
 
-    <script src="static/js/i18n.js?v=101"></script>
-    <script src="static/js/theme.js?v=9"></script>
+    <script src="static/js/i18n.js?v=129"></script>
+    <script src="static/js/theme.js?v=11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-web@1.23.0/dist/umd/index.js" integrity="sha384-gB8nQDA1vTT5N2EUrwILb4EmNquufjYcGqx5Cmce63dC5l/zyDRlxPjzv4/pG6mE" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -40,7 +40,7 @@
 
     <!-- Header (shared, see static/js/layout.js) -->
     <div id="site-header"></div>
-    <script src="static/js/layout.js?v=32"></script>
+    <script src="static/js/layout.js?v=43"></script>
 
     <main id="main" tabindex="-1" class="page">
         <div class="site-container page__container">
@@ -51,7 +51,7 @@
             <p class="ds-paragraph">Skolekretsinformasjon administreres av den enkelte kommune. Du finner din skolekrets på den offisielle nettsiden til kommunen skolen ligger i.</p>
             <h2 class="ds-heading" data-size="xs">Hvorfor viser kartet nærmeste skole?</h2>
             <p class="ds-paragraph">Når du søker på en adresse, sorterer Skolekartet skolene etter avstand i luftlinje. Nærmeste skole er ofte, men ikke alltid, skolen adressen sogner til. Grensene kan følge veier, elver eller gamle kretser, og noen kommuner har ikke faste kretsgrenser i det hele tatt.</p>
-            <p class="ds-paragraph">Det finnes ikke et åpent, nasjonalt datasett med skolekretsgrenser. Kommunene registrerer kretsene i matrikkelen hos Kartverket, men disse dataene er ikke åpent tilgjengelige. Skolekartet bruker bare åpne data, og kan derfor bare vise skolekretsen i kommunene som har publisert den selv (se under).</p>
+            <p class="ds-paragraph">Det finnes ikke et åpent, nasjonalt datasett med skolekretsgrenser. Kommunene registrerer kretsene i matrikkelen hos Kartverket, men disse dataene er ikke åpent tilgjengelige. Skolekartet viser derfor skolekretsen bare i kommunene som har publisert den som åpne data, og i Oslo, der Plan- og bygningsetaten har gitt oss lov til å bruke kretsgrensene (se under).</p>
             <p class="ds-paragraph">Selv innenfor skolekretsen er det kommunen som fatter vedtak om skoleplass. Sjekk alltid med kommunen.</p>
             <h2 class="ds-heading" data-size="xs" id="pilot">Pilot: skolekrets fra åpne data</h2>
             <p class="ds-paragraph">Noen få kommuner publiserer skolekretsene sine som åpne data. For adresser i disse kommunene viser Skolekartet skolekretsen som en pilot. Den er merket «Pilot» og kan avvike fra kommunens gjeldende grenser.</p>
@@ -72,6 +72,12 @@
                     <a class="ds-link" href="https://www.oslo.kommune.no/skole-og-utdanning/skoleoversikt-og-skolekrets/skolekrets-ungdomsskole/#toc-2"
                        target="_blank" rel="noopener">Skolekrets – ungdomsskole<svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M20.5319 3.47126C20.603 3.5428 20.6568 3.62511 20.6931 3.71291C20.7298 3.80134 20.75 3.89831 20.75 4V11.5C20.75 11.9142 20.4142 12.25 20 12.25C19.5858 12.25 19.25 11.9142 19.25 11.5V5.81066L10.5303 14.5303C10.2374 14.8232 9.76256 14.8232 9.46967 14.5303C9.17678 14.2374 9.17678 13.7626 9.46967 13.4697L18.1893 4.75H12.5C12.0858 4.75 11.75 4.41421 11.75 4C11.75 3.58579 12.0858 3.25 12.5 3.25H20C20.2063 3.25 20.3931 3.33329 20.5287 3.46808L20.5303 3.46967L20.5319 3.47126ZM4.75 9C4.75 8.86193 4.86193 8.75 5 8.75H12C12.4142 8.75 12.75 8.41421 12.75 8C12.75 7.58579 12.4142 7.25 12 7.25H5C4.0335 7.25 3.25 8.0335 3.25 9V19C3.25 19.9665 4.0335 20.75 5 20.75H15C15.9665 20.75 16.75 19.9665 16.75 19V12C16.75 11.5858 16.4142 11.25 16 11.25C15.5858 11.25 15.25 11.5858 15.25 12V19C15.25 19.1381 15.1381 19.25 15 19.25H5C4.86193 19.25 4.75 19.1381 4.75 19V9Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></a>
                 </li>
+            </ul>
+            <h2 class="ds-heading" data-size="xs">Søke en annen skole i Oslo</h2>
+            <p class="ds-paragraph">Vil dere at barnet skal gå på en annen skole enn nærskolen, søker dere om skolebytte på Oslo kommunes skjema. Søknader som kommer inn innen 5. mars, er med i hovedinntaket før 1. og 8. trinn.</p>
+            <p class="ds-paragraph">Har skolen mer enn to ledige plasser på trinnet, skal den si ja. Er det flere søkere enn plasser, vurderer skolen blant annet avstand, søsken på skolen, trafikk og sikkerhet. Dere kan klage innen tre uker.</p>
+            <ul class="ds-list">
+                <li><a class="ds-link" href="https://www.oslo.kommune.no/skole-og-utdanning/skoleoversikt-og-skolekrets/bytte-grunnskole/" target="_blank" rel="noopener">Bytte grunnskole (Oslo kommune)<svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M14 4h6v6M20 4l-9 9M18 13.5V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
             </ul>
             <h2 class="ds-heading" data-size="xs">Bergen kommune</h2>
             <ul class="ds-list">

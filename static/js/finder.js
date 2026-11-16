@@ -2,7 +2,11 @@
 // main.js creates the markers and calls Finder.init(map, markerCluster, entries).
 
 const Finder = (() => {
-    const PAGE_SIZE = 10;
+    const PAGE_SIZE = 4;
+    // The krets block names the level with its years (Figma 10.1)
+    const LEVEL_LABEL = { barneskole: 'Barneskole (1.–7. trinn)', ungdomsskole: 'Ungdomsskole (8.–10. trinn)' };
+    // Below this zoom (all of Norway or a large part of it) and without a search, the list is not shown
+    const START_ZOOM = 9;
     const ALL_TYPES = ['barneskole', 'ungdomsskole'];
     const ALL_OWNERS = ['offentlig', 'privat'];
     const ALL_SCORES = ['very-low', 'low', 'high', 'very-high', 'none'];
@@ -27,21 +31,28 @@ const Finder = (() => {
     // "LocationPinFill" from Aksel icons by Nav (MIT licence)
     const PIN_ICON = "<svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M12.7572 21.2567C12.8684 21.1193 13.0282 20.9217 13.223 20.6811C13.6126 20.2 14.1419 19.5472 14.7008 18.8601C15.8231 17.4805 17.0518 15.9788 17.5174 15.4403C20.2796 12.2453 20.5383 7.57786 17.4804 4.51992C14.4538 1.49336 9.54679 1.49336 6.52022 4.51992C3.46229 7.57786 3.72097 12.2453 6.4832 15.4403C6.94883 15.9788 8.17749 17.4805 9.29978 18.8601C9.85869 19.5472 10.388 20.2 10.7776 20.6811C10.9724 20.9217 11.1323 21.1193 11.2434 21.2567L11.4162 21.4704L11.4168 21.4712C11.5592 21.6475 11.7737 21.75 12.0003 21.75C12.2269 21.75 12.4414 21.6475 12.5838 21.4712L12.7572 21.2567ZM12 6.25C9.92893 6.25 8.25 7.92893 8.25 10C8.25 12.0711 9.92893 13.75 12 13.75C14.0711 13.75 15.75 12.0711 15.75 10C15.75 7.92893 14.0711 6.25 12 6.25Z\" fill-rule=\"evenodd\" clip-rule=\"evenodd\" fill=\"currentColor\"/></svg>";
 
+    // The filter groups are chosen in: an empty group lets all schools through, a group with values only
+    // those. "Trinn" (types) is chosen with the chips under the search and is never empty.
     const state = {
         types: new Set(ALL_TYPES),
-        owners: new Set(ALL_OWNERS),
-        scores: new Set(ALL_SCORES),
+        owners: new Set(),
+        scores: new Set(),
         kommune: '',
         profile: '',
-        trivsels: new Set(ALL_TRIVSEL),
-        mobbings: new Set(ALL_MOBBING),
-        laerere: new Set(ALL_LAERER),
-        norsk: new Set(ALL_NORSK),
+        trivsels: new Set(),
+        mobbings: new Set(),
+        laerere: new Set(),
+        norsk: new Set(),
         sort: 'distance',
+        anlegg: new Set(), // «Anlegg ved skolen»: football, hall, pool (OpenStreetMap, anlegg-index.json)
+        walk: 0,       // «Gangtid til skolen (anslag ut fra luftlinje)»: at most this many minutes from the address (0 = all)
+        view: 'kart', // Kart (the list next to the map, the default) or Liste (the list with the side column)
         address: null, // { lat, lng, label, kommune }
         krets: null,   // pilot: { info, hits } when the address is in a kommune with open skolekrets data
         school: null,  // key of the school whose popup is open
         savedOnly: false,   // the list shows the saved schools ("Lagre til senere") instead of the map view
+        step: 'start',      // start (A1, the address) → prio (A4, what matters) → results (A6)
+        priorities: new Set(), // the ids in PRIORITIES; only in this browser and in links the family shares itself
         shown: PAGE_SIZE
     };
 
@@ -52,14 +63,252 @@ const Finder = (() => {
     let searchItems = [];   // what the search list shows: schools, kommuner, a postnummer and addresses
     let addressAbort = null;
     let addressTimer = null;
-    let kretsData = null;   // static/js/skolekretser.json, loaded on first use
     let kretsLayer = null;
     let postalLayer = null; // the outline of a searched postnummer
+    let facilities = {};    // orgnr -> [football 0/1, hall 0/1, metres to a pool], from static/js/anlegg-index.json
+    let kretsEntries = new Set(); // the schools shown in "Skolekrets for adressen", left out of the list below it
 
 
     const el = id => document.getElementById(id);
     const numberFormat = new Intl.NumberFormat(I18N.locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
     const countFormat = new Intl.NumberFormat(I18N.locale);
+
+
+    const RADIUS_STEPS = [3, 10, 25, 60];   // km around the address: 3, and wider where there are fewer than five schools
+    let radiusKm = RADIUS_STEPS[0];
+    let fitCache = new Map();
+
+    const selectedPriorities = () => PRIORITIES.filter(p => state.priorities.has(p.id));
+
+    // How a school meets what the family chose (the rules are in priorities.js); cached per school
+    function evaluate(entry) {
+        if (fitCache.has(entry.key)) return fitCache.get(entry.key);
+        const shown = levelsShown(entry);
+        const result = evaluatePriorities(selectedPriorities(), entry.school, levelNumbers(shown.length ? shown : [entry.school]));
+        fitCache.set(entry.key, result);
+        return result;
+    }
+
+    // One page, three states: the browser's back button walks through them
+    function showStep(step) {
+        state.step = step;
+        el('main').dataset.mode = step;
+        updateMobileBar();
+        el('startPage').hidden = step !== 'start';
+        el('startNeeds').hidden = step !== 'start';
+        el('prioPage').hidden = step !== 'prio';
+        el('resultsBand').hidden = step !== 'results';
+        document.querySelector('section.results').hidden = step !== 'results';
+        if (step === 'prio') renderPrioPage();
+        if (step === 'results') { renderBand(); map.invalidateSize(); if (postalLayer) map.fitBounds(postalLayer.getBounds(), { maxZoom: 15, padding: [16, 16] }); }
+    }
+
+    function setStep(step, { push = true, focus = true } = {}) {
+        const from = state.step;
+        showStep(step);
+        if (push && from !== step) history.pushState({ ...(history.state || {}), step }, '', location.href);
+        if (step === 'results') { state.shown = PAGE_SIZE; refreshList(); }
+        window.scrollTo(0, 0);
+        if (focus) {
+            const target = { start: el('searchHint'), prio: el('prioTitle'), results: el('bandTitle') }[step];
+            if (target) { target.tabIndex = -1; target.focus({ preventScroll: true }); }
+        }
+    }
+
+    // The schools around the address and how far out we had to look
+    function nearbyFor(address, pool) {
+        const ref = L.latLng(address.lat, address.lng);
+        let list = [];
+        for (const km of RADIUS_STEPS) {
+            list = pool.filter(e => ref.distanceTo([e.school.lat, e.school.lng]) <= km * 1000);
+            if (list.length >= 5 || km === RADIUS_STEPS[RADIUS_STEPS.length - 1]) return { km, list };
+        }
+    }
+
+    // ── A1: the start ──
+    function showStartError(html) {
+        const box = el('startError');
+        box.innerHTML = html || '';
+        box.hidden = !html;
+    }
+
+    // I19
+    function helpPositionDialog() {
+        UI.dialog({
+            title: t('Slik tillater du posisjon'),
+            closeButton: true,
+            body: `<h3 class="ui-dialog__sub">${t('På PC (Chrome, Edge)')}</h3>
+                <ul><li>${t('Klikk på hengelåsen til venstre for nettadressen')}</li><li>${t('Velg «Posisjon» → «Tillat»')}</li><li>${t('Last inn siden på nytt')}</li></ul>
+                <h3 class="ui-dialog__sub">${t('På iPhone (Safari)')}</h3>
+                <ul><li>${t('Innstillinger → Personvern → Stedstjenester → Safari → «Når appen er i bruk»')}</li></ul>`,
+            actions: [
+                { label: t('Prøv igjen'), onClick: () => locate() },
+                { label: t('Skriv adressen i stedet'), variant: 'secondary', onClick: () => setTimeout(() => el('addressSearch').focus(), 0) }
+            ]
+        });
+    }
+
+    // A3: the position could not be used
+    function positionError() {
+        if (state.step !== 'start') setStep('start', { push: false, focus: false });
+        showStartError(`<strong>${t('Vi fikk ikke bruke posisjonen din')}</strong>
+            <p>${t('Nettleseren har blokkert posisjon. Skriv adressen i stedet, eller tillat posisjon i innstillingene og prøv igjen. Vi lagrer aldri posisjonen din.')}</p>
+            <p class="start-error__links"><button type="button" class="link-button" data-act="help">${t('Slik tillater du posisjon')}</button>
+            <button type="button" class="link-button" data-act="retry">${t('Prøv igjen')}</button></p>`);
+    }
+
+    // «Neste»: on to step 2, or G1 when nothing was found or nothing chosen from the list
+    async function nextFromStart() {
+        showStartError('');
+        if (state.address) { setStep('prio'); return; }
+        const query = el('addressSearch').value.trim();
+        if (!query) {
+            showStartError(`<strong>${t('Skriv en adresse først')}</strong><p>${t('Skriv adresse, kommune eller navnet på en skole.')}</p>`);
+            el('addressSearch').focus();
+            return;
+        }
+        let places = [];
+        try { places = (await searchPlaces(query)).filter(p => !p.postnummer).slice(0, 2); } catch (_) { /* offline: the message below */ }
+        const options = places.map((p, i) => `<button type="button" class="link-button" data-pick="${i}">${escapeHtml(p.label)}</button>`);
+        // The address is there but not chosen from the list, or there is no such address (with the nearest names as «Mente du»)
+        const typed = places.some(p => p.label.toLowerCase().startsWith(query.toLowerCase()));
+        showStartError(`<strong>${typed ? t('Velg en adresse fra listen') : t('Vi fant ingen adresse som heter «{query}»', { query: escapeHtml(query) })}</strong>
+            <p>${typed ? t('Skriv adressen og velg den fra forslagene.') : t('Sjekk stavemåten, eller prøv uten husnummer.')}</p>
+            ${places.length ? `<p class="start-error__links"><span>${t('Mente du:')}</span> ${options.join(` <span>${t('eller')}</span> `)}</p>` : ''}`);
+        el('startError').querySelectorAll('[data-pick]').forEach(b => b.addEventListener('click', () => {
+            selectAddress(places[Number(b.dataset.pick)]);
+            showStartError('');
+            setStep('prio');
+        }));
+    }
+
+    function bindStart() {
+        el('nextStep').addEventListener('click', nextFromStart);
+        el('addressSearch').addEventListener('keydown', event => {
+            if (event.key === 'Enter' && state.address && !document.querySelector('#addressResults [aria-selected="true"]')) { event.preventDefault(); nextFromStart(); }
+        });
+        el('showAllList').addEventListener('click', () => {
+            showStartError('');
+            clearAddress();
+            state.kommune = '';
+            map.setView([59.91, 10.75], 11, { animate: false });
+            setStep('results');
+        });
+        el('startError').addEventListener('click', event => {
+            const act = event.target.closest('[data-act]');
+            if (!act) return;
+            if (act.dataset.act === 'help') helpPositionDialog();
+            if (act.dataset.act === 'retry') locate();
+        });
+        el('changeAddress').addEventListener('click', () => { setStep('start'); el('addressSearch').focus(); });
+        el('changePriorities').addEventListener('click', () => setStep('prio'));
+        window.addEventListener('popstate', event => {
+            if (el('filterPanel').open || (event.state && event.state.filterPanel)) return;
+            const step = (event.state && event.state.step) || 'start';
+            if (step !== state.step) { showStep(step); if (step === 'results') refreshList(); window.scrollTo(0, 0); }
+        });
+    }
+
+    // ── A4: what is important ──
+    function renderPrioPage() {
+        const near = state.address && !state.address.postnummer ? nearbyFor(state.address, entries).list.length : entries.length;
+        const groups = [...new Set(PRIORITIES.map(p => p.group))];
+        el('prioPage').innerHTML = `
+            <div class="prio__inner">
+                <button type="button" class="prio__back" id="prioBack">← ${t('Endre adresse')}</button>
+                <div class="prio__head">
+                    <p class="hero__step">${t('Steg 2 av 2')}</p>
+                    <h1 class="prio__title" id="prioTitle">${t('Hva er viktig for dere?')}</h1>
+                    <p class="prio__lead">${t('Velg det som gjelder. Vi sorterer skolene etter dette og viser tydelig hva vi vet – og ikke vet – om hver skole. Du kan endre valgene senere.')}</p>
+                </div>
+                ${state.address ? `<p class="prio__place">${FLOW_ICON.target}<strong>${t('Skoler nær {place}', { place: escapeHtml(state.address.label) })}</strong></p>` : ''}
+                ${groups.map(g => `
+                    <fieldset class="prio__group"><legend>${t(g)}</legend>
+                        <div class="prio__options">${PRIORITIES.filter(p => p.group === g).map(p => `
+                            <label class="prio-option"><input type="checkbox" value="${p.id}"${state.priorities.has(p.id) ? ' checked' : ''} />
+                                <span class="prio-option__box" aria-hidden="true"></span>
+                                <span class="prio-option__body"><span class="prio-option__title">${t(p.title)}</span><span class="prio-option__text">${t(p.text)}</span></span></label>`).join('')}
+                        </div></fieldset>`).join('')}
+                <div class="prio__bar">
+                    <span class="prio__count" id="prioCount" aria-live="polite"></span>
+                    <button type="button" class="link-button prio__skip" id="prioSkip">${t('Hopp over')}</button>
+                    <button type="button" class="hero-button hero-button--primary" id="prioShow"></button>
+                </div>
+                <p class="prio__note">${FLOW_ICON.info}<span>${t('Vi lagrer ikke hva du velger om barnet. Valgene finnes bare i nettleseren din og i lenker du selv deler.')}</span></p>
+            </div>`;
+        const update = () => {
+            const count = state.priorities.size;
+            el('prioCount').textContent = count ? t('{count} valgt', { count }) : '';
+            el('prioShow').innerHTML = `${t('Vis skoler')} (${near}) ${FLOW_ICON.chev}`;
+        };
+        update();
+        el('prioPage').querySelectorAll('input[type=checkbox]').forEach(box => box.addEventListener('change', () => {
+            if (box.checked) state.priorities.add(box.value); else state.priorities.delete(box.value);
+            fitCache = new Map();
+            update();
+        }));
+        el('prioBack').addEventListener('click', () => { setStep('start'); el('addressSearch').focus(); });
+        const toResults = () => {
+            // Chosen priorities sort by fit; with none chosen the list is by distance
+            state.sort = state.priorities.size ? 'fit' : (state.sort === 'fit' ? 'distance' : state.sort);
+            writeUrlState();
+            setStep('results');
+        };
+        el('prioShow').addEventListener('click', toResults);
+        el('prioSkip').addEventListener('click', () => { state.priorities = new Set(); fitCache = new Map(); toResults(); });
+    }
+
+    // ── A6: the band over the results ──
+    // Phones (Figma H1): «Liste | Kart» sits at the bottom of the band, over Sorter and Filter; wider screens keep it in the toolbar
+    function placeViewSwitch() {
+        const view = document.querySelector('.view-switch');
+        if (!view) return;
+        if (phoneLayout.matches) document.querySelector('#resultsBand > .site-container').appendChild(view);
+        else el('resultsToolbar').appendChild(view);
+    }
+
+    // Phones: «3 lagret» and «Sammenlign» at the bottom of the screen while the results show
+    function updateMobileBar() {
+        const bar = el('savedBarMobile');
+        const count = savedSchools().size;
+        bar.hidden = !count || state.step !== 'results' || state.savedOnly;
+        bar.innerHTML = `<strong>${t('{count} lagret', { count })}</strong>
+            <a class="ds-button" data-variant="primary" href="${I18N.href('sammenlign')}"${count < 2 ? ' aria-disabled="true" tabindex="-1"' : ''}>${t('Sammenlign')}</a>`;
+    }
+
+    function renderBand() {
+        // Phones show only the address with a pin (Figma H1), so «Skoler nær» is a span the narrow layout hides
+        if (state.address && !state.savedOnly) {
+            el('bandTitle').innerHTML = `<span class="band-pin" aria-hidden="true">${FLOW_ICON.target}</span><span class="band-prefix">${t('Skoler nær {place}', { place: '' }).trim()} </span>${escapeHtml(state.address.label)}`;
+        } else {
+            el('bandTitle').textContent = state.savedOnly ? t('Lagrede skoler')
+                : state.kommune ? t('Skoler i {kommune} kommune', { kommune: state.kommune })
+                : t('Alle skoler');
+        }
+        el('changeAddress').innerHTML = state.address ? `<span class="wide">${t('Endre adresse')}</span><span class="narrow">${t('Endre')}</span>` : t('Søk på adresse');
+        el('addressRow').hidden = !state.address;
+        const street = state.address ? state.address.label.split(',')[0] : '';
+        el('addressChips').innerHTML = state.address ? `<li><span class="band-chip band-chip--on">${FLOW_ICON.target}${escapeHtml(street)}</span></li>` : '';
+        const chosen = selectedPriorities();
+        el('priorityRow').hidden = !state.address && !chosen.length;
+        el('priorityChips').innerHTML = chosen.map((p, i) => `<li${i >= 2 ? ' class="band-chip-extra"' : ''}><button type="button" class="band-chip band-chip--prio" data-prio="${p.id}" aria-label="${escapeHtml(t('Fjern {label}', { label: t(p.chip) }))}">${t(p.chip)}<svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></li>`).join('');
+        el('changePriorities').lastChild.textContent = t(chosen.length ? 'Endre prioriteringer' : 'Velg prioriteringer');
+        // Phones: the first two as chips, the rest behind «+ N prioriteringer til · Endre» (Figma H1)
+        el('priMore').textContent = chosen.length > 2 ? t('+ {count} prioriteringer til · Endre', { count: chosen.length - 2 }) : t(chosen.length ? 'Endre prioriteringer' : 'Velg prioriteringer');
+        el('priMore').onclick = () => el('changePriorities').click();
+        el('priorityChips').querySelectorAll('[data-prio]').forEach(b => b.addEventListener('click', () => {
+            state.priorities.delete(b.dataset.prio);
+            fitCache = new Map();
+            if (!state.priorities.size && state.sort === 'fit') state.sort = 'distance';
+            writeUrlState();
+            renderBand();
+            state.shown = PAGE_SIZE;
+            refreshList();
+        }));
+        const fit = document.querySelector('.sort-menu__item[data-sort="fit"]');
+        if (fit) fit.hidden = !chosen.length;
+    }
+
 
     function init(_map, _cluster, _entries) {
         map = _map;
@@ -74,12 +323,20 @@ const Finder = (() => {
         bindFilters();
         bindOwnSchoolActions();
         bindSaved();
+        placeViewSwitch();
+        phoneLayout.addEventListener('change', placeViewSwitch);
         bindAddressSearch();
         bindLocate();
         bindPhoneMap();
+        bindView();
+        bindStart();
+        renderSide();
+        document.querySelectorAll('[data-locate]').forEach(button => button.addEventListener('click', () => locate()));
+        // The side column lists the saved schools, so it follows every «Lagre» on the page
+        document.addEventListener('click', event => { if (event.target.closest('[data-save]')) setTimeout(renderSide, 0); });
 
         el('showMore').addEventListener('click', () => {
-            state.shown += PAGE_SIZE;
+            state.shown += 10;
             refreshList();
         });
 
@@ -114,18 +371,30 @@ const Finder = (() => {
             }
         });
 
+        // The page opens on step 1 (A1) unless the link or the way back already says there are results to show
+        const savedViewEarly = returningView();
+        const hasResultsState = Boolean(savedViewEarly) || state.savedOnly || Boolean(state.kommune) || Boolean(fromUrl.school)
+            || state.priorities.size > 0 || filtersActive()
+            || [...new URLSearchParams(location.search).keys()].some(key => !['lang', 'steg'].includes(key));
+        showStep(hasResultsState ? 'results' : 'start');
+        history.replaceState({ ...(history.state || {}), step: state.step }, '', location.href);
+
         applyFilters();
+        fetch(I18N.url('static/js/anlegg-index.json'))
+            .then(response => (response.ok ? response.json() : {}))
+            .then(data => { facilities = data; if (state.anlegg.size) applyFilters(); })
+            .catch(() => {});
 
         // Remember the whole view when leaving the page, so "Tilbake" on a school page returns to it
         window.addEventListener('pagehide', saveView);
 
         const sharedSchool = fromUrl.school && entryFor(fromUrl.school);
-        const savedView = returningView();
+        const savedView = savedViewEarly;
         if (savedView) {
             restoreView(savedView);
         } else if (sharedSchool) {
             // A shared link: go straight to the school, without first animating to all of Norway
-            if (!passes(sharedSchool)) resetFilters();
+            if (!passes(sharedSchool)) resetFilters(true);
             openSchoolAt(sharedSchool);
         } else if (state.savedOnly) {
             setSavedOnly(true);
@@ -134,7 +403,8 @@ const Finder = (() => {
         } else {
             // Start with mainland Norway in view (all schools would include Svalbard
             // and zoom out too far); the map column is narrower than the window.
-            map.fitBounds([[57.9, 4.6], [71.2, 31.2]], { padding: [16, 16], animate: false });
+            if (map.getSize().x) map.fitBounds([[57.9, 4.6], [71.2, 31.2]], { padding: [16, 16], animate: false });
+            else map.setView([64.5, 12], 4, { animate: false });
         }
     }
 
@@ -177,6 +447,8 @@ const Finder = (() => {
 
     // The sort button shows the chosen order ("Sorter: Høyest snitt"), and the menu marks it
     function showSort(sort) {
+        // A kommune without an address is sorted by name (there is nothing to be near)
+        if (sort === 'distance' && state.kommune && !state.address) sort = 'name';
         document.querySelectorAll('.sort-menu__item').forEach(item => {
             if (item.dataset.sort === sort) {
                 item.setAttribute('aria-current', 'true');
@@ -234,6 +506,7 @@ const Finder = (() => {
         const list = (name, allowed) => (params.get(name) || '').split(',').filter(v => allowed.includes(v));
 
         if (params.has('type')) state.types = new Set(list('type', ALL_TYPES));
+        if (state.types.size === 0) state.types = new Set(ALL_TYPES);
         if (params.has('eier')) state.owners = new Set(list('eier', ALL_OWNERS));
         if (params.has('resultat')) state.scores = new Set(list('resultat', ALL_SCORES));
 
@@ -242,7 +515,7 @@ const Finder = (() => {
         const profile = params.get('profil');
         if (profile && PROFILE_LABEL[profile]) state.profile = profile;
         const sort = params.get('sort');
-        if (['distance', 'name', 'avg-desc', 'avg-asc', 'triv-desc', 'triv-asc', 'mob-asc', 'mob-desc'].includes(sort)) state.sort = sort;
+        if (['distance', 'fit', 'known', 'name', 'avg-desc', 'avg-asc', 'triv-desc', 'triv-asc', 'mob-asc', 'mob-desc'].includes(sort)) state.sort = sort;
         if (params.has('mobbing')) state.mobbings = new Set(list('mobbing', ALL_MOBBING));
         if (params.has('laerer')) state.laerere = new Set(list('laerer', ALL_LAERER));
         if (params.has('norsk')) state.norsk = new Set(list('norsk', ALL_NORSK));
@@ -252,7 +525,12 @@ const Finder = (() => {
         if (legacy[trivsel]) state.trivsels = new Set(legacy[trivsel]);
         else if (params.has('trivsel')) state.trivsels = new Set(list('trivsel', ALL_TRIVSEL));
         if (params.get('lagrede') === '1') state.savedOnly = true;
+        if (params.get('visning') === 'liste') state.view = 'liste';
+        if (['10', '15', '30'].includes(params.get('gangtid'))) state.walk = Number(params.get('gangtid'));
+        if (params.has('anlegg')) state.anlegg = new Set(list('anlegg', ANLEGG.map(a => a.id)));
 
+        if (params.has('prio')) state.priorities = new Set(list('prio', PRIORITIES.map(p => p.id)));
+        if (sort === 'fit') state.sort = 'fit';
         return { school: params.get('skole') };
     }
 
@@ -261,17 +539,23 @@ const Finder = (() => {
         const list = (set, all) => all.filter(v => set.has(v)).join(',');
 
         if (state.types.size !== ALL_TYPES.length) params.set('type', list(state.types, ALL_TYPES));
-        if (state.owners.size !== ALL_OWNERS.length) params.set('eier', list(state.owners, ALL_OWNERS));
-        if (state.scores.size !== ALL_SCORES.length) params.set('resultat', list(state.scores, ALL_SCORES));
+        if (state.owners.size) params.set('eier', list(state.owners, ALL_OWNERS));
+        if (state.scores.size) params.set('resultat', list(state.scores, ALL_SCORES));
         if (state.kommune) params.set('kommune', state.kommune);
         if (state.profile) params.set('profil', state.profile);
-        if (state.trivsels.size !== ALL_TRIVSEL.length) params.set('trivsel', list(state.trivsels, ALL_TRIVSEL));
-        if (state.mobbings.size !== ALL_MOBBING.length) params.set('mobbing', list(state.mobbings, ALL_MOBBING));
-        if (state.laerere.size !== ALL_LAERER.length) params.set('laerer', list(state.laerere, ALL_LAERER));
-        if (state.norsk.size !== ALL_NORSK.length) params.set('norsk', list(state.norsk, ALL_NORSK));
+        if (state.trivsels.size) params.set('trivsel', list(state.trivsels, ALL_TRIVSEL));
+        if (state.mobbings.size) params.set('mobbing', list(state.mobbings, ALL_MOBBING));
+        if (state.laerere.size) params.set('laerer', list(state.laerere, ALL_LAERER));
+        if (state.norsk.size) params.set('norsk', list(state.norsk, ALL_NORSK));
         if (state.sort !== 'distance') params.set('sort', state.sort);
         if (state.savedOnly) params.set('lagrede', '1');
+        if (state.view === 'liste') params.set('visning', 'liste');
+        if (state.walk) params.set('gangtid', String(state.walk));
+        if (state.anlegg.size) params.set('anlegg', ANLEGG.map(a => a.id).filter(id => state.anlegg.has(id)).join(','));
         if (state.school) params.set('skole', state.school);
+        const chosenIds = PRIORITIES.map(p => p.id).filter(id => state.priorities.has(id));
+        if (chosenIds.length) params.set('prio', chosenIds.join(','));
+        rememberPriorities(chosenIds);
         if (I18N.translated) params.set('lang', I18N.lang);   // a shared link keeps the language
 
         const query = params.toString();
@@ -280,7 +564,8 @@ const Finder = (() => {
 
     // Put the controls in line with the state (after reading the URL or resetting)
     function syncControls() {
-        document.querySelectorAll('input[name="type"]').forEach(i => { i.checked = state.types.has(i.value); });
+        const level = state.types.size === ALL_TYPES.length ? 'begge' : [...state.types][0];
+        document.querySelectorAll('input[name="trinn"]').forEach(i => { i.checked = i.value === level; });
         document.querySelectorAll('input[name="owner"]').forEach(i => { i.checked = state.owners.has(i.value); });
         document.querySelectorAll('input[name="score"]').forEach(i => { i.checked = state.scores.has(i.value); });
         el('kommuneFilter').value = state.kommune;
@@ -289,6 +574,8 @@ const Finder = (() => {
         document.querySelectorAll('input[name="mobbing"]').forEach(i => { i.checked = state.mobbings.has(i.value); });
         document.querySelectorAll('input[name="laerer"]').forEach(i => { i.checked = state.laerere.has(i.value); });
         document.querySelectorAll('input[name="norsk"]').forEach(i => { i.checked = state.norsk.has(i.value); });
+        document.querySelectorAll('input[name="walk"]').forEach(i => { i.checked = Number(i.value) === state.walk; });
+        renderPresets();
         showSort(state.sort);
     }
 
@@ -316,9 +603,11 @@ const Finder = (() => {
     }
 
     function bindFilters() {
-        document.querySelectorAll('input[name="type"]').forEach(input => {
+        // Trinn under the search: all schools, or only barneskoler or ungdomsskoler
+        document.querySelectorAll('input[name="trinn"]').forEach(input => {
             input.addEventListener('change', () => {
-                toggle(state.types, input.value, input.checked);
+                if (!input.checked) return;
+                state.types = new Set(input.value === 'begge' ? ALL_TYPES : [input.value]);
                 applyFilters();
             });
         });
@@ -358,6 +647,27 @@ const Finder = (() => {
                 applyFilters();
             });
         });
+        // «Gangtid til skolen (anslag ut fra luftlinje)» (only with an address)
+        document.querySelectorAll('input[name="walk"]').forEach(input => {
+            input.addEventListener('change', () => {
+                state.walk = Number(input.value);
+                applyFilters();
+            });
+        });
+        el('anleggOptions').addEventListener('change', event => {
+            const id = event.target.dataset.anlegg;
+            if (!id) return;
+            if (event.target.checked) state.anlegg.add(id); else state.anlegg.delete(id);
+            applyFilters();
+        });
+        // «Læring og trivsel» in words: each sets one of the interval groups further down
+        el('presetOptions').addEventListener('change', event => {
+            const p = FILTER_PRESETS.find(x => x.id === event.target.dataset.preset);
+            if (!p) return;
+            state[p.key] = event.target.checked ? new Set(p.values) : new Set();
+            syncControls();
+            applyFilters();
+        });
         el('profileFilter').addEventListener('change', event => {
             if (event.target.name !== 'profile') return;
             state.profile = event.target.value;
@@ -389,7 +699,7 @@ const Finder = (() => {
         el('filterToggleSticky').addEventListener('click', () => setFilterPanel(true));
         el('filterClose').addEventListener('click', () => setFilterPanel(false));
         el('filterDone').addEventListener('click', () => setFilterPanel(false));
-        el('filterResetDialog').addEventListener('click', resetFilters);
+        el('filterResetDialog').addEventListener('click', () => resetFilters(true));
         dialog.addEventListener('click', event => {
             if (event.target === dialog) setFilterPanel(false); // the backdrop
         });
@@ -397,17 +707,27 @@ const Finder = (() => {
         // instead of leaving the page. Closing it any other way (button, Esc, backdrop) takes that step back.
         // Watched through the dialog's "open" attribute: the "close" event did not always come.
         let wasOpen = false;
+        let keepFilters = false;
         new MutationObserver(() => {
             if (dialog.open === wasOpen) return;
             wasOpen = dialog.open;
             if (dialog.open) return;
             el('filterToggle').setAttribute('aria-expanded', 'false');
             el('filterToggleSticky').setAttribute('aria-expanded', 'false');
-            if (history.state && history.state.filterPanel) history.back();
+            if (history.state && history.state.filterPanel) {
+                // The step back lands on the address the page had before the panel opened: write the filters
+                // chosen in the panel into it again once it is there
+                keepFilters = true;
+                history.back();
+            }
             (el('filterToggleSticky').hidden ? el('filterToggle') : el('filterToggleSticky')).focus();
         }).observe(dialog, { attributes: true, attributeFilter: ['open'] });
         window.addEventListener('popstate', () => {
             if (dialog.open && !(history.state && history.state.filterPanel)) dialog.close();
+            if (keepFilters) {
+                keepFilters = false;
+                writeUrlState();
+            }
         });
         bindActiveFilters();
         bindStickyFilter();
@@ -428,7 +748,7 @@ const Finder = (() => {
     // Phones: the list head (title, sort) stays at the top while the list scrolls, and shows the filter button
     // once the search row with its own filter button has scrolled out of view
     function bindStickyFilter() {
-        const actions = document.querySelector('.search-bar__actions');
+        const actions = el('resultsToolbar');
         if (!actions || !('IntersectionObserver' in window)) return;
         new IntersectionObserver(([entry]) => {
             el('filterToggleSticky').hidden = entry.isIntersecting || !phoneLayout.matches;
@@ -445,15 +765,17 @@ const Finder = (() => {
 
     // Number of filters that differ from the default, shown on the "Filtre" button
     function activeFilterCount() {
-        return (state.types.size !== ALL_TYPES.length ? 1 : 0)
-            + (state.owners.size !== ALL_OWNERS.length ? 1 : 0)
-            + (state.scores.size !== ALL_SCORES.length ? 1 : 0)
+        // Trinn is chosen with the chips under the search, so it is not counted here
+        return (state.anlegg.size ? 1 : 0)
+            + (state.walk && state.address ? 1 : 0)
+            + (state.owners.size ? 1 : 0)
+            + (state.scores.size ? 1 : 0)
             + (state.kommune ? 1 : 0)
             + (state.profile ? 1 : 0)
-            + (state.trivsels.size !== ALL_TRIVSEL.length ? 1 : 0)
-            + (state.mobbings.size !== ALL_MOBBING.length ? 1 : 0)
-            + (state.laerere.size !== ALL_LAERER.length ? 1 : 0)
-            + (state.norsk.size !== ALL_NORSK.length ? 1 : 0);
+            + (state.trivsels.size ? 1 : 0)
+            + (state.mobbings.size ? 1 : 0)
+            + (state.laerere.size ? 1 : 0)
+            + (state.norsk.size ? 1 : 0);
     }
 
     function updateFilterCount() {
@@ -464,8 +786,10 @@ const Finder = (() => {
             badge.setAttribute('aria-label', count === 1 ? t('1 aktivt filter') : t('{count} aktive filtre', { count }));
         });
         renderActiveFilters();
-        // "Nullstill" in the panel; only usable when a filter is on
-        el('filterResetDialog').disabled = count === 0;
+        el('filterLabel').textContent = count ? `${t('Filter')} (${count})` : t('Filter');
+        renderPresets();
+        // "Nullstill" in the panel sets everything back, trinn too; only usable when something is chosen
+        el('filterResetDialog').disabled = count === 0 && state.types.size === ALL_TYPES.length;
         updateSummaries();
     }
 
@@ -477,7 +801,6 @@ const Finder = (() => {
     // In the panel's order: national tests first, then school type, owner, (kommune, profile,) trivsel, mobbing
     const FILTER_GROUPS = [
         { name: 'score', label: 'Nasjonale prøver', key: 'scores', all: () => ALL_SCORES, named: false, dots: true },
-        { name: 'type', label: 'Skoletype', key: 'types', all: () => ALL_TYPES, named: false },
         { name: 'owner', label: 'Eierform', key: 'owners', all: () => ALL_OWNERS, named: false },
         { name: 'trivsel', label: 'Trivsel', key: 'trivsels', all: () => ALL_TRIVSEL, named: true },
         { name: 'mobbing', label: 'Mobbing', key: 'mobbings', all: () => ALL_MOBBING, named: true },
@@ -489,17 +812,23 @@ const Finder = (() => {
         const optionLabel = input => document.querySelector(`#filterPanel label[for="${input.id}"]`).textContent.trim();
         const chips = [];
         FILTER_GROUPS.forEach(group => {
-            const all = group.all();
-            if (state[group.key].size === all.length) return;
+            if (state[group.key].size === 0) return;
             const inputs = [...document.querySelectorAll(`#filterPanel input[name="${group.name}"]`)];
             const checked = inputs.filter(i => i.checked);
-            const value = checked.length === 0 ? t('Ingen')
-                : checked.length <= 2 ? checked.map(optionLabel).join(', ')
+            const value = checked.length <= 2 ? checked.map(optionLabel).join(', ')
                 : t('{current} av {total}', { current: checked.length, total: inputs.length });
             const dots = group.dots ? checked.map(i => `<span class="color-dot score-${escapeHtml(i.value)}" aria-hidden="true"></span>`).join('') : '';
             chips.push({ id: group.name, dots, text: group.named ? `${t(group.label)} ${value}` : value, label: `${t(group.label)}: ${value}` });
         });
         if (state.kommune) chips.push({ id: 'kommune', text: state.kommune, label: `${t('Kommune')}: ${state.kommune}` });
+        if (state.anlegg.size) {
+            const text = ANLEGG.filter(a => state.anlegg.has(a.id)).map(a => t(a.label)).join(', ');
+            chips.push({ id: 'anlegg', text, label: `${t('Anlegg ved skolen')}: ${text}` });
+        }
+        if (state.walk && state.address) {
+            const text = t('Inntil {minutes} min å gå', { minutes: state.walk });
+            chips.push({ id: 'walk', text, label: `${t('Gangtid til skolen (anslag ut fra luftlinje)')}: ${text}` });
+        }
         if (state.profile) {
             const input = document.querySelector(`#filterPanel input[name="profile"][value="${CSS.escape(state.profile)}"]`);
             // The label has the number of schools in brackets; the chip only the profile
@@ -507,7 +836,7 @@ const Finder = (() => {
             chips.push({ id: 'profile', text: name, label: `${t('Profil')}: ${name}` });
         }
         // In the panel's order
-        const ORDER = ['score', 'type', 'owner', 'kommune', 'profile', 'trivsel', 'mobbing'];
+        const ORDER = ['score', 'anlegg', 'walk', 'owner', 'kommune', 'profile', 'trivsel', 'mobbing', 'laerer', 'norsk'];
         return chips.sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id));
     }
 
@@ -523,10 +852,12 @@ const Finder = (() => {
 
     function removeFilter(id) {
         if (id === 'kommune') state.kommune = '';
+        else if (id === 'walk') state.walk = 0;
+        else if (id === 'anlegg') state.anlegg = new Set();
         else if (id === 'profile') state.profile = '';
         else {
             const group = FILTER_GROUPS.find(g => g.name === id);
-            state[group.key] = new Set(group.all());
+            state[group.key] = new Set();
         }
         syncControls();
         applyFilters();
@@ -555,11 +886,10 @@ const Finder = (() => {
             const inputs = [...document.querySelectorAll(`input[name="${summary.dataset.summary}"]`)];
             const checked = inputs.filter(i => i.checked);
             const label = input => document.querySelector(`label[for="${input.id}"]`).textContent.trim();
-            summary.textContent = checked.length === inputs.length ? t('Alle')
-                : checked.length === 0 ? t('Ingen')
+            summary.textContent = checked.length === 0 || checked.length === inputs.length ? t('Alle')
                 : checked.length === 1 ? label(checked[0])
                 : t('{current} av {total}', { current: checked.length, total: inputs.length });
-            summary.closest('.filter-dd__button').toggleAttribute('data-active', checked.length !== inputs.length);
+            summary.closest('.filter-dd__button').toggleAttribute('data-active', checked.length > 0 && checked.length !== inputs.length);
         });
     }
 
@@ -567,21 +897,26 @@ const Finder = (() => {
         if (on) set.add(value); else set.delete(value);
     }
 
+    // A filter group with nothing chosen lets every school through
+    const allows = (set, value) => set.size === 0 || set.has(value);
+
     function passes(entry) {
         const school = entry.school;
         const shown = levelsShown(entry);
-        // With both owner types selected, schools without a register match are included too
-        const ownerOk = state.owners.size === ALL_OWNERS.length || state.owners.has(school.eierform);
+        // With no owner type chosen (or both), schools without a register match are included too
+        const ownerOk = state.owners.size === 0 || state.owners.size === ALL_OWNERS.length || state.owners.has(school.eierform);
         // A school with both levels passes when one of the levels the type filter shows does
         return shown.length > 0
             && ownerOk
-            && shown.some(level => state.scores.has(scoreCategory(level.color)))
+            && shown.some(level => allows(state.scores, scoreCategory(level.color)))
             && (!state.kommune || school.kommune === state.kommune)
             && (!state.profile || school.profil === state.profile)
-            && shown.some(level => state.trivsels.has(trivselBand(level)))
-            && shown.some(level => state.mobbings.has(mobbingBand(level)))
-            && shown.some(level => state.laerere.has(laererBand(level)))
-            && shown.some(level => state.norsk.has(norskBand(level)));
+            && (!state.anlegg.size || entry.levels.some(level => [...state.anlegg].every(id => ANLEGG.find(a => a.id === id).test(facilities[level.orgnr]))))
+            && (!state.walk || !state.address || state.address.postnummer || walkEstimate(state.address, school).minutes <= state.walk)
+            && shown.some(level => allows(state.trivsels, trivselBand(level)))
+            && shown.some(level => allows(state.mobbings, mobbingBand(level)))
+            && shown.some(level => allows(state.laerere, laererBand(level)))
+            && shown.some(level => allows(state.norsk, norskBand(level)));
     }
 
     // ── Schools with 1.–10. trinn ──────────────────────────────────────
@@ -627,7 +962,8 @@ const Finder = (() => {
 
     function laererBand(school) {
         const value = school.gsi && school.gsi.laerertetthet;
-        if (value === null || value === undefined) return 'none';
+        // 0 is what GSI reports for some special schools: no figure, not «under 14»
+        if (value === null || value === undefined || value === 0) return 'none';
         if (value < 14) return 'u14';
         if (value < 16) return '14';
         if (value < 18) return '16';
@@ -656,20 +992,26 @@ const Finder = (() => {
         // The panel's main button says how many schools the filters leave, in all of Norway
         el('filterDone').textContent = filtered.length === 1 ? t('Vis 1 skole')
             : t('Vis {count} skoler', { count: countFormat.format(filtered.length) });
+        el('filterCountText').textContent = filtered.length === 1 ? t('1 skole passer valgene')
+            : t('{count} skoler passer valgene', { count: countFormat.format(filtered.length) });
         renderList();
         writeUrlState();
     }
 
-    function resetFilters() {
-        state.types = new Set(ALL_TYPES);
-        state.owners = new Set(ALL_OWNERS);
-        state.scores = new Set(ALL_SCORES);
+    // The filter groups go back to nothing chosen. Trinn stays as chosen, except when a school must be
+    // shown that it hides (`allLevels`: a shared link or a school picked in the search).
+    function resetFilters(allLevels = false) {
+        if (allLevels === true) state.types = new Set(ALL_TYPES);
+        state.walk = 0;
+        state.anlegg = new Set();
+        state.owners = new Set();
+        state.scores = new Set();
         state.kommune = '';
         state.profile = '';
-        state.trivsels = new Set(ALL_TRIVSEL);
-        state.mobbings = new Set(ALL_MOBBING);
-        state.laerere = new Set(ALL_LAERER);
-        state.norsk = new Set(ALL_NORSK);
+        state.trivsels = new Set();
+        state.mobbings = new Set();
+        state.laerere = new Set();
+        state.norsk = new Set();
         syncControls();
         applyFilters();
     }
@@ -699,7 +1041,8 @@ const Finder = (() => {
             return dir * (x - y) || byName(a, b);
         };
 
-        if (state.sort === 'name') return list.sort(byName);
+        // A kommune without an address has no place to measure from: «Nærmest» means by name there
+        if (state.sort === 'name' || (state.sort === 'distance' && state.kommune && !state.address)) return list.sort(byName);
         if (state.sort === 'avg-desc') return list.sort(byValue(avg, -1));
         if (state.sort === 'avg-asc') return list.sort(byValue(avg, 1));
         if (state.sort === 'triv-desc') return list.sort(byValue(triv, -1));
@@ -709,6 +1052,20 @@ const Finder = (() => {
         if (state.sort === 'mob-desc') return list.sort(byValue(mob, -1));
 
         list.forEach(e => { e.distance = ref.distanceTo([e.school.lat, e.school.lng]); });
+        // «Mest bekreftet informasjon» (Figma J5): the schools we know the most about first – results, well-being,
+        // bullying, extra Norwegian teaching and the chosen priorities that have data – then nearest
+        if (state.sort === 'known') {
+            const known = e => [averageOf(e), trivselOf(e), mobbingOf(e), e.school.gsi && e.school.gsi.norsk].filter(v => v !== null && v !== undefined).length
+                + (state.priorities.size ? evaluate(e).known : 0);
+            return list.sort((a, b) => (known(b) - known(a)) || (a.distance - b.distance));
+        }
+        // «Passer best»: the most priorities met first, fewest things worth checking, then nearest
+        if (state.sort === 'fit' && state.priorities.size) {
+            return list.sort((a, b) => {
+                const x = evaluate(a), y = evaluate(b);
+                return (y.met - x.met) || (x.warnings - y.warnings) || (a.distance - b.distance);
+            });
+        }
         // The address's own school is shown in its own card above; the list stays in distance order
         return list.sort((a, b) => a.distance - b.distance);
     }
@@ -730,12 +1087,14 @@ const Finder = (() => {
         }));
         // A bookmark changed somewhere on the page: the counter (and the saved list) follow
         document.addEventListener('savedschools', () => {
+            renderSide();
             if (state.savedOnly) refreshList();
         });
     }
 
     function setSavedOnly(on) {
         state.savedOnly = on;
+        if (on && state.step !== 'results') showStep('results');
         state.shown = PAGE_SIZE;
         // The saved schools are this browser's own list: not a page for search engines
         let robots = document.querySelector('meta[name="robots"]');
@@ -763,7 +1122,7 @@ const Finder = (() => {
         el('savedBar').hidden = !state.savedOnly;
         // The title sits next to the way back, so the list starts at the same height as the map
         document.querySelector('.results-head').hidden = state.savedOnly;
-        document.querySelector('.search-panel').hidden = state.savedOnly;
+        el('resultsBand').hidden = state.savedOnly || state.step !== 'results';
         document.querySelector('.results-sort').hidden = state.savedOnly;
         el('savedToggle').href = I18N.href('./');
         el('savedToggle').innerHTML = `${icon('chevronLeft')}<span>${t('Vis alle skoler')}</span>`;
@@ -772,16 +1131,139 @@ const Finder = (() => {
         });
     }
 
+    // ── Liste or Kart (Figma, section 10) ──────────────────────────────
+    // The start (Figma 10.1, F0) is always drawn as in the design, the ways to begin and the side column; the chosen
+    // view comes with the list
+    function showView() {
+        const view = state.step === 'results' ? state.view : 'liste';
+        if (el('resultsGrid').dataset.view === view) return;
+        el('resultsGrid').dataset.view = view;
+        if (map) setTimeout(() => map.invalidateSize(), 0);
+    }
+
+    // Liste: the list is wide and the side column has the saved schools and a way to the map; the map waits
+    // out of sight at its real size, since it still decides which schools the list shows. Kart: the list
+    // next to the map, as before.
+    function bindView() {
+        document.querySelectorAll('[data-view]').forEach(button => button.addEventListener('click', () => setView(button.dataset.view)));
+        setView(state.view, false);
+    }
+
+    function setView(view, write = true) {
+        state.view = view === 'liste' ? 'liste' : 'kart';
+        showView();
+        document.querySelectorAll('.view-switch [data-view]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.view === state.view)));
+        if (write) writeUrlState();
+    }
+
+    // The side column: the saved schools by name (links to their pages) and the way to the saved list
+    function renderSide() {
+        const saved = savedSchools();
+        const list = entries.filter(e => e.keys.some(k => saved.has(k)));
+        // The link to the comparison holds only the schools' public keys, never the address
+        const params = new URLSearchParams();
+        list.slice(0, 4).forEach(e => params.append('s', e.keys.find(k => saved.has(k))));
+        const compareUrl = new URL(`sammenlign?${params}`, location.href).href;
+        // Every part of the card is there also before anything is saved (Figma 10.1, F1), each with its own empty state
+        const canCompare = list.length >= 2;
+        updateMobileBar();
+        el('sideSaved').innerHTML = `
+            <h2 class="ds-heading" data-size="2xs" id="sideSavedTitle">${t('Lagrede skoler ({count})', { count: list.length })}</h2>
+            ${list.length ? `<ul class="side-card__list">${list.slice(0, 6).map(e => {
+                const key = e.keys.find(k => saved.has(k));
+                const level = e.levels.find(l => schoolKey(l) === key) || e.school;
+                return `<li>${icon('bookmarkFill')}<a class="ds-link" href="${schoolUrl(level)}">${escapeHtml(e.school.name)}</a></li>`;
+            }).join('')}</ul>`
+            : `<p class="ds-paragraph side-card__empty" data-size="sm">${t('Du har ikke lagret noen skoler ennå. Trykk «Lagre» ved en skole for å finne den igjen her.')}</p>`}
+            ${canCompare
+                ? `<a class="ds-button side-card__primary" data-variant="primary" href="${I18N.href('sammenlign')}">${t('Sammenlign ({count})', { count: Math.min(list.length, 4) })}</a>`
+                : `<button type="button" class="ds-button side-card__primary" data-variant="primary" disabled aria-describedby="sideCompareHint">${t('Sammenlign ({count})', { count: list.length })}</button>
+                   <p class="side-card__hint" id="sideCompareHint">${t('Lagre minst to skoler for å sammenligne dem.')}</p>`}
+            ${list.length
+                ? `<a class="ds-button side-card__secondary" data-variant="secondary" href="${I18N.href('sammenlign')}#del">${icon('share')}<span>${t('Del listen med familien')}</span></a>`
+                : `<button type="button" class="ds-button side-card__secondary" data-variant="secondary" disabled>${icon('share')}<span>${t('Del listen med familien')}</span></button>`}`;
+    }
+
+    // (see updateSavedBar)
+
+    // A preset is on when its group holds exactly its values (walking time: the same number of minutes)
+    const quickOn = q => (q.key === 'walk' ? state.walk === q.values[0]
+        : state[q.key].size === q.values.length && q.values.every(v => state[q.key].has(v)));
+    const quickSet = (q, on) => { state[q.key] = q.key === 'walk' ? (on ? q.values[0] : 0) : (on ? new Set(q.values) : new Set()); };
+
+    // The filter panel's first group (Figma, section 10, F3): the same kind of choices in words
+    const FILTER_PRESETS = [
+        { id: 'p-over', label: 'Over snittet på nasjonale prøver', key: 'scores', values: ['very-high', 'high'] },
+        { id: 'p-high', label: 'Godt over snittet (55+)', key: 'scores', values: ['very-high'] },
+        { id: 'p-trives', label: 'Trivsel 4,2 eller høyere', key: 'trivsels', values: ['42', '44'] },
+        { id: 'p-mobbing', label: 'Mobbing under 10 %', key: 'mobbings', values: ['u5', '5'] }
+    ];
+    // «Anlegg ved skolen» (OpenStreetMap): a football pitch or a sports hall at the school, a pool within 1 km
+    const ANLEGG = [
+        { id: 'fotball', label: 'Fotballbane', test: f => Boolean(f && f[0]) },
+        { id: 'hall', label: 'Idrettshall', test: f => Boolean(f && f[1]) },
+        { id: 'basseng', label: 'Basseng innen 1 km', test: f => Boolean(f && f[2] !== null && f[2] <= 1000) }
+    ];
+    function renderPresets() {
+        el('anleggOptions').innerHTML = ANLEGG.map(a => `<label class="ds-chip"><input type="checkbox" data-anlegg="${a.id}"${state.anlegg.has(a.id) ? ' checked' : ''} />${t(a.label)}</label>`).join('');
+        el('presetOptions').innerHTML = FILTER_PRESETS.map(p => `<label class="ds-chip"><input type="checkbox" data-preset="${p.id}"${quickOn(p) ? ' checked' : ''} />${t(p.label)}</label>`).join('');
+        // Walking time needs an address to measure from
+        const noPlace = !state.address || Boolean(state.address.postnummer);
+        document.querySelectorAll('input[name="walk"]').forEach(i => { i.disabled = noPlace; });
+        el('walkHint').hidden = !noPlace;
+    }
+
     // `bounds`: the area the list is built from (by default the visible map)
     function renderList(bounds = map.getBounds()) {
+        // Phones only show the list, and the hidden map is so small that it held two or three schools: there the
+        // list after an address search has the schools within 2 km of it instead
+        if (phoneLayout.matches && state.address && !state.address.postnummer && !state.savedOnly) {
+            bounds = L.latLng(state.address.lat, state.address.lng).toBounds(4000);
+        }
         // Any other change (filters, address, sorting) shows the schools in the map view again
         keepList = false;
+        renderPresets();
         listBounds = bounds;
+        // Before a search, with (nearly) all of Norway in view, the list would be random schools sorted by the
+        // distance to the middle of the map. Show how to start instead, until there is a place, a filter or a zoom.
+        const start = state.step !== 'results';
+        updateSavedBar();
+        showView();
+        el('schoolList').hidden = start;
+        // «Slik leser du kortene» only explains the facts that come with the family's priorities
+        el('readCards').hidden = start || state.savedOnly || !state.priorities.size;
+        el('resultsToolbar').hidden = start || state.savedOnly;
+        if (start) {
+            document.querySelector('.results-head').hidden = true;
+            el('kretsNote').hidden = true;
+            el('showMore').hidden = true;
+            el('schoolList').removeAttribute('aria-busy');
+            if (el('listLoading')) el('listLoading').remove();
+            renderSideMap(true);
+            return;
+        }
+        // Phones: an open card (and its small map), in the list or among the address's schools, stays open
+        // when they are drawn again
+        const reopen = phoneLayout.matches && openKey ? { key: openKey, where: openWhere } : null;
+        const inCards = slot => slot && (el('schoolList').contains(slot) || el('kretsNote').contains(slot));
+        const reopenMap = Boolean(reopen) && miniKey === openKey && inCards(mapSlot());
+        if (inCards(mapSlot())) closeMiniMap();
+        openKey = null;
+        // The address's schools come first, in their own block; the list below has the other schools
+        renderKretsNote();
+        renderSideMap(false);
         // The saved schools: all of them, wherever they are and whatever the filters say
         const saved = savedSchools();
+        // Around an address: the schools within 3 km (wider where there are fewer than five); otherwise those in the map view
+        let inScope = e => bounds.contains([e.school.lat, e.school.lng]);
+        if (state.address && !state.address.postnummer && !state.savedOnly) {
+            const ref = L.latLng(state.address.lat, state.address.lng);
+            radiusKm = nearbyFor(state.address, filtered.filter(e => !kretsEntries.has(e))).km;
+            inScope = e => ref.distanceTo([e.school.lat, e.school.lng]) <= radiusKm * 1000;
+        }
         const inView = state.savedOnly
             ? sortEntries(entries.filter(e => e.keys.some(k => saved.has(k))))
-            : sortEntries(filtered.filter(e => bounds.contains([e.school.lat, e.school.lng])));
+            : sortEntries(filtered.filter(e => inScope(e) && !kretsEntries.has(e)));
         const visible = inView.slice(0, state.shown);
         const ref = referencePoint();
 
@@ -791,16 +1273,25 @@ const Finder = (() => {
             ? t('Lagrede skoler ({count})', { count: total })
             : total === 0
                 ? t('Ingen skoler')
+                : state.kommune && !state.address
+                    // A kommune: «Barneskoler i Oslo kommune (125)», by name
+                    ? t('{type} i {kommune} kommune ({count})', { type: t(state.types.size === 1 ? (state.types.has('barneskole') ? 'Barneskoler' : 'Ungdomsskoler') : 'Skoler'), kommune: state.kommune, count: countFormat.format(total) })
                 : state.address
-                    // The address is in the search field, so the heading only says these are the nearby schools
-                    ? (visible.length < total
-                        ? t('Skoler i nærheten ({shown} av {total})', { shown: visible.length, total: countFormat.format(total) })
-                        : t('Skoler i nærheten ({count})', { count: countFormat.format(total) }))
+                    // The address is in the search field, so the heading only says these are the nearby schools;
+                    // "Andre" when the address's own schools are in the block above
+                    ? (kretsEntries.size
+                        ? (visible.length < total
+                            ? t('Andre skoler i nærheten ({shown} av {total})', { shown: visible.length, total: countFormat.format(total) })
+                            : t('Andre skoler i nærheten ({count})', { count: countFormat.format(total) }))
+                        : (visible.length < total
+                            ? t('Skoler i nærheten ({shown} av {total})', { shown: visible.length, total: countFormat.format(total) })
+                            : t('Skoler i nærheten ({count})', { count: countFormat.format(total) })))
                     : (visible.length < total
                         ? t('Viser {shown} av {total} {noun}', { shown: visible.length, total: countFormat.format(total), noun })
                         : t('{total} {noun}', { total: countFormat.format(total), noun }));
 
         // With an address, "Skoler i nærheten (12)" is set like "Trolig skolekrets for adressen" above it
+        showSort(state.sort);
         el('resultsTitle').classList.toggle('results-title--nearby', Boolean(state.address) && !state.savedOnly && total > 0);
         // That the list is filtered is said by the chips under the search, not again here
         const contextText = '';
@@ -819,15 +1310,21 @@ const Finder = (() => {
             el('savedText').textContent = t('Du har ikke lagret noen skoler ennå. Trykk på bokmerket ved en skole for å lagre den til senere.');
         }
 
-        // Phones: an open card (and its small map), in the list or among the address's schools, stays open
-        // when they are drawn again
-        const reopen = phoneLayout.matches && openKey ? { key: openKey, where: openWhere } : null;
-        const inCards = slot => slot && (el('schoolList').contains(slot) || el('kretsNote').contains(slot));
-        const reopenMap = Boolean(reopen) && miniKey === openKey && inCards(mapSlot());
-        if (inCards(mapSlot())) closeMiniMap();
-        openKey = null;
-        renderKretsNote();
-        el('schoolList').innerHTML = visible.map((e, i) => schoolCard(e, ref, i)).join('');
+        const SORT_WORDS = { fit: 'hvor godt de passer dere', known: 'hvor mye vi vet', distance: 'avstand', name: 'navn', 'avg-desc': 'høyeste snitt', 'avg-asc': 'laveste snitt',
+            'triv-desc': 'høyeste trivsel', 'triv-asc': 'laveste trivsel', 'mob-asc': 'minst mobbing', 'mob-desc': 'mest mobbing' };
+        const sortWord = t(SORT_WORDS[state.kommune && !state.address && state.sort === 'distance' ? 'name' : state.sort] || 'avstand');
+        const count = countFormat.format(total + kretsEntries.size);
+        el('toolbarText').textContent = state.savedOnly ? '' : state.address && !state.address.postnummer
+            ? t('{count} skoler innen {km} km · sortert etter {sort}', { count, km: radiusKm, sort: sortWord })
+            : t('{count} skoler · sortert etter {sort}', { count, sort: sortWord });
+        // Phones only say how many (Figma H1): «19 skoler innen 3 km»
+        el('toolbarText').dataset.short = state.address && !state.address.postnummer
+            ? t('{count} skoler innen {km} km', { count, km: radiusKm }) : t('{count} skoler', { count });
+        const nearest = state.address && state.sort === 'fit' ? null : (state.address && visible[0]);
+        el('schoolList').innerHTML = total === 0 && !state.savedOnly && !kretsEntries.size
+            ? emptyStateHtml()
+            : visible.map((e, i) => schoolCard(e, ref, i, nearest === e)).join('');
+        if (total === 0) bindEmptyState();
         // The first list replaces the loading placeholders
         el('schoolList').removeAttribute('aria-busy');
         if (el('listLoading')) el('listLoading').remove();
@@ -866,48 +1363,84 @@ const Finder = (() => {
         }
 
         el('showMore').hidden = inView.length <= visible.length;
+        el('showMore').textContent = t('Vis flere skoler ({count} til)', { count: countFormat.format(inView.length - visible.length) });
     }
 
-    function schoolCard(entry, ref, index) {
+    // G2: nothing left after the filters
+    function emptyStateHtml() {
+        const wider = state.address && !state.address.postnummer && RADIUS_STEPS.find(km => km > radiusKm);
+        return `<li class="empty-state">
+            <h2 class="empty-state__title">${t('Ingen skoler passer valgene')}</h2>
+            <p>${t('Det betyr ikke at ingen skoler kan passe. Mange opplysninger er «Ukjent» – skolene kan ha det dere trenger, uten at vi vet det. Spør skolen.')}</p>
+            <div class="empty-state__actions">
+                ${wider ? `<button type="button" class="hero-button hero-button--secondary" data-empty="wider" data-km="${wider}">${t('Utvid til {km} km', { km: wider })}</button>` : ''}
+                ${filtersActive() ? `<button type="button" class="hero-button hero-button--secondary" data-empty="filters">${t('Fjern alle filtre')}</button>` : ''}
+                ${state.priorities.size ? `<button type="button" class="hero-button hero-button--secondary" data-empty="prio">${t('Endre prioriteringer')}</button>` : ''}
+            </div></li>`;
+    }
+
+    function bindEmptyState() {
+        el('schoolList').querySelectorAll('[data-empty]').forEach(b => b.addEventListener('click', () => {
+            if (b.dataset.empty === 'filters') resetFilters(true);
+            if (b.dataset.empty === 'prio') setStep('prio');
+            if (b.dataset.empty === 'wider') {
+                RADIUS_STEPS.splice(0, RADIUS_STEPS.indexOf(Number(b.dataset.km)));
+                refreshList();
+            }
+        }));
+    }
+
+    // The school card as in Figma 5 · PROTOTYPE, A6 «Skolekort»: name and the bookmark, a line of facts, and – when the
+    // family chose priorities – «Passer X av N prioriteringer» with a segment for each, then one fact for each
+    // priority: «Bekreftet», «Ukjent» (no data, ask the school) or «Verdt å sjekke». Without priorities the three
+    // numbers of the school in words, as before.
+    function schoolCard(entry, ref, index, isNearest = false) {
         const school = entry.school;
         const shown = levelsShown(entry);
         const combined = entry.levels.length > 1;
-        const meta = [escapeHtml(school.kommune), combined ? t('Barne- og ungdomsskole (1.–10. trinn)') : (SCHOOL_TYPE_LABEL[school.schoolType] || school.schoolType)];
+        const levels = shown.length ? shown : [school];
+        const type = combined ? t('Barne- og ungdomsskole (1.–10. trinn)') : t(school.schoolType === 'barneskole' ? 'Barneskole (1.–7. trinn)' : 'Ungdomsskole (8.–10. trinn)');
+        const meta = [type];
         if (school.eierform) {
-            const label = school.eierform === 'privat' && school.profil && school.profil !== 'annen'
+            meta.push(school.eierform === 'privat' && school.profil && school.profil !== 'annen'
                 ? t('Privat, {profile}', { profile: t(PROFILE_LABEL[school.profil]).toLowerCase() })
-                : t(OWNER_LABEL[school.eierform]);
-            meta.push(`<span class="owner-meta">${ownerIcon(school.eierform)}${label}</span>`);
+                : t(OWNER_LABEL[school.eierform]));
         }
-        if (state.address) meta.push(distanceLabel(school));
+        if (!state.address && !state.kommune) meta.push(escapeHtml(school.kommune));
+        if (state.address) {
+            meta.push(state.address.postnummer ? distanceLabel(school) : formatDistance(L.latLng(state.address.lat, state.address.lng).distanceTo([school.lat, school.lng])));
+        }
+        if (isNearest) meta.push(t('nærmeste skole'));
         const isOwn = entry.levels.some(isKretsSchool);
+        if (isOwn) meta.push(t('Skolen for adressen'));
         // The bookmark shows saved when either level's page was saved
         const saveKey = entry.keys.find(isSaved) || entry.key;
-        const kretsTag = isOwn
-            ? `<span class="school-card__krets"><span>${t('Skolen for adressen')}</span></span>`
-            : '';
+        const numbers = levelNumbers(levels);
+        const band = scoreBand(numbers.avg, numbers.avgNational);
 
-        // The bookmark ("Lagre til senere") sits in the top right corner, next to the card button
-        // (a button inside a button is not allowed), and can be pressed again to remove the school
+        let body = tilesHtml(levels);
+        if (state.priorities.size) {
+            const ev = evaluate(entry);
+            const bar = ev.known
+                ? `<span class="sk-fit"><span class="sk-bar" aria-hidden="true">${Array.from({ length: ev.known }, (_, i) => `<span class="sk-bar__seg${i < ev.met ? ' is-on' : ''}"></span>`).join('')}</span>
+                    <strong>${t('Passer {met} av {total} prioriteringer', { met: ev.met, total: ev.known })}</strong></span>` : '';
+            body = `${bar}<span class="sk-facts">${ev.facts.map(priorityFactHtml).join('')}</span>`;
+        }
         return `
             <li class="school-list__item">
-                <button type="button" class="ds-card school-card${isOwn ? ' school-card--own' : ''}" data-variant="${isOwn ? 'tinted' : 'default'}"${isOwn ? ' data-color="brand1"' : ''} data-key="${escapeHtml(entry.key)}">
-                    <span class="school-card__badge${combined ? ' school-card__badge--pair' : ''}" aria-hidden="true">${entry.levels.map(level =>
-                        `<span class="school-marker score-${scoreCategory(level.color)}">${schoolTypeIcon(level.schoolType)}</span>`).join('')}</span>
-                    <span class="school-card__body">
-                        <span class="school-card__name">${escapeHtml(school.name)}</span>
-                        ${kretsTag}
-                        <span class="school-card__meta">${meta.join(' · ')}</span>
-                        ${combined && shown.length > 1 ? combinedStats(entry) : statsLine(shown[0] || school)}
-                    </span>
+                <button type="button" class="school-card school-sk score-${band}${isOwn ? ' school-card--own' : ''}" data-key="${escapeHtml(entry.key)}">
+                    <span class="sk-name">${escapeHtml(school.name)}</span>
+                    <span class="sk-meta">${meta.join(' · ')}</span>
+                    ${body}
                 </button>
-                ${saveButtonHtml(saveKey, 'school-card__save')}
+                ${saveButtonHtml(saveKey, 'school-card__save', true)}
+                ${moreLinkHtml(entry.school, 'school-card__more')}
                 ${cardDetails(entry, `schoolDetails${index}`)}
             </li>`;
     }
 
     // Phones: what the map popup adds to the card (the year, the scores per subject, what the numbers
-    // are based on, the photo), then "Vis på kartet" and "Les mer om skolen". The numbers already on the
+    // are based on, the photo), then "Vis på kartet" («Les mer om skolen» is on the card itself). The numbers already on the
     // card are not repeated. Hidden until the card is tapped; other screens use the map popup instead.
     function cardDetails(entry, id) {
         const combined = entry.levels.length > 1;
@@ -934,10 +1467,14 @@ const Finder = (() => {
                 ${schoolPhotoHtml(entry.school, 'popup-photo school-card__photo')}
                 <div class="school-card__actions">
                     <button type="button" class="ds-button school-card__map" data-variant="secondary" data-size="sm" aria-expanded="false">${icon('locationPin')}<span>${t('Vis på kartet')}</span></button>
-                    <a class="ds-button" data-variant="primary" data-size="sm" href="${schoolUrl(entry.school)}"><span>${t('Les mer om skolen')}</span>${icon('arrowRight')}</a>
                 </div>
             </div>`;
     }
+
+    // «Les mer om skolen» on every card, as in the map popup; a link of its own beside the card button
+    // (a link inside a button is not allowed)
+    const moreLinkHtml = (school, className) => `<a class="ds-link ${className}" href="${schoolUrl(school)}"
+        aria-label="${escapeHtml(t('Les mer om {school}', { school: school.name }))}">${t('Les mer om skolen')} →</a>`;
 
     // One row of label–value pairs: "Snitt 47,0   Trivsel 3,9   Mobbing –"; the list keeps it short, so
     // Trivsel has no "av 5" here (the school page has it, and the scores per subject). The
@@ -990,7 +1527,7 @@ const Finder = (() => {
     function showSchool(key, fromList = false) {
         const entry = entryFor(key);
         if (!entry) return;
-        if (!passes(entry)) resetFilters();
+        if (!passes(entry)) resetFilters(true);
         keepList = fromList;
         zoomToMarker(entry.marker, map, cluster);
 
@@ -1137,7 +1674,7 @@ const Finder = (() => {
         miniMap = L.map(slot.firstElementChild, { scrollWheelZoom: false, zoomControl: false, maxZoom: 19, zoomAnimation: false })
             .setView([school.lat, school.lng], 15);
         L.control.zoom({ position: 'bottomright' }).addTo(miniMap);
-        baseMapLayer().addTo(miniMap);
+        addBaseMap(miniMap);
         miniMap.attributionControl.setPrefix(false);
         // Popups sized to the small map (their frame adds about 50 px). The bottom padding keeps the marker
         // under a popup clear of the attribution; a school with two levels scrolls inside its popup.
@@ -1189,8 +1726,7 @@ const Finder = (() => {
                 return;
             }
             const local = localMatches(query);
-            if (local.length) showSearchItems(query, list, local);
-            else list.innerHTML = '';
+            showSearchItems(query, list, local, [], false, query.length >= 3);
             if (query.length >= 3) addressTimer = setTimeout(() => searchAddress(query, list, local), 250);
         });
 
@@ -1225,10 +1761,8 @@ const Finder = (() => {
             if (!result) return;
             list.innerHTML = '';
             if (result.kind === 'school') {
-                // The searched address (if any) stays; the school opens on the map
-                input.value = state.address ? state.address.label : '';
-                input.blur();
-                showSchool(result.key);
+                // Straight to the school's page (the searched address, if any, stays)
+                location.href = schoolUrl(result.school);
             } else if (result.kind === 'kommune') {
                 chooseKommune(result.kommune);
             } else if (result.postnummer) placePostalArea(result).then(selectAddress);
@@ -1246,7 +1780,7 @@ const Finder = (() => {
     function locateOptionHtml() {
         if (!canLocate()) return '';
         const label = escapeHtml(t('Din posisjon'));
-        return `<u-option value="locate" label="${label}" class="locate-option">${TARGET_ICON}<span>${label}</span></u-option>`;
+        return `<u-option value="locate" label="${label}" class="locate-option search-option">${TARGET_ICON}<span class="search-option__text"><span class="search-result-name">${label}</span><span class="search-result-kommune">${t('Bruk posisjonen i stedet for en adresse')}</span></span></u-option>`;
     }
 
     function bindLocate() {
@@ -1273,26 +1807,18 @@ const Finder = (() => {
     // Why "Din posisjon" did not work, as Designsystemet's validation message under the address field:
     // <ds-field> links it to the input and marks the input invalid while it is there
     function showLocateError(text) {
-        const field = el('addressField');
-        field.querySelectorAll(':scope > [data-field="validation"]').forEach(node => node.remove());
-        if (!text) return;
-        const message = document.createElement('p');
-        message.className = 'ds-validation-message';
-        message.dataset.field = 'validation';
-        message.dataset.size = 'sm';
-        message.setAttribute('role', 'status');
-        message.textContent = text;
-        field.append(message);
+        if (text) positionError(); else showStartError('');
     }
 
     function locate() {
         showLocateError(null);
         navigator.geolocation.getCurrentPosition(async position => {
             const result = { label: t('Din posisjon'), lat: position.coords.latitude, lng: position.coords.longitude };
-            const data = await loadKretser();
+            const data = await loadKretsData();
             const krets = data && data.kretser.find(k => insideRings(result.lng, result.lat, k.rings));
             if (krets) result.kommune = krets.kommune;
             selectAddress(result);
+            if (state.step === 'start') setStep('prio');
         }, error => {
             showLocateError(t(error.code === error.PERMISSION_DENIED
                 ? 'Nettleseren har ikke lov til å bruke posisjonen din. Skriv inn en adresse i stedet.'
@@ -1302,6 +1828,7 @@ const Finder = (() => {
 
     // Show the address as the combobox's selected value and place it on the map
     function selectAddress(result) {
+        showStartError('');
         const suggestion = el('addressSuggestion');
         suggestion.querySelectorAll(':scope > data').forEach(d => d.remove());
         const data = document.createElement('data');
@@ -1345,28 +1872,38 @@ const Finder = (() => {
         return [...kommuner, ...schools];
     }
 
-    // With a digit in it the query is most likely an address or a postnummer, so those come first
-    function showSearchItems(query, list, local, places = [], failed = false) {
-        // Beside schools and kommuner a few addresses are enough
-        if (local.length) places = places.slice(0, 5);
-        searchItems = /\d/.test(query) ? [...places, ...local] : [...local, ...places];
+    // The suggestions in fixed groups (Figma 10.1, F1): «Din posisjon», then schools, addresses, and kommuner
+    // and postnumre, each group with its own «Ingen treff», and a line on what a school and an address lead to.
+    // Addresses and postnumre come from Kartverket a moment later («Søker …» until then).
+    function showSearchItems(query, list, local, places = [], failed = false, pending = false) {
+        const schools = local.filter(item => item.kind === 'school');
+        const addresses = places.filter(item => !item.postnummer).slice(0, schools.length ? 3 : 5);
+        const areas = [...local.filter(item => item.kind === 'kommune'), ...places.filter(item => item.postnummer)];
+        searchItems = [...schools, ...addresses, ...areas];
+        const row = (i, label, iconName, name, sub) => `<u-option value="${i}" label="${escapeHtml(label)}" class="search-option">
+            ${iconName === 'pin' ? PIN_ICON.replace('<svg ', '<svg class="ds-icon" ') : icon(iconName)}
+            <span class="search-option__text"><span class="search-result-name">${name}</span><span class="search-result-kommune">${sub}</span></span></u-option>`;
         const option = (item, i) => {
             if (item.kind === 'school') {
                 const levels = schoolsData.filter(s => s.name === item.school.name && s.kommune === item.school.kommune);
-                const type = levels.length > 1 ? t('Barne- og ungdomsskole (1.–10. trinn)') : (SCHOOL_TYPE_LABEL[item.school.schoolType] || item.school.schoolType);
-                return `<u-option value="${i}" label="${escapeHtml(`${item.school.name}, ${item.school.kommune}`)}">
-                    <span class="search-result-name">${highlightMatch(item.school.name, query)}</span>
-                    <span class="search-result-kommune">${escapeHtml(item.school.kommune)} · ${type}</span></u-option>`;
+                const type = levels.length > 1 ? t('Barne- og ungdomsskole (1.–10. trinn)') : t(SCHOOL_TYPE_LABEL[item.school.schoolType] || item.school.schoolType);
+                return row(i, `${item.school.name}, ${item.school.kommune}`, 'hatSchool', highlightMatch(item.school.name, query), `${escapeHtml(item.school.kommune)} · ${type}`);
             }
-            if (item.kind === 'kommune') {
-                return `<u-option value="${i}" label="${escapeHtml(item.kommune)}">${highlightMatch(item.kommune, query)} <span class="address-option__kind">${t('Kommune')}</span></u-option>`;
-            }
-            return `<u-option value="${i}" label="${escapeHtml(item.label)}">${escapeHtml(item.label)}${
-                item.postnummer ? ` <span class="address-option__kind">${t('Postnummer')}</span>` : ''}</u-option>`;
+            if (item.kind === 'kommune') return row(i, item.kommune, 'buildings3', highlightMatch(item.kommune, query), t('Kommune'));
+            if (item.postnummer) return row(i, item.label, 'buildings3', escapeHtml(item.label), `${t('Postnummer')}${item.kommune ? ` · ${escapeHtml(item.kommune)}` : ''}`);
+            const cut = item.label.lastIndexOf(', ');
+            return row(i, item.label, 'pin', escapeHtml(cut > 0 ? item.label.slice(0, cut) : item.label), escapeHtml(cut > 0 ? item.label.slice(cut + 2) : ''));
         };
-        list.innerHTML = searchItems.map(option).join('')
-            + (failed ? `<u-option data-empty value="">${t('Adressesøket er ikke tilgjengelig akkurat nå')}</u-option>`
-                : searchItems.length ? '' : `<u-option data-empty value="">${t('Ingen treff')}</u-option>`);
+        let index = 0;
+        const empty = text => `<p class="search-group__empty" aria-hidden="true">${t(text)}</p>`;
+        const group = (title, items, waiting) => `<p class="search-group" aria-hidden="true">${t(title)}</p>${items.length
+            ? items.map(item => option(item, index++)).join('')
+            : empty(waiting ? 'Søker …' : failed ? 'Adressesøket er ikke tilgjengelig akkurat nå' : 'Ingen treff')}`;
+        list.innerHTML = locateOptionHtml()
+            + group('Skoler', schools, false)
+            + group('Adresser', addresses, pending)
+            + group('Kommuner og postnummer', areas, pending)
+            + `<p class="search-group__hint" aria-hidden="true">${t('Skole: går rett til skolen')} · ${t('Adresse: viser skolekretsen og skolene i nærheten')}</p>`;
         openSuggestions(list, 'addressSearch');
     }
 
@@ -1375,8 +1912,12 @@ const Finder = (() => {
         state.kommune = kommune;
         el('kommuneFilter').value = kommune;
         clearAddressSearch();
+        if (state.step !== 'results') showStep('results');
         applyFilters();
         fitToFiltered();
+        if (history.state && history.state.step !== 'results') history.pushState({ ...history.state, step: 'results' }, '', location.href);
+        renderBand();
+        window.scrollTo(0, 0);
     }
 
     async function searchAddress(query, list, local) {
@@ -1471,23 +2012,9 @@ const Finder = (() => {
     }
 
     // ── Skolekrets pilot (Halden, Stavanger) ──────────────────────────────
-    function loadKretser() {
-        if (!kretsData) {
-            kretsData = fetch('static/js/skolekretser.json?v=2')
-                .then(r => (r.ok ? r.json() : null))
-                .catch(() => null);
-        }
-        return kretsData;
-    }
-
-    async function findKretser(result) {
+    function findKretser(result) {
         // Every kommune in skolekretser.json (see skolekretser.py) is looked up; others get the note
-        const data = await loadKretser();
-        if (!data || !data.kommuner[result.kommune]) return null;
-        const hits = data.kretser
-            .filter(k => k.kommune === result.kommune && insideRings(result.lng, result.lat, k.rings))
-            .sort((a, b) => (a.level === 'barneskole' ? -1 : 1) - (b.level === 'barneskole' ? -1 : 1));
-        return { kommune: result.kommune, info: data.kommuner[result.kommune], hits };
+        return lookupKrets(result);
     }
 
     function isKretsSchool(school) {
@@ -1512,6 +2039,13 @@ const Finder = (() => {
         }
     }
 
+    // The small map in the side column shows the same schools as the list on the map («Vis i kart»)
+    function renderSideMap(start) {
+        el('sideMapText').textContent = start
+            ? t('Alle {count} grunnskolene i Norge på kart. Søk først for å se skolene nær dere.', { count: countFormat.format(entries.length) })
+            : t('Kartet viser de samme skolene som listen, og grensen for skolekretsen.');
+    }
+
     // Distance is not the same as skolekrets: say so whenever the list is sorted from an address.
     // Where a kommune publishes open skolekrets data, show the exact krets as a pilot.
     function renderKretsNote() {
@@ -1519,6 +2053,7 @@ const Finder = (() => {
         // Not on the saved schools page, which is only the list and the map. Not for a postnummer either:
         // it spans several kretser, so neither the krets nor the nearest schools from its middle would be right
         note.hidden = !state.address || state.savedOnly || Boolean(state.address.postnummer);
+        kretsEntries = new Set();
         if (note.hidden) return;
         const kommune = state.address.kommune;
         const check = `<a class="ds-link" href="${I18N.href('om-skolekrets')}">${kommune
@@ -1530,7 +2065,7 @@ const Finder = (() => {
                 const entry = k.school && entries.find(e => e.levels.some(l => l.name === k.school && l.kommune === k.kommune && l.schoolType === k.level));
                 return { krets: k, entry, level: entry && entry.levels.find(l => l.schoolType === k.level) };
             })
-            .filter(hit => hit.entry || hit.krets.school) : [];
+            .filter(hit => (hit.entry || hit.krets.school) && state.types.has(hit.krets.level)) : [];
 
         // No skolekrets data for this address (Oslo and most kommuner): show the nearest public
         // barneskole and ungdomsskole in the same cards, clearly named as the nearest, not the krets
@@ -1548,7 +2083,7 @@ const Finder = (() => {
                 .filter(e => e.levels.some(l => l.schoolType === type) && e.school.eierform !== 'privat' && e.school.lat && e.school.lng)
                 .map(e => ({ entry: e, level: e.levels.find(l => l.schoolType === type), metres: ref.distanceTo([e.school.lat, e.school.lng]) }))
                 .sort((a, b) => a.metres - b.metres)[0])
-                .filter(hit => hit && hit.metres <= 20000)
+                .filter(hit => hit && hit.metres <= 20000 && state.types.has(hit.level.schoolType))
                 .map(hit => ({ krets: { level: hit.level.schoolType, name: null }, entry: hit.entry, level: hit.level }));
             if (!nearest.length) {
                 note.innerHTML = `<div class="ds-alert results-note" data-color="info" data-size="sm">
@@ -1556,38 +2091,71 @@ const Finder = (() => {
                     ${osloLookup}${where}</div>`;
                 return;
             }
-            note.innerHTML = `
-                <section class="own-schools" aria-labelledby="ownHeading">
-                    <p class="own-schools__eyebrow" id="ownHeading">${t('Trolig skolekrets for adressen')}
-                        <button type="button" class="ds-button filter-help" data-variant="tertiary" data-size="sm" data-icon="true"
-                                popovertarget="ownInfo" aria-label="${t('Om skolekretsen')}">${icon('questionmarkCircle')}</button></p>
-                    <div class="ds-popover own-schools__info" popover id="ownInfo" data-placement="bottom-start">
-                        <p class="ds-paragraph" data-size="sm">${t('Kommunen bestemmer skolekretsen, men har ikke publisert kretsgrensene som åpne data. Vi viser derfor de nærmeste offentlige skolene, som oftest er skolene i kretsen. Sjekk alltid med kommunen.')}</p>
-                        ${osloLookup}
-                        ${where}
-                    </div>
-                    ${nearest.map(card).join('')}
-                </section>`;
+            // A6 «Hvilken skole hører adressen til?»: where the kommune has not published the krets, we say we do not
+            // know, name the nearest school and send them to the kommune and to the rights of the child. The schools
+            // themselves stay in the list below, sorted as chosen (not pulled out into a block of their own).
+            const names = [...new Set(nearest.map(hit => hit.entry.school.name))].map(escapeHtml);
+            const who = kommune ? t('{kommune} kommune', { kommune: escapeHtml(kommune) }) : t('kommunen');
+            const lookup = kommune === 'Oslo'
+                ? out('https://www.oslo.kommune.no/skole-og-utdanning/skoleoversikt-og-skolekrets/skolekrets-barneskole/', 'Slå opp skolekrets hos Oslo kommune')
+                : check.replace(/\.$/, '');
+            note.innerHTML = `<div class="saved-note saved-note--info results-message" role="note">${FLOW_ICON.info}<div>
+                    <strong>${t('Hvilken skole hører adressen til?')}</strong>
+                    <p>${t('Vi vet ikke sikkert. {school} er nærmest, men det er {who} som bestemmer skolekretsen. Barn som trenger tilrettelegging har som hovedregel rett til å gå på nærskolen.', { school: names.join(` ${t('og')} `), who })}</p>
+                    <p class="saved-note__links">${lookup}<a class="ds-link" href="${I18N.href('barn-med-sarskilte-behov')}">${t('Skoleplass for barn med særskilte behov')}</a></p>
+                    <p class="results-message__short">${t('Kommunen bestemmer skolekretsen.')} ${lookup}</p>
+                </div></div>`;
             return;
         }
 
-        renderOwn();
+        // A6 «Hvilken skole hører adressen til?» also where the kommune publishes the krets (a pilot): the message names
+        // the krets school from that data and says who decides; the schools stay in the list below, sorted as chosen
+        const ownNames = [...new Set(own.map(hit => (hit.entry ? hit.entry.school.name : hit.krets.school)))].map(escapeHtml);
+        const decider = kommune ? t('{kommune} kommune', { kommune: escapeHtml(kommune) }) : t('kommunen');
+        const lookupLink = kommune === 'Oslo'
+            ? `<a class="ds-link" href="https://www.oslo.kommune.no/skole-og-utdanning/skoleoversikt-og-skolekrets/skolekrets-barneskole/" target="_blank" rel="noopener">${t('Slå opp skolekrets hos Oslo kommune')}${icon('externalLink')}</a>`
+            : check.replace(/\.$/, '');
+        note.innerHTML = `<div class="saved-note saved-note--info results-message" role="note">${FLOW_ICON.info}<div>
+                <strong>${t('Hvilken skole hører adressen til?')}</strong>
+                <p>${t('Ifølge åpne data (pilot) hører adressen til {school}. Det kan avvike fra gjeldende grenser, og det er {who} som bestemmer skolekretsen. Barn som trenger tilrettelegging har som hovedregel rett til å gå på nærskolen.', { school: ownNames.join(` ${t('og')} `), who: decider })}</p>
+                <p class="saved-note__links">${lookupLink}<a class="ds-link" href="${I18N.href('barn-med-sarskilte-behov')}">${t('Skoleplass for barn med særskilte behov')}</a></p>
+                <p class="results-message__short">${t('Kommunen bestemmer skolekretsen.')} ${lookupLink}</p>
+            </div></div>`;
+        return;
 
         function renderOwn() {
             note.innerHTML = `
             <section class="own-schools" aria-labelledby="ownHeading">
-                <p class="own-schools__eyebrow" id="ownHeading">${t('Skolekrets for adressen')}
+                <div class="own-schools__head"><h2 class="own-schools__title" id="ownHeading">${t('Skolekrets for adressen')}</h2>
+                    <span class="own-schools__source">${t('Kilde:')} ${escapeHtml(shortSource())}</span>
                     <button type="button" class="ds-button filter-help" data-variant="tertiary" data-size="sm" data-icon="true"
-                            popovertarget="ownInfo" aria-label="${t('Om skolekretsdataene')}">${icon('questionmarkCircle')}</button></p>
+                            popovertarget="ownInfo" aria-label="${t('Om skolekretsdataene')}">${icon('questionmarkCircle')}</button></div>
                 <div class="ds-popover own-schools__info" popover id="ownInfo" data-placement="bottom-start">
                     <p class="ds-paragraph" data-size="sm">${t('Dette er en pilot på åpne data og kan avvike fra kommunens gjeldende grenser.')} ${escapeHtml(t(krets.info.caveat))}</p>
                     <p class="ds-paragraph" data-size="sm">${t('Kilde:')} <a class="ds-link" href="${escapeHtml(safeUrl(krets.info.sourceUrl))}" target="_blank" rel="noopener">${escapeHtml(t(krets.info.source))}</a>.</p>
                     <p class="ds-paragraph" data-size="sm">${check}</p>
                     <p class="ds-paragraph" data-size="sm"><a class="ds-link" href="${I18N.href('om-skolekrets')}#pilot">${t('Se hvilke kommuner vi kan vise skolekretsen for, og hvor dataene kommer fra')}</a></p>
                 </div>
-                ${own.map(card).join('')}
-                ${finnHtml(own)}
+                ${own.map(card).join('<hr class="own-schools__rule" />')}
+                <div class="own-schools__links">${mapLinkHtml(own)}${finnHtml(own)}</div>
             </section>`;
+        }
+
+        // The source in short beside the heading, as in Figma 10.1 F2: «Oslo kommune (Plan- og bygningsetaten)», or
+        // just «Halden kommune» when the kommune itself publishes the data; the full source is in the ⓘ popover
+        function shortSource() {
+            const kommune = `${krets.kommune} kommune`;
+            const publisher = krets.info.source.split(',')[0].trim();
+            return publisher === kommune ? kommune : `${kommune} (${publisher})`;
+        }
+
+        // The krets boundaries on the map page, centred on the krets school (never on the address itself,
+        // which must not end up in a link)
+        function mapLinkHtml(hits) {
+            const school = (hits.find(h => h.level) || {}).level;
+            if (!school || !school.lat || !school.lng) return '';
+            const view = `${school.lat.toFixed(5)},${school.lng.toFixed(5)},14`;
+            return `<a class="ds-link own-schools__map" href="${escapeHtml(I18N.href(`kart?lag=skolekretser#${view}`))}">${t('Se kretsgrensen på kartet')} →</a>`;
         }
 
         // Housing search on Finn.no for each postnummer in the barneskolekrets (or the krets found)
@@ -1595,7 +2163,7 @@ const Finder = (() => {
             const krets = (hits.find(h => h.krets.level === 'barneskole') || hits[0] || {}).krets;
             const numbers = (krets && krets.postnummer) || [];
             if (!numbers.length) return '';
-            return `<p class="ds-paragraph own-schools__finn" data-size="sm">${t('Boligsøk på Finn.no for postnumrene i skolekretsen:')}
+            return `<p class="ds-paragraph own-schools__finn" data-size="sm">${t('Boligsøk på Finn.no i kretsen:')}
                 ${numbers.map(n => `<a class="ds-link" href="https://www.finn.no/realestate/homes/search.html?q=${encodeURIComponent(n)}" target="_blank" rel="noopener"
                     aria-label="${escapeHtml(t('Boligsøk på Finn.no for postnummer {n}', { n }))}">${escapeHtml(n)}</a>`).join(' · ')}</p>`;
         }
@@ -1613,39 +2181,28 @@ const Finder = (() => {
             // The krets school is not in our data (too small to have published results): name only
             if (!entry) return `
                 <div class="own-school-item">
-                    <div class="ds-card own-school" data-variant="tinted" data-color="neutral">
-                        <span class="own-school__head">
-                            <span class="school-marker score-none" aria-hidden="true">${schoolTypeIcon(k.level)}</span>
-                            <span class="own-school__body">
-                                <span class="own-school__name">${escapeHtml(k.school)}</span>
-                                <span class="own-school__meta">${[t(k.level === 'barneskole' ? 'Barneskole' : 'Ungdomsskole'),
-                                    t('({name} skolekrets)', { name: escapeHtml(k.name) }).replace(/^\(|\)$/g, '')].join(' · ')}</span>
-                                <span class="own-school__meta">${t('Skolen har ingen offentlige resultater og er derfor ikke med i lista.')}</span>
-                                ${splitNote(k)}
-                            </span>
-                        </span>
+                    <p class="own-school__level">${t(LEVEL_LABEL[k.level] || k.level)}</p>
+                    <div class="own-school__line">
+                        <span class="own-school__name own-school__name--plain">${escapeHtml(k.school)}</span>
+                        <span class="own-school__meta">${t('({name} skolekrets)', { name: escapeHtml(k.name) }).replace(/^\(|\)$/g, '')}</span>
                     </div>
+                    <p class="ds-paragraph own-school__split" data-size="xs">${t('Skolen har ingen offentlige resultater og er derfor ikke med i lista.')} ${splitNote(k)}</p>
                 </div>`;
             const school = level || entry.school;
             const key = schoolKey(school);
-            const meta = [SCHOOL_TYPE_LABEL[school.schoolType] || school.schoolType,
-                          distanceLabel(school),
-                          k.name ? t('({name} skolekrets)', { name: escapeHtml(k.name) }).replace(/^\(|\)$/g, '') : null].filter(Boolean);
-            // Grey until picked; the whole card shows the school on the map (like the list cards), the
-            // bookmark sits next to it, and the school page is one click further, in the popup
+            const meta = [k.name ? t('({name} skolekrets)', { name: escapeHtml(k.name) }).replace(/^\(|\)$/g, '') : null,
+                          distanceLabel(school)].filter(Boolean);
+            // The whole name shows the school on the map (phones: opens the card under it), as in the list
             return `
                 <div class="own-school-item">
-                    <button type="button" class="ds-card own-school" data-variant="tinted" data-color="neutral" data-show="${escapeHtml(key)}">
-                        <span class="own-school__head">
-                            <span class="school-marker score-${scoreCategory(school.color)}" aria-hidden="true">${schoolTypeIcon(school.schoolType)}</span>
-                            <span class="own-school__body">
-                                <span class="own-school__name">${escapeHtml(school.name)}</span>
-                                <span class="own-school__meta">${meta.join(' · ')}</span>
-                                ${statsLine(school)}
-                            </span>
-                        </span>
-                    </button>
-                    ${saveButtonHtml(key, 'own-school__fav')}
+                    <p class="own-school__level">${t(LEVEL_LABEL[school.schoolType] || school.schoolType)}</p>
+                    <div class="own-school__line">
+                        <button type="button" class="own-school own-school__name" data-show="${escapeHtml(key)}">${escapeHtml(school.name)}</button>
+                        <span class="own-school__meta">${meta.join(' · ')}</span>
+                        ${saveButtonHtml(key, 'own-school__save')}
+                    </div>
+                    ${tilesHtml([school])}
+                    ${moreLinkHtml(school, 'own-school__more')}
                     ${cardDetails({ levels: [school], school }, `ownDetails${index}`)}
                     ${k.split ? `<p class="ds-paragraph own-school__split" data-size="xs">${splitNote(k)}</p>` : ''}
                 </div>`;

@@ -29,10 +29,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/src/index.css" integrity="sha384-CAE1Qe2Yp1euTdmOujy77VIT0GR/Yu8V+3taPP8Oo7GGV9hrQKrVigMB51hyUKYD" crossorigin="anonymous" />
 
 
-    <link rel="stylesheet" href="static/css/styles.css?v=208"/>
+    <link rel="stylesheet" href="static/css/styles.css?v=273"/>
 
-    <script src="static/js/i18n.js?v=101"></script>
-    <script src="static/js/theme.js?v=9"></script>
+    <script src="static/js/i18n.js?v=129"></script>
+    <script src="static/js/theme.js?v=11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-web@1.23.0/dist/umd/index.js" integrity="sha384-gB8nQDA1vTT5N2EUrwILb4EmNquufjYcGqx5Cmce63dC5l/zyDRlxPjzv4/pG6mE" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -40,7 +40,7 @@
 
     <!-- Header (shared, see static/js/layout.js) -->
     <div id="site-header"></div>
-    <script src="static/js/layout.js?v=32"></script>
+    <script src="static/js/layout.js?v=43"></script>
 
     <main id="main" tabindex="-1" class="page">
         <div class="site-container page__container">
@@ -52,22 +52,22 @@
             <p class="ds-paragraph">Til nasjonale prøver er det utviklet en egen skala (skalapoeng) hvor <strong>gjennomsnittet i 2022 ble satt til 50</strong> og <strong>standardavviket til 10</strong>. Alle prøveresultater blir omregnet til denne skalaen.</p>
             
             <div class="ds-card" data-variant="tinted" data-color="brand1">
-                <p class="ds-paragraph" data-size="sm"><strong>Datagrunnlag (1 947 skoler):</strong></p>
+                <p class="ds-paragraph" data-size="sm"><strong>Datagrunnlag (2 280 skoler):</strong></p>
                 <ul class="ds-list" data-size="sm">
-                    <li>Gjennomsnitt: 49,31 (nær landsgjennomsnitt ✓)</li>
-                    <li>Median: 49,33</li>
-                    <li>Standardavvik: 2,84</li>
-                    <li>Spredning: 39-59 poeng</li>
+                    <li>Gjennomsnitt av skolenes snitt: 49,29</li>
+                    <li>Median: 49,0</li>
+                    <li>Standardavvik: 2,82</li>
+                    <li>Spredning: 39–65 poeng</li>
                 </ul>
             </div>
             
             <h2 class="ds-heading" data-size="xs">Fargeforklaring</h2>
             <p class="ds-paragraph">Fargene på kartet og i listen bygger på det siste skoleåret med publiserte resultater fra nasjonale prøver. Resultatene fra tidligere år ser du på siden til hver skole.</p>
             <ul class="ds-list ds-list--unstyled color-explanation">
-                <li><span class="color-dot score-very-low" aria-hidden="true"></span><span><strong>Rød (&lt; 45):</strong> Betydelig under landsgjennomsnitt (3,7% av skoler)</span></li>
-                <li><span class="color-dot score-low" aria-hidden="true"></span><span><strong>Oransje (45 – 49,31):</strong> Under landsgjennomsnitt (44,9% av skoler)</span></li>
-                <li><span class="color-dot score-high" aria-hidden="true"></span><span><strong>Lysegrønn (49,31 – 55):</strong> Over landsgjennomsnitt (48,2% av skoler)</span></li>
-                <li><span class="color-dot score-very-high" aria-hidden="true"></span><span><strong>Mørkegrønn (≥ 55):</strong> Betydelig over landsgjennomsnitt (3,2% av skoler)</span></li>
+                <li><span class="color-dot score-very-low" aria-hidden="true"></span><span><strong>Rød (&lt; 45):</strong> Godt under snittet (5,1 % av skolene)</span></li>
+                <li><span class="color-dot score-low" aria-hidden="true"></span><span><strong>Oransje (45 – landssnittet):</strong> Litt under snittet (46,9 % av skolene)</span></li>
+                <li><span class="color-dot score-high" aria-hidden="true"></span><span><strong>Lysegrønn (landssnittet – 55):</strong> Over snittet (44,8 % av skolene)</span></li>
+                <li><span class="color-dot score-very-high" aria-hidden="true"></span><span><strong>Mørkegrønn (≥ 55):</strong> Godt over snittet (3,1 % av skolene)</span></li>
                 <li><span class="color-dot score-none" aria-hidden="true"></span><span><strong>Grå:</strong> Ingen data tilgjengelig (alle fag mangler)</span></li>
             </ul>
             
@@ -79,28 +79,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td><span class="color-dot score-very-low" aria-hidden="true"></span>Under 45</td><td class="num">3,7%</td></tr>
-                    <tr><td><span class="color-dot score-low" aria-hidden="true"></span>45 – 46</td><td class="num">4,8%</td></tr>
-                    <tr><td><span class="color-dot score-low" aria-hidden="true"></span>46 – 47</td><td class="num">7,1%</td></tr>
-                    <tr><td><span class="color-dot score-low" aria-hidden="true"></span>48 – 49</td><td class="num">16,5%</td></tr>
-                    <tr><td><span class="color-dot score-low" aria-hidden="true"></span>49 – 50</td><td class="num">14,4%</td></tr>
-                    <tr><td><span class="color-dot score-high" aria-hidden="true"></span>50 – 51</td><td class="num">14,2%</td></tr>
-                    <tr><td><span class="color-dot score-high" aria-hidden="true"></span>52 – 53</td><td class="num">6,7%</td></tr>
-                    <tr><td><span class="color-dot score-high" aria-hidden="true"></span>53 – 54</td><td class="num">4,8%</td></tr>
-                    <tr><td><span class="color-dot score-high" aria-hidden="true"></span>54 – 55</td><td class="num">3,2%</td></tr>
-                    <tr><td><span class="color-dot score-very-high" aria-hidden="true"></span>Over 55</td><td class="num">3,2%</td></tr>
-                </tbody>
+                    <tr><td><span class="color-dot score-very-low" aria-hidden="true"></span>Under 45</td><td class="num">5,1 %</td></tr>
+                    <tr><td><span class="color-dot score-low" aria-hidden="true"></span>45 – 46</td><td class="num">5,1 %</td></tr>
+                    <tr><td><span class="color-dot score-low" aria-hidden="true"></span>46 – 47</td><td class="num">7,5 %</td></tr>
+                    <tr><td><span class="color-dot score-low" aria-hidden="true"></span>47 – 48</td><td class="num">11,8 %</td></tr>
+                    <tr><td><span class="color-dot score-low" aria-hidden="true"></span>48 – 49</td><td class="num">15,5 %</td></tr>
+                    <tr><td><span class="color-dot score-low" aria-hidden="true"></span>49 – landssnittet</td><td class="num">7,1 %</td></tr>
+                    <tr><td><span class="color-dot score-high" aria-hidden="true"></span>Landssnittet – 50</td><td class="num">7,1 %</td></tr>
+                    <tr><td><span class="color-dot score-high" aria-hidden="true"></span>50 – 51</td><td class="num">13,9 %</td></tr>
+                    <tr><td><span class="color-dot score-high" aria-hidden="true"></span>51 – 52</td><td class="num">9,6 %</td></tr>
+                    <tr><td><span class="color-dot score-high" aria-hidden="true"></span>52 – 53</td><td class="num">6,4 %</td></tr>
+                    <tr><td><span class="color-dot score-high" aria-hidden="true"></span>53 – 54</td><td class="num">4,8 %</td></tr>
+                    <tr><td><span class="color-dot score-high" aria-hidden="true"></span>54 – 55</td><td class="num">3,1 %</td></tr>
+                    <tr><td><span class="color-dot score-very-high" aria-hidden="true"></span>55 og over</td><td class="num">3,1 %</td></tr>
+                    </tbody>
             </table>
-            <p class="ds-paragraph table-caption" data-size="xs">Basert på 1 947 skoler med data (2025–26)</p>
+            <p class="ds-paragraph table-caption" data-size="xs">Basert på 2 280 skoler med resultater i datagrunnlaget, sjekket 14. november 2026</p>
             
             <h2 class="ds-heading" data-size="xs">Begrunnelse</h2>
-            <p class="ds-paragraph">Fargefordelingen bruker det faktiske gjennomsnittlige resultatet blant skoler i datagrunnlaget (<strong>49,31</strong>) som skillelinje mellom oransje og lysegrønn, i stedet for den teoretiske midtverdien 50. Dette gir en:</p>
-            <ul class="ds-list">
-                <li><strong>Realistisk fordeling</strong> basert på faktiske resultater fra 1 947 skoler</li>
-                <li><strong>Rettferdig vurdering</strong> som gjenspeiler det faktiske landsgjennomsnitt</li>
-                <li><strong>Meningsfull tolkning</strong> – ca. halvparten av skolene er over/under midten</li>
-            </ul>
-            <p class="ds-paragraph">Dette sikrer at skoler som presterer over det faktiske gjennomsnittet får anerkjennelse, mens skoler som trenger støtte blir identifisert.</p>
+            <p class="ds-paragraph">Skillet mellom oransje og lysegrønn er landsgjennomsnittet på nasjonale prøver for samme trinn og skoleår, fra Udirs tall for hele landet. For 2025–26 er det 49,3 på 5. trinn og 49,7 på 8. trinn. En skole er lysegrønn når snittet er det samme som landsgjennomsnittet eller høyere.</p>
+            <p class="ds-paragraph">Grensene 45 og 55 ligger et halvt standardavvik under og over 50, som var landsgjennomsnittet da skalaen ble laget. Gjennomsnittet av skolene i datagrunnlaget er 49,29.</p>
+            <p class="ds-paragraph">Kartet, listen og siden til hver skole bruker de samme grensene, så «over snittet» betyr det samme overalt. Forskjeller på 1–2 poeng er usikre, særlig på små skoler.</p>
             
             <p class="ds-paragraph">
                 <a class="ds-link" href="https://statistikkportalen.udir.no/api/rapportering/rest/v1/Tekst/visTekst/19715?dataChanged=2026-02-19_074500#title5"

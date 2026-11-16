@@ -264,9 +264,10 @@ function zoomToMarker(targetMarker, map, markerCluster) {
 function setDataTooltips(metadata) {
     const year = value => String(value).replace('-', '–');
     const snitt = document.getElementById('snittHelp');
-    if (snitt && metadata.currentYear) {
-        snitt.dataset.tooltip = t('Snittet er gjennomsnittet av skolens skalapoeng i engelsk, lesing og regning på nasjonale prøver {year}. Fag uten publisert resultat telles ikke med. Skalaen er satt slik at landsgjennomsnittet var 50 i 2022.',
-            { year: year(metadata.currentYear) });
+    const lines = metadata.resultater;
+    if (snitt && metadata.currentYear && lines && lines.barneskole && lines.ungdomsskole) {
+        snitt.dataset.tooltip = t('Snittet er gjennomsnittet av skolens skalapoeng i engelsk, lesing og regning på nasjonale prøver {year}. Fag uten publisert resultat telles ikke med. Skillet mellom oransje og lysegrønn er landsgjennomsnittet samme år: {barne} på 5. trinn og {ungdom} på 8. trinn.',
+            { year: year(lines.year || metadata.currentYear), barne: formatDecimal(lines.barneskole), ungdom: formatDecimal(lines.ungdomsskole) });
     }
     const mobbing = document.getElementById('mobbingHelp');
     if (mobbing && metadata.mobbing) {
@@ -281,7 +282,7 @@ function setDataTooltips(metadata) {
     }
     const norsk = document.getElementById('norskHelp');
     if (norsk && metadata.gsi && metadata.gsi.norsk !== null && metadata.gsi.norsk !== undefined) {
-        norsk.dataset.tooltip = t('Andelen elever ved skolen som får forsterket opplæring i norsk, fra Grunnskolens informasjonssystem (GSI) {year}. Landsgjennomsnittet er {value}.',
+        norsk.dataset.tooltip = t('Andelen elever ved skolen som får forsterket opplæring i norsk, fra Grunnskolens informasjonssystem (GSI), siste år skolen har tall for. Landsgjennomsnittet i {year} er {value}.',
             { year: year(metadata.gsi.year), value: formatPercent(metadata.gsi.norsk).replace('&nbsp;', '\u00a0') });
     }
 }
