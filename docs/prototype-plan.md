@@ -301,3 +301,8 @@ J1 Meny (321:34099) 🟡, J2 Visning, J3 Språk, J4 Filter, J5 Sorter, J6 Endre 
 - Sidene under skoler/ er bygd på nytt med site_pages.py; school-data.json med create_map.py.
 - Språkbytte: lenken får adressen i det øyeblikket den brukes, og på forsiden kommer adresse, steg, prioriteringer og kart tilbake etter byttet (sessionStorage, som «Tilbake»). Prioriteringer på steg 2 skrives i adressen med en gang. Båndet over resultatene tegnes på nytt etter gjenoppretting (gjaldt også «Tilbake»).
 - Tester: nye JS-tester for `scoreBand`, `trivselWord`, `levelNumbers`; test for trivsel med landstall.
+
+### 2026-11-16 · Два шляхи пошуку й одне поле
+- На прохання власниці продукту покроковий флоу A1 → A4 → A6 («Steg 1 av 2 / 2 av 2») замінено на два шляхи: швидкий пошук (адреса → одразу школи, як у `main`) і необов'язковий пошук за критеріями («Velg hva som er viktig» → A4 → результати за «Passer best»).
+- Поле пошуку одне і стоїть під хедером на старті, на A4 і на результатах на тій самій висоті (перевірено: 215 px на 1280, 219 px на 375 з «Ekstra stor» текстом).
+- Опис флоу: [docs/user-flow.md](user-flow.md). Це відхилення від кадрів A1/A4/A6 прототипа; Figma не оновлено.

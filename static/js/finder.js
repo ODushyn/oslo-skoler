@@ -111,7 +111,7 @@ const Finder = (() => {
         if (step === 'results') { state.shown = PAGE_SIZE; refreshList(); }
         window.scrollTo(0, 0);
         if (focus) {
-            const target = { start: el('searchHint'), prio: el('prioTitle'), results: el('bandTitle') }[step];
+            const target = { start: el('bandTitle'), prio: el('prioTitle'), results: el('resultsTitle') }[step];
             if (target) { target.tabIndex = -1; target.focus({ preventScroll: true }); }
         }
     }
@@ -151,17 +151,26 @@ const Finder = (() => {
 
     // A3: the position could not be used
     function positionError() {
-        if (state.step !== 'start') setStep('start', { push: false, focus: false });
         showStartError(`<strong>${t('Vi fikk ikke bruke posisjonen din')}</strong>
             <p>${t('Nettleseren har blokkert posisjon. Skriv adressen i stedet, eller tillat posisjon i innstillingene og prøv igjen. Vi lagrer aldri posisjonen din.')}</p>
             <p class="start-error__links"><button type="button" class="link-button" data-act="help">${t('Slik tillater du posisjon')}</button>
             <button type="button" class="link-button" data-act="retry">${t('Prøv igjen')}</button></p>`);
     }
 
-    // «Neste»: on to step 2, or G1 when nothing was found or nothing chosen from the list
-    async function nextFromStart() {
+    // Path 1 (docs/user-flow.md): a place chosen on the start shows the schools at once. On «Hva er viktig»
+    // the family stays there (the count on «Vis skoler» follows the place); on the results the list follows it.
+    function placeChosen() {
         showStartError('');
-        if (state.address) { setStep('prio'); return; }
+        if (state.step === 'start') {
+            if (state.priorities.size) { state.sort = 'fit'; writeUrlState(); }
+            setStep('results', { focus: false });
+        } else if (state.step === 'prio') renderPrioPage();
+    }
+
+    // «Søk» (or Enter): the schools for the chosen place, or G1 when nothing was found or nothing chosen from the list
+    async function searchGo() {
+        showStartError('');
+        if (state.address) { if (state.step !== 'results') setStep('results'); return; }
         const query = el('addressSearch').value.trim();
         if (!query) {
             showStartError(`<strong>${t('Skriv en adresse først')}</strong><p>${t('Skriv adresse, kommune eller navnet på en skole.')}</p>`);
@@ -178,15 +187,15 @@ const Finder = (() => {
             ${places.length ? `<p class="start-error__links"><span>${t('Mente du:')}</span> ${options.join(` <span>${t('eller')}</span> `)}</p>` : ''}`);
         el('startError').querySelectorAll('[data-pick]').forEach(b => b.addEventListener('click', () => {
             selectAddress(places[Number(b.dataset.pick)]);
-            showStartError('');
-            setStep('prio');
+            placeChosen();
         }));
     }
 
     function bindStart() {
-        el('nextStep').addEventListener('click', nextFromStart);
+        el('searchGo').addEventListener('click', searchGo);
+        el('startPrio').addEventListener('click', () => setStep('prio'));
         el('addressSearch').addEventListener('keydown', event => {
-            if (event.key === 'Enter' && state.address && !document.querySelector('#addressResults [aria-selected="true"]')) { event.preventDefault(); nextFromStart(); }
+            if (event.key === 'Enter' && el('addressSearch').value.trim() && !document.querySelector('#addressResults [aria-selected="true"]')) { event.preventDefault(); searchGo(); }
         });
         el('showAllList').addEventListener('click', () => {
             showStartError('');
@@ -201,7 +210,6 @@ const Finder = (() => {
             if (act.dataset.act === 'help') helpPositionDialog();
             if (act.dataset.act === 'retry') locate();
         });
-        el('changeAddress').addEventListener('click', () => { setStep('start'); el('addressSearch').focus(); });
         el('changePriorities').addEventListener('click', () => setStep('prio'));
         window.addEventListener('popstate', event => {
             if (el('filterPanel').open || (event.state && event.state.filterPanel)) return;
@@ -216,13 +224,10 @@ const Finder = (() => {
         const groups = [...new Set(PRIORITIES.map(p => p.group))];
         el('prioPage').innerHTML = `
             <div class="prio__inner">
-                <button type="button" class="prio__back" id="prioBack">← ${t('Endre adresse')}</button>
                 <div class="prio__head">
-                    <p class="hero__step">${t('Steg 2 av 2')}</p>
-                    <h1 class="prio__title" id="prioTitle">${t('Hva er viktig for dere?')}</h1>
+                    <h2 class="prio__title" id="prioTitle">${t('Hva er viktig for dere?')}</h2>
                     <p class="prio__lead">${t('Velg det som gjelder. Vi sorterer skolene etter dette og viser tydelig hva vi vet – og ikke vet – om hver skole. Du kan endre valgene senere.')}</p>
                 </div>
-                ${state.address ? `<p class="prio__place">${FLOW_ICON.target}<strong>${t('Skoler nær {place}', { place: escapeHtml(state.address.label) })}</strong></p>` : ''}
                 ${groups.map(g => `
                     <fieldset class="prio__group"><legend>${t(g)}</legend>
                         <div class="prio__options">${PRIORITIES.filter(p => p.group === g).map(p => `
@@ -249,7 +254,6 @@ const Finder = (() => {
             fitCache = new Map();
             update();
         }));
-        el('prioBack').addEventListener('click', () => { setStep('start'); el('addressSearch').focus(); });
         const toResults = () => {
             // Chosen priorities sort by fit; with none chosen the list is by distance
             state.sort = state.priorities.size ? 'fit' : (state.sort === 'fit' ? 'distance' : state.sort);
@@ -279,18 +283,8 @@ const Finder = (() => {
     }
 
     function renderBand() {
-        // Phones show only the address with a pin (Figma H1), so «Skoler nær» is a span the narrow layout hides
-        if (state.address && !state.savedOnly) {
-            el('bandTitle').innerHTML = `<span class="band-pin" aria-hidden="true">${FLOW_ICON.target}</span><span class="band-prefix">${t('Skoler nær {place}', { place: '' }).trim()} </span>${escapeHtml(state.address.label)}`;
-        } else {
-            el('bandTitle').textContent = state.savedOnly ? t('Lagrede skoler')
-                : state.kommune ? t('Skoler i {kommune} kommune', { kommune: state.kommune })
-                : t('Alle skoler');
-        }
-        el('changeAddress').innerHTML = state.address ? `<span class="wide">${t('Endre adresse')}</span><span class="narrow">${t('Endre')}</span>` : t('Søk på adresse');
+        // The address is in the search field over the band, so the band only offers more addresses
         el('addressRow').hidden = !state.address;
-        const street = state.address ? state.address.label.split(',')[0] : '';
-        el('addressChips').innerHTML = state.address ? `<li><span class="band-chip band-chip--on">${FLOW_ICON.target}${escapeHtml(street)}</span></li>` : '';
         const chosen = selectedPriorities();
         el('priorityRow').hidden = !state.address && !chosen.length;
         el('priorityChips').innerHTML = chosen.map((p, i) => `<li${i >= 2 ? ' class="band-chip-extra"' : ''}><button type="button" class="band-chip band-chip--prio" data-prio="${p.id}" aria-label="${escapeHtml(t('Fjern {label}', { label: t(p.chip) }))}">${t(p.chip)}<svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></li>`).join('');
@@ -1802,8 +1796,8 @@ const Finder = (() => {
                 location.href = schoolUrl(result.school);
             } else if (result.kind === 'kommune') {
                 chooseKommune(result.kommune);
-            } else if (result.postnummer) placePostalArea(result).then(selectAddress);
-            else selectAddress(result);
+            } else if (result.postnummer) placePostalArea(result).then(place => { selectAddress(place); placeChosen(); });
+            else { selectAddress(result); placeChosen(); }
         });
     }
 
@@ -1855,7 +1849,7 @@ const Finder = (() => {
             const krets = data && data.kretser.find(k => insideRings(result.lng, result.lat, k.rings));
             if (krets) result.kommune = krets.kommune;
             selectAddress(result);
-            if (state.step === 'start') setStep('prio');
+            placeChosen();
         }, error => {
             showLocateError(t(error.code === error.PERMISSION_DENIED
                 ? 'Nettleseren har ikke lov til å bruke posisjonen din. Skriv inn en adresse i stedet.'

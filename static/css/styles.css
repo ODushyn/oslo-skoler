@@ -7363,28 +7363,10 @@ html.ui-locked {
     color: var(--ds-color-neutral-text-subtle);
 }
 
-.hero__field .ds-input,
-.hero__field input {
-    box-sizing: border-box;
-    min-height: 60px;
-    border: 1px solid var(--ds-color-neutral-border-strong, #77797b);
-    border-radius: 6px;
-    font-size: 18px;
-}
-
-.hero__field input:focus-visible {
-    outline: 0;
-    border: 3px solid var(--ds-color-neutral-text-default);
-}
-
 .hero__actions {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-}
-
-.hero__field .locate-inline {
-    display: none;
 }
 
 .hero__link {
@@ -7567,20 +7549,6 @@ html.ui-locked {
     margin: 0;
 }
 
-.prio__back {
-    justify-self: start;
-    padding: 0;
-    border: 0;
-    background: none;
-    color: var(--ds-color-brand1-text-subtle);
-    font: inherit;
-    font-size: 16px;
-    line-height: 24px;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    cursor: pointer;
-}
-
 .prio__title {
     font-size: 30px;
     line-height: 39px;
@@ -7600,24 +7568,6 @@ html.ui-locked {
     max-width: 900px;
     font-size: 18px;
     line-height: 27px;
-}
-
-.prio__place {
-    display: inline-flex;
-    justify-self: start;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 16px;
-    border-radius: 8px;
-    background: var(--ds-color-brand1-background-tinted);
-    color: #053227;
-    font-size: 18px;
-    line-height: 27px;
-}
-
-.prio__place .ds-icon {
-    width: 22px;
-    height: 22px;
 }
 
 .prio__group {
@@ -7750,34 +7700,6 @@ html.ui-locked {
 /* A6: the band over the results */
 .results-band.search-panel {
     padding: 32px 0;
-}
-
-.results-band__title {
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 4px 16px;
-    margin-bottom: 16px;
-}
-
-.results-band__h1 {
-    margin: 0;
-    font-size: 24px;
-    line-height: 32px;
-    font-weight: var(--ds-font-weight-medium);
-}
-
-.results-band__link {
-    padding: 0;
-    border: 0;
-    background: none;
-    color: var(--ds-color-brand1-text-subtle);
-    font: inherit;
-    font-size: 16px;
-    line-height: 24px;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    cursor: pointer;
 }
 
 .band-row {
@@ -8896,7 +8818,6 @@ html[data-contrast="hoy"] .fact--unknown { background: #dcdcdd; }
     gap: 16px;
 }
 
-.results-band .results-band__title,
 .results-band .band-row,
 .results-band .active-filters {
     margin: 0;
@@ -8928,21 +8849,12 @@ a.band-row__add { text-decoration: none; }
 
 /* ══ Phones, A6 (Figma H1, 390 px wide): a compact band with the address, two priorities and «Liste | Kart»; Sorter and
    Filter in one row; «N lagret» and «Sammenlign» fixed at the bottom ═══════════════════════════════════════════ */
-.band-pin, .results-message__short, .saved-bar-mobile { display: none; }
+.results-message__short, .saved-bar-mobile { display: none; }
 .band-row__more { display: none; }
-.results-band__link .narrow { display: none; }
 
 @media (max-width: 640px) {
     .results-band.search-panel { padding: 12px 0 12px; }
     .results-band > .site-container { gap: 12px; padding-inline: 17px; }
-    .results-band .results-band__title { flex-wrap: nowrap; align-items: center; gap: 8px; }
-    .results-band__h1 { display: flex; align-items: center; gap: 8px; min-width: 0; font-size: 16px; line-height: 24px; font-weight: var(--ds-font-weight-semibold); }
-    .results-band__h1 .band-pin { display: inline-flex; flex: none; }
-    .results-band__h1 .band-pin .ds-icon { width: 20px; height: 20px; }
-    .results-band__h1 .band-prefix { display: none; }
-    .results-band__link { flex: none; font-size: 16px; font-weight: var(--ds-font-weight-regular); }
-    .results-band__link .wide { display: none; }
-    .results-band__link .narrow { display: inline; }
     #addressRow, #changePriorities, .band-chip-extra, .band-row__label { display: none !important; }
     .band-row__more { display: inline-flex; align-self: flex-start; }
     .band-row__more.link-button { font-size: 16px; line-height: 24px; }
@@ -9121,4 +9033,43 @@ a.band-row__add { text-decoration: none; }
 /* The light green marker needs a dark ring to stand out on the light map (WCAG 1.4.11, 3:1) */
 .school-marker.score-high {
     box-shadow: 0 0 0 1px var(--ds-color-success-border-strong), var(--ds-shadow-sm);
+}
+
+/* ══ One search in the same place on every state of the front page (docs/user-flow.md) ══════════════════════════
+   The same title and field over the start, «Hva er viktig for dere?» and the results, so nothing under the header
+   moves when the page changes state. The start and «Hva er viktig» line up with the field (64 / 24 / 16 px). */
+.finder-search.search-panel { padding: 32px 0 24px; }
+.finder-search__title {
+    margin: 0 0 16px;
+    font-size: 30px;
+    line-height: 39px;
+    font-weight: var(--ds-font-weight-medium);
+}
+.finder-search .search-bar { flex-wrap: nowrap; align-items: flex-start; gap: 12px; }
+.finder-search .search-bar__field { flex: 0 1 700px; min-width: 0; }
+.finder-search__go.hero-button { flex: none; align-self: stretch; min-width: 112px; max-height: 64px; }
+.finder-search .start-error { max-width: 700px; margin-top: 12px; }
+.start-error[hidden] { display: none; }
+.results-band.search-panel { padding-top: 0; }
+.hero__inner,
+.prio__inner { width: auto; margin: 0; padding-inline: 64px; }
+.hero__inner { padding-block: 8px 64px; }
+.prio__inner { padding-block: 32px 56px; }
+.hero__card--path { gap: 16px; }
+@media (max-width: 1279px) {
+    .hero__inner,
+    .prio__inner { padding-inline: var(--ds-size-6); }
+}
+@media (max-width: 1023px) {
+    .hero__inner { padding-block: 8px 40px; }
+}
+@media (max-width: 640px) {
+    .finder-search.search-panel { padding: 20px 0 16px; }
+    .finder-search__title { margin-bottom: 12px; font-size: 24px; line-height: 32px; }
+    /* Phones: the field takes the whole row; the keyboard's search key does what «Søk» does */
+    .finder-search__go.hero-button { display: none; }
+    .hero__inner,
+    .prio__inner { padding-inline: 16px; }
+    .prio__inner { padding-top: 24px; }
+    .results-band.search-panel { padding-top: 0; }
 }

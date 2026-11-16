@@ -51,8 +51,8 @@
 
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="static/css/styles.css?v=275"/>
-    <script src="static/js/i18n.js?v=131"></script>
+    <link rel="stylesheet" href="static/css/styles.css?v=277"/>
+    <script src="static/js/i18n.js?v=132"></script>
     <script src="static/js/theme.js?v=11"></script>
 
     <!-- Leaflet JS -->
@@ -78,37 +78,46 @@
     <script src="static/js/layout.js?v=44"></script>
 
     <main id="main" tabindex="-1" data-mode="start">
-        <!-- Figma 5 · PROTOTYPE, A1 «Forside – hvor bor dere?»: step 1 of 2, the address (or kommune or school name) -->
-        <section class="hero" id="startPage" aria-labelledby="searchHint">
+        <!-- One search in the same place on every state of the page (start, «Hva er viktig», results): docs/user-flow.md.
+             Choosing an address shows the schools at once (path 1); «Velg hva som er viktig» is path 2. -->
+        <section class="search-panel finder-search" id="finderSearch" aria-labelledby="bandTitle">
+            <div class="site-container">
+                <h1 class="finder-search__title" id="bandTitle">Finn en skole som passer barnet ditt</h1>
+                <div class="search-bar" role="search" aria-label="Søk etter skoler">
+                    <div class="search-bar__field">
+                        <ds-field class="ds-field" id="addressField">
+                        <label class="ds-label ds-sr-only" for="addressSearch">Søk på adresse, skole, kommune eller postnummer</label>
+                        <div class="address-input">
+                            <ds-suggestion class="ds-suggestion" id="addressSuggestion">
+                                <input class="ds-input" type="search" id="addressSearch" enterkeyhint="search" placeholder="Adresse, skole, kommune eller postnummer" autocomplete="off" />
+                                <del aria-label="Tøm søket"></del>
+                                <u-datalist id="addressResults" data-nofilter data-sr-singular="%d treff" data-sr-plural="%d treff"></u-datalist>
+                            </ds-suggestion>
+                            <!-- "Din posisjon", like Entur and Vy: an icon in the empty field and the first suggestion when the
+                                 field gets focus. The browser asks for the position only then (see finder.js, bindLocate). -->
+                            <button type="button" class="ds-button locate-inline" data-variant="tertiary" data-size="sm" data-icon
+                                    id="locateButton" aria-label="Bruk min posisjon" data-tooltip="Bruk min posisjon" hidden><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="6.25" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="2.25" fill="currentColor"/><path d="M12 2.75V5.75M12 18.25V21.25M2.75 12H5.75M18.25 12H21.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+                        </div>
+                    </ds-field>
+                    </div>
+                    <button type="button" class="hero-button hero-button--primary finder-search__go" id="searchGo">Søk</button>
+                </div>
+                <!-- A3 / G1: the position could not be used, or the address was not chosen from the list -->
+                <div class="start-error" id="startError" role="alert" hidden></div>
+            </div>
+        </section>
+
+        <!-- The start under the search: path 2, the other ways in and «Slik hjelper vi dere» -->
+        <section class="hero" id="startPage" aria-label="Slik finner du skoler">
             <div class="hero__inner">
                 <div class="hero__main">
-                    <p class="hero__step">Steg 1 av 2</p>
-                    <h1 class="hero__title" id="searchHint">Finn en skole som passer barnet ditt</h1>
-                    <p class="hero__lead">Svar på to korte spørsmål, så viser vi skolene i nærheten og hvordan de passer for dere – også når barnet trenger tilrettelegging.</p>
-                    <div class="hero__card" role="search" aria-labelledby="whereTitle">
-                        <h2 class="hero__card-title" id="whereTitle">Hvor bor dere?</h2>
-                        <p class="hero__hint" id="whereHint">Skriv adresse, kommune eller navnet på en skole.</p>
-                        <!-- A3: the position could not be used -->
-                        <div class="start-error" id="startError" role="alert" hidden></div>
-                        <div class="search-bar__field hero__field">
-                            <ds-field class="ds-field" id="addressField">
-                            <label class="ds-label ds-sr-only" for="addressSearch">Søk på adresse, skole, kommune eller postnummer</label>
-                            <div class="address-input">
-                                <ds-suggestion class="ds-suggestion" id="addressSuggestion">
-                                    <input class="ds-input" type="search" id="addressSearch" placeholder="Adresse, skole, kommune eller postnummer" autocomplete="off" />
-                                    <del aria-label="Tøm søket"></del>
-                                    <u-datalist id="addressResults" data-nofilter data-sr-singular="%d treff" data-sr-plural="%d treff"></u-datalist>
-                                </ds-suggestion>
-                                <!-- "Din posisjon", like Entur and Vy: an icon in the empty field and the first suggestion when the
-                                     field gets focus. The browser asks for the position only then (see finder.js, bindLocate). -->
-                                <button type="button" class="ds-button locate-inline" data-variant="tertiary" data-size="sm" data-icon
-                                        id="locateButton" aria-label="Bruk min posisjon" data-tooltip="Bruk min posisjon" hidden><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="6.25" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="2.25" fill="currentColor"/><path d="M12 2.75V5.75M12 18.25V21.25M2.75 12H5.75M18.25 12H21.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
-                            </div>
-                        </ds-field>
-                        </div>
+                    <p class="hero__lead">Skriv adressen deres i søket over, så viser vi skolekretsen og skolene i nærheten.</p>
+                    <!-- Path 2 (docs/user-flow.md): choose what matters, then the schools sorted by fit -->
+                    <div class="hero__card hero__card--path">
+                        <h2 class="hero__card-title" id="pathTitle">Er noe ekstra viktig for dere?</h2>
+                        <p class="hero__hint">Velg det barnet trenger, for eksempel tilrettelegging, rullestol eller SFO/AKS etter 4. trinn. Da sorterer vi skolene etter hvor godt de passer, og viser tydelig hva vi vet og ikke vet.</p>
                         <div class="hero__actions">
-                            <button type="button" class="hero-button hero-button--primary" id="nextStep">Neste: hva er viktig for dere? <svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M9.47 5.97a.75.75 0 0 1 1.06 0l5.5 5.5a.75.75 0 0 1 0 1.06l-5.5 5.5a.75.75 0 1 1-1.06-1.06L14.44 12 9.47 7.03a.75.75 0 0 1 0-1.06Z" fill="currentColor"/></svg></button>
-                            <button type="button" class="hero-button hero-button--secondary" id="startLocate" data-locate><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="6.25" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="2.25" fill="currentColor"/><path d="M12 2.75V5.75M12 18.25V21.25M2.75 12H5.75M18.25 12H21.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Bruk min posisjon</button>
+                            <button type="button" class="hero-button hero-button--secondary" id="startPrio">Velg hva som er viktig <svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M9.47 5.97a.75.75 0 0 1 1.06 0l5.5 5.5a.75.75 0 0 1 0 1.06l-5.5 5.5a.75.75 0 1 1-1.06-1.06L14.44 12 9.47 7.03a.75.75 0 0 1 0-1.06Z" fill="currentColor"/></svg></button>
                         </div>
                     </div>
                     <button type="button" class="hero__link" id="showAllList">Jeg vil heller se alle skoler i en liste</button>
@@ -141,15 +150,9 @@
         <section class="prio" id="prioPage" aria-labelledby="prioTitle" hidden></section>
 
         <!-- A6 / A7: the band over the results (address, priorities, filters that are on) and the filter panel -->
-        <section class="search-panel results-band" id="resultsBand" aria-labelledby="bandTitle" hidden>
+        <section class="search-panel results-band" id="resultsBand" aria-label="Valg for resultatene" hidden>
             <div class="site-container">
-                <div class="results-band__title">
-                    <h1 class="results-band__h1" id="bandTitle">Skoler</h1>
-                    <button type="button" class="results-band__link" id="changeAddress">Endre adresse</button>
-                </div>
                 <div class="band-row" id="addressRow" hidden>
-                    <span class="band-row__label">Adresser:</span>
-                    <ul class="band-row__chips" id="addressChips"></ul>
                     <a class="band-row__add" id="addAddressLink" href="sammenlign-adresser#ny"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 5.25a.75.75 0 0 1 .75.75v5.25H18a.75.75 0 0 1 0 1.5h-5.25V18a.75.75 0 0 1-1.5 0v-5.25H6a.75.75 0 0 1 0-1.5h5.25V6a.75.75 0 0 1 .75-.75Z" fill="currentColor"/></svg><span>Legg til adresse (maks 3)</span></a>
                 </div>
                 <div class="band-row" id="priorityRow" hidden>
@@ -509,7 +512,7 @@
     <script defer src="static/js/ui.js?v=3"></script>
     <script defer src="static/js/priorities.js?v=4"></script>
     <script defer src="static/js/map-init.js?v=14"></script>
-    <script defer src="static/js/finder.js?v=144"></script>
+    <script defer src="static/js/finder.js?v=145"></script>
     <script defer src="static/js/main.js?v=44"></script>
 </body>
 </html>
