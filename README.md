@@ -386,7 +386,9 @@ There is no open national dataset of school districts; Matrikkelen has them, but
 `skolekretser.py` builds `static/js/skolekretser.json` from the kommuner that publish districts as open data, and Oslo (with permission):
 Halden barneskolekretser (SOSI on Geonorge, 2025) and Stavanger barne- and ungdomsskolekretser (GeoJSON, NLOD 2.0, undated). Fredrikstad's «Inntakssoner» for barne- and ungdomsskoler (Geonorge, open data, 2018) were added in
 November 2026; a search of Geonorge and data.norge.no found no open districts for Bergen, Trondheim,
-Nordre Follo or Hamar. `school_details.py` adds each matched school's krets (`skolekrets`), and the school
+Nordre Follo or Hamar. The kretser of 49 more kommuner (Bergen, Trondheim, Tromsø, Bærum, Asker, Bodø and
+others) were collected once from each kommune's own map; they are kept with their sources in
+`source-data/kommune-skolekretser.json`, and `skolekretser.py` adds them as they are. `school_details.py` adds each matched school's krets (`skolekrets`), and the school
 page draws it on its map with the source.
 
 ### Contact, saved schools

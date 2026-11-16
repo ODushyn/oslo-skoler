@@ -160,5 +160,20 @@ class MatchSchoolsTest(unittest.TestCase):
         self.assertEqual(unmatched, ['Privat (Halden, barneskole)'])
 
 
+class SavedKommunerTest(unittest.TestCase):
+    def test_kretser_and_sources_are_added(self):
+        saved = {'kommuner': {'Bergen': {'levels': ['barneskole'], 'source': 'Bergen kommune'}},
+                 'kretser': [{'kommune': 'Bergen', 'level': 'barneskole', 'name': 'Ny-Krohnborg',
+                              'school': 'Ny-Krohnborg skole', 'rings': [SQUARE]}]}
+        with tempfile.TemporaryDirectory() as folder, mock.patch.dict(sk.SOURCES, clear=False):
+            path = Path(folder) / 'saved.json'
+            path.write_text(json.dumps(saved), encoding='utf-8')
+            self.assertEqual(sk.saved_kommuner(path), saved['kretser'])
+            self.assertEqual(sk.SOURCES['Bergen']['source'], 'Bergen kommune')
+
+    def test_missing_file_gives_nothing(self):
+        self.assertEqual(sk.saved_kommuner(Path('no-such-file.json')), [])
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -21,6 +21,10 @@ Searched and not found as open data (Geonorge and data.norge.no, November 2026):
 Trondheim, Nordre Follo, Hamar and the other kommuner. Oslo's barneskolekretser come from the WFS
 of Plan- og bygningsetaten, used with permission (see OSLO_WFS below).
 
+The kretser of 49 more kommuner (Bergen, Trondheim, Tromsø, Bærum, Asker, Bodø and others) were collected
+once from each kommune's own map and are kept, with their sources, in source-data/kommune-skolekretser.json.
+They are added as they are and not fetched again.
+
 Oslo's ungdomsskolekretser are joined from the barneskolekretser with Oslo kommune's feeder list
 (cached-data/ungdomsskole-oslo.json). Each krets gets the postnummer that cover at least 10 % of it
 (Kartverket's postnummerområder), for the housing search links to Finn.no. Needs static/js/school-data.json
@@ -567,6 +571,21 @@ def oslo_ungdomsskolekretser(kretser):
     return result
 
 
+SAVED_FILE = Path('source-data/kommune-skolekretser.json')
+
+
+def saved_kommuner(path=SAVED_FILE):
+    """The other kommuners kretser, collected once from each kommune's own map and kept in source-data.
+
+    They already name their school and are not fetched again here; the file holds their sources too."""
+    if not path.exists():
+        return []
+    data = json.loads(path.read_text(encoding='utf-8'))
+    SOURCES.update(data['kommuner'])
+    print(f"Saved kretser: {len(data['kretser'])} in {len(data['kommuner'])} kommuner, from {path}")
+    return data['kretser']
+
+
 def main():
     kretser = halden() + stavanger() + fredrikstad() + oslo() + nordre_follo()
     unmatched = match_schools(kretser)
@@ -574,6 +593,7 @@ def main():
     if any(k['kommune'] == 'Oslo' and k['level'] == 'ungdomsskole' for k in kretser):
         SOURCES['Oslo'].update(levels=['barneskole', 'ungdomsskole'], caveat=OSLO_CAVEAT)
     add_postnummer(kretser)
+    kretser += saved_kommuner()
     OUTPUT.write_text(json.dumps({'kommuner': SOURCES, 'kretser': kretser}, ensure_ascii=False, separators=(',', ':')),
                       encoding='utf-8')
     print(f"Saved {len(kretser)} skolekretser to {OUTPUT} ({OUTPUT.stat().st_size // 1024} kB)")
