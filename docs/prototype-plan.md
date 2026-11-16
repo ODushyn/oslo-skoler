@@ -294,3 +294,10 @@ J1 Meny (321:34099) 🟡, J2 Visning, J3 Språk, J4 Filter, J5 Sorter, J6 Endre 
 - Tekster: filteret («Landssnittet – 55», «45 – landssnittet»), Snitt-hjelpen (tallene fra dataene), Om fargefordelingen (nye andeler 46,9 % / 44,8 %, nye rader i tabellen, ny begrunnelse).
 - 2 924 sider under skoler/ lastet shared.js?v=28; nå v=37 overalt.
 - Fortsatt åpent: GSI-året vises ikke ved norsk-tallene når det er eldre enn siste år.
+
+### 2026-11-16 – main flettet inn, språkbytte beholder søket
+
+- origin/main (Nordre Follo og 49 nye kommuner med skolekretser, tester og CI, 404-side, tilgjengelighetsgjennomgangen 6. november) er flettet inn. Vår design og logikk er beholdt; fra main er tatt: statisk bunntekst, `sameKommune` i kretsoppslaget, skjermleserteller for listen, `labelParts` på skolesiden, kartfeilmelding, `defer` på skriptene, WCAG 2.2.
+- Sidene under skoler/ er bygd på nytt med site_pages.py; school-data.json med create_map.py.
+- Språkbytte: lenken får adressen i det øyeblikket den brukes, og på forsiden kommer adresse, steg, prioriteringer og kart tilbake etter byttet (sessionStorage, som «Tilbake»). Prioriteringer på steg 2 skrives i adressen med en gang. Båndet over resultatene tegnes på nytt etter gjenoppretting (gjaldt også «Tilbake»).
+- Tester: nye JS-tester for `scoreBand`, `trivselWord`, `levelNumbers`; test for trivsel med landstall.

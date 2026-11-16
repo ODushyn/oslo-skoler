@@ -18,14 +18,14 @@ To give parents, students, and anyone interested a clear, geographic overview of
 - **Two school types** displayed: barneskole (5. trinn) and ungdomsskole
 - **Colour scale** based on the official national average (50 ± 10):
   - 🔴 **Red** `< 45` — significantly below national average
-  - 🟠 **Orange** `45–49` — below national average
-  - 🟢 **Light green** `50–54` — above national average
+  - 🟠 **Orange** `45–49.31` — below the average of the schools (49.31)
+  - 🟢 **Light green** `49.31–55` — above the average of the schools
   - 🟢 **Dark green** `≥ 55` — significantly above national average
   - ⚪ **Grey** — no data available
 - **School popup** showing current-year scores (Engelsk, Lesing, Regning) plus a year-by-year history table
 - **Search** by school name across all schools
 - **Legend panel** with explanation of the colour scale and school-district (_skolekrets_) links
-- **Feedback form** (Formspree) accessible directly from the toolbar
+- **Feedback**: the page `tilbakemelding.html` (Formspree) and the question "Fant du det du lette etter?" on every page
 - **Multi-year support** — new data for each school year is added on top; previous years stay as historical data in every popup
 
 ---
@@ -34,7 +34,7 @@ To give parents, students, and anyone interested a clear, geographic overview of
 
 ### Data Source
 
-All school performance data comes from **[skoleporten.udir.no](https://skoleporten.udir.no)** — the official Norwegian directorate for education. Data is exported as CSV and covers:
+All national test results come from **Udir's statistikkbank** (Utdanningsdirektoratet, NLOD). Data is exported as CSV and covers:
 
 - `Engelsk` — English test score
 - `Lesing` — Reading test score
@@ -100,7 +100,10 @@ with "Run workflow". It checks the sources whose numbers can change during the y
   `OppdatertDatoTid` for table 148 or 150 is newer than at the last check.
 - **Nasjonalt skoleregister**: downloaded every night (`nsr.py --refresh`).
 
-When a source has changed, it runs `create_map.py`, `school_details.py` and `site_pages.py`. The workflow
+When a source has changed, it runs `create_map.py`, `school_details.py` and `site_pages.py`.
+Not checked nightly, and refreshed by hand: GSI (`python gsi.py --refresh`, new numbers each December),
+skolekretser (`python skolekretser.py`, which fetches Oslo's from PBE) and Oslo's feeder list
+(`python ungdomsskole_oslo.py --refresh`). Run `create_map.py`, `school_details.py` and `site_pages.py` after them. The workflow
 commits the changed data and pages, and GitHub Pages publishes them. `static/js/data-status.json` holds the day the sources were last checked
 (shown in the footer: "Tallene ble sist sjekket mot kildene …") and the day each source last changed. If a
 source cannot be reached, the old data stays, the check date is not moved, and the workflow run fails.
@@ -136,8 +139,8 @@ A full-screen map like the kommunes' own map services, with open data only:
   remove the drawings, change the background map (OpenFreeMap or Kartverket's topographic map, CC BY 4.0),
   zoom. A hint at the bottom says what to do, shows the result so far and has Ferdig / Angre siste punkt / Avbryt.
 - Search: schools by name (videregående too) and addresses (Kartverket). An address shows its bydel in Oslo and,
-  where the kommune has published them (Halden, Stavanger, Fredrikstad), its skolekretser, drawn on the map;
-  in Oslo links to the kommune's own lookup, elsewhere to the kommune. The map's place is kept in the address (`#lat,lng,zoom`).
+  where we have them (Halden, Stavanger, Fredrikstad, Oslo), its skolekretser, drawn on the map, with links to
+  housing search on Finn.no for the krets' postnummer; elsewhere a link to the kommune. The map's place is kept in the address (`#lat,lng,zoom`).
 
 The page's CSP also allows images from `cache.kartverket.no` and `wms.geonorge.no`. It is in the menu under
 "Finn skole" and in `sitemap.xml`.
@@ -252,7 +255,7 @@ scripts run.
 Google Analytics (G-HHMNN59GDS) was removed from all pages in November 2026: it set cookies without
 consent. The site sets no cookies; language, theme, saved schools (localStorage) and the searched address
 for the walking time (sessionStorage, this tab only) stay in the browser. If statistics are needed again,
-add a consent banner first and say so under Personvern on datakilder.html.
+add a consent banner first and say so on personvern.html.
 
 ### Themes (`static/js/theme.js`)
 
@@ -265,7 +268,7 @@ Grønn (the Designsystemet theme, the default; also in each page's `<link id="ds
 belongs to them. The site uses the theme's `brand1` colour (`data-color="brand1"` on `<html>`,
 `--ds-color-brand1-*` in `styles.css`). The brand themes set IBM Plex Mono as font; `styles.css` keeps Inter.
 The choice is kept in localStorage (`skolekartet.tema`). Score colours
-(red/yellow/green) do not change.
+(red/orange/green) do not change.
 
 ### Ny i Norge (newly arrived families)
 
@@ -276,8 +279,7 @@ alfabetiseringsgruppe, and how many places in total, from Oslo kommune's page "T
 elever". Only school names, group type, level and number of places are stored (`cached-data/velkomst.json`);
 `school_details.py` adds them to each school's detail file. Refresh with `python velkomst.py --refresh`.
 
-There is no open per-school dataset for the share of pupils with særskilt norskopplæring (GSI):
-Udir's open API only has Elevundersøkelsen, and Skoleporten no longer exists.
+The school page shows the share of pupils with forsterket opplæring i norsk from GSI (see `gsi.py` above).
 
 ### Next school after year 7 (Oslo)
 
@@ -340,12 +342,11 @@ school; nothing is read from page text or PDFs.
   ended in 2024) are written in our own words with links, checked on oslo.kommune.no 2 November 2026.
 `school_details.py` adds `anlegg` and `devices` to the per-school files.
 
-### Nearest schools for an address without skolekrets data (Oslo and others)
+### Nearest schools for an address without skolekrets data
 
-Where no open skolekrets data exists (Oslo included), the address search shows the nearest public
+Where we have no skolekrets data, the address search shows the nearest public
 barneskole and ungdomsskole in the same cards as the krets pilot (bookmark, "Del", "Vis på kartet"), titled
-"Nærmeste offentlige skoler", with a note that the kommune decides the krets and, for Oslo, links to
-Oslo kommune's own lookup. These cards never claim that the address belongs to the school.
+"Nærmeste offentlige skoler", with a note that the kommune decides the krets. These cards never claim that the address belongs to the school.
 
 ### One search field
 
@@ -369,26 +370,25 @@ walking time from it. The page's CSP allows `wfs.geonorge.no` for this.
 lette etter?" and sends Ja/Nei, then optional text, to the same Formspree form as tilbakemelding.html.
 The page is sent without the hash. Formspree's free plan allows 50 submissions a month.
 
-### Skolekrets Pilot (Halden, Stavanger, Fredrikstad)
+### Skolekrets Pilot (Halden, Stavanger, Fredrikstad, Oslo)
 
-Oslo is not in the pilot: the school district layer in Oslo kommune's own maps comes from Geodata AS'
-commercial "GeomapUtdanning" service (districts computed from Matrikkelen), shared through a credential
-proxy. It is not open data and must not be used here. For Oslo addresses the note links to Oslo kommune's
-own "Finn barneskole" and "Finn ungdomsskole" lookups.
-
-If Oslo kommune delivers its school districts (for example after a written permission), save them as
-`source-data/oslo-skolekretser.geojson`: a GeoJSON FeatureCollection in WGS84 with one Polygon or
-MultiPolygon per krets, the school's name in `properties.name` and, for ungdomsskole districts,
-`properties.level = "ungdomsskole"`. Then run `python skolekretser.py`; Oslo is added with the source
-"Oslo kommune, skolekretser (brukt med tillatelse)", and the address search looks it up like Halden and
-Stavanger. Keep the written permission. The data must not be taken from Oslo kommune's own lookup with
-the access key on their page: that is not an open service.
+Oslo's barneskolekretser come from Plan- og bygningsetaten's WFS (`od2.pbe.oslo.kommune.no`, layer
+`Skolekretser_f`), used with permission from the kommune and credited «Plan- og bygningsetaten, Oslo kommune».
+`skolekretser.py` fetches them (an optional key is read from `PBE_WFS_KEY`, never written in the repo) and saves
+`source-data/oslo-skolekretser.geojson` as a fallback. Oslo has no ungdomsskolekretser of its own: the
+barneskole decides the ungdomsskole, so the script joins the barneskolekretser that lead to each ungdomsskole,
+using `cached-data/ungdomsskole-oslo.json`; the seven barneskoler that split by address are in both and marked
+`split`, with Oslo kommune's boundary map. Each krets gets the postnummer that cover at least 10 % of it
+(Kartverket's postnummerområder), used for the links to housing search on Finn.no. Run `ungdomsskole_oslo.py`
+and `create_map.py` before `skolekretser.py`.
 
 There is no open national dataset of school districts; Matrikkelen has them, but only under agreement with Kartverket.
-`skolekretser.py` builds `static/js/skolekretser.json` from the kommuner that publish districts as open data:
+`skolekretser.py` builds `static/js/skolekretser.json` from the kommuner that publish districts as open data, and Oslo (with permission):
 Halden barneskolekretser (SOSI on Geonorge, 2025) and Stavanger barne- and ungdomsskolekretser (GeoJSON, NLOD 2.0, undated). Fredrikstad's «Inntakssoner» for barne- and ungdomsskoler (Geonorge, open data, 2018) were added in
-November 2026; a search of Geonorge and data.norge.no found no open districts for Oslo, Bergen, Trondheim,
-Nordre Follo or Hamar. `school_details.py` adds each matched school's krets (`skolekrets`), and the school
+November 2026; a search of Geonorge and data.norge.no found no open districts for Bergen, Trondheim,
+Nordre Follo or Hamar. The kretser of 49 more kommuner (Bergen, Trondheim, Tromsø, Bærum, Asker, Bodø and
+others) were collected once from each kommune's own map; they are kept with their sources in
+`source-data/kommune-skolekretser.json`, and `skolekretser.py` adds them as they are. `school_details.py` adds each matched school's krets (`skolekrets`), and the school
 page draws it on its map with the source.
 
 ### Contact, saved schools
@@ -399,16 +399,16 @@ page draws it on its map with the source.
 - "Lagre til senere": the bookmark on the school cards and in the school banner saves the school's key in
   localStorage (`skolekartet.lagrede`), only in this browser. "Lagrede skoler" in the header (all pages, with
   a count) opens them in the list and on the map (`?lagrede=1`); "Vis alle skoler" above the list goes back.
-  On phones the header keeps logo, saved schools, theme and language; the info pages are in the footer.
-The address search shows the krets, outlines it on the map and marks the school as "Skolekrets (pilot)".
-A check in the script confirms every matched school lies inside its own krets.
+  On phones the header keeps logo, saved schools, Meny and language; the info pages are in the footer.
 
 ### Filters on phones and the active-filter chips
 
 The filters are a Designsystemet Dialog (full width on phones) with "Vis N skoler", which counts as you choose.
 The filters that are on show as removable chips under the search ("Oslo ✕", "Offentlig ✕", the chosen score
 colours; Trivsel and Mobbing keep their word); a chip's ✕ sets that group back, and with two or more filters
-on, "Fjern alle" after the chips removes them all. The national tests are only in the panel (first, on a
+on, "Fjern alle" after the chips removes them all. Besides the national tests, school type, owner, kommune and
+profile, the panel filters on Trivsel, Mobbing, Lærertetthet and Forsterket opplæring i norsk (both from GSI);
+those four chips keep their word. The national tests are only in the panel (first, on a
 light green background, with a link to "Om fargefordelingen"); there is no separate button for them. The open panel is a step in the browser's history (`history.pushState`), so the
 phone's back button closes it; closing it any other way takes that step back. On phones the list head (title,
 sort) sticks to the top while the list scrolls, and shows a filter button with the number of filters on once
@@ -446,33 +446,34 @@ Opens the site on http://localhost:8000. Unlike `python3 -m http.server`, it tel
 
 ### Prerequisites
 
-- Python 3.7+
+- Python 3.8+ (the nightly workflow uses 3.12)
 - `pip install -r requirements.txt`
 
 ### Project Structure
 
 ```
 oslo-skoler/
-├── import_exam_result.py          # ⭐ Main annual-update script (run this each year)
-├── create_csv_with_coordinates.py # Geocodes a source CSV → processed-data/
-├── create_map.py                  # Builds static/js/school-data.json from processed CSVs
-├── geo.py                         # Geocoding utilities + cache logic
+├── import_exam_result.py   # ⭐ Annual import of nasjonale prøver (run each year)
+├── create_map.py           # Builds static/js/school-data.json
+├── school_details.py       # One detail file per school: static/data/skoler/<orgnr>.json
+├── site_pages.py           # Static school and kommune pages under skoler/ and sitemap.xml
+├── update_data.py          # Nightly refresh (Elevundersøkelsen, NSR), run by .github/workflows/
+├── gsi.py, elevundersokelsen.py, nsr.py, school_locations.py, skolekretser.py,
+│   ungdomsskole_oslo.py, … # One script per source, each caching to cached-data/
+├── check_i18n.py           # Checks that every English text has a Ukrainian one
+├── dev_server.py           # Local server without caching
 │
-├── source-data/                   # Raw UDIR exports (one CSV per school type per year)
-├── processed-data/                # Geocoded CSVs (generated, do not edit manually)
-├── cached-data/
-│   └── skoler-geo-coordinates.csv # Geocoding cache (commit this file)
-│
+├── source-data/            # Raw Udir exports and other delivered files
+├── processed-data/         # Geocoded CSVs (generated)
+├── cached-data/            # Downloaded source data (commit these)
 ├── static/
-│   ├── js/
-│   │   ├── school-data.json       # Generated map data (commit this file)
-│   │   ├── main.js                # App logic (search, modals, feedback form)
-│   │   ├── map-init.js            # Leaflet map initialisation
-│   ├── css/styles.css
-│   └── templates/info-modal.html  # Legend, modals, feedback form HTML
-│
-├── index.html                     # Entry point served by GitHub Pages
-├── CNAME                          # Custom domain: skolekartet.no
+│   ├── js/                 # finder.js, main.js (front page), kart.js, school-page.js, shared.js,
+│   │                       # layout.js, i18n.js, i18n-uk.js, and the generated JSON data
+│   ├── data/skoler/        # Generated per-school detail files
+│   └── css/styles.css
+├── skoler/                 # Generated static pages for search engines
+├── index.html, kart.html, skole.html and the info pages
+├── CNAME                   # Custom domain: skolekartet.no
 ├── robots.txt
 └── sitemap.xml
 ```
@@ -488,13 +489,13 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-Open `index.html` in a browser — the map works immediately from the committed `school-data.json`.
+Run `python3 dev_server.py` and open http://localhost:8000. Opening `index.html` as a file does not work, because the browser does not fetch JSON from `file://`.
 
 ### Adding a New School Year
 
 When UDIR publishes new data (typically February–March each year):
 
-**1. Download the two CSV exports from [skoleporten.udir.no](https://skoleporten.udir.no)**
+**1. Download the two CSV exports from Udir's statistikkbank**
 - Nasjonale prøver → 5. trinn → export as CSV → save to `source-data/`
 - Nasjonale prøver → ungdomstrinn → export as CSV → save to `source-data/`
 
@@ -515,11 +516,14 @@ This single command:
 4. Updates `CURRENT_YEAR` in `create_map.py`
 5. Regenerates `static/js/school-data.json`
 
+Then run `python school_details.py` and `python site_pages.py`, so the detail files and static pages get the new year.
+
 **3. Verify and commit**
 
 ```bash
-# Open index.html in a browser and check the map looks correct
-git add processed-data/ static/js/school-data.json create_map.py cached-data/
+# Run python3 dev_server.py and check the map at http://localhost:8000
+git add processed-data/ static/js/school-data.json static/js/landssnitt.json static/js/kommunesnitt.json \
+    static/data skoler sitemap.xml create_map.py cached-data/
 git commit -m "Add 2026-27 school year data"
 git push
 ```

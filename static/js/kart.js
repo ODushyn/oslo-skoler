@@ -41,6 +41,7 @@
     const map = L.map('toolMap', { zoomControl: false, maxZoom: MAX_ZOOM, zoomSnap: 0.5 })
         .setView(start, Number.isFinite(zoom) ? zoom : 12);
     map.attributionControl.setPrefix(false);
+    keyboardPopupFocus(map);
     let baseName = 'openfreemap';
     let baseLayer = BASE_MAPS[baseName]().addTo(map);
     map.on('moveend', () => {
@@ -88,7 +89,7 @@
                 html: `<span class="school-marker score-${scoreCategory(school.color)}">${schoolTypeIcon(school.schoolType)}</span>`,
                 className: 'school-marker-icon', iconSize: [size, size], iconAnchor: [size / 2, size / 2], popupAnchor: [0, -size / 2]
             }),
-            title: `${school.name}, ${SCHOOL_TYPE_LABEL[school.schoolType] || school.schoolType}`,
+            title: `${school.name}, ${SCHOOL_TYPE_LABEL[school.schoolType] || school.schoolType}, ${scoreTitle(school)}`,
             fillColor: school.color
         });
         return marker.bindPopup(() => schoolPopup(school), { maxWidth: 300 });
@@ -146,10 +147,11 @@
 
     // ── Boundaries ───────────────────────────────────────────────────────
     const boundaryLayers = {};
-    async function kretsLayer() {
+    // One layer per school level, so barneskole and ungdomsskole kretser can be shown apart
+    async function kretsLayer(level) {
         const kretser = await loadKretser();
         const color = getComputedStyle(document.documentElement).getPropertyValue('--ds-color-brand1-base-default').trim() || '#0d7a5f';
-        return L.layerGroup(kretser.kretser.map(k => L.polygon(
+        return L.layerGroup(kretser.kretser.filter(k => k.level === level).map(k => L.polygon(
             k.rings.map(ring => ring.map(([x, y]) => [y, x])),
             { color, weight: 2, dashArray: k.level === 'barneskole' ? '6 4' : '2 6', fillOpacity: k.level === 'barneskole' ? 0.06 : 0 }
         ).bindTooltip(`${escapeHtml(k.name || k.school || '')} (${escapeHtml(k.kommune)})`, { sticky: true })));
@@ -182,7 +184,11 @@
     map.on('zoomend', markFar);
     markFar();
 
-    const BOUNDARY_DATA = { skolekretser: kretsLayer, bydeler: bydelLayer };
+    const BOUNDARY_DATA = {
+        'kretser-barneskole': () => kretsLayer('barneskole'),
+        'kretser-ungdomsskole': () => kretsLayer('ungdomsskole'),
+        bydeler: bydelLayer,
+    };
 
     async function setLayer(name, on) {
         if (!schoolLayers[name] && SCHOOL_DATA[name]) schoolLayers[name] = await SCHOOL_DATA[name]();
@@ -207,15 +213,21 @@
     });
 
     // The layer panel opens under its button; Esc or the close button closes it
-    // The skolekrets layer names the kommuner in skolekretser.json, read when the panel first opens
+    // Each skolekrets layer names the kommuner that have kretser for its level, read when the panel first opens
     let kretsLabelDone = false;
+    const KRETS_LABELS = {
+        barneskole: 'Skolekretser for barneskoler ({kommuner})',
+        ungdomsskole: 'Skolekretser for ungdomsskoler ({kommuner})',
+    };
     async function labelKretsLayer() {
         kretsLabelDone = true;
-        const kommuner = Object.keys((await loadKretser()).kommuner)
-            .sort((a, b) => (b === 'Oslo') - (a === 'Oslo'));
-        if (!kommuner.length) return;
-        el('kretsLayerLabel').textContent = t('Skolekretser ({kommuner})', { kommuner: kommuner.join(', ') });
-        el('kretsOsloNote').hidden = kommuner.includes('Oslo');
+        const all = Object.entries((await loadKretser()).kommuner);
+        for (const [level, text] of Object.entries(KRETS_LABELS)) {
+            const kommuner = all.filter(([, info]) => info.levels.includes(level)).map(([name]) => name)
+                .sort((a, b) => (b === 'Oslo') - (a === 'Oslo'));
+            const label = document.querySelector(`[data-krets-label="${level}"]`);
+            if (label && kommuner.length) label.textContent = t(text, { kommuner: kommuner.join(', ') });
+        }
     }
     const setLayersPanel = open => {
         if (open && !kretsLabelDone) labelKretsLayer();
@@ -252,7 +264,10 @@
             return `<li><button type="button" class="map-search__item" data-i="${i}">${text}</button></li>`;
         }).join('') + (failed ? message('Adressesøket er ikke tilgjengelig akkurat nå') : empty && !items.length ? message('Ingen treff') : '');
         results.hidden = !results.innerHTML;
-        input.setAttribute('aria-expanded', String(!results.hidden));
+        // How many hits, said once; the hits are buttons right after the field (Tab or arrow down)
+        const hits = items.filter(item => item.kind !== 'locate').length;
+        el('mapSearchStatus').textContent = failed ? t('Adressesøket er ikke tilgjengelig akkurat nå')
+            : !input.value.trim() ? '' : hits === 1 ? t('1 treff') : hits ? t('{count} treff', { count: hits }) : t('Ingen treff');
     }
 
     // Schools by name (a 1–10 skole is one hit), videregående skoler and kommuner, best matches first
@@ -417,7 +432,7 @@
         ['barneskole', 'ungdomsskole'].forEach(level => {
             const own = hits.filter(k => k.level === level);
             own.forEach(k => {
-                const school = k.school && data.schools.find(s => s.name === k.school && s.kommune === k.kommune && s.schoolType === level);
+                const school = k.school && data.schools.find(s => s.name === k.school && sameKommune(s.kommune, k.kommune) && s.schoolType === level);
                 lines.push(schoolLine(level === 'barneskole' ? 'Barneskolen adressen hører til' : 'Ungdomsskolen adressen hører til',
                     k.school || k.name, null, school && more(school)));
                 addressKretser.addLayer(L.polygon(k.rings.map(ring => ring.map(([x, y]) => [y, x])),
@@ -462,6 +477,7 @@
         distance: 'Klikk i kartet for hvert punkt på strekningen. Trykk Ferdig når du er ferdig.',
         area: 'Klikk i kartet for hvert hjørne av området. Trykk Ferdig når du er ferdig.'
     };
+    const KEYBOARD_TEXT = 'Med tastatur: flytt kartet med piltastene og trykk Enter for å sette et punkt der krysset er.';
 
     function startMode(next) {
         finishMode(true);
@@ -471,7 +487,7 @@
         el(MODE_BUTTON[mode]).setAttribute('aria-pressed', 'true');
         map.doubleClickZoom.disable();
         map.getContainer().classList.add('is-drawing');
-        showHint(t(MODE_TEXT[mode]), '', { done: true });
+        showHint(`${t(MODE_TEXT[mode])} ${t(KEYBOARD_TEXT)}`, '', { done: true });
     }
 
     // Ends the tool: keeps the shape (with its measurement) or, with `cancel`, drops it
@@ -507,6 +523,13 @@
     map.on('click', event => {
         if (!mode) return;
         points.push(event.latlng);
+        redraw();
+    });
+    // Keyboard: with the map focused, Enter or Space sets a point at the middle of the map (marked by a cross)
+    map.getContainer().addEventListener('keydown', event => {
+        if (!mode || event.target !== map.getContainer() || !['Enter', ' '].includes(event.key)) return;
+        event.preventDefault();
+        points.push(map.getCenter());
         redraw();
     });
     map.on('mousemove', event => {

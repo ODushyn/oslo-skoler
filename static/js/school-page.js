@@ -376,6 +376,8 @@
     renderWalk(rememberedAddress());
     bindStatTabs();
     bindToc();
+    labelParts();
+    new MutationObserver(() => requestAnimationFrame(labelParts)).observe(root, { childList: true, subtree: true });
     root.querySelector('.school-head__save').addEventListener('click', event => {
         updateSaveButton(event.currentTarget, toggleSaved(schoolKey(school)));
     });
@@ -585,11 +587,45 @@
     // Wider screens: tabs, the chosen card's details below the row of cards. Phones: each card opens its details
     // right under itself (an arrow shows open or closed); tapping it again closes them, tapping another card
     // opens that one and closes the first.
+    // Screen readers: each stat tab is described by its explanation and source, and each table is named by
+    // the heading above it and described by the note under it. Runs again when parts of the page are filled in.
+    function labelParts() {
+        document.querySelectorAll('.school-stat[role="tab"], .school-stat[aria-controls]').forEach(tab => {
+            const id = tab.id.replace(/^tab-/, '');
+            const parts = [...tab.querySelectorAll(`[data-describe="${id}"]`)];
+            parts.forEach((part, i) => { if (!part.id) part.id = `tab-${id}-d${i}`; });
+            if (parts.length) tab.setAttribute('aria-describedby', parts.map(part => part.id).join(' '));
+        });
+        let n = 0;
+        root.querySelectorAll('table').forEach(table => {
+            if (table.hasAttribute('aria-labelledby') || table.querySelector('caption')) return;
+            const box = table.closest('.table-scroll') || table;
+            let heading = box.previousElementSibling;
+            while (heading && !/^H[2-4]$/.test(heading.tagName)) heading = heading.previousElementSibling;
+            const note = box.nextElementSibling && box.nextElementSibling.classList.contains('table-caption') ? box.nextElementSibling : null;
+            n += 1;
+            if (heading) {
+                if (!heading.id) heading.id = `table-heading-${Date.now().toString(36)}-${n}`;
+                table.setAttribute('aria-labelledby', heading.id);
+            }
+            if (note) {
+                if (!note.id) note.id = `table-note-${Date.now().toString(36)}-${n}`;
+                table.setAttribute('aria-describedby', note.id);
+            }
+        });
+    }
+
     function statTab(id, title, content, selected) {
+        // The tab's name is the title and the value; the explanation and the source are its description,
+        // so a screen reader does not read 30 words on every arrow key
+        const body = content
+            .replace('class="school-stat__value"', `class="school-stat__value" id="tab-${id}-value"`)
+            .replace(/class="school-stat__(text|compare|source)"/g, (match, part) => `class="school-stat__${part}" data-describe="${id}"`);
         return `<button type="button" class="ds-card school-stat" data-variant="tinted" data-color="${selected ? 'brand1' : 'neutral'}" role="tab" id="tab-${id}"
-                    aria-selected="${selected}" aria-controls="panel-${id}" tabindex="${selected ? 0 : -1}">
-                    <span class="school-stat__title">${title}</span>
-                    ${content}
+                    aria-selected="${selected}" aria-controls="panel-${id}" tabindex="${selected ? 0 : -1}"
+                    aria-labelledby="tab-${id}-title tab-${id}-value">
+                    <span class="school-stat__title" id="tab-${id}-title">${title}</span>
+                    ${body}
                     <span class="school-stat__chevron" aria-hidden="true">${icon('chevronDown')}</span>
                 </button>`;
     }
@@ -1419,7 +1455,7 @@
         kretsBounds = layer.getBounds();
         if (!walkLayer) drawWalk(null);
         const caption = document.getElementById('kretsCaption');
-        caption.innerHTML = `${t('Den stiplede linjen viser skolekretsen ({name}). Pilot på åpne data, kan avvike fra kommunens gjeldende grenser.', { name: escapeHtml(own[0].name) })}
+        caption.innerHTML = `${t('Den stiplede linjen viser skolekretsen ({name}). Dette er en pilot og kan avvike fra kommunens gjeldende grenser.', { name: escapeHtml(own[0].name) })}
             ${t('Kilde:')} <a class="ds-link" href="${escapeHtml(safeUrl(info.sourceUrl))}" target="_blank" rel="noopener">${escapeHtml(t(info.source))}</a>.
             <a class="ds-link" href="${I18N.href('om-skolekrets')}#pilot">${t('Om skolekretsdataene')}</a>`;
         caption.hidden = false;

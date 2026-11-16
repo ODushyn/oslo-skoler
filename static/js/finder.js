@@ -59,6 +59,7 @@ const Finder = (() => {
     let map, cluster, entries = [], filtered = [];
     let addressMarker = null;
     let keepList = false;   // true after a school was picked from the list, until the user moves the map
+    let announceList = true;   // say the list's count once after the next render (see renderList)
     let listBounds = null;  // the map area the list was last built from
     let searchItems = [];   // what the search list shows: schools, kommuner, a postnummer and addresses
     let addressAbort = null;
@@ -244,6 +245,7 @@ const Finder = (() => {
         update();
         el('prioPage').querySelectorAll('input[type=checkbox]').forEach(box => box.addEventListener('change', () => {
             if (box.checked) state.priorities.add(box.value); else state.priorities.delete(box.value);
+            writeUrlState();   // in the address at once, so a language change or a reload keeps the choice
             fitCache = new Map();
             update();
         }));
@@ -355,6 +357,7 @@ const Finder = (() => {
         map.on('dragstart', () => { keepList = false; });
         ['pointerdown', 'wheel', 'keydown'].forEach(type => map.getContainer().addEventListener(type, releaseList, { passive: true }));
 
+        keyboardPopupFocus(map);
         // Keep the open school in the URL so a shared link opens the same school
         map.on('popupopen', event => {
             const marker = event.popup._source;
@@ -426,6 +429,8 @@ const Finder = (() => {
             picked: keepList ? (document.querySelector('#schoolList .school-card[aria-current]') || {}).dataset?.key || null : null,
             sort: state.sort,
             school: state.school,
+            // Which of the three screens was shown (start, «Hva er viktig», results): a language change keeps it
+            step: state.step,
             address: state.address ? { label: state.address.label, lat: state.address.lat, lng: state.address.lng, kommune: state.address.kommune, postnummer: state.address.postnummer } : null,
             scrollY: window.scrollY
         };
@@ -491,6 +496,13 @@ const Finder = (() => {
                 cluster.zoomToShowLayer(entry.marker, () => entry.marker.openPopup());
             }
         }
+        // The screen that was shown, when it was not the results (a language change on step 1 or 2)
+        if (['start', 'prio'].includes(view.step) && view.step !== state.step) {
+            showStep(view.step);
+            history.replaceState({ ...(history.state || {}), step: state.step }, '', location.href);
+        }
+        // The band over the results was drawn before the address came back: draw it again with the address
+        else if (state.step === 'results') renderBand();
         // Again once the skolekrets cards (loaded after the address) are in place
         const scroll = () => window.scrollTo(0, view.scrollY || 0);
         requestAnimationFrame(scroll);
@@ -688,6 +700,7 @@ const Finder = (() => {
             state.sort = item.dataset.sort;
             state.shown = PAGE_SIZE;
             showSort(state.sort);
+            announceList = true;
             renderList();
             writeUrlState();
         });
@@ -984,6 +997,7 @@ const Finder = (() => {
     }
 
     function applyFilters() {
+        announceList = true;
         filtered = entries.filter(passes);
         cluster.clearLayers();
         cluster.addLayers(filtered.map(e => e.marker));
@@ -1070,6 +1084,19 @@ const Finder = (() => {
         return list.sort((a, b) => a.distance - b.distance);
     }
 
+    // The list is drawn again after a bookmark is pressed: keyboard focus goes back to the same bookmark,
+    // or to the list heading when the school has left the list (the saved list)
+    function refocusSave(key) {
+        const again = [...document.querySelectorAll('#kretsNote button[data-save], #schoolList button[data-save]')]
+            .find(button => button.dataset.save === key);
+        if (again) again.focus();
+        else {
+            const heading = el(state.savedOnly ? 'savedTitle' : 'resultsTitle');
+            heading.tabIndex = -1;
+            heading.focus();
+        }
+    }
+
     // Render again without letting go of a list that is held after a pick from it
     function refreshList() {
         const held = keepList;
@@ -1093,6 +1120,7 @@ const Finder = (() => {
     }
 
     function setSavedOnly(on) {
+        announceList = true;
         state.savedOnly = on;
         if (on && state.step !== 'results') showStep('results');
         state.shown = PAGE_SIZE;
@@ -1321,6 +1349,12 @@ const Finder = (() => {
         el('toolbarText').dataset.short = state.address && !state.address.postnummer
             ? t('{count} skoler innen {km} km', { count, km: radiusKm }) : t('{count} skoler', { count });
         const nearest = state.address && state.sort === 'fit' ? null : (state.address && visible[0]);
+        // Screen readers hear the new count once, after a choice; moving the map does not repeat it
+        if (announceList) {
+            const own = !el('kretsNote').hidden && el('kretsNote').querySelector('.own-school__name');
+            el('listStatus').textContent = [own ? `${t('Skolekrets for adressen')}: ${own.textContent}` : '', el('resultsTitle').textContent].filter(Boolean).join('. ');
+            announceList = false;
+        }
         el('schoolList').innerHTML = total === 0 && !state.savedOnly && !kretsEntries.size
             ? emptyStateHtml()
             : visible.map((e, i) => schoolCard(e, ref, i, nearest === e)).join('');
@@ -1331,7 +1365,10 @@ const Finder = (() => {
         el('schoolList').querySelectorAll('.school-card__save').forEach(button => {
             button.addEventListener('click', () => {
                 updateSaveButton(button, toggleSaved(button.dataset.save));
-                if (state.savedOnly) refreshList();
+                if (state.savedOnly) {
+                    refreshList();
+                    refocusSave(button.dataset.save);
+                }
             });
         });
         markExpandable(el('schoolList'));
@@ -1633,7 +1670,7 @@ const Finder = (() => {
     function scrollIntoViewIfCut(node) {
         requestAnimationFrame(() => {
             if (node.isConnected && node.getBoundingClientRect().bottom > window.innerHeight) {
-                node.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                node.scrollIntoView({ block: 'nearest', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
             }
         });
     }
@@ -1947,6 +1984,7 @@ const Finder = (() => {
     const inPostalArea = (address, school) => Boolean(address.area) && address.area.some(polygon => insideRings(school.lng, school.lat, polygon));
 
     function setAddress(result) {
+        announceList = true;
         state.address = result;
         // A postnummer is an area, not a place to walk from: the school page gets no walking time from it
         rememberAddress(result.postnummer ? null : result);
@@ -1990,12 +2028,14 @@ const Finder = (() => {
             if (state.address !== result || !found) return;
             state.krets = found;
             drawKretser(found.hits);
+            announceList = true;
             refreshList();
         });
     }
 
     function clearAddress() {
         if (!state.address) return;
+        announceList = true;
         state.address = null;
         rememberAddress(null);
         clearKrets();
@@ -2019,7 +2059,7 @@ const Finder = (() => {
 
     function isKretsSchool(school) {
         return Boolean(state.krets && state.krets.hits.some(k => k.school === school.name && k.level === school.schoolType
-            && k.kommune === school.kommune));
+            && sameKommune(k.kommune, school.kommune)));
     }
 
     function drawKretser(hits) {
@@ -2062,7 +2102,7 @@ const Finder = (() => {
         const krets = state.krets;
         const own = krets ? krets.hits
             .map(k => {
-                const entry = k.school && entries.find(e => e.levels.some(l => l.name === k.school && l.kommune === k.kommune && l.schoolType === k.level));
+                const entry = k.school && entries.find(e => e.levels.some(l => l.name === k.school && sameKommune(l.kommune, k.kommune) && l.schoolType === k.level));
                 return { krets: k, entry, level: entry && entry.levels.find(l => l.schoolType === k.level) };
             })
             .filter(hit => (hit.entry || hit.krets.school) && state.types.has(hit.krets.level)) : [];
@@ -2131,7 +2171,7 @@ const Finder = (() => {
                     <button type="button" class="ds-button filter-help" data-variant="tertiary" data-size="sm" data-icon="true"
                             popovertarget="ownInfo" aria-label="${t('Om skolekretsdataene')}">${icon('questionmarkCircle')}</button></div>
                 <div class="ds-popover own-schools__info" popover id="ownInfo" data-placement="bottom-start">
-                    <p class="ds-paragraph" data-size="sm">${t('Dette er en pilot på åpne data og kan avvike fra kommunens gjeldende grenser.')} ${escapeHtml(t(krets.info.caveat))}</p>
+                    <p class="ds-paragraph" data-size="sm">${t('Dette er en pilot og kan avvike fra kommunens gjeldende grenser.')} ${escapeHtml(t(krets.info.caveat))}</p>
                     <p class="ds-paragraph" data-size="sm">${t('Kilde:')} <a class="ds-link" href="${escapeHtml(safeUrl(krets.info.sourceUrl))}" target="_blank" rel="noopener">${escapeHtml(t(krets.info.source))}</a>.</p>
                     <p class="ds-paragraph" data-size="sm">${check}</p>
                     <p class="ds-paragraph" data-size="sm"><a class="ds-link" href="${I18N.href('om-skolekrets')}#pilot">${t('Se hvilke kommuner vi kan vise skolekretsen for, og hvor dataene kommer fra')}</a></p>
@@ -2217,6 +2257,7 @@ const Finder = (() => {
             if (save) {
                 updateSaveButton(save, toggleSaved(save.dataset.save));
                 refreshList();
+                refocusSave(save.dataset.save);
                 return;
             }
             const mapButton = event.target.closest('.school-card__map');

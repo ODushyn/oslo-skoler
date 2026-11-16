@@ -11,6 +11,8 @@ Data source:
 https://www.oslo.kommune.no/skole-og-utdanning/skoleoversikt-og-skolekrets/skolekrets-ungdomsskole/
 Only school names and the link to the boundary map are read, matched to the schools on the map.
 
+Also used by skolekretser.py to build Oslo's ungdomsskolekretser from the barneskolekretser.
+
 Cached in cached-data/ungdomsskole-oslo.json. Refresh with:
     python ungdomsskole_oslo.py --refresh
 """
