@@ -1954,7 +1954,6 @@ button.school-stat[aria-selected="true"] .school-stat__more {
         border: 0;
     }
 
-
     .filter-group {
         max-width: 100%;
     }
@@ -2103,7 +2102,6 @@ button.school-stat[aria-selected="true"] .school-stat__more {
         gap: 0;
     }
 
-
     .filter-bar {
         grid-template-columns: minmax(0, 1fr);
     }
@@ -2242,35 +2240,6 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 
 .start-hint .ds-heading {
     margin: 0;
-}
-
-.start-hint__ways {
-    display: grid;
-    gap: var(--ds-size-3);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.start-hint__ways li {
-    display: grid;
-    gap: var(--ds-size-1);
-    padding: var(--ds-size-4);
-    border: 1px solid var(--ds-color-brand1-border-subtle);
-    border-radius: var(--ds-border-radius-md);
-    background: var(--ds-color-neutral-background-default);
-}
-
-.start-hint__map {
-    margin: 0;
-    color: var(--ds-color-neutral-text-subtle);
-}
-
-/* Phones only show the list, so the map tip is left out there */
-@media (max-width: 640px) {
-    .start-hint__map {
-        display: none;
-    }
 }
 
 /* "Se kretsgrensen på kartet" under the address's schools */
@@ -2740,7 +2709,6 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 .walk-below {
     margin-top: var(--ds-size-4);
 }
-
 
 .page__content .map-walk__from {
     margin-bottom: 0;
@@ -3258,7 +3226,6 @@ body.has-page-feedback {
     color: currentColor;
 }
 
-
 .school-banner__body {
     padding-right: var(--ds-size-8);
 }
@@ -3374,7 +3341,6 @@ body.has-page-feedback {
 .theme-menu__dot--designsystemet { background: #0d7a5f; }
 .theme-menu__dot--altinn { background: #0162ba; }
 
-
 /* Phones: the header has the logo, two page links, the theme and the language menu; without the
    chevrons and with tighter buttons they fit in 375 px */
 @media (max-width: 640px) {
@@ -3415,7 +3381,6 @@ body.has-page-feedback {
 .saved-link__count[hidden] {
     display: none;
 }
-
 
 /* The last part of the shortcuts: where the pupils go after this school */
 .page__content .snarveier__next {
@@ -4223,11 +4188,6 @@ body.has-page-feedback {
     gap: var(--ds-size-2);
 }
 
-.start-hint__locate.ds-button {
-    justify-self: start;
-    margin-top: var(--ds-size-2);
-}
-
 /* Liste / Kart */
 .view-switch {
     display: inline-flex;
@@ -4754,8 +4714,9 @@ body.has-page-feedback {
     margin-bottom: 32px;
 }
 
+/* Figma's 360 / 240 / 260 / 340 px at 1440, shrinking in the same proportion on narrower screens (no sideways scroll) */
 .site-footer__grid {
-    grid-template-columns: 360px 240px 260px 340px;
+    grid-template-columns: minmax(0, 360fr) minmax(0, 240fr) minmax(0, 260fr) minmax(0, 340fr);
     gap: 48px;
 }
 
@@ -5709,8 +5670,8 @@ body.has-page-feedback {
     }
 }
 
-/* ── Start (Figma 10.1, F0, measured) ─────────────────────────────────────
-   The intro 17 px, the empty field with a 1 px border; three cards 289 × 238 in a row with 16 px between */
+/* ── Start (Figma F0, measured) ────────────────────────────────────────────
+   The intro 17 px, the empty field with a 1 px border; «Slik leser du fargene» and «Vet dere hva som er viktigst?» */
 .search-panel .search-panel__intro {
     margin: 0 0 16px;
     font-size: 17px;
@@ -5740,93 +5701,7 @@ body.has-page-feedback {
     color: var(--ds-color-brand1-text-default);
 }
 
-.start-hint__ways {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
-}
-
-.start-hint__ways li {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    box-sizing: border-box;
-    min-height: 238px;
-    padding: 20px;
-    border: 1px solid var(--ds-color-brand1-border-subtle);
-    border-radius: 12px;
-    background: var(--ds-color-neutral-background-default);
-}
-
-.start-hint__ways li > .ds-icon {
-    flex-shrink: 0;
-    width: 28px;
-    height: 28px;
-    color: var(--ds-color-brand1-base-default);
-}
-
-.start-hint__text {
-    display: grid;
-    gap: 10px;
-}
-
-.start-hint__text strong {
-    font-size: 18px;
-    line-height: 26px;
-    font-weight: var(--ds-font-weight-semibold);
-    color: var(--ds-color-brand1-text-default);
-}
-
-.start-hint__desc {
-    font-size: 15px;
-    line-height: 22px;
-    color: var(--ds-color-neutral-text-subtle);
-}
-
-/* The longer texts on wide screens, the shorter on phones (Figma 10.1, F0 and m0) */
-.start-hint__narrow {
-    display: none;
-}
-
-.start-hint__locate {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 0;
-    padding: 10px 14px;
-    border: 2px solid var(--ds-color-brand1-base-default);
-    border-radius: 8px;
-    background: none;
-    color: var(--ds-color-brand1-base-default);
-    font: inherit;
-    font-size: 15px;
-    line-height: 22px;
-    font-weight: var(--ds-font-weight-semibold);
-    cursor: pointer;
-}
-
-.start-hint__locate .ds-icon {
-    width: 20px;
-    height: 20px;
-}
-
-.start-hint__locate--top {
-    display: none;
-}
-
-@media (max-width: 1023px) {
-    .start-hint__ways {
-        grid-template-columns: minmax(0, 1fr);
-    }
-
-    .start-hint__ways li {
-        min-height: 0;
-    }
-}
-
-/* Phones (Figma 10.1, m0): one column, «Bruk min posisjon» on top, the ways as rows with the icon on the left */
+/* Phones (Figma m0): one column, no Filter before a search */
 @media (max-width: 640px) {
     .results-grid[data-view="liste"] {
         grid-template-columns: minmax(0, 1fr);
@@ -5861,64 +5736,13 @@ body.has-page-feedback {
         display: none;
     }
 
-    .start-hint__wide {
-        display: none;
-    }
-
-    .start-hint__narrow {
-        display: inline;
-    }
-
     .start-hint {
         gap: 12px;
-    }
-
-    .start-hint__locate--top {
-        display: flex;
-        width: 100%;
-        padding: 12px 0;
-        font-size: 16px;
-        line-height: 23px;
-    }
-
-    .start-hint__ways li > .start-hint__locate {
-        display: none;
     }
 
     .start-hint__title {
         font-size: 18px;
         line-height: 26px;
-    }
-
-    .start-hint__ways {
-        gap: 12px;
-    }
-
-    .start-hint__ways li {
-        flex-direction: row;
-        align-items: center;
-        gap: 12px;
-        padding: 14px;
-        border-radius: 10px;
-    }
-
-    .start-hint__ways li > .ds-icon {
-        width: 24px;
-        height: 24px;
-    }
-
-    .start-hint__text {
-        gap: 2px;
-    }
-
-    .start-hint__text strong {
-        font-size: 16px;
-        line-height: 23px;
-    }
-
-    .start-hint__desc {
-        font-size: 14px;
-        line-height: 20px;
     }
 }
 
@@ -6115,7 +5939,6 @@ body.has-page-feedback {
         gap: 12px;
     }
 }
-
 
 /* Filter and «Slik leser du kortene og fargene» 12 px apart, as the field and Filter */
 .search-panel .search-bar__actions {
@@ -7283,256 +7106,13 @@ html.ui-locked {
 }
 
 .hero-button:focus-visible,
-.link-button:focus-visible,
-.needs-card:focus-visible {
+.link-button:focus-visible {
     outline: 3px solid var(--ds-color-focus-outer, #1e2b3c);
     outline-offset: 2px;
 }
 
-.hero {
-    background: var(--ds-color-brand1-background-tinted);
-}
-
-.hero[hidden], .needs[hidden], .prio[hidden], .results-band[hidden] {
+.prio[hidden], .results-band[hidden], .start-hint[hidden] {
     display: none;
-}
-
-.hero__inner {
-    box-sizing: border-box;
-    display: grid;
-    grid-template-columns: minmax(0, 660px) minmax(0, 396px);
-    justify-content: space-between;
-    gap: 64px;
-    align-items: start;
-    width: min(1120px, 100% - 32px);
-    margin-inline: auto;
-    padding: 64px 0;
-}
-
-.hero__main {
-    display: grid;
-    gap: 20px;
-}
-
-.hero__main > * {
-    margin: 0;
-}
-
-.hero__step {
-    margin: 0;
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: var(--ds-font-weight-semibold);
-    color: var(--ds-color-brand1-text-subtle);
-}
-
-.hero__title {
-    margin: 0;
-    font-size: 30px;
-    line-height: 39px;
-    font-weight: var(--ds-font-weight-medium);
-}
-
-.hero__lead {
-    font-size: 18px;
-    line-height: 27px;
-}
-
-.hero__card {
-    display: grid;
-    gap: 12px;
-    padding: 32px;
-    border: 1px solid #bbbcbd;
-    border-radius: 12px;
-    background: var(--ds-color-neutral-background-default);
-}
-
-.hero__card > * {
-    margin: 0;
-}
-
-.hero__card-title {
-    font-size: 18px;
-    line-height: 27px;
-    font-weight: var(--ds-font-weight-semibold);
-}
-
-.hero__hint {
-    font-size: 16px;
-    line-height: 24px;
-    color: var(--ds-color-neutral-text-subtle);
-}
-
-.hero__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-
-.hero__link {
-    justify-self: start;
-    padding: 0;
-    border: 0;
-    background: none;
-    color: var(--ds-color-brand1-text-subtle);
-    font: inherit;
-    font-size: 16px;
-    line-height: 24px;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    cursor: pointer;
-}
-
-.start-error {
-    padding: 16px 20px;
-    border-left: 4px solid #a56d13;
-    border-radius: 6px;
-    background: #fae6c6;
-    color: #3c2807;
-}
-
-.start-error p {
-    margin: 4px 0 0;
-}
-
-.start-error__links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px 16px;
-    margin-top: 8px;
-}
-
-.start-error .link-button {
-    color: inherit;
-    font-weight: var(--ds-font-weight-semibold);
-}
-
-.hero__help {
-    display: grid;
-    gap: 24px;
-    padding: 32px;
-    border-radius: 12px;
-    background: var(--ds-color-neutral-background-default);
-}
-
-.hero__help-title {
-    margin: 0;
-    font-size: 21px;
-    line-height: 27px;
-    font-weight: var(--ds-font-weight-medium);
-}
-
-.hero__help-list {
-    display: grid;
-    gap: 24px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.hero__help-list li {
-    display: flex;
-    gap: 16px;
-}
-
-.hero__help-icon {
-    flex: none;
-    display: grid;
-    place-items: center;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: #dcece8;
-    color: #053227;
-}
-
-.hero__help-icon .ds-icon {
-    width: 26px;
-    height: 26px;
-}
-
-.hero__help-list strong {
-    display: block;
-    font-size: 18px;
-    line-height: 27px;
-    font-weight: var(--ds-font-weight-semibold);
-}
-
-.hero__help-list p {
-    margin: 4px 0 0;
-    font-size: 16px;
-    line-height: 24px;
-}
-
-.needs__inner {
-    box-sizing: border-box;
-    display: grid;
-    gap: 24px;
-    width: min(1120px, 100% - 32px);
-    margin-inline: auto;
-    padding: 56px 0;
-}
-
-.needs__inner > * {
-    margin: 0;
-}
-
-.needs__title {
-    font-size: 24px;
-    line-height: 31px;
-    font-weight: var(--ds-font-weight-medium);
-}
-
-.needs__lead {
-    font-size: 18px;
-    line-height: 27px;
-}
-
-.needs__cards {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.needs-card {
-    box-sizing: border-box;
-    display: grid;
-    gap: 8px;
-    height: 100%;
-    padding: 28px;
-    border: 1px solid #bbbcbd;
-    border-radius: 12px;
-    color: inherit;
-    text-decoration: none;
-}
-
-.needs-card:hover {
-    border-color: var(--ds-color-brand1-text-subtle);
-}
-
-.needs-card__title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 18px;
-    line-height: 27px;
-    font-weight: var(--ds-font-weight-semibold);
-    color: var(--ds-color-brand1-text-subtle);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-}
-
-.needs-card__title .ds-icon {
-    width: 22px;
-    height: 22px;
-}
-
-.needs-card__text {
-    font-size: 16px;
-    line-height: 24px;
 }
 
 /* A4 */
@@ -7549,9 +7129,10 @@ html.ui-locked {
     margin: 0;
 }
 
+/* The same sizes as the search band over it: the title as «Leter du etter en skole?», the lead as its intro */
 .prio__title {
-    font-size: 30px;
-    line-height: 39px;
+    font-size: 24px;
+    line-height: 32px;
     font-weight: var(--ds-font-weight-medium);
 }
 
@@ -7566,8 +7147,9 @@ html.ui-locked {
 
 .prio__lead {
     max-width: 900px;
-    font-size: 18px;
-    line-height: 27px;
+    font-size: 17px;
+    line-height: 25px;
+    color: var(--ds-color-neutral-text-subtle);
 }
 
 .prio__group {
@@ -7581,9 +7163,9 @@ html.ui-locked {
 .prio__group legend {
     padding: 0;
     margin-bottom: 0;
-    font-size: 21px;
-    line-height: 28px;
-    font-weight: var(--ds-font-weight-medium);
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: var(--ds-font-weight-semibold);
     float: left;
     width: 100%;
 }
@@ -7600,8 +7182,8 @@ html.ui-locked {
     box-sizing: border-box;
     display: flex;
     align-items: flex-start;
-    gap: 16px;
-    padding: 20px;
+    gap: 14px;
+    padding: 16px 20px;
     border: 1px solid #77797b;
     border-radius: 12px;
     background: var(--ds-color-neutral-background-default);
@@ -7631,8 +7213,8 @@ html.ui-locked {
 .prio-option__box {
     flex: none;
     box-sizing: border-box;
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     margin-top: 0;
     border: 2px solid #5b5d60;
     border-radius: 4px;
@@ -7641,7 +7223,7 @@ html.ui-locked {
 
 .prio-option:has(input:checked) .prio-option__box {
     border-color: var(--ds-color-brand1-base-default);
-    background: var(--ds-color-brand1-base-default) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 22px no-repeat;
+    background: var(--ds-color-brand1-base-default) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 18px no-repeat;
 }
 
 .prio-option__body {
@@ -7650,14 +7232,14 @@ html.ui-locked {
 }
 
 .prio-option__title {
-    font-size: 18px;
-    line-height: 27px;
+    font-size: 16px;
+    line-height: 24px;
     font-weight: var(--ds-font-weight-semibold);
 }
 
 .prio-option__text {
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 15px;
+    line-height: 22px;
     color: var(--ds-color-neutral-text-subtle);
 }
 
@@ -7672,8 +7254,8 @@ html.ui-locked {
 
 .prio__count {
     flex: 1;
-    font-size: 18px;
-    line-height: 27px;
+    font-size: 16px;
+    line-height: 24px;
     font-weight: var(--ds-font-weight-semibold);
 }
 
@@ -7686,8 +7268,8 @@ html.ui-locked {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 15px;
+    line-height: 22px;
     color: var(--ds-color-neutral-text-subtle);
 }
 
@@ -8030,35 +7612,21 @@ html.ui-locked {
 
 /* Phones */
 @media (max-width: 1023px) {
-    .hero__inner {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 32px;
-        padding: 40px 0;
-    }
-
-    .needs__cards {
-        grid-template-columns: minmax(0, 1fr);
-    }
-
     .prio__options {
         grid-template-columns: minmax(0, 1fr);
     }
 }
 
 @media (max-width: 640px) {
-    .hero__title,
     .prio__title {
-        font-size: 26px;
-        line-height: 34px;
+        font-size: 22px;
+        line-height: 32px;
+        font-weight: var(--ds-font-weight-semibold);
     }
 
-    .hero__card,
-    .hero__help {
-        padding: 20px;
-    }
-
-    .hero__actions > .hero-button {
-        flex: 1 1 100%;
+    .prio__lead {
+        font-size: 15px;
+        line-height: 22px;
     }
 
     .sk-name,
@@ -8823,16 +8391,6 @@ html[data-contrast="hoy"] .fact--unknown { background: #dcdcdd; }
     margin: 0;
 }
 
-/* A1: the second link under the field (Figma, «Iterasjon 2 – flere adresser»): a plus and 18 px underlined text */
-.hero__link--icon {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 18px;
-    line-height: 27px;
-}
-
-.hero__link--icon .ds-icon { flex: none; width: 22px; height: 22px; }
 a.band-row__add { text-decoration: none; }
 
 /* «Sammenlign adresser» and the dialog «Legg til en adresse» */
@@ -9035,41 +8593,101 @@ a.band-row__add { text-decoration: none; }
     box-shadow: 0 0 0 1px var(--ds-color-success-border-strong), var(--ds-shadow-sm);
 }
 
-/* ══ One search in the same place on every state of the front page (docs/user-flow.md) ══════════════════════════
-   The same title and field over the start, «Hva er viktig for dere?» and the results, so nothing under the header
-   moves when the page changes state. The start and «Hva er viktig» line up with the field (64 / 24 / 16 px). */
-.finder-search.search-panel { padding: 32px 0 24px; }
-.finder-search__title {
-    margin: 0 0 16px;
-    font-size: 30px;
-    line-height: 39px;
-    font-weight: var(--ds-font-weight-medium);
-}
-.finder-search .search-bar { flex-wrap: nowrap; align-items: flex-start; gap: 12px; }
-.finder-search .search-bar__field { flex: 0 1 700px; min-width: 0; }
-.finder-search__go.hero-button { flex: none; align-self: stretch; min-width: 112px; max-height: 64px; }
+/* ══ Figma F0 (303:24833): one search in the same place on every state of the front page (docs/user-flow.md) ══════
+   The band keeps its title, intro and field over the start, «Hva er viktig for dere?» and the results; the band over
+   the results goes on under it. «Hva er viktig» lines up with the field (64 / 24 / 16 px). */
 .finder-search .start-error { max-width: 700px; margin-top: 12px; }
 .start-error[hidden] { display: none; }
 .results-band.search-panel { padding-top: 0; }
-.hero__inner,
-.prio__inner { width: auto; margin: 0; padding-inline: 64px; }
-.hero__inner { padding-block: 8px 64px; }
-.prio__inner { padding-block: 32px 56px; }
-.hero__card--path { gap: 16px; }
+.prio__inner { width: auto; margin: 0; padding: 32px 64px 56px; }
+
+/* «Vet dere hva som er viktigst?» (Figma 303:25257): 24 px inside, the brand's light green, 12 px corners */
+.start-prio {
+    display: grid;
+    gap: 8px;
+    padding: 24px;
+    border-radius: 12px;
+    background: var(--ds-color-brand1-background-tinted);
+}
+.start-prio > * { margin: 0; }
+.start-prio__title {
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-color-brand1-text-default);
+}
+.start-prio__text {
+    font-size: 15px;
+    line-height: 22px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+.start-prio__link.link-button {
+    justify-self: start;
+    font-size: 15px;
+    line-height: 22px;
+    color: var(--ds-color-brand1-text-subtle);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
 @media (max-width: 1279px) {
-    .hero__inner,
     .prio__inner { padding-inline: var(--ds-size-6); }
 }
-@media (max-width: 1023px) {
-    .hero__inner { padding-block: 8px 40px; }
-}
 @media (max-width: 640px) {
-    .finder-search.search-panel { padding: 20px 0 16px; }
-    .finder-search__title { margin-bottom: 12px; font-size: 24px; line-height: 32px; }
-    /* Phones: the field takes the whole row; the keyboard's search key does what «Søk» does */
-    .finder-search__go.hero-button { display: none; }
-    .hero__inner,
-    .prio__inner { padding-inline: 16px; }
-    .prio__inner { padding-top: 24px; }
+    .prio__inner { padding: 24px 16px 40px; }
     .results-band.search-panel { padding-top: 0; }
+    .start-prio { padding: 16px; border-radius: 10px; }
+}
+
+/* «Slik leser du fargene» (in place of «Slik kan dere begynne»): the five colours with the limits and the words */
+.color-scale.legend-box { gap: 12px; }
+.color-scale > * { margin: 0; }
+.color-scale__lead,
+.color-scale__note {
+    font-size: 15px;
+    line-height: 22px;
+    color: var(--ds-color-neutral-text-subtle);
+}
+.color-scale__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 8px;
+    padding: 0;
+    list-style: none;
+}
+.color-scale__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 8px;
+    background: var(--ds-color-neutral-background-default);
+}
+.color-scale__list .color-dot {
+    width: 16px;
+    height: 16px;
+    margin: 4px 0 0;
+}
+.color-scale__text {
+    display: grid;
+    font-size: 15px;
+    line-height: 22px;
+}
+.color-scale__text strong { font-weight: var(--ds-font-weight-semibold); }
+.color-scale__text span { color: var(--ds-color-neutral-text-subtle); }
+.color-scale__link { justify-self: start; font-size: 15px; line-height: 22px; }
+@media (max-width: 640px) {
+    .color-scale__list { grid-template-columns: minmax(0, 1fr); }
+    .color-scale__list li { padding: 10px 12px; }
+}
+
+/* Before a search: no side column («Lagrede skoler», «Kart»); the start keeps the list column's 900 px */
+#main[data-mode="start"] .results-side { display: none; }
+#main[data-mode="start"] .results-grid[data-view="liste"] { grid-template-columns: minmax(0, 900px); }
+
+/* Headings get focus from the script when the page changes state (finder.js, setStep) so screen readers start there;
+   they are not controls, so no focus ring */
+h1[tabindex="-1"]:focus,
+h2[tabindex="-1"]:focus {
+    outline: none;
 }

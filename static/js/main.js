@@ -275,6 +275,13 @@ function setDataTooltips(metadata) {
         snitt.dataset.tooltip = t('Snittet er gjennomsnittet av skolens skalapoeng i engelsk, lesing og regning på nasjonale prøver {year}. Fag uten publisert resultat telles ikke med. Skillet mellom oransje og lysegrønn er landsgjennomsnittet samme år: {barne} på 5. trinn og {ungdom} på 8. trinn.',
             { year: year(lines.year || metadata.currentYear), barne: formatDecimal(lines.barneskole), ungdom: formatDecimal(lines.ungdomsskole) });
     }
+    // «Slik leser du fargene» on the front page: the line between orange and light green, from the same numbers
+    const national = document.getElementById('colorNational');
+    if (national && lines && lines.barneskole && lines.ungdomsskole) {
+        national.textContent = t('Landssnittet på nasjonale prøver {year} er {barne} på 5. trinn og {ungdom} på 8. trinn.',
+            { year: year(lines.year || metadata.currentYear), barne: formatDecimal(lines.barneskole), ungdom: formatDecimal(lines.ungdomsskole) });
+        national.hidden = false;
+    }
     const mobbing = document.getElementById('mobbingHelp');
     if (mobbing && metadata.mobbing) {
         const percent = value => formatPercent(value).replace('&nbsp;', '\u00a0');

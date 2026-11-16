@@ -203,7 +203,7 @@
 
     document.querySelectorAll('[data-layer]').forEach(input => input.addEventListener('change', () => setLayer(input.dataset.layer, input.checked)));
 
-    // A link can turn layers on, as "Se kretsgrensen på kartet" on the front page: kart?lag=skolekretser#lat,lng,zoom
+    // A link can turn layers on, as "Se kretsgrensen på kartet" on the front page: kart?lag=kretser-barneskole,kretser-ungdomsskole#lat,lng,zoom
     (new URLSearchParams(location.search).get('lag') || '').split(',').forEach(name => {
         const input = name && document.querySelector(`[data-layer="${CSS.escape(name)}"]`);
         if (input && !input.checked) {

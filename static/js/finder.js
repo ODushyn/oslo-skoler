@@ -95,12 +95,14 @@ const Finder = (() => {
         state.step = step;
         el('main').dataset.mode = step;
         updateMobileBar();
-        el('startPage').hidden = step !== 'start';
-        el('startNeeds').hidden = step !== 'start';
+        // Figma F0 (changed): the start is the list column with «Vet dere hva som er viktigst?» and «Slik leser du fargene», no side column; no Filter on phones
+        el('finderSearch').toggleAttribute('data-start', step === 'start');
+        el('startHint').hidden = step !== 'start';
         el('prioPage').hidden = step !== 'prio';
         el('resultsBand').hidden = step !== 'results';
-        document.querySelector('section.results').hidden = step !== 'results';
+        document.querySelector('section.results').hidden = step === 'prio';
         if (step === 'prio') renderPrioPage();
+        if (step === 'start') refreshList();
         if (step === 'results') { renderBand(); map.invalidateSize(); if (postalLayer) map.fitBounds(postalLayer.getBounds(), { maxZoom: 15, padding: [16, 16] }); }
     }
 
@@ -167,7 +169,7 @@ const Finder = (() => {
         } else if (state.step === 'prio') renderPrioPage();
     }
 
-    // «Søk» (or Enter): the schools for the chosen place, or G1 when nothing was found or nothing chosen from the list
+    // Enter in the field: the schools for the chosen place, or G1 when nothing was found or nothing chosen from the list
     async function searchGo() {
         showStartError('');
         if (state.address) { if (state.step !== 'results') setStep('results'); return; }
@@ -192,17 +194,9 @@ const Finder = (() => {
     }
 
     function bindStart() {
-        el('searchGo').addEventListener('click', searchGo);
         el('startPrio').addEventListener('click', () => setStep('prio'));
         el('addressSearch').addEventListener('keydown', event => {
             if (event.key === 'Enter' && el('addressSearch').value.trim() && !document.querySelector('#addressResults [aria-selected="true"]')) { event.preventDefault(); searchGo(); }
-        });
-        el('showAllList').addEventListener('click', () => {
-            showStartError('');
-            clearAddress();
-            state.kommune = '';
-            map.setView([59.91, 10.75], 11, { animate: false });
-            setStep('results');
         });
         el('startError').addEventListener('click', event => {
             const act = event.target.closest('[data-act]');
@@ -734,6 +728,7 @@ const Finder = (() => {
             if (keepFilters) {
                 keepFilters = false;
                 writeUrlState();
+                if (state.step === 'start' && activeFilterCount()) setStep('results', { focus: false });
             }
         });
         bindActiveFilters();
@@ -755,7 +750,7 @@ const Finder = (() => {
     // Phones: the list head (title, sort) stays at the top while the list scrolls, and shows the filter button
     // once the search row with its own filter button has scrolled out of view
     function bindStickyFilter() {
-        const actions = el('resultsToolbar');
+        const actions = document.querySelector('#finderSearch .search-bar');
         if (!actions || !('IntersectionObserver' in window)) return;
         new IntersectionObserver(([entry]) => {
             el('filterToggleSticky').hidden = entry.isIntersecting || !phoneLayout.matches;
@@ -2189,7 +2184,7 @@ const Finder = (() => {
             const school = (hits.find(h => h.level) || {}).level;
             if (!school || !school.lat || !school.lng) return '';
             const view = `${school.lat.toFixed(5)},${school.lng.toFixed(5)},14`;
-            return `<a class="ds-link own-schools__map" href="${escapeHtml(I18N.href(`kart?lag=skolekretser#${view}`))}">${t('Se kretsgrensen på kartet')} →</a>`;
+            return `<a class="ds-link own-schools__map" href="${escapeHtml(I18N.href(`kart?lag=kretser-barneskole,kretser-ungdomsskole#${view}`))}">${t('Se kretsgrensen på kartet')} →</a>`;
         }
 
         // Housing search on Finn.no for each postnummer in the barneskolekrets (or the krets found)

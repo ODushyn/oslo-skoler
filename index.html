@@ -51,8 +51,8 @@
 
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="static/css/styles.css?v=277"/>
-    <script src="static/js/i18n.js?v=132"></script>
+    <link rel="stylesheet" href="static/css/styles.css?v=282"/>
+    <script src="static/js/i18n.js?v=134"></script>
     <script src="static/js/theme.js?v=11"></script>
 
     <!-- Leaflet JS -->
@@ -78,11 +78,13 @@
     <script src="static/js/layout.js?v=44"></script>
 
     <main id="main" tabindex="-1" data-mode="start">
-        <!-- One search in the same place on every state of the page (start, «Hva er viktig», results): docs/user-flow.md.
-             Choosing an address shows the schools at once (path 1); «Velg hva som er viktig» is path 2. -->
-        <section class="search-panel finder-search" id="finderSearch" aria-labelledby="bandTitle">
+        <!-- Figma F0 «Søk og prioriteringer» (303:24835): one search in the same place on the start, «Hva er viktig»
+             and the results (docs/user-flow.md). Choosing an address shows the schools at once; «Finn skole etter det
+             som er viktig for dere» is the second path, through «Hva er viktig for dere?». -->
+        <section class="search-panel finder-search" id="finderSearch" aria-labelledby="bandTitle" data-start>
             <div class="site-container">
-                <h1 class="finder-search__title" id="bandTitle">Finn en skole som passer barnet ditt</h1>
+                <h1 class="ds-heading" data-size="sm" id="bandTitle">Leter du etter en skole?</h1>
+                <p class="search-panel__intro">Søk på adressen deres for å se skolekretsen og skolene i nærheten – eller gå rett til en skole eller kommune.</p>
                 <div class="search-bar" role="search" aria-label="Søk etter skoler">
                     <div class="search-bar__field">
                         <ds-field class="ds-field" id="addressField">
@@ -100,70 +102,15 @@
                         </div>
                     </ds-field>
                     </div>
-                    <button type="button" class="hero-button hero-button--primary finder-search__go" id="searchGo">Søk</button>
+                    <!-- Phones: no Filter before a search (styles.css, [data-start]) -->
+                    <div class="search-bar__actions">
+                        <button type="button" class="ds-button filter-toggle" data-variant="secondary" id="filterToggle" aria-expanded="false" aria-controls="filterPanel">
+                            <svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M3.25 7C3.25 6.58579 3.58579 6.25 4 6.25H20C20.4142 6.25 20.75 6.58579 20.75 7C20.75 7.41421 20.4142 7.75 20 7.75L4 7.75C3.58579 7.75 3.25 7.41421 3.25 7ZM6.25 12C6.25 11.5858 6.58579 11.25 7 11.25H17C17.4142 11.25 17.75 11.5858 17.75 12C17.75 12.4142 17.4142 12.75 17 12.75H7C6.58579 12.75 6.25 12.4142 6.25 12ZM10 16.25C9.58579 16.25 9.25 16.5858 9.25 17C9.25 17.4142 9.58579 17.75 10 17.75H14C14.4142 17.75 14.75 17.4142 14.75 17C14.75 16.5858 14.4142 16.25 14 16.25H10Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg><span id="filterLabel">Filter</span><span class="ds-badge" data-size="sm" id="filterCount" hidden></span>
+                        </button>
+                    </div>
                 </div>
                 <!-- A3 / G1: the position could not be used, or the address was not chosen from the list -->
                 <div class="start-error" id="startError" role="alert" hidden></div>
-            </div>
-        </section>
-
-        <!-- The start under the search: path 2, the other ways in and «Slik hjelper vi dere» -->
-        <section class="hero" id="startPage" aria-label="Slik finner du skoler">
-            <div class="hero__inner">
-                <div class="hero__main">
-                    <p class="hero__lead">Skriv adressen deres i søket over, så viser vi skolekretsen og skolene i nærheten.</p>
-                    <!-- Path 2 (docs/user-flow.md): choose what matters, then the schools sorted by fit -->
-                    <div class="hero__card hero__card--path">
-                        <h2 class="hero__card-title" id="pathTitle">Er noe ekstra viktig for dere?</h2>
-                        <p class="hero__hint">Velg det barnet trenger, for eksempel tilrettelegging, rullestol eller SFO/AKS etter 4. trinn. Da sorterer vi skolene etter hvor godt de passer, og viser tydelig hva vi vet og ikke vet.</p>
-                        <div class="hero__actions">
-                            <button type="button" class="hero-button hero-button--secondary" id="startPrio">Velg hva som er viktig <svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M9.47 5.97a.75.75 0 0 1 1.06 0l5.5 5.5a.75.75 0 0 1 0 1.06l-5.5 5.5a.75.75 0 1 1-1.06-1.06L14.44 12 9.47 7.03a.75.75 0 0 1 0-1.06Z" fill="currentColor"/></svg></button>
-                        </div>
-                    </div>
-                    <button type="button" class="hero__link" id="showAllList">Jeg vil heller se alle skoler i en liste</button>
-                    <a class="hero__link hero__link--icon" href="sammenlign-adresser#ny"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 5.25a.75.75 0 0 1 .75.75v5.25H18a.75.75 0 0 1 0 1.5h-5.25V18a.75.75 0 0 1-1.5 0v-5.25H6a.75.75 0 0 1 0-1.5h5.25V6a.75.75 0 0 1 .75-.75Z" fill="currentColor"/></svg><span>Ser dere på flere boliger? Sammenlign opptil tre adresser</span></a>
-                </div>
-                <aside class="hero__help" aria-labelledby="helpTitle">
-                    <h2 class="hero__help-title" id="helpTitle">Slik hjelper vi dere</h2>
-                    <ul class="hero__help-list">
-                        <li><span class="hero__help-icon" aria-hidden="true"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="4.5" r="1.75" fill="currentColor"/><path d="M12 8.5v5h4l2 4.5M12 11h4.5M7.5 12.5a5 5 0 1 0 7.2 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><strong>Tilrettelegging først</strong><p>Velg hva barnet trenger – vi sorterer skolene etter det, ikke etter prøveresultater.</p></div></li>
-                        <li><span class="hero__help-icon" aria-hidden="true"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="18" cy="5.5" r="2.5" stroke="currentColor" stroke-width="1.5"/><circle cx="6" cy="12" r="2.5" stroke="currentColor" stroke-width="1.5"/><circle cx="18" cy="18.5" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M8.2 10.8l7.6-4M8.2 13.2l7.6 4" stroke="currentColor" stroke-width="1.5"/></svg></span><div><strong>Del med familien</strong><p>Lagre, sammenlign og send listen til den som skal bestemme, på deres egen telefon.</p></div></li>
-                        <li><span class="hero__help-icon" aria-hidden="true"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M12 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.75" r="1.1" fill="currentColor"/></svg></span><div><strong>Ærlige om hva vi ikke vet</strong><p>Mangler vi opplysninger, står det tydelig – sammen med spørsmålet du kan stille skolen.</p></div></li>
-                    </ul>
-                </aside>
-            </div>
-        </section>
-
-        <section class="needs" id="startNeeds" aria-labelledby="needsTitle">
-            <div class="needs__inner">
-                <h2 class="needs__title" id="needsTitle">Trenger barnet tilrettelegging?</h2>
-                <p class="needs__lead">Her finner du rettigheter, hvem som bestemmer og hva du kan spørre skolen om.</p>
-                <ul class="needs__cards">
-                    <li><a class="needs-card" href="barn-med-sarskilte-behov"><span class="needs-card__title">Barn med særskilte behov <svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M9.47 5.97a.75.75 0 0 1 1.06 0l5.5 5.5a.75.75 0 0 1 0 1.06l-5.5 5.5a.75.75 0 1 1-1.06-1.06L14.44 12 9.47 7.03a.75.75 0 0 1 0-1.06Z" fill="currentColor"/></svg></span><span class="needs-card__text">Rettigheter, PP-tjenesten, sakkyndig vurdering og skoleskyss.</span></a></li>
-                    <li><a class="needs-card" href="om-skolekrets"><span class="needs-card__title">Skolekrets og skoleplass <svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M9.47 5.97a.75.75 0 0 1 1.06 0l5.5 5.5a.75.75 0 0 1 0 1.06l-5.5 5.5a.75.75 0 1 1-1.06-1.06L14.44 12 9.47 7.03a.75.75 0 0 1 0-1.06Z" fill="currentColor"/></svg></span><span class="needs-card__text">Hvem som bestemmer skoleplass – og hvordan du søker annen skole.</span></a></li>
-                    <li><a class="needs-card" href="skolefritid"><span class="needs-card__title">SFO og AKS <svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M9.47 5.97a.75.75 0 0 1 1.06 0l5.5 5.5a.75.75 0 0 1 0 1.06l-5.5 5.5a.75.75 0 1 1-1.06-1.06L14.44 12 9.47 7.03a.75.75 0 0 1 0-1.06Z" fill="currentColor"/></svg></span><span class="needs-card__text">Også etter 4. trinn for barn med særskilte behov.</span></a></li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- A4 «Hva er viktig for dere?»: step 2 of 2, drawn by finder.js (renderPrioPage) -->
-        <section class="prio" id="prioPage" aria-labelledby="prioTitle" hidden></section>
-
-        <!-- A6 / A7: the band over the results (address, priorities, filters that are on) and the filter panel -->
-        <section class="search-panel results-band" id="resultsBand" aria-label="Valg for resultatene" hidden>
-            <div class="site-container">
-                <div class="band-row" id="addressRow" hidden>
-                    <a class="band-row__add" id="addAddressLink" href="sammenlign-adresser#ny"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 5.25a.75.75 0 0 1 .75.75v5.25H18a.75.75 0 0 1 0 1.5h-5.25V18a.75.75 0 0 1-1.5 0v-5.25H6a.75.75 0 0 1 0-1.5h5.25V6a.75.75 0 0 1 .75-.75Z" fill="currentColor"/></svg><span>Legg til adresse (maks 3)</span></a>
-                </div>
-                <div class="band-row" id="priorityRow" hidden>
-                    <span class="band-row__label">Prioritert:</span>
-                    <ul class="band-row__chips" id="priorityChips"></ul>
-                    <button type="button" class="band-row__more link-button" id="priMore"></button>
-                    <button type="button" class="band-row__add" id="changePriorities"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 5.25a.75.75 0 0 1 .75.75v5.25H18a.75.75 0 0 1 0 1.5h-5.25V18a.75.75 0 0 1-1.5 0v-5.25H6a.75.75 0 0 1 0-1.5h5.25V6a.75.75 0 0 1 .75-.75Z" fill="currentColor"/></svg>Endre prioriteringer</button>
-                </div>
-                <!-- The filters that are on, as chips: each removes its filter (finder.js) -->
-                <ul class="active-filters" id="activeFilters" aria-label="Aktive filtre" hidden></ul>
-
                 <!-- Filters slide in from the right (Designsystemet Dialog, data-placement="right"), as on many
                      search pages; on phones the panel takes the whole width. The results update as you choose. -->
                 <dialog class="ds-dialog filter-dialog" data-placement="right" id="filterPanel" aria-labelledby="filterDialogTitle">
@@ -400,6 +347,27 @@
             </div>
         </section>
 
+        <!-- A4 «Hva er viktig for dere?»: step 2 of 2, drawn by finder.js (renderPrioPage) -->
+        <section class="prio" id="prioPage" aria-labelledby="prioTitle" hidden></section>
+
+        <!-- A6 / A7: the band over the results (address, priorities, filters that are on) and the filter panel -->
+        <section class="search-panel results-band" id="resultsBand" aria-label="Valg for resultatene" hidden>
+            <div class="site-container">
+                <div class="band-row" id="addressRow" hidden>
+                    <a class="band-row__add" id="addAddressLink" href="sammenlign-adresser#ny"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 5.25a.75.75 0 0 1 .75.75v5.25H18a.75.75 0 0 1 0 1.5h-5.25V18a.75.75 0 0 1-1.5 0v-5.25H6a.75.75 0 0 1 0-1.5h5.25V6a.75.75 0 0 1 .75-.75Z" fill="currentColor"/></svg><span>Legg til adresse (maks 3)</span></a>
+                </div>
+                <div class="band-row" id="priorityRow" hidden>
+                    <span class="band-row__label">Prioritert:</span>
+                    <ul class="band-row__chips" id="priorityChips"></ul>
+                    <button type="button" class="band-row__more link-button" id="priMore"></button>
+                    <button type="button" class="band-row__add" id="changePriorities"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 5.25a.75.75 0 0 1 .75.75v5.25H18a.75.75 0 0 1 0 1.5h-5.25V18a.75.75 0 0 1-1.5 0v-5.25H6a.75.75 0 0 1 0-1.5h5.25V6a.75.75 0 0 1 .75-.75Z" fill="currentColor"/></svg>Endre prioriteringer</button>
+                </div>
+                <!-- The filters that are on, as chips: each removes its filter (finder.js) -->
+                <ul class="active-filters" id="activeFilters" aria-label="Aktive filtre" hidden></ul>
+
+            </div>
+        </section>
+
         <!-- Results: school list next to the map -->
         <section class="results" aria-label="Skoler og kart" hidden>
             <!-- The way back from the saved schools (opened from "Lagrede skoler" in the header), on its
@@ -432,9 +400,6 @@
                                 </ul>
                             </div>
                         </div>
-                <button type="button" class="ds-button filter-toggle" data-variant="secondary" id="filterToggle" aria-expanded="false" aria-controls="filterPanel">
-                    <svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M3.25 7C3.25 6.58579 3.58579 6.25 4 6.25H20C20.4142 6.25 20.75 6.58579 20.75 7C20.75 7.41421 20.4142 7.75 20 7.75L4 7.75C3.58579 7.75 3.25 7.41421 3.25 7ZM6.25 12C6.25 11.5858 6.58579 11.25 7 11.25H17C17.4142 11.25 17.75 11.5858 17.75 12C17.75 12.4142 17.4142 12.75 17 12.75H7C6.58579 12.75 6.25 12.4142 6.25 12ZM10 16.25C9.58579 16.25 9.25 16.5858 9.25 17C9.25 17.4142 9.58579 17.75 10 17.75H14C14.4142 17.75 14.75 17.4142 14.75 17C14.75 16.5858 14.4142 16.25 14 16.25H10Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg><span id="filterLabel">Filter</span><span class="ds-badge" data-size="sm" id="filterCount" hidden></span>
-                </button>
                 <div class="view-switch" role="group" aria-label="Vis som">
                             <button type="button" class="ds-button" data-variant="secondary" data-view="liste" aria-pressed="false"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M8 6.25a.75.75 0 0 0 0 1.5h12a.75.75 0 0 0 0-1.5H8Zm0 5a.75.75 0 0 0 0 1.5h12a.75.75 0 0 0 0-1.5H8Zm-.75 5.75a.75.75 0 0 1 .75-.75h12a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1-.75-.75ZM4 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm-1 6a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm1 4a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z" fill="currentColor"/></svg>Liste</button>
                             <button type="button" class="ds-button" data-variant="secondary" data-view="kart" aria-pressed="true"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.7 3.3a.75.75 0 0 1 .6 0L15 5.94l5.2-2.6A.75.75 0 0 1 21.25 4v14a.75.75 0 0 1-.41.67l-5.5 2.75a.75.75 0 0 1-.64.02L9 18.81l-5.2 2.6A.75.75 0 0 1 2.75 20.75V6.75a.75.75 0 0 1 .41-.67l5.5-2.75.04-.03ZM8.25 5.21l-4 2v12.33l4-2V5.21Zm1.5 12.13 4.5 2.08V7.16L9.75 5.08v12.26Zm6 1.95 4-2V5.21l-4 2v12.08Z" fill="currentColor"/></svg>Kart</button>
@@ -442,6 +407,30 @@
             </div>
             <div class="site-container results-grid" id="resultsGrid">
                 <div class="results-list">
+                    <!-- Figma F0 (303:24833), changed: first the way to «Hva er viktig for dere?», then «Slik leser du fargene» in
+                         place of «Slik kan dere begynne»; no side column before a search (styles.css, data-mode="start") -->
+                    <div class="start-hint" id="startHint">
+                        <!-- The second path (docs/user-flow.md): «Hva er viktig for dere?», then the schools sorted by fit -->
+                        <div class="start-prio">
+                            <h2 class="start-prio__title">Vet dere hva som er viktigst?</h2>
+                            <p class="start-prio__text">Velg det som betyr mest – gode resultater, lite mobbing, trivsel eller kort skolevei – så sorterer vi skolene etter det.</p>
+                            <button type="button" class="link-button start-prio__link" id="startPrio">Finn skole etter det som er viktig for dere →</button>
+                        </div>
+                        <section class="legend-box color-scale" aria-labelledby="colorScaleTitle">
+                            <h2 class="start-hint__title" id="colorScaleTitle">Slik leser du fargene</h2>
+                            <p class="color-scale__lead">Fargen på kartet og på kanten av skolekortet viser skolens snitt på nasjonale prøver, sammenlignet med landssnittet.</p>
+                            <ul class="color-scale__list">
+                                <li><span class="color-dot score-very-high" aria-hidden="true"></span><span class="color-scale__text"><strong>55 og over</strong> <span>Godt over snittet</span></span></li>
+                                <li><span class="color-dot score-high" aria-hidden="true"></span><span class="color-scale__text"><strong>Landssnittet – 55</strong> <span>Over snittet</span></span></li>
+                                <li><span class="color-dot score-low" aria-hidden="true"></span><span class="color-scale__text"><strong>45 – landssnittet</strong> <span>Litt under snittet</span></span></li>
+                                <li><span class="color-dot score-very-low" aria-hidden="true"></span><span class="color-scale__text"><strong>Under 45</strong> <span>Godt under snittet</span></span></li>
+                                <li><span class="color-dot score-none" aria-hidden="true"></span><span class="color-scale__text"><strong>Ingen data</strong> <span>Ingen resultater publisert</span></span></li>
+                            </ul>
+                            <!-- The national averages come from the data (main.js, setDataTooltips) -->
+                            <p class="color-scale__note" id="colorNational" hidden></p>
+                            <a class="ds-link color-scale__link" href="om-fargefordelingen">Les mer om fargene</a>
+                        </section>
+                    </div>
                     <!-- The address's own school (pilot) or a note that the list is by distance -->
                     <div class="results-pick" id="kretsNote" hidden></div>
                     <!-- A6 «Slik leser du kortene»: what the three kinds of facts on a card mean -->
@@ -488,11 +477,11 @@
                     <section class="ds-card side-card" id="sideSaved" aria-labelledby="sideSavedTitle"></section>
                     <section class="ds-card side-card side-card--map" aria-labelledby="sideMapTitle">
                         <h2 class="ds-heading" data-size="2xs" id="sideMapTitle">Kart</h2>
-                        <!-- A still picture of the map (OpenFreeMap, © OpenMapTiles, © OpenStreetMap). It and «Vis i kart» show the
-                             schools on the map, as «Liste / Kart» above the list; the map with layers is in the header menu -->
-                        <button type="button" class="side-card__map-button" data-view="kart" tabindex="-1" aria-hidden="true"><img class="side-card__map" src="static/img/kartutsnitt.png" width="330" height="240" alt="" title="© OpenStreetMap" loading="lazy" /></button>
+                        <!-- A still picture of the map (OpenFreeMap, © OpenMapTiles, © OpenStreetMap). It and «Se skolekretser» open
+                             the map with layers (kart) with the skolekrets layers on; «Liste / Kart» above the list shows this map -->
+                        <a class="side-card__map-button" href="kart?lag=kretser-barneskole,kretser-ungdomsskole" tabindex="-1" aria-hidden="true"><img class="side-card__map" src="static/img/kartutsnitt.png" width="330" height="240" alt="" title="© OpenStreetMap" loading="lazy" /></a>
                         <p class="ds-paragraph" data-size="sm" id="sideMapText"></p>
-                        <button type="button" class="ds-button side-card__secondary" data-variant="secondary" data-view="kart"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.7 3.3a.75.75 0 0 1 .6 0L15 5.94l5.2-2.6A.75.75 0 0 1 21.25 4v14a.75.75 0 0 1-.41.67l-5.5 2.75a.75.75 0 0 1-.64.02L9 18.81l-5.2 2.6A.75.75 0 0 1 2.75 20.75V6.75a.75.75 0 0 1 .41-.67l5.5-2.75.04-.03ZM8.25 5.21l-4 2v12.33l4-2V5.21Zm1.5 12.13 4.5 2.08V7.16L9.75 5.08v12.26Zm6 1.95 4-2V5.21l-4 2v12.08Z" fill="currentColor"/></svg>Vis i kart</button>
+                        <a class="ds-button side-card__secondary" data-variant="secondary" href="kart?lag=kretser-barneskole,kretser-ungdomsskole"><svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.7 3.3a.75.75 0 0 1 .6 0L15 5.94l5.2-2.6A.75.75 0 0 1 21.25 4v14a.75.75 0 0 1-.41.67l-5.5 2.75a.75.75 0 0 1-.64.02L9 18.81l-5.2 2.6A.75.75 0 0 1 2.75 20.75V6.75a.75.75 0 0 1 .41-.67l5.5-2.75.04-.03ZM8.25 5.21l-4 2v12.33l4-2V5.21Zm1.5 12.13 4.5 2.08V7.16L9.75 5.08v12.26Zm6 1.95 4-2V5.21l-4 2v12.08Z" fill="currentColor"/></svg>Se skolekretser</a>
                     </section>
                 </aside>
             </div>
@@ -512,8 +501,8 @@
     <script defer src="static/js/ui.js?v=3"></script>
     <script defer src="static/js/priorities.js?v=4"></script>
     <script defer src="static/js/map-init.js?v=14"></script>
-    <script defer src="static/js/finder.js?v=145"></script>
-    <script defer src="static/js/main.js?v=44"></script>
+    <script defer src="static/js/finder.js?v=146"></script>
+    <script defer src="static/js/main.js?v=45"></script>
 </body>
 </html>
 
