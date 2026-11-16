@@ -1,6 +1,8 @@
 """
-import_exam_result.py — Annual update script for the Oslo Schools Map
-==============================================================
+import_exam_result.py — Annual update script for Skolekartet
+=========================================================
+
+Afterwards run school_details.py and site_pages.py, so the detail files and static pages get the new year.
 
 Run this script once when new UDIR data for a school year arrives.
 

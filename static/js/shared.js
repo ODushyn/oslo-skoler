@@ -44,6 +44,14 @@ function baseMapLayer() {
         });
         gl.setStyle(typeof THEME !== 'undefined' ? THEME.mapStyle() : 'https://tiles.openfreemap.org/styles/liberty',
             { diff: false, transformStyle: (previous, style) => baseMapStyle(style) });
+        // The background map service cannot be reached: say so on the map (once), the schools still show
+        gl.on('error', () => {
+            if (gl.isStyleLoaded()) return;   // one missing tile is not worth a message; a missing style is
+            const box = layer._map && layer._map.getContainer();
+            if (!box || box.querySelector('.map-load-error')) return;
+            box.insertAdjacentHTML('beforeend', `<p class="ds-paragraph map-load-error" data-size="sm" role="status">${
+                typeof t === 'function' ? t('Bakgrunnskartet kunne ikke lastes. Skolene vises likevel.') : 'Bakgrunnskartet kunne ikke lastes.'}</p>`);
+        });
     });
     return layer;
 }
@@ -73,6 +81,52 @@ function baseMapStyle(style) {
         });
     });
     return style;
+}
+
+// A short message for screen readers (one shared polite status region, made on first use)
+function announce(text) {
+    let region = document.getElementById('srStatus');
+    if (!region) {
+        region = document.createElement('p');
+        region.id = 'srStatus';
+        region.className = 'ds-sr-only';
+        region.setAttribute('role', 'status');
+        document.body.appendChild(region);
+    }
+    region.textContent = '';
+    setTimeout(() => { region.textContent = text; }, 50);
+}
+
+// A school popup opened from the keyboard (Enter on a list card or a marker) gets the focus, so its link
+// ("Les mer om skolen") is the next stop; Esc or closing it sends the focus back to where it came from.
+// With a mouse or a finger nothing moves.
+function keyboardPopupFocus(map) {
+    let keyboard = false;
+    let opener = null;
+    document.addEventListener('keydown', event => {
+        if (['Enter', ' ', 'Tab'].includes(event.key)) keyboard = true;
+    }, true);
+    document.addEventListener('pointerdown', () => { keyboard = false; }, true);
+    map.on('popupopen', event => {
+        if (!keyboard) return;
+        opener = document.activeElement;
+        const box = event.popup.getElement();
+        if (!box) return;
+        box.addEventListener('keydown', key => {
+            if (key.key === 'Escape') map.closePopup();
+        });
+        const target = box.querySelector('.leaflet-popup-content a[href], .leaflet-popup-content button')
+            || box.querySelector('.leaflet-popup-close-button');
+        if (target) setTimeout(() => target.focus({ preventScroll: true }), 0);
+    });
+    map.on('popupclose', event => {
+        const box = event.popup.getElement();
+        const active = document.activeElement;
+        if (opener && document.body.contains(opener) && (!active || active === document.body || (box && box.contains(active)))) {
+            opener.focus({ preventScroll: true });
+        }
+        opener = null;
+    });
 }
 
 // "850 m", "1,2 km"
@@ -289,6 +343,7 @@ async function shareSchoolPage(school, button) {
         await navigator.clipboard.writeText(url);
         const label = button.querySelector('span');
         label.textContent = t('Lenken er kopiert');
+        announce(t('Lenken er kopiert'));
         setTimeout(() => { label.textContent = t('Del'); }, 2500);
     } catch (error) {
         if (error.name !== 'AbortError') window.prompt(t('Kopier lenken til skolen:'), url);
@@ -377,6 +432,14 @@ const TARGET_ICON = '<svg class="ds-icon" viewBox="0 0 24 24" fill="none" aria-h
 
 function titleCase(text) {
     return (text || '').toLowerCase().replace(/(^|[\s-])\p{L}/gu, m => m.toUpperCase());
+}
+
+// Kommuner with a Sami or Kven name as well: Udir writes "Harstad - Hárstták", Kartverket's address
+// search "Harstad". Both mean the same kommune.
+function sameKommune(a, b) {
+    if (!a || !b) return false;
+    const base = name => name.split(' - ')[0].trim().toLowerCase();
+    return a === b || base(a) === base(b);
 }
 
 // Even-odd rule over all rings, so holes work too. Coordinates are [lng, lat].

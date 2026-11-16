@@ -3,7 +3,8 @@ Per-school detail files for the school page: static/data/skoler/<orgnr>.json
 
 The map loads static/js/school-data.json, which holds what every marker and list card
 needs. Details that only the school page shows (photo gallery, website, social links,
-AKS links, hjertesone, groups for newly arrived pupils, sports facilities, læringsbrett links) live in one small file per school, so the map stays light and the school
+AKS links, hjertesone, groups for newly arrived pupils, sports facilities, læringsbrett links, GSI history,
+skolekrets) live in one small file per school, so the map stays light and the school
 page loads only its own data. No server or database is needed: the data changes when
 the build scripts run, not when visitors use the site.
 
@@ -19,6 +20,8 @@ Inputs (run these first, all cached in cached-data/):
     python anlegg.py --refresh               # pool, football pitch and hall near the school (OpenStreetMap)
     python school_links.py --devices         # links about læringsbrett on the school's front page
     python aks_mat.py --refresh              # food facts from the AKS "Mat" page (Oslo)
+    python gsi.py --refresh                  # lærertetthet, elevtall, forsterket norsk (GSI), every year
+    python skolekretser.py                   # skolekretser (Halden, Stavanger, Fredrikstad, Oslo); writes static/js/
 Then:
     python school_details.py
 """
@@ -82,7 +85,7 @@ def main():
     contacts = school_links.load_contacts()
     gsi_cache = gsi.load_cache()
     kommune_of = {s['orgnr']: s['kommune'] for s in schools if s.get('orgnr')}
-    # Skolekretser from kommuner that publish them as open data (skolekretser.py): orgnr -> its kretser
+    # Skolekretser from skolekretser.py (open data, and Oslo with permission): orgnr -> its kretser
     krets_file = json.loads(KRETS_FILE.read_text(encoding='utf-8')) if KRETS_FILE.exists() else {'kommuner': {}, 'kretser': []}
     by_school = {(s['name'], s['kommune'], s['schoolType']): s['orgnr'] for s in schools if s.get('orgnr')}
     kretser, kretser_kommune = {}, {}

@@ -3798,25 +3798,18 @@ body.has-page-feedback {
 .skeleton--text { width: 85%; height: 1rem; }
 .skeleton--short { width: 55%; }
 
-/* The school page: the placeholder while scripts load the data; without scripts (search engines) the static
-   text under skoler/ shows instead. If the data cannot be loaded, the static text comes back (.is-fallback). */
+/* The school page: the pages under skoler/ show their static text at once (search engines, no scripts, slow
+   connections), and the script replaces it with the full page when the data is in. Only skole?id=, which has no
+   static text, shows the placeholder while loading. */
 .page-skeleton,
 .school-page.is-fallback .page-skeleton {
     display: none;
 }
 
 /* At least a screen tall, so the footer is not in view while loading and then pushed down */
-.js .page-skeleton {
+.js .school-page:not(:has(.school-static)) .page-skeleton {
     display: block;
     min-height: 100svh;
-}
-
-.js .school-static {
-    display: none;
-}
-
-.js .school-page.is-fallback .school-static {
-    display: block;
 }
 
 /* A card-sized placeholder per school in the list while the schools load */
@@ -4102,3 +4095,53 @@ body.has-page-feedback {
     gap: var(--ds-size-1);
 }
 
+
+/* Drawing and measuring with the keyboard: a cross marks the middle of the map, where Enter sets a point */
+.leaflet-container.is-drawing:focus-visible::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 28px;
+    height: 28px;
+    margin: -14px 0 0 -14px;
+    z-index: 800;
+    pointer-events: none;
+    background:
+        linear-gradient(var(--ds-color-neutral-text-default), var(--ds-color-neutral-text-default)) center / 2px 100% no-repeat,
+        linear-gradient(var(--ds-color-neutral-text-default), var(--ds-color-neutral-text-default)) center / 100% 2px no-repeat;
+    filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 1px #fff);
+}
+
+/* The footer links in the HTML itself, for search engines and browsers without scripts (layout.js replaces them) */
+.static-footer ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-2) var(--ds-size-5);
+    margin: var(--ds-size-8) 0;
+    padding: 0;
+    list-style: none;
+}
+
+.noscript-note {
+    margin: var(--ds-size-4) auto;
+}
+
+/* The background map could not be loaded: a note on top of the map */
+.map-load-error {
+    position: absolute;
+    left: var(--ds-size-3);
+    right: var(--ds-size-3);
+    top: var(--ds-size-3);
+    z-index: 1000;
+    margin: 0;
+    padding: var(--ds-size-2) var(--ds-size-3);
+    background: var(--ds-color-neutral-background-default);
+    border: 1px solid var(--ds-color-neutral-border-default);
+    border-radius: var(--ds-border-radius-md);
+}
+
+/* The light green marker needs a dark ring to stand out on the light map (WCAG 1.4.11, 3:1) */
+.school-marker.score-high {
+    box-shadow: 0 0 0 1px var(--ds-color-success-border-strong), var(--ds-shadow-sm);
+}

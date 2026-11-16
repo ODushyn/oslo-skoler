@@ -1,5 +1,5 @@
 """
-Pilot: exact school districts (skolekretser) where a kommune publishes them as open data.
+Pilot: exact school districts (skolekretser) where a kommune publishes them as open data, and Oslo (PBE WFS, with permission).
 
 There is no open national dataset. Kommunene register districts in Matrikkelen, but
 Kartverket only shares those under agreement. This pilot covers the kommuner that
@@ -20,6 +20,15 @@ publish their own districts openly:
 Searched and not found as open data (Geonorge and data.norge.no, November 2026): Oslo, Bergen,
 Trondheim, Nordre Follo, Hamar and the other kommuner. Oslo's barneskolekretser come from the WFS
 of Plan- og bygningsetaten, used with permission (see OSLO_WFS below).
+
+The kretser of 49 more kommuner (Bergen, Trondheim, Tromsø, Bærum, Asker, Bodø and others) were collected
+once from each kommune's own map and are kept, with their sources, in source-data/kommune-skolekretser.json.
+They are added as they are and not fetched again.
+
+Oslo's ungdomsskolekretser are joined from the barneskolekretser with Oslo kommune's feeder list
+(cached-data/ungdomsskole-oslo.json). Each krets gets the postnummer that cover at least 10 % of it
+(Kartverket's postnummerområder), for the housing search links to Finn.no. Needs static/js/school-data.json
+(create_map.py) and ungdomsskole_oslo.py's cache first.
 
 Writes static/js/skolekretser.json, read by the address search. Run:
     python skolekretser.py
@@ -49,6 +58,14 @@ STAVANGER = {
     'barneskole': 'https://opencom.no/dataset/1d0442c1-4521-41b8-bcce-f08d7930b9e5/resource/c30990ab-ca85-40c5-beff-a1cfe6273033/download/skolekretserbarn.json',
     'ungdomsskole': 'https://opencom.no/dataset/1d0442c1-4521-41b8-bcce-f08d7930b9e5/resource/d39abd69-6924-4d1b-acb6-27bca6850294/download/skolekretserungdom.json',
 }
+
+# Nordre Follo: the kommune's own layers on ArcGIS Online, public in its map «Utdanning Nordre Follo»
+# (https://nordrefollo-kom.maps.arcgis.com/apps/instant/media/index.html?appid=304bf373976340e39ddba95d6acf867a).
+# No licence is stated on the layers. The kretser match «Forskrift om skoletilhørighet i Nordre Follo
+# kommune» (from 1 August 2024: 15 barneskolekretser, 8 ungdomsskolekretser). The map's school and
+# kindergarten layers come from Geodata AS' commercial «GeomapUtdanning» and are not used.
+NORDRE_FOLLO_LAYERS = 'https://services-eu1.arcgis.com/lZbySjrhosUXNOZl/arcgis/rest/services/{}/FeatureServer/0/query'
+NORDRE_FOLLO = {'barneskole': 'BarneskoleKretser_Nordre_Follo', 'ungdomsskole': 'Ungdomskolekretser_Nordre_Follo'}
 
 SOURCES = {
     'Halden': {
@@ -188,6 +205,59 @@ def fredrikstad():
     return result
 
 
+def _simplify(ring, tolerance_m=3.0):
+    """Douglas–Peucker on a closed ring of [lng, lat]: drops points closer than `tolerance_m` to the line."""
+    if len(ring) < 5:
+        return ring
+    lat0 = math.radians(sum(p[1] for p in ring) / len(ring))
+    xy = [(p[0] * 111320 * math.cos(lat0), p[1] * 111320) for p in ring]
+    keep = [False] * len(ring)
+    keep[0] = keep[-1] = True
+    stack = [(0, len(ring) - 1)]
+    while stack:
+        first, last = stack.pop()
+        (x1, y1), (x2, y2) = xy[first], xy[last]
+        dx, dy = x2 - x1, y2 - y1
+        length = math.hypot(dx, dy)
+        best, index = 0.0, None
+        for i in range(first + 1, last):
+            px, py = xy[i]
+            d = abs(dy * px - dx * py + x2 * y1 - y2 * x1) / length if length else math.hypot(px - x1, py - y1)
+            if d > best:
+                best, index = d, i
+        if index is not None and best > tolerance_m:
+            keep[index] = True
+            stack += [(first, index), (index, last)]
+    out = [p for p, k in zip(ring, keep) if k]
+    return out if len(out) >= 4 else ring
+
+
+def nordre_follo():
+    result = []
+    for level, layer in NORDRE_FOLLO.items():
+        query = urllib.parse.urlencode({'where': '1=1', 'outFields': 'SKRETSNAVN', 'outSR': '4326', 'f': 'geojson'})
+        for feature in json.loads(_get(f'{NORDRE_FOLLO_LAYERS.format(layer)}?{query}'))['features']:
+            props, geometry = feature.get('properties') or {}, feature.get('geometry') or {}
+            # 'Kolbotn skolekrets' -> 'Kolbotn', 'Ski ungdomsskolekrets' -> 'Ski'
+            name = re.sub(r'\s+(ungdomsskolekrets|ungdomskolekrets|skolekrets)$', '', (props.get('SKRETSNAVN') or '').strip(), flags=re.I)
+            polygons = [geometry['coordinates']] if geometry.get('type') == 'Polygon' else \
+                       geometry.get('coordinates', []) if geometry.get('type') == 'MultiPolygon' else []
+            for polygon in polygons:
+                # The kommune's layers are very detailed; 3 m is far below what an address lookup needs
+                rings = [_simplify([[round(x, 5), round(y, 5)] for x, y, *_ in r]) for r in polygon]
+                result.append({'kommune': 'Nordre Follo', 'level': level, 'name': name, 'rings': rings})
+    if result:
+        SOURCES['Nordre Follo'] = {
+            'levels': ['barneskole', 'ungdomsskole'],
+            'source': 'Nordre Follo kommune, «Barneskolekretser» og «Ungdomskolekretser» (kartet «Utdanning Nordre Follo»)',
+            'sourceUrl': 'https://nordrefollo-kom.maps.arcgis.com/apps/instant/media/index.html?appid=304bf373976340e39ddba95d6acf867a',
+            'updated': None,
+            'caveat': 'Kretsene følger forskrift om skoletilhørighet i Nordre Follo kommune fra 1. august 2024. '
+                      'Elever i Skotbu skolekrets går på Kråkstad skole fra 5. trinn. Det er kommunen som fatter vedtak om skoleplass.',
+        }
+    return result
+
+
 def _krets_name(name):
     """'Slevik skole' -> 'Slevik', 'Haugåsen ungdomsskole' -> 'Haugåsen'."""
     return re.sub(r'\s+(skole|skule|barneskole|ungdomsskole|ungdomskole)$', '', name, flags=re.I)
@@ -274,6 +344,12 @@ KRETS_SCHOOL = {
     # Too small to have published results, so it is not in our school data; the name is from NSR.
     # The address card shows it as a plain card without scores.
     ('Stavanger', 'Fogn'): 'Fogn oppvekstsenter',
+    # Nordre Follo: Udir lists Sofiemyr skole with its address; Ski ungdomsskole is now Magasinparken
+    # ungdomsskole (same organisation number, 974593564, new building from August 2025); Skotbu skole
+    # (1.–4. trinn) has no published results, so it is not in our school data
+    ('Nordre Follo', 'Sofiemyr'): 'Sofiemyr skole Holbergsvei',
+    ('Nordre Follo', 'Ski', 'ungdomsskole'): 'Magasinparken ungdomsskole',
+    ('Nordre Follo', 'Skotbu'): 'Skotbu skole',
 }
 
 
@@ -282,8 +358,10 @@ def match_schools(kretser):
     schools = json.loads(SCHOOL_DATA.read_text(encoding='utf-8'))['schools']
     unmatched = []
     for krets in kretser:
-        if (krets['kommune'], krets['name']) in KRETS_SCHOOL:
-            krets['school'] = KRETS_SCHOOL[(krets['kommune'], krets['name'])]
+        alias = KRETS_SCHOOL.get((krets['kommune'], krets['name'], krets['level'])) \
+            or KRETS_SCHOOL.get((krets['kommune'], krets['name']))
+        if alias:
+            krets['school'] = alias
             continue
         pool = [s for s in schools if s['kommune'] == krets['kommune'] and s['schoolType'] == krets['level']
                 and s.get('eierform') != 'privat']
@@ -334,15 +412,20 @@ def _metres_to_border(lng, lat, rings):
 def check_schools_inside(kretser):
     """Sanity check: each matched school's own position lies inside its krets, or right at its border."""
     schools = json.loads(SCHOOL_DATA.read_text(encoding='utf-8'))['schools']
-    outside = []
+    # A krets can be in several parts (each its own entry); the school only has to be in one of them
+    parts = {}
     for krets in kretser:
         if (krets['kommune'], krets['school']) in TEMPORARY_SITES or 'from' in krets:
             continue   # an Oslo ungdomsskole may stand in a barneskolekrets that leads elsewhere
-        school = next((s for s in schools if s['name'] == krets['school'] and s['kommune'] == krets['kommune']
-                       and s['schoolType'] == krets['level']), None)
-        if school and not _inside(school['lng'], school['lat'], krets['rings']) \
-                and _metres_to_border(school['lng'], school['lat'], krets['rings']) > BORDER_TOLERANCE_M:
-            outside.append(f"{krets['school']} ({krets['name']})")
+        parts.setdefault((krets['kommune'], krets['level'], krets['name'], krets['school']), []).append(krets['rings'])
+    outside = []
+    for (kommune, level, name, school_name), all_rings in parts.items():
+        school = next((s for s in schools if s['name'] == school_name and s['kommune'] == kommune
+                       and s['schoolType'] == level), None)
+        if school and not any(_inside(school['lng'], school['lat'], rings)
+                              or _metres_to_border(school['lng'], school['lat'], rings) <= BORDER_TOLERANCE_M
+                              for rings in all_rings):
+            outside.append(f"{school_name} ({name})")
     return outside
 
 
@@ -488,13 +571,29 @@ def oslo_ungdomsskolekretser(kretser):
     return result
 
 
+SAVED_FILE = Path('source-data/kommune-skolekretser.json')
+
+
+def saved_kommuner(path=SAVED_FILE):
+    """The other kommuners kretser, collected once from each kommune's own map and kept in source-data.
+
+    They already name their school and are not fetched again here; the file holds their sources too."""
+    if not path.exists():
+        return []
+    data = json.loads(path.read_text(encoding='utf-8'))
+    SOURCES.update(data['kommuner'])
+    print(f"Saved kretser: {len(data['kretser'])} in {len(data['kommuner'])} kommuner, from {path}")
+    return data['kretser']
+
+
 def main():
-    kretser = halden() + stavanger() + fredrikstad() + oslo()
+    kretser = halden() + stavanger() + fredrikstad() + oslo() + nordre_follo()
     unmatched = match_schools(kretser)
     kretser += oslo_ungdomsskolekretser(kretser)   # these name their school already
     if any(k['kommune'] == 'Oslo' and k['level'] == 'ungdomsskole' for k in kretser):
         SOURCES['Oslo'].update(levels=['barneskole', 'ungdomsskole'], caveat=OSLO_CAVEAT)
     add_postnummer(kretser)
+    kretser += saved_kommuner()
     OUTPUT.write_text(json.dumps({'kommuner': SOURCES, 'kretser': kretser}, ensure_ascii=False, separators=(',', ':')),
                       encoding='utf-8')
     print(f"Saved {len(kretser)} skolekretser to {OUTPUT} ({OUTPUT.stat().st_size // 1024} kB)")

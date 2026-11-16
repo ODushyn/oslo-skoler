@@ -1,0 +1,35 @@
+# Tests and data checks on every push and pull request. Nothing to install: the Python tests use
+# unittest and the JavaScript tests node:test. How to run them locally: tests/README.md.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Actions pinned to a commit, the tag it was in the comment (same pins as oppdater-data.yml)
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5.6.0
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020  # v4.4.0
+        with:
+          node-version: '20'
+
+      - name: Python unit tests
+        run: python -m unittest discover -s tests -v
+
+      - name: JavaScript unit tests
+        run: node --test tests/js/*.test.mjs
+
+      - name: Data checks
+        run: python tests/check_data.py
