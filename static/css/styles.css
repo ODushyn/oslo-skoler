@@ -828,7 +828,7 @@ main:focus {
 }
 
 .school-card__name {
-    font-weight: var(--ds-font-weight-semibold);
+    font-weight: var(--ds-font-weight-regular, 400);
 }
 
 /* One row of pairs: "Snitt 47,0   Trivsel 3,9 av 5   Mobbing –", spaced instead of "·" between them */
@@ -1147,7 +1147,7 @@ main:focus {
     display: inline-flex;
     align-items: center;
     gap: var(--ds-size-1);
-    font-weight: 500;
+    font-weight: var(--ds-font-weight-regular, 400);
 }
 
 .popup-more__link .ds-icon {
@@ -2216,9 +2216,12 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 
 /* The address's schools: grey cards; the one picked (shown on the map) is blue */
 .own-school.ds-card {
-    --dsc-card-padding: var(--ds-size-4);
+    /* The same card as the list's (school-card): padding, columns, badge with its label under it */
+    --dsc-card-padding: var(--ds-size-3);
     display: grid;
-    gap: var(--ds-size-2);
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: var(--ds-size-3);
     width: 100%;
     text-align: start;
     color: inherit;
@@ -2245,7 +2248,7 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 }
 
 .own-school__name {
-    font-weight: var(--ds-font-weight-semibold);
+    font-weight: var(--ds-font-weight-regular, 400);
     font-size: var(--sk-text-md);
 }
 
@@ -3284,7 +3287,7 @@ body.has-page-feedback {
     border-radius: 50%;
 }
 
-.theme-menu__dot--designsystemet { background: #0d7a5f; }
+.theme-menu__dot--designsystemet { background: var(--ds-color-brand1-base-default); }
 .theme-menu__dot--altinn { background: #0162ba; }
 
 
@@ -4777,7 +4780,7 @@ html[data-contrast="hoy"] :is(.display-panel__note) { color: #1e2b3c; }
     gap: 12px;
     padding: 20px;
     border-radius: 12px;
-    background: #f3f3f4;
+    background: var(--ds-color-neutral-surface-tinted);
 }
 
 .color-scale > * { margin: 0; }
@@ -4812,7 +4815,7 @@ html[data-contrast="hoy"] :is(.display-panel__note) { color: #1e2b3c; }
     font-size: var(--sk-text-sm);
     line-height: var(--ds-line-height-md);
 }
-.color-scale__text strong { font-weight: var(--ds-font-weight-semibold); }
+.color-scale__text strong { }
 .color-scale__text span { color: var(--ds-color-neutral-text-subtle); }
 .color-scale__link { justify-self: start; font-size: var(--sk-text-sm); line-height: var(--ds-line-height-md); }
 
@@ -5192,6 +5195,7 @@ html[data-contrast="hoy"] :is(.display-panel__note) { color: #1e2b3c; }
 .own-schools__group.ds-card {
     --dsc-card-padding: 0;
     display: grid;
+    gap: 0;
     overflow: hidden;
 }
 
@@ -5204,6 +5208,7 @@ html[data-contrast="hoy"] :is(.display-panel__note) { color: #1e2b3c; }
     border: 0;
     border-radius: 0;
     background: transparent;
+    box-shadow: none;
 }
 
 .own-schools__group .own-school.ds-card:hover {
@@ -5235,7 +5240,7 @@ html[data-contrast="hoy"] :is(.display-panel__note) { color: #1e2b3c; }
 .own-school .own-school__name.ds-link {
     justify-self: start;
     color: var(--ds-color-neutral-text-default);
-    font-weight: var(--ds-font-weight-semibold);
+    font-weight: var(--ds-font-weight-regular, 400);
     text-decoration-thickness: 1px;
     text-underline-offset: 0.2em;
 }
@@ -5360,7 +5365,7 @@ html[data-contrast="hoy"] :is(.display-panel__note) { color: #1e2b3c; }
     border: 1px solid var(--ds-color-neutral-border-subtle);
     border-radius: var(--ds-border-radius-lg);
 }
-.page-related__title { margin: 0 0 var(--ds-size-3); font-size: var(--sk-text-sm); font-weight: var(--ds-font-weight-semibold); }
+.page-related__title { margin: 0 0 var(--ds-size-3); font-size: var(--sk-text-sm); }
 .page-related ul { display: grid; gap: var(--ds-size-3); margin: 0; padding: 0; list-style: none; }
 
 .page__container--related { max-width: 76rem; }
@@ -5456,7 +5461,7 @@ html[data-contrast="hoy"] :is(.display-panel__note) { color: #1e2b3c; }
     gap: var(--ds-size-4);
     text-align: start;
 }
-.stat-row__title { font-weight: var(--ds-font-weight-semibold); }
+.stat-row__title { }
 .stat-row__summary .school-stat__value { font-size: var(--sk-text-lg); font-weight: var(--ds-font-weight-semibold); white-space: nowrap; }
 .stat-row__summary .school-stat__value > span:not(.color-dot) { font-size: var(--sk-text-xs); font-weight: var(--ds-font-weight-regular); color: var(--ds-color-neutral-text-subtle); }
 .stat-row__words {
@@ -5490,7 +5495,7 @@ html[data-contrast="hoy"] :is(.display-panel__note) { color: #1e2b3c; }
 .school-banner__actions .school-banner__save.ds-button { position: static; color: inherit; }
 .school-banner__actions .school-banner__save.ds-button[data-variant="primary"] { color: var(--ds-color-brand1-base-contrast-default); }
 .stat-fold.ds-details { margin-top: var(--ds-size-4); border: 1px solid var(--ds-color-neutral-border-subtle); border-radius: var(--ds-border-radius-lg); }
-.stat-fold.ds-details > summary { font-weight: var(--ds-font-weight-semibold); }
+.stat-fold.ds-details > summary { }
 
 /* ══ /kart search list, the same as the front page's (groups, icon and two lines per row, hint) ═══════ */
 .map-search__results.ds-card { padding: var(--ds-size-1) 0 0; overflow: hidden; }
@@ -5520,7 +5525,7 @@ html[data-contrast="hoy"] :is(.display-panel__note) { color: #1e2b3c; }
    the long kommune list folded once under «Grenser» (as Norgeskart and Geonorge keep layer names short) ══ */
 .map-layers.ds-card { width: min(24rem, calc(100% - 2 * var(--ds-size-3) - var(--ds-size-12) - var(--ds-size-2))); }
 #layersPanel .map-layers__group { display: flex; flex-wrap: wrap; gap: var(--ds-size-2); margin: 0 0 var(--ds-size-4); padding: 0; border: 0; }
-#layersPanel .map-layers__group > legend { flex-basis: 100%; margin-bottom: var(--ds-size-2); font-size: var(--sk-text-xs); font-weight: var(--ds-font-weight-semibold); }
+#layersPanel .map-layers__group > legend { flex-basis: 100%; margin-bottom: var(--ds-size-2); font-size: var(--sk-text-xs); }
 #layersPanel .map-layers__group > .ds-field {
     position: relative;
     display: inline-flex;
@@ -5751,7 +5756,7 @@ html[data-contrast="hoy"] :is(.display-panel__note) { color: #1e2b3c; }
 .compare-diff[data-tone="warn"] .compare-diff__icon { background: var(--ds-color-warning-surface-tinted); color: var(--ds-color-warning-text-default); }
 .compare-diff__body { display: grid; gap: 2px; min-width: 0; }
 .compare-diff__title { font-size: var(--sk-text-xs); color: var(--ds-color-neutral-text-subtle); }
-.compare-diff__head { font-weight: var(--ds-font-weight-semibold); }
+.compare-diff__head { }
 .compare-diff__text { font-size: var(--sk-text-xs); color: var(--ds-color-neutral-text-subtle); }
 
 /* «Vis som: Tabell | Kort og kart» (Designsystemet's ToggleGroup) */
@@ -5771,7 +5776,7 @@ html[data-contrast="hoy"] :is(.display-panel__note) { color: #1e2b3c; }
 .compare-table thead th[aria-sort="ascending"] button,
 .compare-table thead th[aria-sort="descending"] button { color: var(--ds-color-brand1-text-default); }
 .compare-table tbody th { font-weight: inherit; text-align: start; }
-.compare-table__name { font-weight: var(--ds-font-weight-semibold); }
+.compare-table__name { }
 .compare-table__meta { display: block; font-size: var(--sk-text-xs); color: var(--ds-color-neutral-text-subtle); }
 .compare-table__distance { white-space: nowrap; }
 .compare-table .compare-table__move { width: 1%; padding-inline-end: 0; }
@@ -5806,7 +5811,7 @@ html[data-contrast="hoy"] :is(.display-panel__note) { color: #1e2b3c; }
 .school-summary-band .key-figures { margin-top: 0; }
 .school-summary-band .key-figures__grid { margin-bottom: var(--ds-size-4); }
 .school-about { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: var(--ds-size-4) var(--ds-size-5); margin: 0 0 var(--ds-size-4); }
-.school-about dt { margin-bottom: var(--ds-size-1); font-weight: var(--ds-font-weight-semibold); }
+.school-about dt { margin-bottom: var(--ds-size-1); }
 .school-about dd { margin: 0; overflow-wrap: anywhere; }
 .school-about [hidden] { display: none; }
 
@@ -5848,17 +5853,9 @@ html[data-contrast="hoy"] :is(.display-panel__note) { color: #1e2b3c; }
 .compare-tile__label { font-size: var(--sk-text-xs); color: var(--ds-color-neutral-text-subtle); }
 .compare-tile__words { font-size: var(--sk-text-xs); }
 .compare-tile__value { font-weight: var(--ds-font-weight-semibold); font-size: var(--sk-text-md); white-space: nowrap; }
-.compare-card__star {
-    align-self: flex-start;
-    padding: 2px var(--ds-size-2);
-    border-radius: var(--ds-border-radius-full);
-    background: var(--ds-color-brand1-base-default);
-    color: var(--ds-color-brand1-base-contrast-default);
-    font-size: var(--sk-text-xs);
-    font-weight: var(--ds-font-weight-semibold);
-}
-.compare-card__tag { align-self: flex-start; margin: 0; padding: 2px var(--ds-size-2); background: var(--ds-color-warning-surface-tinted); color: var(--ds-color-warning-text-default); font-size: var(--sk-text-xs); }
-.compare-card__more { margin-top: auto; padding-top: var(--ds-size-2); font-weight: var(--ds-font-weight-semibold); }
+
+
+.compare-card__more { margin-top: auto; padding-top: var(--ds-size-2); }
 .compare-card__more .ds-icon { width: 1em; height: 1em; margin-inline-start: 0.25em; vertical-align: -0.1em; }
 .compare-card--add {
     display: grid;
@@ -5934,7 +5931,7 @@ section.summary-questions .school-page__sources { margin: 0; }
 /* Three cards in a row, as in the design */
 @media (min-width: 48rem) { .parents-guide__list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .parents-guide__card.ds-card { display: grid; gap: var(--ds-size-2); align-content: start; padding: var(--ds-size-5); }
-.parents-guide__link { display: inline-flex; align-items: center; gap: var(--ds-size-2); font-weight: var(--ds-font-weight-semibold); }
+.parents-guide__link { display: inline-flex; align-items: center; gap: var(--ds-size-2); }
 .parents-guide__link .ds-icon { flex: none; width: 1.2em; height: 1.2em; }
 .parents-guide__card .ds-paragraph { margin: 0; color: var(--ds-color-neutral-text-subtle); }
 
@@ -5964,6 +5961,21 @@ section.summary-questions .school-page__sources { margin: 0; }
 .ui-dialog__body > *, .ui-confirm > .ds-paragraph { margin: 0; }
 .ui-dialog__actions { display: grid; gap: var(--ds-size-3); }
 .ui-dialog__action.ds-button { width: 100%; min-height: 3.25rem; justify-content: center; }
+/* Type in the dialogs comes from the site's scale, not from the sizes Digdir gives inside data-size="sm":
+   the title 18 px (the same as the body of the page's cards), the text, the choices and the buttons 16 px */
+.ui-dialog .ds-heading[data-size],
+.ui-confirm .ds-heading[data-size] { font-size: var(--sk-heading-2xs); }
+.ui-dialog .ds-paragraph,
+.ui-confirm .ds-paragraph,
+.ui-dialog li,
+.ui-confirm li,
+.ui-choice,
+.ui-status,
+.ui-dialog .ds-input,
+.ui-dialog__action,
+.ui-dialog__close { font-size: var(--sk-text-sm); }
+.ui-status { margin: 0; font-weight: var(--ds-font-weight-semibold); color: var(--ds-color-success-text-default); }
+
 /* «Merknad»: a short note on grey */
 .ui-note { margin: 0; padding: var(--ds-size-3) var(--ds-size-4); border-radius: var(--ds-border-radius-md); background: var(--ds-color-neutral-surface-tinted); font-size: var(--sk-text-xs); }
 /* A list of choices, one per row (radio buttons or links that look like them) */
@@ -5972,7 +5984,7 @@ section.summary-questions .school-page__sources { margin: 0; }
 .ui-choice__mark { flex: none; width: 1.5rem; height: 1.5rem; box-sizing: border-box; border: 2px solid var(--ds-color-neutral-text-default); border-radius: 50%; }
 .ui-choice[aria-current="true"] .ui-choice__mark,
 .ui-choice input:checked + .ui-choice__mark { border: 7px solid var(--ds-color-brand1-base-default); }
-.ui-choice[aria-current="true"], .ui-choice:has(input:checked) { font-weight: var(--ds-font-weight-semibold); }
+.ui-choice[aria-current="true"], .ui-choice:has(input:checked) { }
 .ui-choice input { position: absolute; opacity: 0; pointer-events: none; }
 .ui-choice:has(input:focus-visible), a.ui-choice:focus-visible { outline: var(--ds-border-width-focus, 3px) solid var(--ds-color-focus-outer, #000); outline-offset: 2px; border-radius: var(--ds-border-radius-md); }
 .ui-choice--check .ui-choice__mark { border-radius: 4px; }
@@ -6032,3 +6044,54 @@ fieldset.ui-choices { min-width: 0; margin: 0; padding: 0; border: 0; }
 .leaflet-control.map-collapse .ds-button { background: var(--ds-color-neutral-background-default); box-shadow: 0 1px 4px rgb(0 0 0 / 20%); }
 .results-map-card__head { display: flex; align-items: center; gap: var(--ds-size-3); }
 .results-map-card__head .ds-heading { margin: 0; }
+
+/* ══ The consent banner for Google Analytics (analytics.js): bottom of the screen, not blocking the page ══ */
+.analyse-banner {
+    position: fixed;
+    inset-inline: var(--ds-size-4);
+    inset-block-end: var(--ds-size-4);
+    z-index: 2000;
+    box-sizing: border-box;
+    max-width: 40rem;
+    margin-inline: auto;
+    display: grid;
+    gap: var(--ds-size-3);
+    padding: var(--ds-size-4) var(--ds-size-5);
+    border: 1px solid var(--ds-color-neutral-border-subtle);
+    border-radius: var(--ds-border-radius-lg, 12px);
+    background: var(--ds-color-neutral-background-default);
+    color: var(--ds-color-neutral-text-default);
+    box-shadow: 0 4px 16px rgb(0 0 0 / 18%);
+}
+.analyse-banner .ds-paragraph { margin: 0; }
+.analyse-banner__actions { display: flex; flex-wrap: wrap; gap: var(--ds-size-2); }
+
+/* A confirmation: the title and ✕ on one line, then its text and buttons (if it has any) */
+.ui-confirm__head { display: flex; align-items: center; gap: var(--ds-size-3); }
+.ui-confirm__head .ds-heading { flex: 1; margin: 0; }
+.ui-confirm__head .ui-dialog__close.ds-button { flex: none; }
+
+/* On wide screens the question and the two buttons share one line: a short bar, not a box */
+@media (min-width: 961px) {
+    .analyse-banner { grid-template-columns: minmax(0, 1fr) auto; align-items: center; max-width: 56rem; }
+}
+
+/* «‹ Vis kart» in the «Kart» card: the words close to the arrow */
+.results-map-card__open.ds-button { gap: var(--ds-size-1); }
+
+/* «‹ Tilbake til skolene» above the saved schools: the small link size, as the other links of the page */
+.saved-bar__back.ds-link { font-size: var(--sk-text-sm); }
+
+/* One size per role on the comparison: the card's words, labels and link 16 px; names and values 18 px */
+.compare-card__more.ds-link { font-size: var(--sk-text-sm); }
+.compare-tile__label,
+.compare-tile__words { font-size: var(--sk-text-sm); }
+
+/* Every link on the site has the same size (16 px, the small text of the scale); the weight comes from the component */
+.ds-link { font-size: var(--sk-text-sm); }
+
+/* Links are not bold: the same weight for every link on the site (regular), whatever the component sets */
+.ds-link,
+.ds-link:hover,
+.ds-link:focus-visible,
+.ds-link:visited { font-weight: var(--ds-font-weight-regular, 400); }

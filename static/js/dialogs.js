@@ -74,14 +74,18 @@
         if (current) current.close();
         const opener = document.activeElement;
         const id = `uiConfirm${++count}`;
-        const list = actions && actions.length ? actions : [{ label: say('OK'), primary: true }];
+        // A plain message has no button of its own: ✕ «Lukk» (and Escape, or a click outside) closes it
+        const list = actions || [];
         const box = document.createElement('dialog');
         box.className = 'ui-confirm';
         box.setAttribute('aria-labelledby', `${id}Title`);
         box.innerHTML = `
-            <h2 class="ds-heading" data-size="sm" id="${id}Title" role="status">${esc(title)}</h2>
+            <div class="ui-confirm__head">
+                <h2 class="ds-heading" data-size="sm" id="${id}Title" role="status">${esc(title)}</h2>
+                <button type="button" class="ds-button ui-dialog__close" data-variant="tertiary" data-close><span aria-hidden="true">✕</span> ${esc(say('Lukk'))}</button>
+            </div>
             ${text ? `<p class="ds-paragraph">${esc(text)}</p>` : ''}${html}
-            <div class="ui-dialog__actions">${list.map(actionHtml).join('')}</div>`;
+            ${list.length ? `<div class="ui-dialog__actions">${list.map(actionHtml).join('')}</div>` : ''}`;
         document.body.appendChild(box);
         // The focus goes back to what was used before, when it was in the box (not when the visitor clicked elsewhere)
         const close = () => {
@@ -105,8 +109,9 @@
         };
         setTimeout(() => document.addEventListener('pointerdown', outside, true), 0);
         bindActions(box, list, close);
+        box.querySelector('[data-close]').addEventListener('click', close);
         box.show();
-        box.querySelector('[data-action]').focus();
+        (box.querySelector('[data-action]') || box.querySelector('[data-close]')).focus();
         current = { box, close };
         return current;
     }
@@ -129,8 +134,7 @@
                 title: `✓ ${say(n === 1 ? 'Lagret – 1 skole i listen' : 'Lagret – {count} skoler i listen', { count: n })}`,
                 text: say('Du finner dem under «Lagrede skoler» øverst på siden.'),
                 actions: [
-                    { label: say('Se lagrede skoler'), primary: true, href },
-                    { label: say('Fortsett å se') }
+                    { label: say('Se lagrede skoler'), primary: true, href }
                 ]
             });
         }, 50);
