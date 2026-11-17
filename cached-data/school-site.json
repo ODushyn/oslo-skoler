@@ -1,0 +1,5909 @@
+{
+"fetched": "2026-11-17",
+"schools": {
+"811801402": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.hjuksebomontessori.no/sfo/"
+}
+}
+},
+"813993422": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://spraksenteret.osloskolen.no/for-elever-og-foresatte/skoledagen/leksehjelp/"
+}
+}
+},
+"816668212": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.kkfriskole.no/sfo/"
+},
+"devices": {
+"title": "Chromebook",
+"url": "https://www.kkfriskole.no/chromebook/"
+}
+}
+},
+"834121832": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://minskole.no/lervig/underside/22059"
+}
+}
+},
+"873084022": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen",
+"url": "https://rsil.no/sfo"
+},
+"skolemat": {
+"title": "Kantinen",
+"url": "https://rsil.no/kantinen"
+}
+}
+},
+"873441852": {
+"links": {
+"sfo": {
+"title": "Fritidshjem (SFO)",
+"url": "https://www.steinerskolentromso.no/barne-og-ungdomsskole/fritidshjemmet-sfo"
+}
+}
+},
+"873608862": {
+"links": {
+"sfo": {
+"title": "Sagdalen SFO",
+"url": "https://www.lillestrom.kommune.no/skole-og-utdanning/skoler-og-skolegrenser/skolene-i-lillestrom/sagdalen-sfo/"
+}
+}
+},
+"874222062": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/kringlebotn-skole/sfo"
+}
+}
+},
+"874552062": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.eikeli.skole.no/index.php?pageID=6"
+}
+}
+},
+"874552232": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.snaroyaskole.no/index.php?pageID=6"
+}
+}
+},
+"874566322": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://kaldfjord.tromsoskolen.no/index.php?pageID=147"
+}
+}
+},
+"874580562": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://eigeroy.eigskole.no/start/sfo"
+},
+"skolemat": {
+"title": "Kantine",
+"url": "https://eigeroy.eigskole.no/start/nyttig-for-foreldre/kantine"
+}
+}
+},
+"874584592": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://jordet.larvik.kommune.no/sfo/"
+}
+}
+},
+"874589802": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://grunerlokka.osloskolen.no/aktivitetsskolen/aks-pa-grunerlokka-skole/kontakt-aks/"
+},
+"devices": {
+"title": "Læringsbrett",
+"url": "https://grunerlokka.osloskolen.no/fagtilbud/satsingsomrader/laringsbrett/"
+}
+}
+},
+"874589942": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://lilleaker.osloskolen.no/aktivitetsskolen/aks-pa-lilleaker-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolefrukt og skolemelk",
+"url": "https://lilleaker.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolefrukt/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://lilleaker.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"874590002": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://manglerud.osloskolen.no/aktivitetsskolen/aks-pa-manglerud-skole/kontakt-aks/"
+},
+"kurs": {
+"title": "Aktivitetstilbudet ved Manglerud AKS",
+"url": "https://manglerud.osloskolen.no/aktivitetsskolen/vare-tilbud/aktiviteter-og-pamelding/"
+}
+}
+},
+"874590142": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://rustad.osloskolen.no/aktivitetsskolen/aks-pa-rustad-skole/kontakt-aks/"
+}
+}
+},
+"874590282": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://skjonnhaug.osloskolen.no/aktivitetsskolen/aks-pa-skjonnhaug-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://skjonnhaug.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelk/"
+}
+}
+},
+"874590452": {
+"links": {
+"sfo": {
+"title": "Om Haugen AKS",
+"url": "https://haugen.osloskolen.no/aktivitetsskolen/aks-pa-haugen-skole/om-haugen-aks/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://haugen.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelk-og-skolefrukt/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://haugen.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+},
+"ferie": {
+"title": "Ferieprogram på AKS",
+"url": "https://haugen.osloskolen.no/aktivitetsskolen/vare-planer/ferieplaner/"
+}
+}
+},
+"874590592": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://hovseter.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"874598542": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/flekkeroy/seksjon/21647"
+}
+}
+},
+"874598682": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://minskole.no/torridal/seksjon/22905"
+}
+}
+},
+"874598712": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen",
+"url": "https://www.minskole.no/todda/seksjon/22473"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://www.minskole.no/todda/Underside/19479"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.minskole.no/todda/Underside/19480"
+}
+}
+},
+"874598852": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.minskole.no/haumyrheia/Underside/18984"
+}
+}
+},
+"874610852": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/hole/seksjon/8242"
+}
+}
+},
+"874611492": {
+"links": {
+"sfo": {
+"title": "Skolens fritidsordning - SFO",
+"url": "https://www.minskole.no/kvaleberg/underside/20930"
+}
+}
+},
+"874611522": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen",
+"url": "https://www.minskole.no/tjensvoll/underside/20970"
+}
+},
+"sfoFood": {
+"url": "https://www.minskole.no/tjensvoll/underside/20970",
+"facts": {
+"warm": true
+}
+}
+},
+"874611662": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://minskole.no/byfjord/underside/20938"
+}
+}
+},
+"874737852": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/nordnes-skole/sfo"
+}
+}
+},
+"874738042": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/kyrkjekrinsen-skole/sfo"
+},
+"sfoMat": {
+"title": "Meny på SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/kyrkjekrinsen-skole/sfo/meny-pa-sfo"
+}
+},
+"sfoFood": {
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/kyrkjekrinsen-skole/sfo/meny-pa-sfo",
+"facts": {
+"perWeek": 5
+}
+}
+},
+"874738182": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/hjellestad-skole/sfo"
+}
+}
+},
+"874738352": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/alvoen-skole/sfo"
+}
+}
+},
+"874738492": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/ulsetskogen-skole/sfo"
+}
+}
+},
+"874738662": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/li-skole/sfo"
+}
+}
+},
+"875271822": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.tonstad.skule.no/index.php?pageID=16"
+}
+}
+},
+"875272462": {
+"links": {
+"sfo": {
+"title": "Mogreina SFO",
+"url": "https://www.ullensaker.kommune.no/virksomheter/skolene-i-ullensaker/mogreina-skole/mogreina-sfo/"
+}
+}
+},
+"875272772": {
+"links": {
+"sfo": {
+"title": "Blaker SFO",
+"url": "https://www.lillestrom.kommune.no/skole-og-utdanning/skoler-og-skolegrenser/skolene-i-lillestrom/fjuk-sfo/"
+}
+}
+},
+"875273892": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.gran.kommune.no/tjenester/skole-og-sfo/her-finner-du-skolene-i-gran/skoleportal/bjoneroa-skole/sfo"
+}
+}
+},
+"875275542": {
+"links": {
+"devices": {
+"title": "Reglement for Chromebook",
+"url": "https://www.sus.solaskolen.no/index.php?pageID=58"
+}
+}
+},
+"875279912": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://hammerfest.kommune.no/fjordtunskole/sfo/"
+}
+}
+},
+"875280902": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://roligheden.skole.arendal.no/index.php?pageID=70"
+}
+}
+},
+"875281992": {
+"links": {
+"sfo": {
+"title": "Om SFO",
+"url": "https://fusa.barneskule.no/index.php?pageID=47"
+}
+}
+},
+"875282182": {
+"links": {
+"sfo": {
+"title": "Informasjon om SFO",
+"url": "https://www.soreoyane.gs.hl.no/index.php?pageID=55"
+}
+}
+},
+"875283022": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.arendal.kommune.no/stintaskole/for-foreldre/arendalsskolen/sfo/"
+}
+}
+},
+"875283162": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.stuenesskole.no/index.php?pageID=127"
+}
+}
+},
+"875286072": {
+"links": {
+"sfo": {
+"title": "Skulefritidsordning (SFO)",
+"url": "https://www.oygarden.kommune.no/toftoyskule/tenester/skulefritidsordning-sfo/"
+}
+}
+},
+"875287672": {
+"links": {
+"sfo": {
+"title": "Skulefritidsordning (SFO)",
+"url": "https://www.oygarden.kommune.no/brattholmenskule/tenester/skulefritidsordning-sfo/"
+}
+}
+},
+"875287702": {
+"links": {
+"sfo": {
+"title": "Skulefritidsordning (SFO)",
+"url": "https://www.oygarden.kommune.no/bjoroyskule/tenester/skulefritidsordning-sfo/"
+}
+}
+},
+"875296752": {
+"links": {
+"skolemat": {
+"title": "Kantine og Skolelyst",
+"url": "https://www.minskole.no/fus/Underside/21806"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.minskole.no/fus/Underside/21808"
+}
+}
+},
+"875296892": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.lorenskog.kommune.no/kurland-skole/sfo/"
+}
+}
+},
+"875298682": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen",
+"url": "https://kollmyr.skole.skien.no/om-skolen/skolefritidsordningen/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://kollmyr.skole.skien.no/om-skolen/leksehjelp/"
+}
+}
+},
+"876210762": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://tyrifjordskole.no/skolefritidsordning/"
+}
+}
+},
+"876599112": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.morealesund.no/sfo.html"
+},
+"skolemat": {
+"title": "Skulemjølk/frukt",
+"url": "https://www.morealesund.no/skulemjoslashlkfrukt.html"
+}
+}
+},
+"876805022": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://skoyenasen.osloskolen.no/om-skolen/elevenes-tilbud/leksehjelp/"
+}
+}
+},
+"879126312": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://vahl.osloskolen.no/aktivitetsskolen/aks-pa-vahl-skole/kontakt-aks/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://vahl.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+},
+"kurs": {
+"title": "Ulike aktiviteter på AKS",
+"url": "https://vahl.osloskolen.no/aktivitetsskolen/vare-tilbud/ulike-aktiviteter-pa-aks/"
+}
+}
+},
+"879128072": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS Disen",
+"url": "https://disen.osloskolen.no/aktivitetsskolen/aks-pa-disen-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Bestill skolemelk",
+"url": "https://disen.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/bestilling-av-skolemelk/"
+},
+"leksehjelp": {
+"title": "Leksetid",
+"url": "https://disen.osloskolen.no/aktivitetsskolen/vare-tilbud/leksetid/"
+},
+"kurs": {
+"title": "Aktivitetstilbudet AKS 26/27",
+"url": "https://disen.osloskolen.no/aktivitetsskolen/vare-tilbud/helarstilbud/"
+}
+}
+},
+"879909252": {
+"links": {
+"sfo": {
+"title": "Brånås SFO",
+"url": "https://www.lillestrom.kommune.no/skole-og-utdanning/skoler-og-skolegrenser/skolene-i-lillestrom/branas-sfo/"
+}
+},
+"sfoFood": {
+"url": "https://www.lillestrom.kommune.no/skole-og-utdanning/skoler-og-skolegrenser/skolene-i-lillestrom/branas-sfo/",
+"facts": {
+"warm": true,
+"warmPerWeek": 2
+}
+}
+},
+"880954342": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://jordal.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"885142362": {
+"links": {
+"sfo": {
+"title": "Nyskolens SFO",
+"url": "https://nyskolen.no/foreldresiden/skolefritidsordningen/"
+}
+}
+},
+"886086202": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.kischool.org/sfo"
+}
+}
+},
+"898211932": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.skulen.no/sfo1/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.skulen.no/praktisk-info-1/leksehjelpa.html"
+}
+}
+},
+"911687100": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.tryggheimstrand.no/sfo/"
+}
+}
+},
+"911716291": {
+"links": {
+"sfo": {
+"title": "SFO Informasjon om SFO tilbud",
+"url": "https://www.skms.no/sfo"
+}
+}
+},
+"911772515": {
+"links": {
+"skolemat": {
+"title": "Skolemat/ måltider",
+"url": "https://overhallamontessoriskole.no/skolemat/"
+},
+"leksehjelp": {
+"title": "Skolefritidsordning/leksehjelp",
+"url": "https://overhallamontessoriskole.no/heldagsskole/"
+}
+}
+},
+"912033333": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://loren.osloskolen.no/aktivitetsskolen/aks-pa-loren-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://loren.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelk/"
+}
+}
+},
+"912187071": {
+"links": {
+"skolemat": {
+"title": "Skolefrukt",
+"url": "https://sofienberg.osloskolen.no/fagtilbud/andre-tilbud-til-elevene/skolefrukt/"
+}
+}
+},
+"912697711": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://berg.osloskolen.no/aktivitetsskolen/aks-pa-berg-skole/kontakt-aks/"
+},
+"leksehjelp": {
+"title": "Leksetid",
+"url": "https://berg.osloskolen.no/fagtilbud/laringsstotte/leksetid/"
+}
+}
+},
+"913261968": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.moreskodje.no/parents"
+}
+}
+},
+"913461746": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://montessoriskole-stavanger.no/sfo/"
+}
+}
+},
+"913511085": {
+"links": {
+"skolemat": {
+"title": "Kantine",
+"url": "https://granstangen.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/kantine/"
+}
+}
+},
+"913511204": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://fagerborg.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"913579321": {
+"links": {
+"sfo": {
+"title": "AKS på TGV",
+"url": "https://teglverket.osloskolen.no/aktivitetsskolen/vare-tilbud/aks-pa-tgv/"
+},
+"skolemat": {
+"title": "Skolemelk for alle",
+"url": "https://teglverket.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelk-for-alle/"
+}
+},
+"sfoFood": {
+"url": "https://teglverket.osloskolen.no/aktivitetsskolen/vare-tilbud/aks-pa-tgv/",
+"facts": {
+"perWeek": 5
+}
+}
+},
+"913755537": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.harstadmontessori.no/index.php?pageID=38"
+}
+}
+},
+"913815351": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://jennestadms.no/sfo-skolefritidsordning/"
+}
+}
+},
+"913998766": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://mesterfjellet.larvik.kommune.no/sfo/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://mesterfjellet.larvik.kommune.no/om-skolen/leksehjelp/"
+}
+}
+},
+"914059135": {
+"links": {
+"sfo": {
+"title": "Vigmostad skole og SFO",
+"url": "https://www.vigmostadskole.no/vigmostadprivatskole"
+}
+}
+},
+"914937159": {
+"links": {
+"sfo": {
+"title": "Skulefritidsordning (SFO)",
+"url": "https://www.oygarden.kommune.no/tjeldstoskule/tenester/skulefritidsordning-sfo/"
+}
+}
+},
+"915094791": {
+"links": {
+"skolemat": {
+"title": "Skolemat",
+"url": "https://olavsborgkristneskole.no/skolemat/"
+}
+}
+},
+"915114091": {
+"links": {
+"sfo": {
+"title": "SFO (Before and After School Service)",
+"url": "https://romerikeis.no/school-doc/sfo-before-and-after-school-service/"
+}
+}
+},
+"915225713": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.kongshaugen.com/informasjon/leksehjelp/"
+}
+}
+},
+"915372473": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.neverdalenspire.no/sfo"
+}
+}
+},
+"915619886": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://fagerli.larvik.kommune.no/sfo/"
+}
+}
+},
+"915686893": {
+"links": {
+"leksehjelp": {
+"title": "Søk om leksehjelp",
+"url": "https://www.skodvinskule.no/soknad-om-sfo-plass"
+}
+}
+},
+"916203993": {
+"links": {
+"sfo": {
+"title": "Kontakt oss på AKS",
+"url": "https://fernandanissen.osloskolen.no/aktivitetsskolen/aks-pa-fernanda-nissen/kontakt-aks/"
+}
+}
+},
+"916513968": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://brynseng.osloskolen.no/aktivitetsskolen/aks-pa-brynseng-skole/kontakt-aks/"
+},
+"leksehjelp": {
+"title": "Leksetid",
+"url": "https://brynseng.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"916871422": {
+"links": {
+"sfo": {
+"title": "Frogner SFO",
+"url": "https://www.lillestrom.kommune.no/skole-og-utdanning/skoler-og-skolegrenser/skolene-i-lillestrom/frogner-sfo/"
+}
+}
+},
+"916974302": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.lorenskog.kommune.no/luhr-skole/sfo/"
+}
+}
+},
+"917450064": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://strandvikmontessori.no/sfo/"
+},
+"ferie": {
+"title": "Ferie-SFO",
+"url": "https://strandvikmontessori.no/ferie-sfo-3/"
+}
+}
+},
+"917526427": {
+"links": {
+"sfo": {
+"title": "AKS Holmen",
+"url": "https://holmen.osloskolen.no/aktivitetsskolen/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://holmen.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelk/"
+}
+}
+},
+"918399267": {
+"links": {
+"sfo": {
+"title": "AKS for Vollebekk +",
+"url": "https://vollebekk.osloskolen.no/aktivitetsskolen/aks-pa-vollebekk-skole/aks-for-vollebekk-/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://vollebekk.osloskolen.no/aktivitetsskolen/vare-tilbud/leksehjelp/"
+},
+"ferie": {
+"title": "Andre ferier på AKS",
+"url": "https://vollebekk.osloskolen.no/aktivitetsskolen/ukeplan/ferieaks/"
+}
+}
+},
+"918511377": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.vollskole.no/sfo.html"
+}
+}
+},
+"918522859": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.kongsvingermontessori.no/foresatte/sfo.html"
+}
+}
+},
+"920330576": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.hjartdalmontessoriskule.com/sfo"
+}
+}
+},
+"922802742": {
+"links": {
+"sfo": {
+"title": "Skulefritidsordning (SFO)",
+"url": "https://www.oygarden.kommune.no/spildepollenskule/tenester/skulefritidsordning-sfo/"
+}
+}
+},
+"923927085": {
+"links": {
+"sfo": {
+"title": "SFO på SKS",
+"url": "https://www.stordkristneskule.no/sfo-sks/"
+}
+}
+},
+"925977373": {
+"links": {
+"skolemat": {
+"title": "Kantine",
+"url": "https://www.minskole.no/vardheia/Underside/21893"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.minskole.no/vardheia/Underside/21895"
+}
+}
+},
+"929630548": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://tvedestrand.barneskole.no/index.php?pageID=80"
+}
+}
+},
+"971427418": {
+"links": {
+"sfo": {
+"title": "Informasjon om SFO",
+"url": "https://www.delk.no/skauen-kristelige-skole/sfo-og-leksehjelp-2/"
+}
+}
+},
+"971638982": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://askim.steinerskolen.no/sfo-2/"
+}
+},
+"sfoFood": {
+"url": "https://askim.steinerskolen.no/sfo-2/",
+"facts": {
+"perWeek": 5
+}
+}
+},
+"973073214": {
+"links": {
+"sfo": {
+"title": "Fritidshjemmet SFO",
+"url": "https://fredrikstad.steinerskolen.no/sfo/"
+}
+}
+},
+"973076914": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.nesodden.steinerskolen.no/sfo"
+}
+}
+},
+"973125508": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://hedemarken.steinerskolen.no/sfo/"
+}
+}
+},
+"973131621": {
+"links": {
+"sfo": {
+"title": "Morgen-tilbud og SFO",
+"url": "https://tonsbergmontessori.no/skole/morgen-tilbud-og-sfo/"
+}
+}
+},
+"973141791": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordning (SFO)",
+"url": "https://vestfold.steinerskolen.no/barnetrinnet/skolefritidsordning-sfo/"
+}
+}
+},
+"973255428": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://ekrehagen.no/sfo/"
+}
+},
+"sfoFood": {
+"url": "https://ekrehagen.no/sfo/",
+"facts": {
+"warm": true
+}
+}
+},
+"973443143": {
+"links": {
+"skolemat": {
+"title": "Skolemat",
+"url": "https://www.aalesund.steinerskolen.no/skolemat"
+},
+"leksehjelp": {
+"title": "Folder: Leksehjelpen",
+"url": "https://www.aalesund.steinerskolen.no/leksehjelpen"
+}
+}
+},
+"973448889": {
+"links": {
+"skolemat": {
+"title": "Skolemåltid",
+"url": "https://skjold.steinerskolen.no/kantinen/"
+}
+}
+},
+"973465147": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen",
+"url": "https://ringerike.steinerskolen.no/praktisk-info/sfo/"
+}
+}
+},
+"973488910": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.montessori.no/sfo/"
+}
+}
+},
+"973501186": {
+"links": {
+"sfo": {
+"title": "Fritidshjemmet (SFO)",
+"url": "https://aas.steinerskole.no/fritidshjemmet-sfo/"
+}
+},
+"sfoFood": {
+"url": "https://aas.steinerskole.no/fritidshjemmet-sfo/",
+"facts": {
+"perWeek": 5,
+"warm": true,
+"warmPerWeek": 5
+}
+}
+},
+"973608878": {
+"links": {
+"sfo": {
+"title": "Skjetten SFO",
+"url": "https://www.lillestrom.kommune.no/skole-og-utdanning/skoler-og-skolegrenser/skolene-i-lillestrom/skjetten-sfo/"
+}
+}
+},
+"973608886": {
+"links": {
+"sfo": {
+"title": "Sten-Tærud SFO",
+"url": "https://www.lillestrom.kommune.no/skole-og-utdanning/skoler-og-skolegrenser/skolene-i-lillestrom/sten-tarud-sfo/"
+}
+}
+},
+"973608894": {
+"links": {
+"sfo": {
+"title": "Asak SFO",
+"url": "https://www.lillestrom.kommune.no/skole-og-utdanning/skoler-og-skolegrenser/skolene-i-lillestrom/asak-sfo/"
+}
+}
+},
+"973608908": {
+"links": {
+"sfo": {
+"title": "Åsenhagen SFO",
+"url": "https://www.lillestrom.kommune.no/skole-og-utdanning/skoler-og-skolegrenser/skolene-i-lillestrom/asenhagen-sfo/"
+}
+}
+},
+"973609033": {
+"links": {
+"sfo": {
+"title": "Vigernes SFO",
+"url": "https://www.lillestrom.kommune.no/skole-og-utdanning/skoler-og-skolegrenser/skolene-i-lillestrom/vigernes-sfo/"
+}
+}
+},
+"973626361": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://vetland.osloskolen.no/aktivitetsskolen/aks-pa-vetland-skole/kontakt-aks/"
+}
+}
+},
+"973626434": {
+"links": {
+"skolemat": {
+"title": "Kantine",
+"url": "https://sollerudstranda.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/kantine/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://sollerudstranda.osloskolen.no/for-elever-og-foresatte/laringsstotte/leksehjelp/"
+}
+}
+},
+"973626442": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://gamlebyen.osloskolen.no/aktivitetsskolen/aks-pa-gamlebyen-skole/kontakt-aks/"
+}
+}
+},
+"973626450": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://lusetjern.osloskolen.no/aktivitetsskolen/aks-pa-lusetjern-skole/kontakt-aks/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://lusetjern.osloskolen.no/aktivitetsskolen/vare-tilbud/leksehjelp/"
+}
+}
+},
+"973837397": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen (SFO)",
+"url": "https://vassmyra.no/skolefritidsordningen-sfo/"
+}
+}
+},
+"973837400": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen (SFO)",
+"url": "https://holumskole.no/skolefritidsordningen-sfo/"
+}
+}
+},
+"973837419": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen (SFO)",
+"url": "https://froyslandskole.no/skolefritidsordningen-sfo/"
+}
+}
+},
+"973837427": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen (SFO)",
+"url": "https://furulundenskole.no/skolefritidsordningen-sfo/"
+}
+}
+},
+"973839942": {
+"links": {
+"sfo": {
+"title": "SFO i Farsundsskolene",
+"url": "https://www.farsund.kommune.no/$menyid?4282&MId1=656"
+}
+}
+},
+"973854143": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://rundevoll.eigskole.no/sfo"
+}
+}
+},
+"973890034": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/kleppe/seksjon/23676"
+}
+}
+},
+"973953915": {
+"links": {
+"sfo": {
+"title": "Strandebarm skule SFO",
+"url": "https://strandebarm.skule.no/index.php?pageID=237"
+}
+}
+},
+"973953923": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.alvik.skule.no/index.php?pageID=282"
+}
+}
+},
+"973953990": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://norheimsund.skule.no/index.php?pageID=237"
+}
+}
+},
+"973954008": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://oystese.skule.no/index.php?pageID=273"
+}
+}
+},
+"974058111": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://stakkevollan.tromsoskolen.no/index.php?pageID=99"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://stakkevollan.tromsoskolen.no/index.php?pageID=59"
+}
+}
+},
+"974058782": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.storsteinnesskole.net/sfo/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.storsteinnesskole.net/skjema/leksehjelp/"
+}
+}
+},
+"974058790": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://nordkjosbotn.skole.no/index.php?pageID=33"
+}
+}
+},
+"974117045": {
+"links": {
+"sfo": {
+"title": "Pauline–SFO",
+"url": "https://stpaul.no/pauline-sfo/"
+}
+},
+"sfoFood": {
+"url": "https://stpaul.no/pauline-sfo/",
+"facts": {
+"warm": true,
+"warmPerWeek": 2
+}
+}
+},
+"974117061": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://stfx.no/sfo/"
+}
+}
+},
+"974117088": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://stsunniva.no/sfo/"
+}
+}
+},
+"974117096": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://rsio.no/barnetrinnet/sfo-fritidshjem"
+}
+}
+},
+"974122898": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.stib.no/sfo"
+}
+}
+},
+"974127016": {
+"links": {
+"sfo": {
+"title": "Fritidshjemmet (SFO)",
+"url": "https://trondheim.steinerskolen.no/fritidshjemmet-sfo/"
+},
+"skolemat": {
+"title": "Skoleskyss / skolemelk",
+"url": "https://trondheim.steinerskolen.no/skoleskyss/"
+}
+}
+},
+"974146371": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://haugesund.steinerskolen.no/skolen-var/sfo/"
+}
+}
+},
+"974175762": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://lillehammersteinerskole.no/sfo/"
+}
+}
+},
+"974180022": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.askersteinerskole.no/sfo"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.askersteinerskole.no/leksehjelp"
+}
+}
+},
+"974180030": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.steinerskolengjoviktoten.com/sfo"
+}
+}
+},
+"974185385": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://hurum.steinerskolen.no/sfo/"
+}
+},
+"sfoFood": {
+"url": "https://hurum.steinerskolen.no/sfo/",
+"facts": {
+"perWeek": 5
+}
+}
+},
+"974222078": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/aurdalslia-skole/sfo"
+}
+}
+},
+"974550210": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.elvetun.net/index.php?pageID=6"
+}
+}
+},
+"974552027": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.rykkinnskole.no/index.php?pageID=6"
+}
+}
+},
+"974552043": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://brynhammerbakkenskole.no/index.php?pageID=6"
+}
+}
+},
+"974552078": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.eiksmarkaskole.no/index.php?pageID=6"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://www.eiksmarkaskole.no/index.php?pageID=43"
+}
+}
+},
+"974552108": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.grav.skole.no/index.php?pageID=6"
+}
+}
+},
+"974552116": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.haslumskole.no/index.php?pageID=6"
+}
+}
+},
+"974552132": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.hovikskole.no/index.php?pageID=6"
+}
+}
+},
+"974552140": {
+"links": {
+"sfo": {
+"title": "SFO-utvalg Høvik Verk SFO",
+"url": "https://www.hovikverkskole.no/index.php?pageID=42"
+}
+}
+},
+"974552167": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.jongskole.no/index.php?pageID=6"
+}
+}
+},
+"974552175": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.annakreftingskole.no/index.php?pageID=6"
+}
+}
+},
+"974552191": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.lommedalenskole.no/index.php?pageID=6"
+}
+}
+},
+"974552256": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.tanumskole.no/index.php?pageID=6"
+}
+}
+},
+"974555700": {
+"links": {
+"sfo": {
+"title": "Frydenlund SFO",
+"url": "https://www.lillestrom.kommune.no/skole-og-utdanning/skoler-og-skolegrenser/skolene-i-lillestrom/frydenlund-sfo/"
+}
+}
+},
+"974555808": {
+"links": {
+"sfo": {
+"title": "Gjellerås SFO",
+"url": "https://www.lillestrom.kommune.no/skole-og-utdanning/skoler-og-skolegrenser/skolene-i-lillestrom/gjelleras-sfo/"
+}
+}
+},
+"974566257": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://bjerkaker.tromsoskolen.no/index.php?pageID=33"
+}
+}
+},
+"974566265": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://borgtun.tromsoskolen.no/index.php?pageID=14"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://borgtun.tromsoskolen.no/index.php?pageID=263"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://borgtun.tromsoskolen.no/index.php?pageID=205"
+}
+}
+},
+"974566281": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://hillesoyskolen.tromsoskolen.no/index.php?pageID=212"
+},
+"skolemat": {
+"title": "Skolemelk/-frukt",
+"url": "https://hillesoyskolen.tromsoskolen.no/index.php?pageID=59"
+}
+}
+},
+"974566311": {
+"links": {
+"sfo": {
+"title": "Om SFO",
+"url": "https://gyllenborg.tromsoskolen.no/index.php?pageID=84"
+},
+"skolemat": {
+"title": "Skolemelk/-frukt",
+"url": "https://gyllenborg.tromsoskolen.no/index.php?pageID=59"
+}
+}
+},
+"974566370": {
+"links": {
+"sfo": {
+"title": "SFO, Lakselvbukt",
+"url": "https://ullsfjordskolen.tromsoskolen.no/index.php?pageID=211"
+}
+}
+},
+"974566397": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://mortensnes.tromsoskolen.no/index.php?pageID=232"
+}
+}
+},
+"974566427": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://prestvannet.tromsoskolen.no/index.php?pageID=178"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://prestvannet.tromsoskolen.no/index.php?pageID=216"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://prestvannet.tromsoskolen.no/index.php?pageID=213"
+}
+}
+},
+"974566435": {
+"links": {
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://ramfjord.tromsoskolen.no/index.php?pageID=185"
+}
+}
+},
+"974566443": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://sandnessund.tromsoskolen.no/index.php?pageID=33"
+}
+}
+},
+"974566478": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://skittenelv.tromsoskolen.no/index.php?pageID=187"
+}
+}
+},
+"974566486": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://skjelnan.tromsoskolen.no/index.php?pageID=230"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://skjelnan.tromsoskolen.no/index.php?pageID=296"
+},
+"devices": {
+"title": "Læringsbrett",
+"url": "https://skjelnan.tromsoskolen.no/index.php?pageID=400"
+}
+}
+},
+"974566524": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://straumsbukta.tromsoskolen.no/index.php?pageID=33"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://straumsbukta.tromsoskolen.no/index.php?pageID=59"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://straumsbukta.tromsoskolen.no/index.php?pageID=176"
+}
+}
+},
+"974566532": {
+"links": {
+"sfo": {
+"title": "Heldags-SFO",
+"url": "https://tromsdalen.tromsoskolen.no/index.php?pageID=314"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://tromsdalen.tromsoskolen.no/index.php?pageID=289"
+}
+}
+},
+"974566567": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://trondjord.tromsoskolen.no/index.php?pageID=60"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://trondjord.tromsoskolen.no/index.php?pageID=59"
+}
+},
+"sfoFood": {
+"url": "https://trondjord.tromsoskolen.no/index.php?pageID=60",
+"facts": {
+"perWeek": 5,
+"warm": true
+}
+}
+},
+"974566591": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://krokelvdalen.tromsoskolen.no/index.php?pageID=328"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://krokelvdalen.tromsoskolen.no/index.php?pageID=349"
+}
+}
+},
+"974566605": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://slettaelva.tromsoskolen.no/index.php?pageID=86"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://slettaelva.tromsoskolen.no/index.php?pageID=205"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://slettaelva.tromsoskolen.no/index.php?pageID=199"
+}
+}
+},
+"974566613": {
+"links": {
+"sfo": {
+"title": "SFO / øvrig personale",
+"url": "https://lunheim.tromsoskolen.no/index.php?pageID=155"
+}
+}
+},
+"974578263": {
+"links": {
+"sfo": {
+"title": "SFO Billingstad",
+"url": "https://www.asker.kommune.no/skole-og-utdanning/skoler-og-skoleplass/skoleoversikt/billingstad-skole/sfo-billingstad/"
+}
+}
+},
+"974578271": {
+"links": {
+"sfo": {
+"title": "SFO Jansløkka skole",
+"url": "https://www.asker.kommune.no/skole-og-utdanning/skoler-og-skoleplass/skoleoversikt/janslokka-skole/sfo/"
+}
+}
+},
+"974580594": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://hellvik.eigskole.no/sfo"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://hellvik.eigskole.no/om-skolen/leksehjelp"
+}
+}
+},
+"974580608": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://gbs.eigskole.no/sfo"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://gbs.eigskole.no/foresatte/skolemelk"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://gbs.eigskole.no/foresatte/leksehjelp"
+}
+}
+},
+"974584522": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://berg.larvik.kommune.no/sfo/"
+}
+}
+},
+"974584549": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://hedrumb.larvik.kommune.no/sfo/"
+}
+}
+},
+"974584573": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://hvarnes.larvik.kommune.no/sfo/"
+}
+}
+},
+"974584611": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://langestrand.larvik.kommune.no/sfo/"
+}
+}
+},
+"974584646": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://sky.larvik.kommune.no/sfo/"
+}
+}
+},
+"974584654": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://stavern.larvik.kommune.no/om-skolen/sfo/"
+}
+},
+"sfoFood": {
+"url": "https://stavern.larvik.kommune.no/om-skolen/sfo/",
+"facts": {
+"warm": true,
+"warmPerWeek": 1
+}
+}
+},
+"974584662": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://tjodalyng.larvik.kommune.no/sfo/"
+}
+}
+},
+"974584689": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://ostrehalsen.larvik.kommune.no/sfo/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://ostrehalsen.larvik.kommune.no/om-skolen/leksehjelp/"
+}
+}
+},
+"974584778": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://kvelde.larvik.kommune.no/sfo/"
+}
+}
+},
+"974586487": {
+"links": {
+"sfo": {
+"title": "1. trinn SFO",
+"url": "https://www.rud.skole.no/index.php?pageID=220"
+}
+}
+},
+"974586495": {
+"links": {
+"sfo": {
+"title": "Info om SFO",
+"url": "https://www.fjerdingby.skole.no/index.php?pageID=52"
+}
+}
+},
+"974586509": {
+"links": {
+"sfo": {
+"title": "Velkommen til SFO",
+"url": "https://www.lovenstad.skole.no/index.php?pageID=175"
+}
+}
+},
+"974586517": {
+"links": {
+"skolemat": {
+"title": "Kantine og skolehage",
+"url": "https://www.marikollen.skole.no/index.php?pageID=184"
+}
+}
+},
+"974586525": {
+"links": {
+"skolemat": {
+"title": "Kantine",
+"url": "https://www.sandbekken.skole.no/index.php?pageID=165"
+}
+}
+},
+"974586533": {
+"links": {
+"sfo": {
+"title": "Kontaktinfo om SFO",
+"url": "https://blystadlia.skole.no/index.php?pageID=52"
+}
+}
+},
+"974586541": {
+"links": {
+"sfo": {
+"title": "Elevenes skole- og SFO-miljø",
+"url": "https://www.nordby.skole.no/index.php?pageID=186"
+}
+}
+},
+"974589648": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://abildso.osloskolen.no/aktivitetsskolen/aks-pa-abildso-skole/kontakt-aks/"
+}
+}
+},
+"974589656": {
+"links": {
+"sfo": {
+"title": "Team AKS",
+"url": "https://ammerud.osloskolen.no/aktivitetsskolen/aks-pa-ammerud-skole/ansatte-pa-aks/"
+},
+"kurs": {
+"title": "Kurs på aktivitetsskolen Ammerud",
+"url": "https://ammerud.osloskolen.no/aktivitetsskolen/aktuelle-kurs-og-aktiviteter/nye-kurs-pa-aktivitetsskolen-ammerud/"
+},
+"devices": {
+"title": "Læringsbrett",
+"url": "https://ammerud.osloskolen.no/fagtilbud/laringsbrett/innforing-av-laringsbrett/"
+}
+}
+},
+"974589664": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://bekkelaget.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974589672": {
+"links": {
+"sfo": {
+"title": "Om AKS Bestum",
+"url": "https://bestum.osloskolen.no/aktivitetsskolen/aks-pa-bestum-skole/om-aks-bestum/"
+},
+"devices": {
+"title": "Læringsbrett",
+"url": "https://bestum.osloskolen.no/fagtilbud/satsingsomrader/laringsbrett2/"
+}
+}
+},
+"974589680": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://bjolsen.osloskolen.no/aktivitetsskolen/aks-pa-bjolsen-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Bestille skolemelk",
+"url": "https://bjolsen.osloskolen.no/for-elever-og-foresatte/skole-hjem-samarbeid2/bestille-skolemelk/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://bjolsen.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974589699": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://grindbakken.osloskolen.no/aktivitetsskolen/aks-pa-grindbakken/kontakt-aks/"
+},
+"devices": {
+"title": "Læringsbrett",
+"url": "https://grindbakken.osloskolen.no/fagtilbud/satsingsomrader/laringsbrett/"
+}
+}
+},
+"974589702": {
+"links": {
+"sfo": {
+"title": "Samarbeid AKS og skole",
+"url": "https://boltelokka.osloskolen.no/fagtilbud/laringsstotte/samarbeid-aks-og-skole/"
+},
+"leksehjelp": {
+"title": "Leksehjelp på Bolteløkka skole",
+"url": "https://boltelokka.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974589710": {
+"links": {
+"sfo": {
+"title": "AKS på Bryn",
+"url": "https://bryn.osloskolen.no/aktivitetsskolen/aks-pa-bryn-skole/aks-pa-bryn/"
+},
+"skolemat": {
+"title": "Skolelyst og Skolefrukt",
+"url": "https://bryn.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelkordning/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://bryn.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974589729": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://bygdoy.osloskolen.no/aktivitetsskolen/aks-pa-bygdoy-skole/kontakt-aks/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://bygdoy.osloskolen.no/fagtilbud/laringsstotte2/leksehjelp/"
+}
+}
+},
+"974589737": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://boler.osloskolen.no/aktivitetsskolen/aks-pa-boler-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Mat og skolemelk",
+"url": "https://boler.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelk/"
+}
+}
+},
+"974589745": {
+"links": {
+"sfo": {
+"title": "Vigilo AKS",
+"url": "https://ekeberg.osloskolen.no/aktivitetsskolen/aktivitetsskolen-i-oslo/vigilo/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://ekeberg.osloskolen.no/for-elever-og-foresatte/laringsstotte/grunnleggende-ferdigheter/"
+}
+}
+},
+"974589753": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://ellingsrudasen.osloskolen.no/aktivitetsskolen/aks-pa-ellingsrudasen/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelkordning",
+"url": "https://ellingsrudasen.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelkordning/"
+},
+"ferie": {
+"title": "Sommer-AKS",
+"url": "https://ellingsrudasen.osloskolen.no/aktivitetsskolen/planer/sommer-aks/"
+},
+"devices": {
+"title": "Kjøreregler for bruk av læringsbrett",
+"url": "https://ellingsrudasen.osloskolen.no/for-elever-og-foresatte/reglement-og-skjema/regler-for-bruk-av-laringsbrett/"
+}
+}
+},
+"974589761": {
+"links": {
+"sfo": {
+"title": "Furuset AKS",
+"url": "https://furuset.osloskolen.no/aktivitetsskolen/aks-pa-furuset-skole/furuset-aktivitetsskole/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://furuset.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+},
+"ferie": {
+"title": "Ferier på AKS",
+"url": "https://furuset.osloskolen.no/aktivitetsskolen/ukeplaner/ferier-pa-aks/"
+}
+}
+},
+"974589788": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://grefsen.osloskolen.no/aktivitetsskolen/aks-pa-grefsen-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://grefsen.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/melk-og-frukt/"
+}
+}
+},
+"974589796": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://grorud.osloskolen.no/aktivitetsskolen/aks-pa-grorud-skole/kontakt-aks/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://grorud.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974589818": {
+"links": {
+"sfo": {
+"title": "Gratis AKS etter skoletid",
+"url": "https://hasle.osloskolen.no/aktivitetsskolen/aks-pa-hasle-skole/oppholdog-endring/"
+},
+"ferie": {
+"title": "Tilbud på AKS i ferien",
+"url": "https://hasle.osloskolen.no/aktivitetsskolen/vare-tilbud/programmer/"
+}
+}
+},
+"974589834": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://huseby.osloskolen.no/aktivitetsskolen/kontakt-aks/kontakt-aks/"
+},
+"ferie": {
+"title": "Ferie-AKS",
+"url": "https://huseby.osloskolen.no/aktivitetsskolen/vare-tilbud/ferie-aks/"
+},
+"devices": {
+"title": "Læringsbrett og bøker - \"Jatakk, begge deler!\"",
+"url": "https://huseby.osloskolen.no/fagtilbud/satsingsomrader/laringsbrett-pa-huseby-skole/"
+}
+}
+},
+"974589842": {
+"links": {
+"sfo": {
+"title": "AKS-ansatte",
+"url": "https://hoybraten.osloskolen.no/om-skolen/ansatte/aks/"
+},
+"leksehjelp": {
+"title": "Leksetid",
+"url": "https://hoybraten.osloskolen.no/aktivitetsskolen/vare-tilbud/lekselesing/"
+}
+}
+},
+"974589850": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://hoyenhall.osloskolen.no/aktivitetsskolen/aks-pa-hoyenhall-skole/kontakt-aks/"
+},
+"leksehjelp": {
+"title": "Digital leksehjelp",
+"url": "https://hoyenhall.osloskolen.no/fagtilbud/laringsstotte/digital-leksehjelp---tilbud-fra-oslo-rode-kors/"
+}
+}
+},
+"974589869": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS på Ila skole",
+"url": "https://ila.osloskolen.no/aktivitetsskolen/aks-pa-ila-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk og skolefrukt",
+"url": "https://ila.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelk-og-skolefrukt/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://ila.osloskolen.no/fagtilbud/laringsstotte/leksehjelp2/"
+}
+}
+},
+"974589877": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://kampen.osloskolen.no/aktivitetsskolen/aks-pa-kampen-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk og skolefrukt",
+"url": "https://kampen.osloskolen.no/for-elever-og-foresatte/andre-tilbud-til-elevene/skolemelk/"
+}
+}
+},
+"974589893": {
+"links": {
+"ferie": {
+"title": "AKS sommerklubben",
+"url": "https://kjelsas.osloskolen.no/for-elever-og-foresatte/skolestartere/sommerklubben-1.-trinn---august"
+}
+}
+},
+"974589907": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS på Vigilo",
+"url": "https://klemetsrud.osloskolen.no/aktivitetsskolen/aks-pa-klemetsrud-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk og skolefrukt",
+"url": "https://klemetsrud.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelk-og-skolefrukt/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://klemetsrud.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974589915": {
+"links": {
+"sfo": {
+"title": "AKS 2.0",
+"url": "https://korsvoll.osloskolen.no/aktivitetsskolen/vare-baser/aks-2.0"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://korsvoll.osloskolen.no/for-elever-og-foresatte/diverse/skolemelk/"
+},
+"devices": {
+"title": "Bruk av læringsbrett",
+"url": "https://korsvoll.osloskolen.no/for-elever-og-foresatte/diverse/bruk-av-laringsbrett/"
+}
+},
+"sfoFood": {
+"url": "https://korsvoll.osloskolen.no/aktivitetsskolen/vare-baser/aks-2.0",
+"facts": {
+"perWeek": 1
+}
+}
+},
+"974589923": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://lakkegata.osloskolen.no/aktivitetsskolen/aks-pa-lakkegata-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://lakkegata.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelk/"
+}
+}
+},
+"974589931": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://lambertseter.osloskolen.no/aktivitetsskolen/aks-pa-lambertseter/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://lambertseter.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelk/"
+}
+}
+},
+"974589958": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://lilleborg.osloskolen.no/aktivitetsskolen/aks-pa-lilleborg-skole/kontakt-aks/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://lilleborg.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974589966": {
+"links": {
+"sfo": {
+"title": "AKS",
+"url": "https://linderud.osloskolen.no/aktivitetsskolen/"
+},
+"devices": {
+"title": "Ofte stilte spørsmål om læringsbrett",
+"url": "https://linderud.osloskolen.no/for-elever-og-foresatte/hjemskole-samarbeid/ofte-stilte-sporsmal-om-laringsbrett/"
+}
+}
+},
+"974589974": {
+"links": {
+"sfo": {
+"title": "Om Ljan AKS 2026/2027",
+"url": "https://ljan.osloskolen.no/aktivitetsskolen/aks-pa-ljan-skole/om-ljan-aks/"
+}
+}
+},
+"974589982": {
+"links": {
+"sfo": {
+"title": "Om AKS Refstad",
+"url": "https://refstad.osloskolen.no/aktivitetsskolen/aks-pa-refstad/om-aks-refstad/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://refstad.osloskolen.no/for-elever-og-foresatte/andre-tilbud-til-elevene/skolemelk/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://refstad.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974589990": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://majorstuen.osloskolen.no/aktivitetsskolen/aks-pa-majorstuen/kontakt-aks/"
+}
+}
+},
+"974590026": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://marienlyst.osloskolen.no/aktivitetsskolen/aks-pa-marienlyst-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://marienlyst.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelk/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://marienlyst.osloskolen.no/fagtilbud/fagfornyelsenlk20/jeg-en-medborger/"
+}
+}
+},
+"974590034": {
+"links": {
+"sfo": {
+"title": "Om AKS Munkerud",
+"url": "https://munkerud.osloskolen.no/aktivitetsskolen/aks-pa-munkerud-skole/praktisk-informasjon/"
+},
+"skolemat": {
+"title": "Skolemelk og skolefrukt",
+"url": "https://munkerud.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelk/"
+}
+}
+},
+"974590050": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://rosenholm.osloskolen.no/aktivitetsskolen/aks-pa-rosenholm-skole/kontakt-aks/"
+},
+"leksehjelp": {
+"title": "Leksehjelp (ekstern lenke)",
+"url": "https://rosenholm.osloskolen.no/aktivitetsskolen/vare-tilbud/leksehjelp/"
+},
+"kurs": {
+"title": "Aktiviteter på AKS Rosenholm",
+"url": "https://rosenholm.osloskolen.no/aktivitetsskolen/vare-tilbud/aktiviteter-pa-aks-rosenholm/"
+},
+"devices": {
+"title": "Læringsbrett",
+"url": "https://rosenholm.osloskolen.no/fagtilbud/laringsstotte/laringsbrett/"
+}
+}
+},
+"974590069": {
+"links": {
+"sfo": {
+"title": "Vigilo er nå kun verktøy for AKS hjem-kommunikasjon",
+"url": "https://nordstrand.osloskolen.no/for-elever-og-foresatte/hjemskole-samarbeid/vigilo-er-et-nytt-verktoy-for-skole-hjem-kommunikasjon/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://nordstrand.osloskolen.no/for-elever-og-foresatte/andre-tilbud-til-elevene/skolemelk-og-skolefrukt/"
+},
+"leksehjelp": {
+"title": "Leksetid",
+"url": "https://nordstrand.osloskolen.no/aktivitetsskolen/vare-tilbud/leksehjelp/"
+},
+"kurs": {
+"title": "Aktiviteter på AKS 2025-2026",
+"url": "https://nordstrand.osloskolen.no/aktivitetsskolen/vare-tilbud/laringsstottende-aktiviteter/"
+}
+}
+},
+"974590077": {
+"links": {
+"sfo": {
+"title": "AKS",
+"url": "https://nordtvet.osloskolen.no/om-skolen/ansatte/aks/"
+},
+"skolemat": {
+"title": "Skolemåltidet",
+"url": "https://nordtvet.osloskolen.no/for-elever-og-foresatte/andre-tilbud-til-elevene/skolemelk/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://nordtvet.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974590085": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://noklevann.osloskolen.no/aktivitetsskolen/aks-pa-noklevann-skole/kontakt-aks/"
+},
+"leksehjelp": {
+"title": "Leksetid",
+"url": "https://noklevann.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974590093": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://oppsal.osloskolen.no/aktivitetsskolen/aks-pa-oppsal-skole/kontakt-aks/"
+}
+}
+},
+"974590107": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://prinsdal.osloskolen.no/aktivitetsskolen/aks-pa-prinsdal-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://prinsdal.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelk/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://prinsdal.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+},
+"kurs": {
+"title": "Eksterne aktiviteter i AKS-tiden",
+"url": "https://prinsdal.osloskolen.no/aktivitetsskolen/vare-tilbud/sjakk/"
+}
+}
+},
+"974590115": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://rommen.osloskolen.no/aktivitetsskolen/aks-pa-rommen-skole/personale-pa-aks/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://rommen.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974590123": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://tiurleiken.osloskolen.no/aktivitetsskolen/aks-pa-tiurleiken-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://tiurleiken.osloskolen.no/for-elever-og-foresatte/andre-tilbud-til-elevene/skolemelk/"
+}
+}
+},
+"974590131": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://ruselokka.osloskolen.no/aktivitetsskolen/aks-pa-ruselokka-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk,mat og drikke",
+"url": "https://ruselokka.osloskolen.no/for-elever-og-foresatte/andre-tilbud-til-elevene/skolemelkmat-og-drikke/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://ruselokka.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974590158": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://rodtvet.osloskolen.no/aktivitetsskolen/aks-pa-rodtvet-skole/kontakt-aks/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://rodtvet.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+},
+"devices": {
+"title": "Regler for bruk av læringsbrett",
+"url": "https://rodtvet.osloskolen.no/for-elever-og-foresatte/laringsbrett/regler-for-bruk-av-laringsbrett/"
+}
+}
+},
+"974590166": {
+"links": {
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://sagene.osloskolen.no/for-elever-og-foresatte/andre-tilbud-til-elevene/skolemelk/"
+}
+}
+},
+"974590174": {
+"links": {
+"sfo": {
+"title": "Sinsen AKS",
+"url": "https://sinsen.osloskolen.no/aktivitetsskolen/aks-pa-sinsen-skole/om-aks-sinsen/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://sinsen.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelk/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://sinsen.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+},
+"ferie": {
+"title": "Ferier på AKS",
+"url": "https://sinsen.osloskolen.no/aktivitetsskolen/aks-pa-sinsen-skole/ferier-pa-aks/"
+},
+"devices": {
+"title": "Råd og regler for bruk av læringsbrett",
+"url": "https://sinsen.osloskolen.no/for-elever-og-foresatte/reglement-og-skjema/rad-og-regler-for-bruk-av-ikt-utstyr/"
+}
+}
+},
+"974590182": {
+"links": {
+"sfo": {
+"title": "Om AKS",
+"url": "https://slemdal.osloskolen.no/aktivitetsskolen/aks-pa-slemdal-skole/om-aks/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://slemdal.osloskolen.no/for-elever-og-foresatte/andre-tilbud-til-elevene/skolemelk/"
+}
+}
+},
+"974590190": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://smestad.osloskolen.no/fagtilbud8/laringsstotte/leksehjelp/"
+}
+}
+},
+"974590212": {
+"links": {
+"sfo": {
+"title": "Om AKS",
+"url": "https://stovner.osloskolen.no/aktivitetsskolen/aks-pa-stovner-skole/om-aks/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://stovner.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+},
+"devices": {
+"title": "Læringsbrett",
+"url": "https://stovner.osloskolen.no/fagtilbud/satsingsomrader/laringsbrett/"
+}
+}
+},
+"974590220": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://sorkedalen.osloskolen.no/aktivitetsskolen/aks-pa-sorkedalen-skole/kontakt-aks/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://sorkedalen.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974590239": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://tonsenhagen.osloskolen.no/aktivitetsskolen/aks-pa-tonsenhagen-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk/-frukt",
+"url": "https://tonsenhagen.osloskolen.no/for-elever-og-foresatte/andre-tilbud-til-elevene/skolemelk-frukt/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://tonsenhagen.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+},
+"devices": {
+"title": "Bruk av iPad",
+"url": "https://tonsenhagen.osloskolen.no/fagtilbud/digital-skole/bruk-av-ipad---faq/"
+}
+}
+},
+"974590247": {
+"links": {
+"sfo": {
+"title": "Hjemsending på AKS",
+"url": "https://trasop.osloskolen.no/aktivitetsskolen/aks-pa-trasop-skole/hjemsending/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://trasop.osloskolen.no/for-elever-og-foresatte/informasjon-fra-skolen/skolemelk22/"
+}
+}
+},
+"974590255": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://trosterud.osloskolen.no/aktivitetsskolen/aks-pa-trosterud-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolefrokost",
+"url": "https://trosterud.osloskolen.no/for-elever-og-foresatte/laringsstotte/skolefrokost/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://trosterud.osloskolen.no/fagtilbud/laringsstotte/leksehjelp2/"
+},
+"ferie": {
+"title": "Ferietilbud på AKS",
+"url": "https://trosterud.osloskolen.no/aktivitetsskolen/planer/ferietilbud-pa-aks/"
+},
+"devices": {
+"title": "Læringsbrett",
+"url": "https://trosterud.osloskolen.no/fagtilbud/satsningsomrader/dua/"
+}
+}
+},
+"974590263": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS.",
+"url": "https://tveita.osloskolen.no/aktivitetsskolen/aks-pa-tveita-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Bestilling skolemelk",
+"url": "https://tveita.osloskolen.no/for-elever-og-foresatte/andre-tilbud-til-elevene/bestilling-av-skolemelk/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://tveita.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974590271": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://toyen.osloskolen.no/aktivitetsskolen/akspatoyenskole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://toyen.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelk/"
+},
+"kurs": {
+"title": "Lokale planer og aktiviteter på AKS",
+"url": "https://toyen.osloskolen.no/aktivitetsskolen/akspatoyenskole/aktiviteter-pa-aks/"
+},
+"ferie": {
+"title": "Ferietilbud på AKS",
+"url": "https://toyen.osloskolen.no/aktivitetsskolen/akspatoyenskole/ferietilbud-pa-aks/"
+}
+}
+},
+"974590298": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://tasen.osloskolen.no/fagtilbud/laringsstotte/leksehjelp-5.-7.-trinn"
+},
+"devices": {
+"title": "Læringsbrett, Tåsen skole",
+"url": "https://tasen.osloskolen.no/for-elever-og-foresatte/reglement-og-skjemaer/laringsbrett-pa-tasen-skole/"
+}
+}
+},
+"974590301": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://ulleval.osloskolen.no/aktivitetsskolen/aks-pa-ulleval-skole/kontakt-aks/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://ulleval.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974590328": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://uranienborg.osloskolen.no/aktivitetsskolen/aks-pa-uranienborg-skole/kontakt-aks2/"
+},
+"skolemat": {
+"title": "Nå kan du bestille skolemelk",
+"url": "https://uranienborg.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/bestilling-av-skolemelk/"
+}
+}
+},
+"974590336": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://veitvet.osloskolen.no/aktivitetsskolen/aks-pa-veitvet-skole/kontakt-aks/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://veitvet.osloskolen.no/fagtilbud/andre-pedagogiske-tilbud/leksehjelp/"
+},
+"ferie": {
+"title": "Ferier på AKS",
+"url": "https://veitvet.osloskolen.no/aktivitetsskolen/aks-pa-veitvet-skole/ferier-pa-aks/"
+}
+}
+},
+"974590344": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://vestli.osloskolen.no/aktivitetsskolen/aks-pa-vestli-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://vestli.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelk/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://vestli.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974590352": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://vinderen.osloskolen.no/aktivitetsskolen/aks-pa-vinderen-skole/kontakt-aks/"
+}
+}
+},
+"974590360": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://voksen.osloskolen.no/aktivitetsskolen/aks-pa-voksen-skole/kontakt-aks/"
+}
+}
+},
+"974590379": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://valerenga.osloskolen.no/aktivitetsskolen/aks-pa-valerenga-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://valerenga.osloskolen.no/for-elever-og-foresatte/andre-tilbud-til-elevene/skolemelk/"
+}
+}
+},
+"974590387": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://ostensjo.osloskolen.no/aktivitetsskolen/aks-pa-ostensjo/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://ostensjo.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelk/"
+}
+}
+},
+"974590395": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://arvoll.osloskolen.no/aktivitetsskolen/aks-pa-arvoll-skole/kontakt-aks/"
+},
+"devices": {
+"title": "Avtale om lån av læringsbrett",
+"url": "https://arvoll.osloskolen.no/fagtilbud/laringsbrett/avtale-om-lan-av-ikt-utstyr/"
+}
+}
+},
+"974590417": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://hallagerbakken.osloskolen.no/aktivitetsskolen/aks-pa-hallagerbakken-skole/kontakt-oss/"
+},
+"skolemat": {
+"title": "Frukt og skolemelk",
+"url": "https://hallagerbakken.osloskolen.no/for-elever-og-foresatte/andre-tilbud-til-elevene/frukt-og-skolemelk/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://hallagerbakken.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974590433": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://bakas.osloskolen.no/aktivitetsskolen/aks-pa-bakas-skole/kontakt-aks/"
+}
+}
+},
+"974590441": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://bjorasen.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974590468": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://lindeberg.osloskolen.no/aktivitetsskolen/aks-pa-lindeberg-skole/kontakt-aks/"
+}
+}
+},
+"974590476": {
+"links": {
+"sfo": {
+"title": "Trivselsregler for skole og AKS",
+"url": "https://nedrebekkelaget.osloskolen.no/for-elever-og-foresatte/reglement-og-skjema/trivselsregler-for-skole-og-aks/"
+},
+"leksehjelp": {
+"title": "Lekseverksted",
+"url": "https://nedrebekkelaget.osloskolen.no/aktivitetsskolen/vare-tilbud/lekseverksted/"
+}
+}
+},
+"974590484": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://toppasen.osloskolen.no/aktivitetsskolen/aks-pa-toppasen-skole/kontakt-aks/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://toppasen.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974590492": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://mortensrud.osloskolen.no/aktivitetsskolen/aks-pa-mortensrud-skole/kontakt-aks/"
+},
+"devices": {
+"title": "Læringsbrett/digitale læringsmidler",
+"url": "https://mortensrud.osloskolen.no/fagtilbud/satsingsomrader/laringsbrettdigitale-laringsmidler/"
+}
+}
+},
+"974590506": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://jeriko.osloskolen.no/aktivitetsskolen/aks-pa-jeriko-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolefrukt",
+"url": "https://jeriko.osloskolen.no/for-elever-og-foresatte/andre-tilbud-til-elevene/frukt/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://jeriko.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974590514": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://bjorndal.osloskolen.no/aktivitetsskolen/bjorndal-aks/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://bjorndal.osloskolen.no/for-elever-og-foresatte/andre-tilbud-til-elevene/skolemelk/"
+}
+}
+},
+"974590522": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://lysejordet.osloskolen.no/aktivitetsskolen/aks-pa-lysejordet-skole/kontakt-aks/"
+}
+}
+},
+"974590549": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://haugenstua.osloskolen.no/aktivitetsskolen/aks-pa-haugenstua-skole/kontakt-aks/"
+},
+"kurs": {
+"title": "Aktiviteter ved AKS på Haugenstua",
+"url": "https://haugenstua.osloskolen.no/aktivitetsskolen/vare-tilbud/laringsstottende-aktiviteter/"
+}
+}
+},
+"974590557": {
+"links": {
+"devices": {
+"title": "Avtale iPad",
+"url": "https://haugerud.osloskolen.no/for-elever-og-foresatte/reglement-og-skjema/kontrakt-ipad/"
+}
+}
+},
+"974590581": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://brannfjell.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974590603": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://bjornsletta.osloskolen.no/aktivitetsskolen/aks-pa-bjornsletta-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://bjornsletta.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelk/"
+}
+}
+},
+"974590611": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://nordseter.osloskolen.no/aktivitetsskolen/aks-pa-nordseter-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://nordseter.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelk/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://nordseter.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974590638": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp tilbys på tirsdager og onsdager",
+"url": "https://oraker.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"974590670": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://haukasen.osloskolen.no/aktivitetsskolen/aks-pa-stig-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://haukasen.osloskolen.no/skolens-tilbud/helse-og-velferd/skolemelk/"
+}
+}
+},
+"974590689": {
+"links": {
+"sfo": {
+"title": "Heldag på AKS",
+"url": "https://ullevalsveien.osloskolen.no/aktivitetskolen/vare-tilbud/heldag-pa-aks/"
+}
+}
+},
+"974590786": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://lonnebakken.osloskolen.no/aktivitetsskolen/aks-pa-lonnebakken-skole/kontakt-aks/"
+},
+"ferie": {
+"title": "Heldags-AKS i ferier",
+"url": "https://lonnebakken.osloskolen.no/aktivitetsskolen/vare-tilbud/heldags-aks-i-ferier/"
+}
+}
+},
+"974590794": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://lofsrud.osloskolen.no/fagtilbud/laringsstotte/leksehjelp2/"
+}
+}
+},
+"974590816": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://nordvoll.osloskolen.no/aktivitetsskolen/aks-pa-nordvoll-skole/kontakt-aks/"
+},
+"ferie": {
+"title": "AKS i skolens ferier",
+"url": "https://nordvoll.osloskolen.no/aktivitetsskolen/vare-tilbud/aks-pa-hele-dager/"
+}
+}
+},
+"974590824": {
+"links": {
+"leksehjelp": {
+"title": "Tilbud om leksehjelp",
+"url": "https://ris.osloskolen.no/fagtilbud/laringsstotte/leksehjelp-persbraten-videregaende/"
+}
+}
+},
+"974598558": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordning",
+"url": "https://minskole.no/sjostrand/seksjon/22235"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://minskole.no/sjostrand/Underside/19333"
+}
+}
+},
+"974598566": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/voiebyen/seksjon/22651"
+}
+}
+},
+"974598604": {
+"links": {
+"sfo": {
+"title": "Kontakt SFO på Slettheia skole",
+"url": "https://www.minskole.no/slettheia/Underside/19814"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://www.minskole.no/slettheia/Underside/19376"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.minskole.no/slettheia/Underside/19365"
+}
+}
+},
+"974598620": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordning",
+"url": "https://minskole.no/hellemyr/seksjon/22913"
+},
+"leksehjelp": {
+"title": "Leksehjelp for elever på 3.-7.trinn",
+"url": "https://minskole.no/hellemyr/Underside/22117"
+}
+}
+},
+"974598639": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordning (SFO)",
+"url": "https://www.minskole.no/KJM/seksjon/22696"
+}
+}
+},
+"974598655": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/solholmen/seksjon/22798"
+}
+}
+},
+"974598663": {
+"links": {
+"leksehjelp": {
+"title": "Leksetid på skolen",
+"url": "https://www.minskole.no/grim/Underside/19771"
+},
+"devices": {
+"title": "Informasjonsskriv angående bruk av Chromebook",
+"url": "https://www.minskole.no/grim/Underside/19770"
+}
+}
+},
+"974598671": {
+"links": {
+"sfo": {
+"title": "SFO nærmiljøskolen",
+"url": "https://www.minskole.no/krossen/seksjon/22505"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://www.minskole.no/krossen/Underside/19677"
+}
+}
+},
+"974598701": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://minskole.no/mosby/seksjon/22641"
+}
+}
+},
+"974598752": {
+"links": {
+"leksehjelp": {
+"title": "Skolens leksehjelp",
+"url": "https://www.minskole.no/oddemarka/Underside/20424"
+}
+}
+},
+"974598787": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/fagerholt/seksjon/22672"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://www.minskole.no/fagerholt/Underside/19877"
+},
+"leksehjelp": {
+"title": "Leksetid",
+"url": "https://www.minskole.no/fagerholt/Underside/19876"
+}
+}
+},
+"974598809": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/ve/seksjon/22467"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.minskole.no/ve/Underside/19319"
+}
+}
+},
+"974598817": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen",
+"url": "https://www.minskole.no/vardasen/seksjon/22003"
+}
+}
+},
+"974598833": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/stromme/seksjon/22680"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://www.minskole.no/stromme/Underside/19794"
+}
+}
+},
+"974598868": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen",
+"url": "https://www.minskole.no/kringsja/seksjon/22187"
+},
+"skolemat": {
+"title": "Skolemelk eller juice",
+"url": "https://www.minskole.no/kringsja/Underside/18687"
+},
+"leksehjelp": {
+"title": "Om frivillig leksehjelp og lekser",
+"url": "https://www.minskole.no/kringsja/Underside/18689"
+}
+}
+},
+"974610744": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/trones/seksjon/5885"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://www.minskole.no/trones/Underside/18312"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.minskole.no/trones/Underside/18322"
+},
+"devices": {
+"title": "Regler for bruk av Chromebook",
+"url": "https://www.minskole.no/trones/Underside/18315"
+}
+},
+"sfoFood": {
+"url": "https://www.minskole.no/trones/seksjon/5885",
+"facts": {
+"warm": true
+}
+}
+},
+"974610752": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://minskole.no/soma-stangeland/seksjon/8563"
+},
+"skolemat": {
+"title": "Skolemelk og fruktordning",
+"url": "https://minskole.no/soma-stangeland/Underside/4782"
+}
+},
+"sfoFood": {
+"url": "https://minskole.no/soma-stangeland/seksjon/8563",
+"facts": {
+"perWeek": 5
+}
+}
+},
+"974610779": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/malmheim/seksjon/7451"
+}
+}
+},
+"974610787": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/sandved/Underside/7298"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://www.minskole.no/sandved/Underside/7301"
+}
+}
+},
+"974610795": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/Ganddal/Underside/4691"
+}
+}
+},
+"974610809": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://minskole.no/figgjo/seksjon/14812"
+}
+}
+},
+"974610825": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/hana/seksjon/6899"
+}
+}
+},
+"974610833": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/sviland/seksjon/7049"
+}
+}
+},
+"974610841": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://minskole.no/hommersak/Underside/6981"
+}
+}
+},
+"974611120": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/maudland/seksjon/6569"
+}
+}
+},
+"974611147": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/kyrkjevollen/seksjon/9966"
+}
+}
+},
+"974611341": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/godeset/underside/20832"
+}
+},
+"sfoFood": {
+"url": "https://www.minskole.no/godeset/underside/20832",
+"facts": {
+"perWeek": 5,
+"warm": true,
+"warmPerWeek": 1
+}
+}
+},
+"974611414": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen (SFO)",
+"url": "https://www.minskole.no/buoy/underside/21482"
+}
+}
+},
+"974611430": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/storhaug/underside/22085"
+}
+}
+},
+"974611449": {
+"links": {
+"sfo": {
+"title": "Våland skole SFO - Kanutten",
+"url": "https://www.minskole.no/vaaland/underside/21062"
+}
+}
+},
+"974611457": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/eiganes/underside/21966"
+}
+}
+},
+"974611465": {
+"links": {
+"sfo": {
+"title": "Kampen SFO",
+"url": "https://www.minskole.no/kampen/underside/20987"
+}
+}
+},
+"974611473": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/auglend/underside/20817"
+}
+}
+},
+"974611503": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/vaulen/underside/21045"
+}
+}
+},
+"974611511": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen (SFO)",
+"url": "https://minskole.no/jaatten/underside/20850"
+}
+}
+},
+"974611538": {
+"links": {
+"sfo": {
+"title": "Tasta SFO",
+"url": "https://www.minskole.no/tasta/underside/21352"
+}
+}
+},
+"974611546": {
+"links": {
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://www.minskole.no/hundvaag/underside/20823"
+}
+}
+},
+"974611562": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen (SFO)",
+"url": "https://www.minskole.no/madlamark/underside/21223"
+}
+}
+},
+"974611570": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/hafrsfjord/underside/21286"
+}
+},
+"sfoFood": {
+"url": "https://www.minskole.no/hafrsfjord/underside/21286",
+"facts": {
+"warm": true
+}
+}
+},
+"974611589": {
+"links": {
+"sfo": {
+"title": "SFO på Sunde skole",
+"url": "https://www.minskole.no/sunde/underside/20859"
+}
+}
+},
+"974611678": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/kvernevik/underside/20821"
+}
+}
+},
+"974611805": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen (SFO)",
+"url": "https://www.minskole.no/gausel/underside/20901"
+}
+},
+"sfoFood": {
+"url": "https://www.minskole.no/gausel/underside/20901",
+"facts": {
+"warm": true,
+"warmPerWeek": 1
+}
+}
+},
+"974611813": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/madlavoll/underside/20933"
+}
+}
+},
+"974612623": {
+"links": {
+"sfo": {
+"title": "Kontakt SFO",
+"url": "https://www.borkedalen.no/index.php?pageID=106"
+}
+}
+},
+"974625237": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/rbsk/Underside/21039"
+}
+}
+},
+"974702444": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://froy.larvik.kommune.no/sfo/"
+}
+}
+},
+"974737825": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/rolland-skole/sfo"
+}
+}
+},
+"974737841": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/seljedalen-skole/sfo"
+}
+}
+},
+"974737876": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/slettebakken-skole/sfo"
+}
+}
+},
+"974737892": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/hellen-skole/sfo"
+}
+}
+},
+"974737906": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/ny-krohnborg-avdeling-skole/sfo"
+}
+}
+},
+"974737914": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/krohnengen-skole/sfo"
+}
+}
+},
+"974737930": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/haukeland-skole/sfo"
+}
+}
+},
+"974737949": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/fridalen-skole/sfo"
+}
+}
+},
+"974737957": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/christi-krybbe-skoler/sfo"
+}
+}
+},
+"974737965": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/mohlenpris-oppveksttun-skole/sfo"
+}
+}
+},
+"974737973": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/varden-skole/sfo"
+},
+"kurs": {
+"title": "SFO-aktiviteter i tråd med rammeplanen",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/varden-skole/sfo/sfo-aktiviteter-i-trad-med-rammeplanen"
+}
+}
+},
+"974738023": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/hordvik-skole/sfo"
+}
+}
+},
+"974738031": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/mjolkeraen-skole/sfo"
+}
+}
+},
+"974738058": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/salhus-skule/sfo"
+}
+}
+},
+"974738066": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/haukas-skole/sfo"
+}
+}
+},
+"974738074": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/tertnes-skole/sfo"
+}
+}
+},
+"974738120": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/garnes-skule/sfo"
+}
+}
+},
+"974738139": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/ytre-arna-skule/sfo"
+}
+}
+},
+"974738171": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/skeie-skole/sfo"
+}
+}
+},
+"974738244": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/sadalen-skole/sfo"
+}
+}
+},
+"974738252": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/kirkevoll-skole/sfo"
+}
+}
+},
+"974738260": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/skjold-skole/sfo"
+}
+}
+},
+"974738279": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/liland-skole/sfo"
+}
+}
+},
+"974738287": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/bones-skole/sfo"
+}
+}
+},
+"974738295": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/minde-skole/sfo"
+}
+}
+},
+"974738317": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/paradis-skole/sfo"
+}
+}
+},
+"974738325": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/smoras-skole/sfo"
+}
+}
+},
+"974738333": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/kaland-skole/sfo"
+}
+}
+},
+"974738341": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/midtun-skole/sfo"
+}
+}
+},
+"974738368": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/holen-skole/sfo"
+},
+"sfoMat": {
+"title": "Informasjon om mat og måltider i SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/holen-skole/sfo/informasjon-om-mat-og-maltider-i-sfo"
+}
+}
+},
+"974738376": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/mathopen-skole/sfo"
+}
+}
+},
+"974738406": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/lyshovden-oppveksttun-skole/sfo"
+},
+"kurs": {
+"title": "Aktiviteter på SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/lyshovden-oppveksttun-skole/sfo/aktiviteter-pa-sfo"
+}
+}
+},
+"974738422": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/vadmyra-skole/sfo"
+}
+}
+},
+"974738503": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/kalvatraet-skole/sfo"
+}
+}
+},
+"974738511": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/ulsmag-skole/sfo"
+}
+}
+},
+"974738538": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/lovas-oppveksttun-skole/sfo"
+}
+}
+},
+"974738546": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/nygardslien-skole/sfo"
+}
+}
+},
+"974738554": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/eidsvag-skole/sfo"
+}
+}
+},
+"974738562": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/haukedalen-skole/sfo"
+}
+}
+},
+"974738570": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/adnamarka-skule/sfo"
+}
+}
+},
+"974738589": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/loddefjord-skole/sfo"
+}
+}
+},
+"974738627": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/bjorndalsskogen-skole/sfo"
+}
+}
+},
+"974738635": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/olsvik-skole/sfo"
+}
+}
+},
+"974738740": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/flaktveit-skole/sfo"
+}
+}
+},
+"974739380": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/sorashogda-skole/sfo"
+}
+}
+},
+"975013286": {
+"links": {
+"skolemat": {
+"title": "Kantine",
+"url": "http://kg.vgs.no/kantine/"
+}
+}
+},
+"975079465": {
+"links": {
+"sfo": {
+"title": "SFO Ryenberget",
+"url": "https://www.delk.no/ryenberget-skole/aks-og-leksehjelp/"
+}
+},
+"sfoFood": {
+"url": "https://www.delk.no/ryenberget-skole/aks-og-leksehjelp/",
+"facts": {
+"perWeek": 5
+}
+}
+},
+"975267725": {
+"links": {
+"sfo": {
+"title": "Skulefritidsordning (SFO)",
+"url": "https://www.oygarden.kommune.no/foldnesskule/tenester/skulefritidsordning-sfo/"
+}
+}
+},
+"975269922": {
+"links": {
+"sfo": {
+"title": "SFO på Rollsløkken",
+"url": "https://www.hamar.kommune.no/skolene/barneskolene/rollslokken-skole/sfo-pa-rollslokken/"
+}
+}
+},
+"975270866": {
+"links": {
+"sfo": {
+"title": "Lund SFO",
+"url": "https://www.loten.kommune.no/lund-skole/lund-sfo/"
+}
+}
+},
+"975270874": {
+"links": {
+"sfo": {
+"title": "Ådalsbruk SFO",
+"url": "https://www.loten.kommune.no/adalsbruk-skole/adalsbruk-sfo/"
+}
+}
+},
+"975270882": {
+"links": {
+"sfo": {
+"title": "Østvang SFO",
+"url": "https://www.loten.kommune.no/ostvang-skole/ostvang-sfo/"
+}
+}
+},
+"975270890": {
+"links": {
+"sfo": {
+"title": "Jønsrud SFO",
+"url": "https://www.loten.kommune.no/jonsrud-skole/jonsrud-sfo/"
+}
+}
+},
+"975271366": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://lardal.larvik.kommune.no/sfo/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://lardal.larvik.kommune.no/om-skolen/leksehjelp/"
+}
+}
+},
+"975271382": {
+"links": {
+"sfo": {
+"title": "Borhaug SFO",
+"url": "https://www.farsund.kommune.no/borhaug-skole/borhaug-sfo/"
+}
+}
+},
+"975271404": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen (SFO)",
+"url": "https://www.farsund.kommune.no/vanse-skole/skolefritidsordningen-sfo-2/"
+}
+}
+},
+"975271439": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen (SFO)",
+"url": "https://www.sundeskole.no/skolefritidsordningen-sfo/"
+}
+}
+},
+"975271447": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen (SFO)",
+"url": "https://www.hidraskole.no/skolefritidsordningen-sfo/"
+}
+}
+},
+"975271455": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen (SFO)",
+"url": "https://www.gylandskole.no/skolefritidsordningen-sfo/"
+}
+}
+},
+"975271463": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen (SFO)",
+"url": "https://www.siraskole.no/skolefritidsordningen-sfo/"
+}
+}
+},
+"975271544": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/finsland/Underside/20381"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.minskole.no/finsland/Underside/19910"
+}
+}
+},
+"975271587": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/nygaard/seksjon/22267"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://www.minskole.no/nygaard/Underside/20309"
+}
+}
+},
+"975271773": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://liknes.skole.no/index.php?pageID=33"
+},
+"skolemat": {
+"title": "Skolemelk og frukt",
+"url": "https://liknes.skole.no/index.php?pageID=186"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://liknes.skole.no/index.php?pageID=190"
+}
+}
+},
+"975271811": {
+"links": {
+"sfo": {
+"title": "Info SFO",
+"url": "https://feda.skole.no/index.php?pageID=251"
+}
+}
+},
+"975271846": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskule.no/sinnes/Underside/16071"
+}
+}
+},
+"975272443": {
+"links": {
+"sfo": {
+"title": "Jessheim SFO",
+"url": "https://www.ullensaker.kommune.no/virksomheter/skolene-i-ullensaker/jessheim-skole-og-ressurssenter/jessheim-sfo/"
+}
+}
+},
+"975272478": {
+"links": {
+"sfo": {
+"title": "Nordkisa SFO",
+"url": "https://www.ullensaker.kommune.no/virksomheter/skolene-i-ullensaker/nordkisa-skole/nordkisa-sfo/"
+}
+}
+},
+"975272486": {
+"links": {
+"sfo": {
+"title": "Algarheim SFO",
+"url": "https://www.ullensaker.kommune.no/virksomheter/skolene-i-ullensaker/algarheim-skole/algarheim-sfo/"
+}
+},
+"sfoFood": {
+"url": "https://www.ullensaker.kommune.no/virksomheter/skolene-i-ullensaker/algarheim-skole/algarheim-sfo/",
+"facts": {
+"perWeek": 5,
+"warm": true
+}
+}
+},
+"975272508": {
+"links": {
+"sfo": {
+"title": "Hovin SFO",
+"url": "https://www.ullensaker.kommune.no/virksomheter/skolene-i-ullensaker/hovin-skole/hovin-sfo/"
+}
+},
+"sfoFood": {
+"url": "https://www.ullensaker.kommune.no/virksomheter/skolene-i-ullensaker/hovin-skole/hovin-sfo/",
+"facts": {
+"warm": true
+}
+}
+},
+"975272605": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.lorenskog.kommune.no/fjellhamar-skole/sfo/"
+}
+}
+},
+"975272613": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.lorenskog.kommune.no/solheim-skole/sfo/"
+}
+}
+},
+"975272699": {
+"links": {
+"sfo": {
+"title": "Hovinhøgda SFO",
+"url": "https://www.lillestrom.kommune.no/skole-og-utdanning/skoler-og-skolegrenser/skolene-i-lillestrom/hovinhogda-sfo/"
+}
+}
+},
+"975272702": {
+"links": {
+"sfo": {
+"title": "Dalen SFO",
+"url": "https://www.lillestrom.kommune.no/skole-og-utdanning/skoler-og-skolegrenser/skolene-i-lillestrom/dalen-sfo/"
+}
+},
+"sfoFood": {
+"url": "https://www.lillestrom.kommune.no/skole-og-utdanning/skoler-og-skolegrenser/skolene-i-lillestrom/dalen-sfo/",
+"facts": {
+"warm": true
+}
+}
+},
+"975272710": {
+"links": {
+"sfo": {
+"title": "Riddersand SFO",
+"url": "https://www.lillestrom.kommune.no/skole-og-utdanning/skoler-og-skolegrenser/skolene-i-lillestrom/riddersand-sfo/"
+}
+},
+"sfoFood": {
+"url": "https://www.lillestrom.kommune.no/skole-og-utdanning/skoler-og-skolegrenser/skolene-i-lillestrom/riddersand-sfo/",
+"facts": {
+"warm": true
+}
+}
+},
+"975272745": {
+"links": {
+"sfo": {
+"title": "Sørumsand SFO",
+"url": "https://www.lillestrom.kommune.no/skole-og-utdanning/skoler-og-skolegrenser/skolene-i-lillestrom/sorumsand-sfo/"
+}
+}
+},
+"975272753": {
+"links": {
+"sfo": {
+"title": "Sørum SFO",
+"url": "https://www.lillestrom.kommune.no/skole-og-utdanning/skoler-og-skolegrenser/skolene-i-lillestrom/sorum-sfo/"
+}
+}
+},
+"975273598": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen (SFO)",
+"url": "https://www.engerdal.kommune.no/ebus/tjenester/skole/sfo-2/"
+}
+}
+},
+"975273873": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.gran.kommune.no/tjenester/skole-og-sfo/her-finner-du-skolene-i-gran/skoleportal/fredheim-skole/sfo"
+}
+}
+},
+"975273881": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.gran.kommune.no/tjenester/skole-og-sfo/her-finner-du-skolene-i-gran/skoleportal/jaren-skole/sfo"
+}
+}
+},
+"975274721": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen (SFO)",
+"url": "https://www.gjovik.kommune.no/blomhaugskole/skolefritidsordningen-sfo/"
+}
+}
+},
+"975275353": {
+"links": {
+"sfo": {
+"title": "Sjernarøy SFO",
+"url": "https://www.minskole.no/sjernaroy/underside/21994"
+}
+}
+},
+"975275566": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://dysjaland.solaskolen.no/index.php?pageID=48"
+}
+}
+},
+"975275574": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://haga.solaskolen.no/index.php?pageID=6"
+}
+}
+},
+"975275582": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://grannes.solaskolen.no/index.php?pageID=6"
+}
+}
+},
+"975275604": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.royneberg.solaskolen.no/index.php?pageID=6"
+}
+}
+},
+"975275612": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://skadberg.solaskolen.no/index.php?pageID=6"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://skadberg.solaskolen.no/index.php?pageID=55"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://skadberg.solaskolen.no/index.php?pageID=54"
+}
+}
+},
+"975275663": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/bryne/seksjon/23493"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.minskole.no/bryne/Underside/21596"
+}
+}
+},
+"975275671": {
+"links": {
+"skolemat": {
+"title": "Kantine",
+"url": "https://www.minskole.no/bus/Underside/21864"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.minskole.no/bus/Underside/21866"
+}
+}
+},
+"975275698": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/hognestadskule/seksjon/23558"
+},
+"skolemat": {
+"title": "Skulemjølk og skulefrukt",
+"url": "https://www.minskole.no/hognestadskule/Underside/21778"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.minskole.no/hognestadskule/Underside/21779"
+}
+}
+},
+"975275728": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/undheim/seksjon/23531"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.minskole.no/undheim/Underside/21695"
+}
+}
+},
+"975275736": {
+"links": {
+"skolemat": {
+"title": "Kantine",
+"url": "https://www.minskole.no/kleppU/Underside/22011"
+}
+}
+},
+"975275760": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/bore/seksjon/23725"
+}
+}
+},
+"975275787": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/engelsvoll/underside/22002"
+}
+}
+},
+"975275795": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/tu/seksjon/23663"
+},
+"skolemat": {
+"title": "Skulemjølk",
+"url": "https://www.minskole.no/tu/Underside/21984"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.minskole.no/tu/Underside/22068"
+}
+}
+},
+"975275809": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/orre/Underside/22035"
+}
+}
+},
+"975276066": {
+"links": {
+"sfo": {
+"title": "Om SFO",
+"url": "https://husabo.eigersundskolen.no/index.php?pageID=1916"
+},
+"skolemat": {
+"title": "Kantine",
+"url": "https://husabo.eigersundskolen.no/index.php?pageID=118"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://husabo.eigersundskolen.no/index.php?pageID=1390"
+}
+}
+},
+"975277097": {
+"links": {
+"sfo": {
+"title": "SFO-tilbod",
+"url": "https://www.volda.kommune.no/hornindal-skule/sfo-hornindal-skule/"
+}
+}
+},
+"975277194": {
+"links": {
+"sfo": {
+"title": "SFO Allanengen",
+"url": "https://www.kristiansund.kommune.no/skole/allanengen/sfo-allanengen/"
+}
+}
+},
+"975278026": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen",
+"url": "https://bratsbergkleiva.skole.skien.no/om-skolen/skolefritidsordningen/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://bratsbergkleiva.skole.skien.no/om-skolen/leksehjelp/"
+}
+}
+},
+"975278034": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen",
+"url": "https://www.buer.skole.skien.no/om-skolen/skolefritidsordningen/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.buer.skole.skien.no/om-skolen/leksehjelp/"
+}
+}
+},
+"975278042": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen",
+"url": "https://www.bolehogda.skole.skien.no/om-skolen/skolefritidsordningen/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.bolehogda.skole.skien.no/om-skolen/leksehjelp/"
+}
+}
+},
+"975278077": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen",
+"url": "https://www.gjerpenb.skole.skien.no/om-skolen/skolefritidsordningen/"
+}
+}
+},
+"975278093": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen",
+"url": "https://www.kjorbekkhogda.skole.skien.no/om-skolen/skolefritidsordningen/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.kjorbekkhogda.skole.skien.no/om-skolen/leksehjelp/"
+}
+}
+},
+"975278115": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen",
+"url": "https://www.klyve.skole.skien.no/om-skolen/skolefritidsordningen/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.klyve.skole.skien.no/om-skolen/leksehjelp/"
+}
+}
+},
+"975278123": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen",
+"url": "https://www.lundeb.skole.skien.no/om-skolen/skolefritidsordningen/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.lundeb.skole.skien.no/om-skolen/leksehjelp/"
+}
+},
+"sfoFood": {
+"url": "https://www.lundeb.skole.skien.no/om-skolen/skolefritidsordningen/",
+"facts": {
+"perWeek": 5,
+"warm": true,
+"warmPerWeek": 5
+}
+}
+},
+"975278131": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen",
+"url": "https://www.skotfoss.skole.skien.no/om-skolen/skolefritidsordningen/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.skotfoss.skole.skien.no/om-skolen/leksehjelp/"
+}
+}
+},
+"975278174": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen",
+"url": "https://www.venstop.skole.skien.no/om-skolen/skolefritidsordningen/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.venstop.skole.skien.no/om-skolen/leksehjelp/"
+}
+}
+},
+"975278182": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen",
+"url": "https://moflata.skole.skien.no/om-skolen/skolefritidsordningen/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://moflata.skole.skien.no/om-skolen/leksehjelp/"
+}
+}
+},
+"975278247": {
+"links": {
+"skolemat": {
+"title": "Skolemelk og yoghurt",
+"url": "https://www.midtbygda.skole.no/index.php?pageID=254"
+}
+}
+},
+"975278328": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.kragero.kommune.no/kragero-skole/tjenestemeny/sfo/"
+}
+}
+},
+"975278387": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.kragero.kommune.no/sannidal-skole/tjenestemeny/sannidal-sfo/"
+}
+}
+},
+"975278840": {
+"links": {
+"sfo": {
+"title": "SFO-siden for Byåsen skole",
+"url": "https://www.trondheim.kommune.no/org/oppvekst/skoler/byasen-skole/byasen-skole-sfo/"
+}
+},
+"sfoFood": {
+"url": "https://www.trondheim.kommune.no/org/oppvekst/skoler/byasen-skole/byasen-skole-sfo/",
+"facts": {
+"warm": true
+}
+}
+},
+"975278883": {
+"links": {
+"sfo": {
+"title": "SFO sin side",
+"url": "https://www.trondheim.kommune.no/org/oppvekst/skoler/bratsberg-skole/bratsberg-sfo/"
+}
+}
+},
+"975278921": {
+"links": {
+"sfo": {
+"title": "Se egen side for SFO",
+"url": "https://www.trondheim.kommune.no/org/oppvekst/skoler/lade-skole/lade-skole-sfo/"
+}
+},
+"sfoFood": {
+"url": "https://www.trondheim.kommune.no/org/oppvekst/skoler/lade-skole/lade-skole-sfo/",
+"facts": {
+"warm": true,
+"warmPerWeek": 3
+}
+}
+},
+"975280683": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.sarpsborg.com/landebarneskole/lande-sfo/"
+}
+}
+},
+"975280705": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.sarpsborg.com/jelsnesbarneskole/jelsnes-sfo/"
+}
+}
+},
+"975280837": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.arendal.kommune.no/strommenskole/for-foreldre/arendalsskolen/sfo/"
+}
+}
+},
+"975280845": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.arendal.kommune.no/nedenesskole/for-foreldre/arendalsskolen/sfo/"
+}
+}
+},
+"975280853": {
+"links": {
+"sfo": {
+"title": "Dagen i SFO",
+"url": "https://rykene.skole.arendal.no/index.php?pageID=329"
+},
+"leksehjelp": {
+"title": "Plan for leksehjelp",
+"url": "https://rykene.skole.arendal.no/index.php?pageID=294"
+}
+},
+"sfoFood": {
+"url": "https://rykene.skole.arendal.no/index.php?pageID=329",
+"facts": {
+"perWeek": 5
+}
+}
+},
+"975280896": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.arendal.kommune.no/sandnesskole/for-foreldre/arendalsskolen/sfo/"
+}
+}
+},
+"975281086": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.etne.kommune.no/enge-skule/skulefritidsordning-sfo/"
+}
+}
+},
+"975281094": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.etne.kommune.no/skanevik-skule/skulefritidsordning-sfo/"
+}
+}
+},
+"975282112": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.stronobarneskule.no/index.php?pageID=112"
+}
+}
+},
+"975282163": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.noreneset.no/index.php?pageID=30"
+}
+}
+},
+"975282996": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://moltemyr.skole.no/index.php?pageID=48"
+}
+}
+},
+"975283003": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://birkenlund.skole.arendal.no/index.php?pageID=135"
+}
+}
+},
+"975283046": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.abel.skole.no/index.php?pageID=112"
+}
+}
+},
+"975283186": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.arendal.kommune.no/nesheimskole/for-foreldre/arendalsskolen/sfo/"
+}
+}
+},
+"975283194": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.arendal.kommune.no/flostaskole/for-foreldre/arendalsskolen/sfo/"
+}
+}
+},
+"975283208": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.eydehavn.skole.arendal.no/index.php?pageID=226"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.eydehavn.skole.arendal.no/index.php?pageID=369"
+}
+}
+},
+"975283216": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://myra.skole.arendal.no/index.php?pageID=143"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://myra.skole.arendal.no/index.php?pageID=178"
+}
+}
+},
+"975283259": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.birkeland.skole.no/index.php?pageID=216"
+}
+}
+},
+"975283275": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.engesland.skole.no/index.php?pageID=33"
+}
+}
+},
+"975284034": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.giske.kommune.no/giske-skule/tenester/sfo/"
+}
+}
+},
+"975284042": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.giske.kommune.no/godoy-skule/tenester/sfo/"
+}
+}
+},
+"975284050": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.giske.kommune.no/vigra-skule/tenester/sfo/"
+}
+}
+},
+"975284891": {
+"links": {
+"sfo": {
+"title": "Om SFO",
+"url": "https://www.hallingskarvet.skole.no/index.php?pageID=63"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://www.hallingskarvet.skole.no/index.php?pageID=60"
+}
+}
+},
+"975286061": {
+"links": {
+"sfo": {
+"title": "Skulefritidsordning (SFO)",
+"url": "https://www.oygarden.kommune.no/rongskule/tenester/skulefritidsordning-sfo/"
+}
+}
+},
+"975286150": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://minskole.no/grasdal/seksjon/14888"
+}
+}
+},
+"975286169": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://minskole.no/rossland/seksjon/14574"
+}
+}
+},
+"975287432": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/roklandskole/seksjon/15274"
+}
+}
+},
+"975287653": {
+"links": {
+"sfo": {
+"title": "Skulefritidsordning (SFO)",
+"url": "https://www.oygarden.kommune.no/knappskogskule/tenester/skulefritidsordning-sfo/"
+}
+}
+},
+"975287661": {
+"links": {
+"sfo": {
+"title": "Skulefritidsordning (SFO)",
+"url": "https://www.oygarden.kommune.no/ulvesetskule/tenester/skulefritidsordning-sfo/"
+}
+}
+},
+"975287750": {
+"links": {
+"sfo": {
+"title": "Skulefritidsordning (SFO)",
+"url": "https://www.oygarden.kommune.no/landroskule/tenester/skulefritidsordning-sfo/"
+}
+}
+},
+"975287815": {
+"links": {
+"sfo": {
+"title": "Skulefritidsordning (SFO)",
+"url": "https://www.oygarden.kommune.no/skogsvagskule/tenester/skulefritidsordning-sfo/"
+}
+}
+},
+"975287831": {
+"links": {
+"sfo": {
+"title": "Skulefritidsordning (SFO)",
+"url": "https://www.oygarden.kommune.no/strandaskule/tenester/skulefritidsordning-sfo/"
+}
+}
+},
+"975287866": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskule.no/selbjornskule/seksjon/16258"
+}
+}
+},
+"975287920": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/storebo/seksjon/9898"
+},
+"leksehjelp": {
+"title": "FixFerdig(leksehjelp)",
+"url": "https://www.minskole.no/storebo/seksjon/21428"
+}
+}
+},
+"975288935": {
+"links": {
+"sfo": {
+"title": "SFO ved Lunde skole",
+"url": "https://minskole.no/lundeskole/Underside/19119"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://minskole.no/lundeskole/Underside/19105"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://minskole.no/lundeskole/Underside/19107"
+}
+}
+},
+"975289729": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.luster.kommune.no/luster-ungdomsskule/luster-ungdomsskule/sfo/"
+}
+}
+},
+"975289796": {
+"links": {
+"sfo": {
+"title": "SFO sin side",
+"url": "https://www.trondheim.kommune.no/org/oppvekst/skoler/hallset-skole/hallset-sfo/"
+}
+}
+},
+"975290387": {
+"links": {
+"sfo": {
+"title": "Bakke SFO",
+"url": "https://www.ullensaker.kommune.no/virksomheter/skolene-i-ullensaker/bakke-skole/bakke-sfo/"
+}
+}
+},
+"975290549": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.lorenskog.kommune.no/asen-skole/sfo/"
+}
+}
+},
+"975292754": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen (SFO)",
+"url": "https://www.gjovik.kommune.no/snertingdalskole/skolefritidsordningen-sfo/"
+}
+}
+},
+"975294617": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.selbu.kommune.no/tjenester/oppvekst-og-familie/skole/skoler-i-selbu/selbustrand-skole-1-7-trinn/sfo.63429.aspx"
+}
+}
+},
+"975294765": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.sarpsborg.com/hannestadskole/hannestad-sfo/"
+}
+}
+},
+"975294994": {
+"links": {
+"skolemat": {
+"title": "Kantineordning",
+"url": "https://kongerod.skole.skien.no/om-skolen/kantineordning/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://kongerod.skole.skien.no/om-skolen/leksehjelp/"
+}
+}
+},
+"975295109": {
+"links": {
+"sfo": {
+"title": "Skulefritidsordning (SFO)",
+"url": "https://www.oygarden.kommune.no/kolltveitskule/tenester/skulefritidsordning-sfo/"
+}
+}
+},
+"975295850": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen",
+"url": "https://stigeraasen.skole.skien.no/om-skolen/skolefritidsordningen/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://stigeraasen.skole.skien.no/om-skolen/leksehjelp/"
+}
+}
+},
+"975296601": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.kuventra.skule.no/index.php?pageID=74"
+}
+}
+},
+"975297381": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/rosseland/seksjon/23540"
+},
+"skolemat": {
+"title": "Kantine",
+"url": "https://www.minskole.no/rosseland/Underside/21719"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.minskole.no/rosseland/Underside/21721"
+}
+}
+},
+"975297446": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/orstad/seksjon/23834"
+}
+}
+},
+"975297497": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen",
+"url": "https://aafoss.skole.skien.no/om-skolen/skolefritidsordningen/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://aafoss.skole.skien.no/om-skolen/leksehjelp/"
+}
+}
+},
+"975298647": {
+"links": {
+"sfo": {
+"title": "Skulefritidsordning (SFO)",
+"url": "https://www.oygarden.kommune.no/agotnesskule/tenester/skulefritidsordning-sfo/"
+}
+}
+},
+"975298655": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://hammerfest.kommune.no/forsol-oppvekstsenter/sfo/"
+}
+}
+},
+"975299139": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.lorenskog.kommune.no/finstad-skole/sfo/"
+}
+}
+},
+"975299376": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://vesterdalen.skole.no/index.php?pageID=33"
+}
+}
+},
+"975299465": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://hammerfest.kommune.no/reindalenskole/sfo/"
+}
+}
+},
+"975299503": {
+"links": {
+"sfo": {
+"title": "Borgen SFO",
+"url": "https://www.ullensaker.kommune.no/virksomheter/skolene-i-ullensaker/borgen-skole/borgen-sfo/"
+}
+}
+},
+"975300005": {
+"links": {
+"sfo": {
+"title": "Informasjon om SFO",
+"url": "https://www.tingsakerskole.no/index.php?pageID=101"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.tingsakerskole.no/index.php?pageID=141"
+}
+}
+},
+"975300021": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.lorenskog.kommune.no/rasta-skole/sfo/"
+}
+}
+},
+"975300293": {
+"links": {
+"sfo": {
+"title": "SFO Dale",
+"url": "https://www.kristiansund.kommune.no/skole/dale/sfo-dale/"
+}
+}
+},
+"975314758": {
+"links": {
+"sfo": {
+"title": "Skulefritidsordning (SFO)",
+"url": "https://www.oygarden.kommune.no/hjelteryggenskule/tenester/skulefritidsordning-sfo/"
+}
+}
+},
+"975318303": {
+"links": {
+"sfo": {
+"title": "Garderåsen SFO",
+"url": "https://www.lillestrom.kommune.no/skole-og-utdanning/skoler-og-skolegrenser/skolene-i-lillestrom/garderasen-sfo/"
+}
+}
+},
+"975324842": {
+"links": {
+"sfo": {
+"title": "Om SFO",
+"url": "https://hamna.tromsoskolen.no/index.php?pageID=145"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://hamna.tromsoskolen.no/index.php?pageID=99"
+}
+}
+},
+"975327043": {
+"links": {
+"sfo": {
+"title": "SFO på Vikåsen har en egen side som du finner her",
+"url": "https://www.trondheim.kommune.no/org/oppvekst/skoler/vikasen-skole/vikasen-skole-sfo/"
+}
+}
+},
+"975358666": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordning",
+"url": "https://www.vartun.no/skolefritidsordning"
+}
+}
+},
+"975960277": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://stenbraten.osloskolen.no/aktivitetsskolen/aks-pa-stenbraten-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk og skolefrukt",
+"url": "https://stenbraten.osloskolen.no/for-elever-og-foresatte/andre-tilbud-til-elevene/skolemelk/"
+}
+}
+},
+"975960315": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://kringsja.osloskolen.no/aktivitetsskolen/aks-pa-kringsja-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolefrukt og skolemelk",
+"url": "https://kringsja.osloskolen.no/for-elever-og-foresatte/andre-tilbud-til-elevene/skolefrukt-og-skolemelk/"
+}
+}
+},
+"976207076": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://rosendalskole.no/index.php?pageID=36"
+}
+}
+},
+"976207270": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://vatneli.no/sfo/"
+}
+}
+},
+"976207289": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://torderodskole.no/sfo/"
+}
+}
+},
+"976207815": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen (SFO)",
+"url": "https://nidelvenskole.no/sfo-skolefritidsordningen-ved-nidelven-skole/"
+}
+}
+},
+"976210743": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://engesvea-skole.no/sfo/"
+}
+}
+},
+"976429184": {
+"links": {
+"sfo": {
+"title": "Kontakt SFO",
+"url": "https://bmskole.no/kontakt-sfo.html"
+}
+}
+},
+"976654773": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/fjellsdalen-skole/sfo"
+}
+}
+},
+"976811232": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://lutvann.osloskolen.no/aktivitetsskolen/aks-pa-lutvann-skole/kontakt-aks2/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://lutvann.osloskolen.no/om-skolen/satsingsomrader/leksehjelp/"
+}
+}
+},
+"976827538": {
+"links": {
+"sfo": {
+"title": "Informasjon om SFO",
+"url": "https://www.austerdalen.skole.no/index.php?pageID=33"
+}
+}
+},
+"977264502": {
+"links": {
+"sfo": {
+"title": "SFO Vardåsen",
+"url": "https://www.asker.kommune.no/skole-og-utdanning/skoler-og-skoleplass/skoleoversikt/vardasen-skole/sfo-vardasen/"
+}
+},
+"sfoFood": {
+"url": "https://www.asker.kommune.no/skole-og-utdanning/skoler-og-skoleplass/skoleoversikt/vardasen-skole/sfo-vardasen/",
+"facts": {
+"warm": true
+}
+}
+},
+"977506077": {
+"links": {
+"sfo": {
+"title": "Kontaktinformasjon SFO",
+"url": "https://www.minskole.no/teinaa/underside/20878"
+}
+}
+},
+"977506123": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/lassa/underside/20980"
+}
+},
+"sfoFood": {
+"url": "https://www.minskole.no/lassa/underside/20980",
+"facts": {
+"warm": true
+}
+}
+},
+"977509777": {
+"links": {
+"sfo": {
+"title": "SFO-medarbeidere",
+"url": "https://nordstrand.steinerskolen.no/kontakt/sfo-medarbeidere/"
+}
+}
+},
+"979120087": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://nordberg.osloskolen.no/fagtilbud/laringsstotte/lekseklubb/"
+}
+}
+},
+"979126743": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://karlsrud.osloskolen.no/aktivitetsskolen/aks-pa-karlsrud/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://karlsrud.osloskolen.no/fagtilbud/andre-tilbud-til-elevene/skolemelk/"
+}
+}
+},
+"979127413": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://svendstuen.osloskolen.no/aktivitetsskolen/aks-pa-svendstuen-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://svendstuen.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/skolemelk/"
+}
+}
+},
+"979127502": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://seterbraten.osloskolen.no/aktivitetsskolen/aks-pa-seterbraten-skole/kontakt-aks-ny/"
+}
+}
+},
+"979128134": {
+"links": {
+"sfo": {
+"title": "Miljøterapeutens rolle i AKS",
+"url": "https://skoyen.osloskolen.no/aktivitetsskolen/vare-tilbud/miljoterapeutens-rolle-i-aks/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://skoyen.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"979150229": {
+"links": {
+"skolemat": {
+"title": "Kantine",
+"url": "https://minskole.no/lyeung/Underside/21835"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://minskole.no/lyeung/Underside/21837"
+}
+}
+},
+"979200293": {
+"links": {
+"sfo": {
+"title": "SFO Blakstad skole",
+"url": "https://www.asker.kommune.no/skole-og-utdanning/skoler-og-skoleplass/skoleoversikt/blakstad-skole/sfo/"
+}
+},
+"sfoFood": {
+"url": "https://www.asker.kommune.no/skole-og-utdanning/skoler-og-skoleplass/skoleoversikt/blakstad-skole/sfo/",
+"facts": {
+"perWeek": 5
+}
+}
+},
+"979276028": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/skranevatnet-skole/sfo"
+}
+}
+},
+"979446292": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://workinnmarka.tromsoskolen.no/index.php?pageID=146"
+}
+}
+},
+"979446349": {
+"links": {
+"sfo": {
+"title": "Ansatte på SFO",
+"url": "https://reinen.tromsoskolen.no/index.php?pageID=396"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://reinen.tromsoskolen.no/index.php?pageID=212"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://reinen.tromsoskolen.no/index.php?pageID=293"
+}
+}
+},
+"979446373": {
+"links": {
+"leksehjelp": {
+"title": "Studietime/leksehjelp",
+"url": "https://storelva.tromsoskolen.no/index.php?pageID=219"
+}
+}
+},
+"979646275": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordning (SFO)",
+"url": "https://www.minskole.no/tunballen/seksjon/22265"
+},
+"skolemat": {
+"title": "Skolemelk og skolefrukt",
+"url": "https://www.minskole.no/tunballen/Underside/19063"
+}
+}
+},
+"979847548": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://minskole.no/bogafjell/seksjon/15206"
+}
+}
+},
+"979927533": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://godlia.osloskolen.no/aktivitetsskolen/aks-pa-godlia-skole/kontakt-aks/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://godlia.osloskolen.no/for-elever-og-foresatte/andre-tilbud-til-elevene/skolemelk/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://godlia.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"979932634": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.loekebergskole.no/index.php?pageID=6"
+}
+}
+},
+"980419169": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.sande.solaskolen.no/index.php?pageID=6"
+}
+}
+},
+"980447766": {
+"links": {
+"sfo": {
+"title": "Skolefritidsordningen",
+"url": "https://www.minskole.no/presteheia/seksjon/22596"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://www.minskole.no/presteheia/Underside/19892"
+}
+}
+},
+"980487806": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.lorenskog.kommune.no/benterud-skole/sfo/"
+}
+}
+},
+"980515702": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://solneset.tromsoskolen.no/index.php?pageID=14"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://solneset.tromsoskolen.no/index.php?pageID=142"
+}
+}
+},
+"980785343": {
+"links": {
+"sfo": {
+"title": "SFO Hvalstad skole",
+"url": "https://www.asker.kommune.no/skole-og-utdanning/skoler-og-skoleplass/skoleoversikt/hvalstad-skole/sfo-hvalstad-skole/"
+}
+},
+"sfoFood": {
+"url": "https://www.asker.kommune.no/skole-og-utdanning/skoler-og-skoleplass/skoleoversikt/hvalstad-skole/sfo-hvalstad-skole/",
+"facts": {
+"warm": true,
+"warmPerWeek": 2
+}
+}
+},
+"981458672": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.gullhaug.skole.no/index.php?pageID=41"
+}
+}
+},
+"981607228": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.vollanskole.no/kopi-av-barneskolen"
+}
+}
+},
+"981668383": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.lorenskogfriskole.no/index.php?pageID=128"
+}
+}
+},
+"982254701": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://apallokka.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+}
+}
+},
+"982548225": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://valby.larvik.kommune.no/sfo/"
+}
+}
+},
+"982794374": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.steystein.no/sfo"
+}
+}
+},
+"982944694": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.arendal.kommune.no/hisoyskole/for-foreldre/arendalsskolen/sfo/"
+}
+}
+},
+"982980712": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/smeaheia/Underside/9173"
+}
+}
+},
+"983618979": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/vikevaag/underside/21459"
+}
+}
+},
+"983681123": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://lkgskole.no/sfo/"
+}
+}
+},
+"984181345": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.minskole.no/karuss/seksjon/22815"
+}
+}
+},
+"984299443": {
+"links": {
+"sfo": {
+"title": "Skogmo SFO",
+"url": "https://www.ullensaker.kommune.no/virksomheter/skolene-i-ullensaker/skogmo-skole/skogmo-sfo/"
+}
+}
+},
+"984446853": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.minskole.no/tinntjonn/Underside/19303"
+}
+}
+},
+"984666675": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.vollenmontessoriskole.com/kopi-av-hjem"
+}
+}
+},
+"985193495": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.moldefriskole.no/sfo"
+}
+}
+},
+"985260044": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://minskole.no/holte/Underside/19238"
+}
+}
+},
+"986109110": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.hesnesmontessoriskole.no/hesnes/Underside/2529"
+},
+"skolemat": {
+"title": "Skolefrukt",
+"url": "https://www.hesnesmontessoriskole.no/hesnes/Underside/16322"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.hesnesmontessoriskole.no/hesnes/Underside/9493"
+}
+}
+},
+"986171096": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.bergen.kommune.no/omkommunen/avdelinger/apeltun-skole/sfo"
+}
+}
+},
+"986256407": {
+"links": {
+"sfo": {
+"title": "SFO 2026/2027",
+"url": "https://holmedalmontessoriskule.no/Om-skulen/SFO"
+}
+}
+},
+"986859659": {
+"links": {
+"sfo": {
+"title": "SFO Fees",
+"url": "https://this.no/sfo-fees/"
+}
+}
+},
+"986978070": {
+"links": {
+"devices": {
+"title": "Hjem-avtale Chromebook",
+"url": "https://www.minskole.no/sandnesfriskole/Underside/22388"
+}
+}
+},
+"987105941": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.moreskule.no/sfo"
+}
+}
+},
+"987131780": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://kastellet.osloskolen.no/aktivitetsskolen/aks-pa-kastellet-skole/kontakt-aks/"
+}
+}
+},
+"987865997": {
+"links": {
+"sfo": {
+"title": "Kontakt AKS",
+"url": "https://bogstad.osloskolen.no/aktivitetsskolen/aks-pa-bogstad-skole/kontakt-aks/"
+}
+}
+},
+"987900016": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.jaertun.no/informasjon/sfo/"
+}
+}
+},
+"988110833": {
+"links": {
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://www.minskole.no/havlimyra/Underside/19998"
+}
+}
+},
+"988427535": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp/SFO",
+"url": "https://www.brandalfriskule.no/leksehjelp-og-sfo/"
+}
+}
+},
+"989337823": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.snasamontessori.no/skolen/sfo"
+},
+"skolemat": {
+"title": "Frokost og varmlunsj",
+"url": "https://www.snasamontessori.no/skolen/frokost-og-varmlunsj"
+}
+}
+},
+"989516663": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://fagereng.tromsoskolen.no/index.php?pageID=60"
+}
+}
+},
+"990334021": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.aischool.no/sfo/"
+}
+}
+},
+"991595465": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://eidskogms.no/sfo/"
+}
+}
+},
+"992639490": {
+"links": {
+"sfo": {
+"title": "Gystadmarka SFO",
+"url": "https://www.ullensaker.kommune.no/virksomheter/skolene-i-ullensaker/gystadmarka-skole/gystadmarka-sfo/"
+}
+}
+},
+"993630705": {
+"links": {
+"sfo": {
+"title": "› After school / SFO",
+"url": "https://trint.org/school-route/after-school-sfo/"
+}
+}
+},
+"994392328": {
+"links": {
+"devices": {
+"title": "Forventninger og bruk av Chromebook",
+"url": "https://www.minskole.no/lundehaugen/Underside/15926"
+}
+}
+},
+"994480197": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.kragero.kommune.no/helle-skole/tjenestemeny/sfo/"
+}
+}
+},
+"994486977": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://torvikbuktskule.no/sfo/"
+}
+},
+"sfoFood": {
+"url": "https://torvikbuktskule.no/sfo/",
+"facts": {
+"warm": true
+}
+}
+},
+"994736000": {
+"links": {
+"sfo": {
+"title": "Kjeller SFO",
+"url": "https://www.lillestrom.kommune.no/skole-og-utdanning/skoler-og-skolegrenser/skolene-i-lillestrom/kjeller-sfo/"
+}
+}
+},
+"994967541": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.kilebygdamontessoriskole.no/side/11"
+}
+}
+},
+"995355825": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://montessoriskole-drammen.no/sfo/"
+}
+}
+},
+"995821664": {
+"links": {
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://f21.vgs.no/om-skolen/satsingsomrader/leksehjelp/"
+}
+}
+},
+"995865459": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.sokndal.kommune.no/sokndal-skole/sfo/"
+}
+}
+},
+"995922770": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://aais.no/sfo/"
+}
+}
+},
+"996377210": {
+"links": {
+"skolemat": {
+"title": "Kantine",
+"url": "https://frydenberg.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/kantine/"
+}
+}
+},
+"997189116": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.helgenmontessoriskole.no/about-5-1"
+}
+}
+},
+"997621506": {
+"links": {
+"sfo": {
+"title": "AKS-leder",
+"url": "https://nordpolen.osloskolen.no/aktivitetsskolen/kontakt-aks/aks-leder/"
+},
+"skolemat": {
+"title": "Skolemelk",
+"url": "https://nordpolen.osloskolen.no/fagtilbud/andre-tilbud-til-elevene/skolemelk/"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://nordpolen.osloskolen.no/fagtilbud/laringsstotte/leksehjelp/"
+},
+"ferie": {
+"title": "AKS i ferien",
+"url": "https://nordpolen.osloskolen.no/aktivitetsskolen/vare-tilbud/aks-hjemmefra/"
+}
+}
+},
+"998173108": {
+"links": {
+"leksehjelp": {
+"title": "SFO / Leksehjelp",
+"url": "https://www.hm-skole.no/om-skolen/sfo/"
+}
+}
+},
+"998245508": {
+"links": {
+"sfo": {
+"title": "Inntil 12 timar gratis SFO",
+"url": "https://www.kjolsdalenmontessori.no/index.php?pageID=384"
+},
+"leksehjelp": {
+"title": "Leksehjelp",
+"url": "https://www.kjolsdalenmontessori.no/index.php?pageID=388"
+}
+}
+},
+"998469635": {
+"links": {
+"skolemat": {
+"title": "Kantine",
+"url": "https://morellbakken.osloskolen.no/for-elever-og-foresatte/helse-og-velferd/kantina/"
+}
+}
+},
+"998797268": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://bergsbygdamontessori.no/sfo/"
+},
+"skolemat": {
+"title": "Skolemat",
+"url": "https://bergsbygdamontessori.no/skolemat/"
+}
+}
+},
+"998992265": {
+"links": {
+"sfo": {
+"title": "SFO",
+"url": "https://www.storoya.skole.no/index.php?pageID=6"
+}
+}
+}
+}
+}

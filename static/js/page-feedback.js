@@ -176,6 +176,90 @@
 
     // Step one starts without moving focus, so the page loads as usual
     stepOne();
+
+    // Footer v2 (Figma, section 10): on pages with the shared footer the question is a row at the top of the
+    // footer, open from the start, instead of a tab at the bottom of the screen
+    const placeInFooter = () => {
+        const row = document.querySelector('.site-footer__feedback');
+        if (!row) return false;
+        row.appendChild(block);
+        block.classList.add('page-feedback--inline');
+        document.body.classList.remove('has-page-feedback');
+        setOpen(true);
+        inlineStepOne();
+        return true;
+    };
+
+    // In the footer: «Ja» and «Nei» as two buttons that answer at once, then the optional text as before
+    function inlineStepOne() {
+        show(`
+            <div class="page-feedback__answers">
+                <button type="button" class="ds-button page-feedback__answer" data-answer="ja">${t('Ja')}</button>
+                <button type="button" class="ds-button page-feedback__answer" data-answer="nei">${t('Nei')}</button>
+                <p class="ds-paragraph page-feedback__hint">${t('Du kan også skrive til oss – se «Kontakt oss».')}</p>
+            </div>
+            ${errorHtml()}`);
+        body.querySelectorAll('[data-answer]').forEach(button => button.addEventListener('click', async () => {
+            answer = button.dataset.answer;
+            button.setAttribute('aria-busy', 'true');
+            try {
+                await send();
+                try { sessionStorage.setItem(STORAGE_KEY, answer); } catch (_) { /* storage blocked */ }
+                status.textContent = t('Svaret ditt er sendt.');
+                // Figma I13 and I14: «Ja» is thanked at once; «Nei» asks what was missing, in a dialog
+                if (window.UiDialog) {
+                    stepThree();
+                    if (answer === 'nei') askWhatWasMissing(); else thank();
+                } else {
+                    stepTwo();
+                }
+            } catch (_) {
+                body.querySelector('.page-feedback__error').hidden = false;
+                button.removeAttribute('aria-busy');
+            }
+        }));
+    }
+    function thank() {
+        UiDialog.confirm({ title: t('Takk for svaret!'), text: t('Det hjelper oss å gjøre Skolekartet bedre for alle familier.') });
+    }
+
+    // «Hva manglet?» (Figma I14): a few ticks and an optional text, all optional; nothing about the child
+    function askWhatWasMissing() {
+        const reasons = ['Jeg fant ikke skolen jeg lette etter', 'Informasjonen var vanskelig å forstå',
+                         'Det manglet informasjon om tilrettelegging', 'Noe annet'];
+        const { dialog, close } = UiDialog.open({
+            title: t('Hva manglet?'),
+            html: `<p class="ds-paragraph">${t('Kryss av det som passer. Alt er valgfritt.')}</p>
+                <fieldset class="ui-choices"><legend class="ds-sr-only">${t('Hva manglet?')}</legend>
+                    ${reasons.map((reason, i) => `<label class="ui-choice ui-choice--check"><input type="checkbox" name="missing" value="${reason}" id="missing${i}">
+                        <span class="ui-choice__mark" aria-hidden="true"></span><span>${t(reason)}</span></label>`).join('')}
+                </fieldset>
+                <label class="ds-sr-only" for="missingText">${t('Skriv gjerne mer her (valgfritt)')}</label>
+                <textarea class="ds-input" id="missingText" rows="4" maxlength="1000" placeholder="${t('Skriv gjerne mer her (valgfritt)')}"></textarea>
+                <p class="ui-note">${t('Ikke skriv navn eller helseopplysninger om barnet.')}</p>
+                <div class="ds-alert" data-color="danger" data-size="sm" id="missingError" hidden><p class="ds-paragraph" data-size="sm">${t('Noe gikk galt. Prøv igjen senere.')}</p></div>`,
+            actions: [{ label: t('Send'), primary: true, keepOpen: true, onClick: async event => {
+                const button = event.currentTarget;
+                const picked = [...dialog.querySelectorAll('input[name="missing"]:checked')].map(input => input.value);
+                const text = dialog.querySelector('#missingText').value.trim();
+                if (picked.length || text) {
+                    button.setAttribute('aria-busy', 'true');
+                    try {
+                        await send([...picked, text].filter(Boolean).join(' · '));
+                    } catch (_) {
+                        dialog.querySelector('#missingError').hidden = false;
+                        button.removeAttribute('aria-busy');
+                        return;
+                    }
+                }
+                close();
+                thank();
+            } }]
+        });
+        dialog.querySelector('input').focus();
+    }
+
+    if (!placeInFooter()) requestAnimationFrame(placeInFooter);
     const legend = body.querySelector('legend');
     if (legend) legend.setAttribute('data-step-heading', '');
 })();

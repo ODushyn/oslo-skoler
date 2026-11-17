@@ -8,6 +8,10 @@ import school_locations
 import site_pages
 from nsr import NsrMatcher, load_cache
 import gsi
+import maalform
+
+# Målform from Nasjonalt skoleregister (maalform.py) as the filter's values
+MAALFORM_SLUG = {'Bokmål': 'bokmal', 'Nynorsk': 'nynorsk'}
 
 # ─────────────────────────────────────────────────────────────────────────────
 # UPDATE THIS SINGLE VALUE EACH YEAR when new data arrives.
@@ -141,7 +145,7 @@ def _gsi_national(cache):
 
 
 def prepare_school_data_for_export(schools, history=None, nsr_matcher=None, trivsel_cache=None, photo_cache=None,
-                                   mobbing_cache=None, gsi_cache=None):
+                                   mobbing_cache=None, gsi_cache=None, maalform_cache=None):
     """Prepare school data with all necessary computed fields for JSON export."""
     prepared_data = []
     if history is None:
@@ -206,6 +210,7 @@ def prepare_school_data_for_export(schools, history=None, nsr_matcher=None, triv
             'locationSource': school.get('location_source'),
             'eierform': register.get('eierform'),
             'profil': register.get('profil'),
+            'maalform': MAALFORM_SLUG.get((maalform_cache or {}).get(school.get('orgnr') or register.get('orgnr'))),
             'trivsel': trivsel,
             'mobbing': mobbing,
             'gsi': staff,
@@ -389,11 +394,14 @@ def create_norway_schools_map(input_files=None,
     mobbing_cache = elevundersokelsen.load_mobbing()
     photo_cache = photos.load_cache()
     gsi_cache = gsi.load_cache()
+    maalform_cache = maalform.load_cache()
 
     prepared_schools = prepare_school_data_for_export(schools, history=history, nsr_matcher=nsr_matcher,
                                                       trivsel_cache=trivsel_cache, photo_cache=photo_cache,
-                                                      mobbing_cache=mobbing_cache, gsi_cache=gsi_cache)
+                                                      mobbing_cache=mobbing_cache, gsi_cache=gsi_cache,
+                                                      maalform_cache=maalform_cache)
     matched = sum(1 for s in prepared_schools if s['eierform'])
+    print(f"  - Målform for {sum(1 for s in prepared_schools if s['maalform'])} entries")
     print(f"  - Owner type found for {matched} of {len(prepared_schools)} entries")
     print(f"  - Trivsel for {sum(1 for s in prepared_schools if s['trivsel'])} entries, "
           f"mobbing for {sum(1 for s in prepared_schools if s['mobbing'])} entries, "

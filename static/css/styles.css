@@ -108,6 +108,30 @@
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* ══ Type scale: every font size on the site, in one place ═════════════════════════════════════════════
+   The sizes are Digdir Designsystemet's own tokens (body and heading font sizes), read here at the root of the
+   page. That fixes them: a part of the page with data-size="sm" no longer shrinks them, so the same name is the
+   same size everywhere. Every font-size in this file uses one of these; no other sizes are used.
+     xs 14 px  sources, captions, small labels, badges
+     sm 16 px  secondary text: meta lines, notes, small buttons, list details
+     md 18 px  body text (the site's base size)
+     lg 21 px  large text: lead lines, values in tiles
+     headings 18 · 21 · 24 · 30 · 36 px (2xs · xs · sm · md · lg) */
+:root {
+    --sk-text-xs: var(--ds-body-xs-font-size);
+    --sk-text-sm: var(--ds-body-sm-font-size);
+    --sk-text-md: var(--ds-body-md-font-size);
+    --sk-text-lg: var(--ds-body-lg-font-size);
+    --sk-heading-2xs: var(--ds-heading-2xs-font-size);
+    --sk-heading-xs: var(--ds-heading-xs-font-size);
+    --sk-heading-sm: var(--ds-heading-sm-font-size);
+    --sk-heading-md: var(--ds-heading-md-font-size);
+    --sk-heading-lg: var(--ds-heading-lg-font-size);
+    /* Only for the big «404» */
+    --sk-display: clamp(3rem, 8vw, 4.5rem);
+}
+
+
 /* Designsystemet (Digdir) provides the component styles via the `ds` cascade layer.
    This file only holds map layout and small adjustments for using the components on top of a map. */
 
@@ -150,7 +174,7 @@ main:focus {
 }
 
 .leaflet-container {
-    font-size: 1rem;
+    font-size: var(--sk-text-sm);
     font-family: var(--ds-font-family), sans-serif;
 }
 
@@ -227,7 +251,7 @@ main:focus {
     background: var(--score-bg);
     color: var(--score-fg);
     font-family: var(--ds-font-family), sans-serif;
-    font-size: var(--ds-font-size-2, 0.875rem);
+    font-size: var(--sk-text-xs);
     font-weight: var(--ds-font-weight-semibold);
     box-shadow: 0 0 0 5px color-mix(in srgb, var(--score-bg) 35%, transparent);
 }
@@ -316,7 +340,7 @@ main:focus {
     align-items: center;
     gap: var(--ds-size-2);
     color: var(--ds-color-neutral-text-default);
-    font-size: var(--ds-heading-xs-font-size);
+    font-size: var(--sk-heading-xs);
     font-weight: var(--ds-font-weight-semibold);
     text-decoration: none;
 }
@@ -524,7 +548,7 @@ main:focus {
 .address-option__kind {
     margin-left: var(--ds-size-2);
     color: var(--ds-color-neutral-text-subtle);
-    font-size: var(--ds-font-size-1, 0.8125rem);
+    font-size: var(--sk-text-xs);
 }
 
 .search-bar__field .ds-validation-message {
@@ -813,7 +837,7 @@ main:focus {
     flex-wrap: wrap;
     column-gap: var(--ds-size-4);
     margin-top: 2px;
-    font-size: var(--ds-font-size-minus-1);
+    font-size: var(--sk-text-sm);
     color: var(--ds-color-neutral-text-subtle);
 }
 
@@ -834,7 +858,7 @@ main:focus {
 
 .school-card__meta,
 .school-card__scores {
-    font-size: var(--ds-font-size-minus-1);
+    font-size: var(--sk-text-sm);
     color: var(--ds-color-neutral-text-subtle);
 }
 
@@ -845,13 +869,13 @@ main:focus {
 }
 
 .school-card__avg-value {
-    font-size: var(--ds-heading-2xs-font-size);
+    font-size: var(--sk-heading-2xs);
     font-weight: var(--ds-font-weight-semibold);
     font-variant-numeric: tabular-nums;
 }
 
 .school-card__avg-label {
-    font-size: var(--ds-font-size-minus-1);
+    font-size: var(--sk-text-sm);
     color: var(--ds-color-neutral-text-subtle);
 }
 
@@ -942,7 +966,7 @@ main:focus {
 
 .search-result-kommune {
     display: block;
-    font-size: var(--ds-font-size-minus-1);
+    font-size: var(--sk-text-sm);
     color: var(--ds-color-neutral-text-subtle);
 }
 
@@ -1103,7 +1127,7 @@ main:focus {
 .popup-photo figcaption,
 .school-photo figcaption {
     margin-top: var(--ds-size-1);
-    font-size: var(--ds-font-size-1);
+    font-size: var(--sk-text-xs);
     color: var(--ds-color-neutral-text-subtle);
     overflow-wrap: anywhere;
 }
@@ -1179,7 +1203,7 @@ main:focus {
 
 .school-banner__kicker {
     margin: 0 0 var(--ds-size-2);
-    font-size: var(--ds-font-size-2);
+    font-size: var(--sk-text-xs);
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--ds-color-neutral-text-subtle);
@@ -1225,13 +1249,13 @@ main:focus {
 
 .school-banner__facts dt {
     margin-bottom: var(--ds-size-1);
-    font-size: var(--ds-font-size-3);
+    font-size: var(--sk-text-sm);
     font-weight: 600;
 }
 
 .school-banner__facts dd {
     margin: 0;
-    font-size: var(--ds-font-size-3);
+    font-size: var(--sk-text-sm);
     overflow-wrap: anywhere;
 }
 
@@ -1245,7 +1269,7 @@ main:focus {
     margin: 0;
     padding: 0;
     list-style: none;
-    font-size: var(--ds-font-size-3);
+    font-size: var(--sk-text-sm);
     overflow-wrap: anywhere;
 }
 
@@ -1270,7 +1294,7 @@ main:focus {
     border-radius: var(--ds-border-radius-lg);
     background: var(--ds-color-neutral-surface-default);
     color: var(--ds-color-neutral-text-subtle);
-    font-size: var(--ds-font-size-3);
+    font-size: var(--sk-text-sm);
 }
 
 .school-banner__placeholder .ds-icon {
@@ -1305,7 +1329,7 @@ main:focus {
 
 .carousel__slide figcaption {
     margin-top: var(--ds-size-2);
-    font-size: var(--ds-font-size-1);
+    font-size: var(--sk-text-xs);
     color: var(--ds-color-neutral-text-subtle);
     overflow-wrap: anywhere;
 }
@@ -1343,7 +1367,7 @@ main:focus {
     bottom: var(--ds-size-2);
     padding: 0 var(--ds-size-2);
     border-radius: 999px;
-    font-size: var(--ds-font-size-1);
+    font-size: var(--sk-text-xs);
     color: #fff;
     background: rgb(0 0 0 / 0.6);
 }
@@ -1361,7 +1385,7 @@ main:focus {
 
 .page__content h2.snarveier__label {
     margin: 0;
-    font-size: var(--ds-font-size-2);
+    font-size: var(--sk-text-xs);
     font-weight: var(--ds-font-weight-regular);
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -1392,7 +1416,7 @@ main:focus {
     display: inline-flex;
     align-items: center;
     gap: var(--ds-size-1);
-    font-size: var(--ds-font-size-4);
+    font-size: var(--sk-text-md);
     text-decoration: none;
     white-space: nowrap;
 }
@@ -1451,14 +1475,14 @@ main:focus {
     align-items: center;
     gap: var(--ds-size-2);
     margin: 0 0 var(--ds-size-2);
-    font-size: var(--ds-heading-md-font-size);
+    font-size: var(--sk-heading-md);
     font-weight: var(--ds-font-weight-semibold);
     line-height: 1.1;
 }
 
 .school-stat__value span:not(.color-dot) {
     white-space: nowrap;
-    font-size: var(--ds-font-size-4);
+    font-size: var(--sk-text-md);
     font-weight: var(--ds-font-weight-regular);
     color: var(--ds-color-neutral-text-subtle);
 }
@@ -1503,7 +1527,7 @@ button.school-stat.ds-card[aria-selected="true"] {
 }
 
 .school-stat__title {
-    font-size: var(--ds-font-size-4);
+    font-size: var(--sk-text-md);
     font-weight: var(--ds-font-weight-semibold);
 }
 
@@ -1512,11 +1536,11 @@ button.school-stat .school-stat__value {
 }
 
 .school-stat__text {
-    font-size: var(--ds-font-size-3);
+    font-size: var(--sk-text-sm);
 }
 
 .school-stat__source {
-    font-size: var(--ds-font-size-2);
+    font-size: var(--sk-text-xs);
     color: var(--ds-color-neutral-text-subtle);
 }
 
@@ -1579,13 +1603,13 @@ a.social-link:focus-visible {
 }
 
 .school-summary__facts dt {
-    font-size: var(--ds-font-size-2);
+    font-size: var(--sk-text-xs);
     color: var(--ds-color-neutral-text-subtle);
 }
 
 .school-summary__facts dd {
     margin: 0;
-    font-size: var(--ds-font-size-5);
+    font-size: var(--sk-text-lg);
     font-weight: var(--ds-font-weight-semibold);
 }
 
@@ -1614,7 +1638,7 @@ a.social-link:focus-visible {
 .school-stat__more {
     margin-top: auto;
     padding-top: var(--ds-size-2);
-    font-size: var(--ds-font-size-3);
+    font-size: var(--sk-text-sm);
     font-weight: var(--ds-font-weight-medium, 500);
     color: var(--ds-color-brand1-text-subtle);
     text-decoration: underline;
@@ -1679,7 +1703,7 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 }
 
 .stat-compare {
-    font-size: var(--ds-font-size-2);
+    font-size: var(--sk-text-xs);
     color: var(--ds-color-neutral-text-subtle);
 }
 
@@ -1852,7 +1876,7 @@ button.school-stat[aria-selected="true"] .school-stat__more {
     padding: var(--ds-size-2) 0 0;
     list-style: none;
     border-top: 1px solid var(--ds-color-neutral-border-subtle);
-    font-size: var(--ds-font-size-2);
+    font-size: var(--sk-text-xs);
     color: var(--ds-color-neutral-text-subtle);
 }
 
@@ -1971,7 +1995,7 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 @media (max-width: 400px) {
     .site-logo {
         gap: var(--ds-size-1);
-        font-size: var(--ds-font-size-3);
+        font-size: var(--sk-text-sm);
     }
 
     /* Room for the colour dots ("Om fargefordelingen") next to the other header buttons */
@@ -1985,7 +2009,7 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 
     /* The list title a step smaller, so it stays on one line next to the filter and sort */
     .results-head #resultsTitle {
-        font-size: var(--ds-font-size-2);
+        font-size: var(--sk-text-xs);
     }
 
     .site-logo__mark svg,
@@ -2128,7 +2152,7 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 }
 
 .key-figures__label {
-    font-size: var(--ds-font-size-2);
+    font-size: var(--sk-text-xs);
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--ds-color-neutral-text-subtle);
@@ -2136,14 +2160,14 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 
 .key-figures__value {
     margin: var(--ds-size-2) 0 var(--ds-size-2);
-    font-size: var(--ds-heading-lg-font-size, 2.5rem);
+    font-size: var(--sk-heading-lg);
     font-weight: var(--ds-font-weight-regular);
     line-height: 1.1;
 }
 
 .key-figures__text {
     margin: 0;
-    font-size: var(--ds-font-size-3);
+    font-size: var(--sk-text-sm);
     color: var(--ds-color-neutral-text-default);
 }
 
@@ -2222,7 +2246,7 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 
 .own-school__name {
     font-weight: var(--ds-font-weight-semibold);
-    font-size: var(--ds-font-size-4);
+    font-size: var(--sk-text-md);
 }
 
 .own-school__head {
@@ -2280,7 +2304,7 @@ button.school-stat[aria-selected="true"] .school-stat__more {
     display: inline-flex;
     align-items: center;
     gap: var(--ds-size-1);
-    font-size: var(--ds-font-size-2);
+    font-size: var(--sk-text-xs);
     font-weight: var(--ds-font-weight-semibold);
     color: var(--ds-color-text-default);
 }
@@ -2335,18 +2359,18 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 }
 
 .walk__approx {
-    font-size: var(--ds-heading-sm-font-size, 1.5rem);
+    font-size: var(--sk-heading-sm);
     font-weight: var(--ds-font-weight-semibold);
 }
 
 .walk__number {
-    font-size: clamp(3rem, 8vw, 4.5rem);
+    font-size: var(--sk-display);
     font-weight: var(--ds-font-weight-bold, 700);
     line-height: 1;
 }
 
 .walk__unit {
-    font-size: var(--ds-font-size-5);
+    font-size: var(--sk-text-lg);
     font-weight: var(--ds-font-weight-semibold);
     color: var(--ds-color-neutral-text-default);
 }
@@ -2368,7 +2392,7 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 }
 
 .walk__figure--far {
-    font-size: var(--ds-heading-md-font-size, 2rem);
+    font-size: var(--sk-heading-md);
     font-weight: var(--ds-font-weight-semibold);
 }
 
@@ -2597,17 +2621,17 @@ button.school-stat[aria-selected="true"] .school-stat__more {
 
 .map-walk__time {
     margin: 0;
-    font-size: var(--ds-font-size-5);
+    font-size: var(--sk-text-lg);
 }
 
 .map-walk__time strong {
-    font-size: var(--ds-heading-md-font-size, 2rem);
+    font-size: var(--sk-heading-md);
     line-height: 1;
 }
 
 .map-walk__from {
     margin: var(--ds-size-1) 0 var(--ds-size-3);
-    font-size: var(--ds-font-size-3);
+    font-size: var(--sk-text-sm);
     color: var(--ds-color-neutral-text-subtle);
     overflow-wrap: anywhere;
 }
@@ -2684,7 +2708,7 @@ a.icon-tile:focus-visible {
 }
 
 .icon-tile__label {
-    font-size: var(--ds-font-size-4);
+    font-size: var(--sk-text-md);
     font-weight: 500;
     overflow-wrap: anywhere;
 }
@@ -2694,7 +2718,7 @@ a.icon-tile .icon-tile__label {
 }
 
 .icon-tile__text {
-    font-size: var(--ds-font-size-3);
+    font-size: var(--sk-text-sm);
     color: var(--ds-color-neutral-text-subtle);
 }
 
@@ -2749,7 +2773,7 @@ a.icon-tile .icon-tile__label {
     display: flex;
     flex-wrap: wrap;
     gap: 0 var(--ds-size-3);
-    font-size: var(--ds-font-size-3);
+    font-size: var(--sk-text-sm);
     color: var(--ds-color-neutral-text-default);
 }
 
@@ -2769,7 +2793,7 @@ a.icon-tile .icon-tile__label {
     margin: 0 0 var(--ds-size-2);
     padding: 0;
     list-style: none;
-    font-size: var(--ds-font-size-3);
+    font-size: var(--sk-text-sm);
 }
 
 .dot-plot__legend li {
@@ -2809,11 +2833,11 @@ a.icon-tile .icon-tile__label {
 }
 
 .dot-plot__label {
-    font-size: var(--ds-font-size-3);
+    font-size: var(--sk-text-sm);
 }
 
 .dot-plot__value {
-    font-size: var(--ds-font-size-4);
+    font-size: var(--sk-text-md);
     font-weight: 600;
     text-align: right;
 }
@@ -2848,7 +2872,7 @@ a.icon-tile .icon-tile__label {
 .dot-plot__ticks {
     display: flex;
     justify-content: space-between;
-    font-size: var(--ds-font-size-2);
+    font-size: var(--sk-text-xs);
     color: var(--ds-color-neutral-text-subtle);
 }
 
@@ -2899,7 +2923,7 @@ a.icon-tile .icon-tile__label {
 }
 
 .nearby__meta {
-    font-size: var(--ds-font-size-3);
+    font-size: var(--sk-text-sm);
     color: var(--ds-color-neutral-text-subtle);
 }
 
@@ -2947,7 +2971,7 @@ body.has-page-feedback {
     background: var(--ds-color-brand1-base-default);
     color: var(--ds-color-brand1-base-contrast-default, #fff);
     font: inherit;
-    font-size: var(--ds-font-size-3);
+    font-size: var(--sk-text-sm);
     font-weight: 600;
     text-align: left;
     cursor: pointer;
@@ -3014,7 +3038,7 @@ body.has-page-feedback {
 
 .page-feedback__privacy {
     margin-right: auto;
-    font-size: var(--ds-font-size-minus-1);
+    font-size: var(--sk-text-sm);
 }
 
 /* Each step's heading gets focus so screen readers read it; it is not a control, so no focus ring */
@@ -3028,7 +3052,7 @@ body.has-page-feedback {
     }
 
     .page-feedback__toggle {
-        font-size: var(--ds-font-size-2);
+        font-size: var(--sk-text-xs);
     }
 }
 
@@ -3296,7 +3320,7 @@ body.has-page-feedback {
     border-radius: 999px;
     background: var(--ds-color-brand1-base-default);
     color: var(--ds-color-brand1-base-contrast-default);
-    font-size: var(--ds-font-size-1);
+    font-size: var(--sk-text-xs);
     font-weight: var(--ds-font-weight-semibold);
     line-height: 1;
 }
@@ -3314,7 +3338,7 @@ body.has-page-feedback {
     margin: 0;
     padding-inline-start: var(--ds-size-6);
     border-left: 1px solid var(--ds-color-neutral-border-default);
-    font-size: var(--ds-font-size-4);
+    font-size: var(--sk-text-md);
 }
 
 .snarveier__next > .ds-icon {
@@ -3386,7 +3410,7 @@ body.has-page-feedback {
 
 .mini-map .leaflet-control-attribution,
 #schoolMap .leaflet-control-attribution {
-    font-size: var(--ds-font-size-1);
+    font-size: var(--sk-text-xs);
     line-height: 1.3;
 }
 
@@ -3501,7 +3525,7 @@ body.has-page-feedback {
 
     /* Small enough that "Viser 10 av 2 564 skoler" fits on one line next to the filter and sort */
     .results-head #resultsTitle {
-        font-size: var(--ds-font-size-3);
+        font-size: var(--sk-text-sm);
     }
 
     .results-head .filter-toggle--sticky > span:not(.ds-badge) {
@@ -3518,17 +3542,19 @@ body.has-page-feedback {
     }
 }
 
-/* ── The map page (kart.html): the map fills the screen under the header ── */
-.map-page {
-    display: flex;
-    flex-direction: column;
-    height: 100dvh;
-}
-
+/* ── The map page (kart.html): a 16:9 map under the header, at most 70 % of the screen's height (so the page
+   is seen to go on) and at least 28rem (room for the search and the column of eight tools); the footer under it ── */
 .map-page__main {
     position: relative;
-    flex: 1;
-    min-height: 0;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    max-height: 70vh;
+    min-height: 28rem;
+}
+
+/* Phones: 16:9 would be a strip; 70 % of the screen instead */
+@media (max-width: 40rem) {
+    .map-page__main { aspect-ratio: auto; height: 75vh; min-height: 34rem; }
 }
 
 .map-page__map {
@@ -3599,7 +3625,7 @@ body.has-page-feedback {
 
 .map-search__item span {
     color: var(--ds-color-neutral-text-subtle);
-    font-size: var(--ds-font-size-2);
+    font-size: var(--sk-text-xs);
 }
 
 .map-search__item .ds-icon {
@@ -3728,7 +3754,7 @@ body.has-page-feedback {
 }
 
 .map-hint__result {
-    font-size: var(--ds-font-size-5);
+    font-size: var(--sk-text-lg);
     font-weight: var(--ds-font-weight-semibold);
 }
 
@@ -3750,7 +3776,7 @@ body.has-page-feedback {
     background: none;
     box-shadow: none;
     color: #3b4a5a;
-    font-size: 0.75rem;
+    font-size: var(--sk-text-xs);
     font-weight: var(--ds-font-weight-semibold);
     text-transform: uppercase;
     text-shadow: 0 0 3px #fff, 0 0 3px #fff;
@@ -3835,7 +3861,7 @@ body.has-page-feedback {
     margin: 0 0 var(--ds-size-4);
     padding: 0;
     list-style: none;
-    font-size: var(--ds-font-size-minus-1);
+    font-size: var(--sk-text-sm);
     color: var(--ds-color-neutral-text-subtle);
 }
 
@@ -3889,7 +3915,7 @@ body.has-page-feedback {
 .site-menu .site-menu__heading {
     margin: var(--ds-size-2) 0 0;
     padding-inline: var(--ds-size-3);
-    font-size: var(--ds-font-size-2);
+    font-size: var(--sk-text-xs);
     font-weight: var(--ds-font-weight-semibold);
     color: var(--ds-color-neutral-text-subtle);
 }
@@ -4145,3 +4171,1864 @@ body.has-page-feedback {
 .school-marker.score-high {
     box-shadow: 0 0 0 1px var(--ds-color-success-border-strong), var(--ds-shadow-sm);
 }
+
+/* ══ Header v2 and Footer v2 (Figma section 10), from feature/sok-rekkefolge ══════════════════════════════ */
+
+/* Header v2: the three menu groups as buttons that open a dropdown, with a chevron; the group of the page
+   you are on is underlined like a current link */
+.site-primary__menu {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-size-1);
+    border: 0;
+    background: none;
+    font: inherit;
+    cursor: pointer;
+}
+
+.site-primary__menu[data-current="true"] {
+    color: var(--ds-color-brand1-text-default);
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-decoration-color: var(--ds-color-brand1-base-default);
+}
+
+.site-primary__chevron {
+    width: 1.1em;
+    height: 1.1em;
+}
+
+
+/* From 1280 px the groups are in the middle of the header, so "Meny" is only for narrower screens */
+@media (min-width: 1280px) {
+    .site-nav .site-menu__button {
+        display: none;
+    }
+}
+
+/* "Visning" (theme): the label goes on narrow screens, like the other buttons in the header */
+.display-button.ds-button {
+    gap: var(--ds-size-2);
+}
+
+
+/* Footer v2: «Fant du det du lette etter?» as an open row at the top of the footer */
+.site-footer__feedback:empty {
+    display: none;
+}
+
+.page-feedback.page-feedback--inline {
+    position: static;
+    width: auto;
+    margin-bottom: var(--ds-size-6);
+    padding: var(--ds-size-3) var(--ds-size-5);
+    border: 1px solid var(--ds-color-neutral-border-subtle);
+    border-radius: var(--ds-border-radius-lg);
+    box-shadow: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ds-size-2) var(--ds-size-5);
+}
+
+.page-feedback--inline .page-feedback__toggle {
+    pointer-events: none;
+    background: none;
+    color: var(--ds-color-neutral-text-default);
+    padding: 0;
+}
+
+.page-feedback--inline .page-feedback__toggle .ds-icon {
+    display: none;
+}
+
+.page-feedback--inline .page-feedback__body {
+    padding: 0;
+}
+
+
+
+/* ── Header v2, measured on Figma section 10 (1440 px) ───────────────────
+   76 px high, 32 px at the sides, logo – 40 px – the three groups – the tools on the right */
+.site-header__lang-short { display: none; }
+.lang-switch__short { display: none; }
+
+@media (min-width: 1280px) {
+    .site-header > .site-container.site-header__inner {
+        max-width: none;
+        min-height: 76px;
+        padding: 0 32px;
+        gap: 40px;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+    }
+
+    .site-logo {
+        gap: 10px;
+        font-size: var(--sk-text-lg);
+        line-height: var(--ds-line-height-sm);
+    }
+
+    .site-logo__mark {
+        width: 44px;
+        height: 44px;
+    }
+
+    .site-primary {
+        position: static;
+        transform: none;
+        flex: 1;
+        gap: 8px;
+    }
+
+    .site-primary__menu {
+        position: relative;
+        padding: 12px 14px;
+        color: var(--ds-color-neutral-text-default);
+        text-decoration: none;
+    }
+
+    .site-primary__menu:hover {
+        text-decoration: none;
+        color: var(--ds-color-brand1-text-default);
+    }
+
+    /* The group of this page: a 4 px bar under the word */
+    .site-primary__menu[data-current="true"] {
+        color: var(--ds-color-neutral-text-default);
+        text-decoration: none;
+    }
+
+    .site-primary__menu[data-current="true"]::after {
+        content: "";
+        position: absolute;
+        left: 14px;
+        right: 14px;
+        bottom: 0;
+        height: 4px;
+        background: var(--ds-color-brand1-base-default);
+    }
+
+    .site-nav {
+        gap: 8px;
+        flex-wrap: nowrap;
+    }
+
+    .site-nav .saved-link.ds-button,
+    .site-nav .display-button.ds-button,
+    .site-nav .lang-switch.ds-button {
+        min-height: 48px;
+        padding: 0 14px;
+        gap: 8px;
+        border-radius: 6px;
+        color: var(--ds-color-brand1-text-subtle);
+    }
+
+    .site-nav .display-button.ds-button {
+        border: 1px solid var(--ds-color-brand1-text-subtle);
+        background: transparent;
+    }
+
+    .site-nav .lang-switch.ds-button {
+        gap: 6px;
+    }
+
+    .lang-switch__long { display: inline; }
+    .lang-switch__short { display: none; }
+
+    .saved-link__count {
+        min-width: auto;
+        height: 24px;
+        padding: 0 8px;
+        border-radius: 999px;
+        background: var(--ds-color-brand1-base-default);
+        color: var(--ds-color-brand1-base-contrast-default);
+        font-size: var(--sk-text-xs);
+        line-height: var(--ds-line-height-md);
+        font-weight: var(--ds-font-weight-semibold);
+    }
+}
+
+@media (max-width: 1279px) {
+    .lang-switch__long { display: none; }
+    .lang-switch__short { display: inline; }
+}
+
+/* Phones (Figma m0–m6): only the logo and «Meny»; saved schools and Visning are in the menu */
+@media (max-width: 640px) {
+    .site-nav .saved-link,
+    .site-nav .display-button {
+        display: none;
+    }
+}
+
+/* ── Footer v2, measured on Figma section 10 ──────────────────────────────
+   48 px above, 32 px at the sides; the feedback row, four columns 360 / 240 / 260 / 340 with 48 px between,
+   and «© 2026 Skolekartet» under a line */
+.site-footer {
+    padding: 48px 0 40px;
+    background: var(--ds-color-neutral-background-tinted);
+}
+
+.site-footer > .site-container {
+    max-width: none;
+    padding-inline: 32px;
+}
+
+.site-footer__feedback {
+    margin-bottom: 32px;
+}
+
+/* Figma's 360 / 240 / 260 / 340 px at 1440, shrinking in the same proportion on narrower screens (no sideways scroll) */
+.site-footer__grid {
+    grid-template-columns: minmax(0, 360fr) minmax(0, 240fr) minmax(0, 260fr) minmax(0, 340fr);
+    gap: 48px;
+}
+
+.site-footer .ds-heading[data-size="2xs"] {
+    margin: 0 0 12px;
+}
+
+.site-footer__grid > div .ds-paragraph {
+    margin: 0 0 12px;
+}
+
+.site-footer__grid .footer-status {
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.site-footer .footer-links {
+    gap: 14px;
+}
+
+.site-footer .footer-contact li {
+    gap: 10px;
+}
+
+.site-footer .footer-contact .ds-icon {
+    width: 22px;
+    height: 22px;
+}
+
+.site-footer__bottom {
+    margin-top: 32px;
+    padding-top: 20px;
+}
+
+
+@media (max-width: 1279px) {
+    .site-footer__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .site-footer > .site-container {
+        padding-inline: 16px;
+    }
+
+    .site-footer__grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/* «Fant du det du lette etter?» in the footer: white row, 20 / 24 px inside, 12 px corners */
+.page-feedback.page-feedback--inline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    margin: 0;
+    padding: 20px 24px;
+    border: 1px solid var(--ds-color-neutral-border-subtle);
+    border-radius: 12px;
+    background: var(--ds-color-neutral-background-default);
+}
+
+.page-feedback--inline .page-feedback__title {
+    margin: 0;
+}
+
+.page-feedback--inline .page-feedback__body {
+    display: contents;
+}
+
+.page-feedback__answers {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+}
+
+.page-feedback__answer.ds-button {
+    min-height: 44px;
+    padding: 0 20px;
+    border: 2px solid var(--ds-color-brand1-text-subtle);
+    border-radius: 6px;
+    background: var(--ds-color-neutral-background-default);
+    color: var(--ds-color-brand1-text-subtle);
+}
+
+.page-feedback__hint {
+    margin: 0;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.page-feedback--inline .page-feedback__form {
+    flex: 1 1 100%;
+}
+
+
+
+/* ── Header on phones, measured on Figma section 10.1 (m0, 390 px) ─────────
+   73 px with the line: the logo mark 40 px, «Skolekartet» 21 px, and «Meny» 101 × 48 with its word.
+   The languages are in «Meny» there (the last group) */
+.site-menu__lang {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .site-header > .site-container.site-header__inner {
+        min-height: 72px;
+        padding: 12px 16px;
+        gap: 10px;
+        flex-wrap: nowrap;
+    }
+
+    /* Logo text keeps main's size on phones */
+    .site-header .site-logo {
+        gap: 10px;
+    }
+
+    .site-header .site-logo__mark {
+        width: 40px;
+        height: 40px;
+    }
+
+    .site-header .site-logo__mark svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .site-nav .lang-switch.ds-button {
+        display: none;
+    }
+
+    .site-menu__lang {
+        display: block;
+    }
+
+    .site-nav .site-menu__button.ds-button {
+        min-height: 48px;
+        padding: 0 12px;
+        gap: 8px;
+        border: 2px solid var(--ds-color-brand1-text-subtle);
+        border-radius: 6px;
+        background: transparent;
+        color: var(--ds-color-brand1-text-subtle);
+    }
+
+    .site-nav .site-menu__button .ds-icon {
+        width: 22px;
+        height: 22px;
+    }
+
+    .site-nav .site-menu__button .site-nav__label {
+        position: static;
+        width: auto;
+        height: auto;
+        overflow: visible;
+        clip: auto;
+    }
+}
+
+
+
+/* ══ «Visning» (Figma D1): the panel, and what its choices do ═══════════════════════════════════════════════ */
+.display-dropdown.ds-dropdown,
+.display-dropdown {
+    box-sizing: border-box;
+    width: min(420px, calc(100vw - 16px));
+    max-height: calc(100vh - 96px);
+    overflow-y: auto;
+    padding: 28px;
+    border: 1px solid #bbbcbd;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.display-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.display-panel__head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+}
+
+.display-panel__title {
+    margin: 0;
+    font-size: var(--sk-text-lg);
+    line-height: var(--ds-line-height-sm);
+    font-weight: var(--ds-font-weight-medium);
+}
+
+.display-panel__rule { flex: 1; }
+
+.display-panel__close {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 8px;
+    border: 0;
+    border-radius: 6px;
+    background: none;
+    color: var(--ds-color-brand1-text-subtle);
+    font: inherit;
+    font-size: var(--sk-text-sm);
+    line-height: var(--ds-line-height-md);
+    cursor: pointer;
+}
+
+.display-panel__close .ds-icon { width: 22px; height: 22px; }
+
+.display-field { display: flex; flex-direction: column; gap: 10px; }
+
+.display-field__title {
+    margin: 0;
+    font-size: var(--sk-text-md);
+    line-height: var(--ds-line-height-md);
+    font-weight: var(--ds-font-weight-regular);
+}
+
+.seg {
+    display: flex;
+    padding: 2px;
+    border: 2px solid var(--ds-color-brand1-text-subtle);
+    border-radius: 8px;
+}
+
+.seg__item {
+    flex: 1 1 0;
+    min-height: 48px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: 5px;
+    background: #fff;
+    color: var(--ds-color-brand1-text-subtle);
+    font: inherit;
+    font-size: var(--sk-text-sm);
+    line-height: var(--ds-line-height-md);
+    cursor: pointer;
+}
+
+.seg__item[aria-checked="true"] {
+    background: var(--ds-color-brand1-base-default);
+    color: var(--ds-color-brand1-base-contrast-default);
+}
+
+.display-switch {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: var(--sk-text-md);
+    line-height: var(--ds-line-height-md);
+}
+
+.switch {
+    position: relative;
+    flex: none;
+    width: 56px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: #77797b;
+    cursor: pointer;
+}
+
+.switch[aria-checked="true"] { background: var(--ds-color-brand1-base-default); }
+
+.switch__knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform 0.15s ease;
+}
+
+.switch[aria-checked="true"] .switch__knob { transform: translateX(24px); }
+
+.display-panel__note {
+    margin: 0;
+    color: var(--ds-color-neutral-text-subtle);
+    font-size: var(--sk-text-sm);
+    line-height: var(--ds-line-height-md);
+}
+
+.display-panel button:focus-visible,
+.display-dropdown button:focus-visible {
+    outline: 3px solid var(--ds-color-focus-outer, #1e2b3c);
+    outline-offset: 2px;
+}
+
+/* On phones the panel is a sheet from the bottom of the screen (Figma J2) */
+@media (max-width: 640px) {
+    .display-dropdown.display-dropdown {
+        position: fixed;
+        inset: auto 0 0 0;
+        width: auto;
+        max-height: 88vh;
+        margin: 0;
+        padding: 20px 16px 24px;
+        border-radius: 16px 16px 0 0;
+    }
+}
+
+/* In «Meny» (phones) the panel is part of the menu */
+.site-menu > .display-panel { margin-top: 16px; padding-top: 16px; border-top: 1px solid #bbbcbd; }
+
+/* Text size: the whole page is enlarged, header, text and tables alike */
+html[data-text="stor"] body { zoom: 1.15; }
+html[data-text="ekstra"] body { zoom: 1.3; }
+
+/* Less movement and animation: what the visitor chose here, as the phone's own setting already does */
+html[data-motion="less"] *,
+html[data-motion="less"] *::before,
+html[data-motion="less"] *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+}
+
+/* High contrast: black text on white, dark borders and links that are underlined; focus is thicker */
+html[data-contrast="hoy"] {
+    --ds-color-neutral-text-default: #000;
+    --ds-color-neutral-text-subtle: #1e2b3c;
+    --ds-color-neutral-border-default: #1e2b3c;
+    --ds-color-neutral-border-subtle: #1e2b3c;
+    --ds-color-neutral-border-strong: #000;
+    --ds-color-brand1-text-subtle: #054a3a;
+    --ds-color-brand1-text-default: #054a3a;
+    --ds-color-brand1-base-default: #054a3a;
+    --ds-color-brand1-base-hover: #033b2e;
+    --ds-color-brand1-border-default: #054a3a;
+}
+
+html[data-contrast="hoy"] body { color: #000; background: #fff; }
+html[data-contrast="hoy"] a { text-decoration: underline; text-underline-offset: 3px; }
+html[data-contrast="hoy"] :focus-visible { outline-width: 4px !important; outline-color: #000 !important; }
+html[data-contrast="hoy"] :is(.notice, .seg, .display-dropdown) { border-color: #1e2b3c; }
+html[data-contrast="hoy"] :is(.display-panel__note) { color: #1e2b3c; }
+
+
+
+/* «Meny» never grows past the screen: it scrolls inside (phones) */
+@media (max-width: 1279px) {
+    #siteMenu { max-height: calc(100vh - 88px); overflow-y: auto; }
+}
+
+/* Figma J2: «Visning» is a sheet from the bottom of the screen on phones (the dropdown's own placement is overridden) */
+@media (max-width: 640px) {
+    #displayMenu.display-dropdown {
+        position: fixed !important;
+        inset: auto 0 0 0 !important;
+        transform: none !important;
+        width: auto !important;
+        max-height: 88vh;
+        margin: 0 !important;
+    }
+}
+
+/* ══ Start of the front page (Figma F0, from feature/sok-rekkefolge): «Slik leser du fargene» and the «Kart» card ══ */
+.results[hidden],
+.start-hint[hidden] {
+    display: none;
+}
+
+.start-hint {
+    display: grid;
+    grid-template-columns: minmax(0, 900fr) minmax(0, 380fr);
+    align-items: start;
+    gap: 32px;
+    padding-block: 32px 48px;
+}
+
+.start-hint__title {
+    margin: 0;
+    font-size: var(--sk-text-lg);
+    line-height: var(--ds-line-height-sm);
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--ds-color-brand1-text-default);
+}
+
+.legend-box {
+    display: grid;
+    gap: 12px;
+    padding: 20px;
+    border-radius: 12px;
+    background: #f3f3f4;
+}
+
+.color-scale > * { margin: 0; }
+.color-scale__lead {
+    font-size: var(--sk-text-sm);
+    line-height: var(--ds-line-height-md);
+    color: var(--ds-color-neutral-text-subtle);
+}
+.color-scale__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 8px;
+    padding: 0;
+    list-style: none;
+}
+.color-scale__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 8px;
+    background: var(--ds-color-neutral-background-default);
+}
+.color-scale__list .color-dot {
+    flex: none;
+    width: 16px;
+    height: 16px;
+    margin: 4px 0 0;
+}
+.color-scale__text {
+    display: grid;
+    font-size: var(--sk-text-sm);
+    line-height: var(--ds-line-height-md);
+}
+.color-scale__text strong { font-weight: var(--ds-font-weight-semibold); }
+.color-scale__text span { color: var(--ds-color-neutral-text-subtle); }
+.color-scale__link { justify-self: start; font-size: var(--sk-text-sm); line-height: var(--ds-line-height-md); }
+
+.side-card.ds-card {
+    display: grid;
+    gap: 12px;
+    padding: 24px;
+    border: 1px solid var(--ds-color-neutral-border-subtle);
+    border-radius: 12px;
+}
+.side-card.ds-card > * { margin: 0; }
+.side-card__map-button {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: none;
+    cursor: pointer;
+}
+.side-card__map {
+    display: block;
+    width: 100%;
+    height: 240px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+.side-card--map .ds-paragraph {
+    color: var(--ds-color-neutral-text-subtle);
+}
+.side-card .side-card__secondary.ds-button {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 20px;
+    gap: 8px;
+    border: 2px solid var(--ds-color-brand1-text-subtle);
+    border-radius: 6px;
+}
+
+@media (max-width: 1023px) {
+    .start-hint { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+    .start-hint { gap: 12px; padding-block: 16px 32px; }
+    .start-hint__title { font-size: var(--sk-text-md); line-height: var(--ds-line-height-md); }
+    .color-scale__list { grid-template-columns: minmax(0, 1fr); }
+    .color-scale__list li { padding: 10px 12px; }
+}
+
+/* ══ Filter panel and dropdowns (Figma section 10, F1–F3, from feature/sok-rekkefolge): only the look of the
+   existing elements, no new filters ════════════════════════════════════════════════════════════════════════ */
+#filterPanel[open] { max-width: 600px; }
+/* ══ Filter panel (Figma 261:14730, made compact as 169:10891), in Designsystemet tokens ══════════════
+   Nothing is chosen from the start; a chosen pill is green with a tick. 14 px text in 36 px pills. */
+#filterPanel .filter-dialog__head { padding: var(--ds-size-4) var(--ds-size-6); }
+#filterPanel .filter-dialog__head .ds-heading { margin: 0; }
+#filterClose.ds-button { gap: var(--ds-size-1); color: var(--ds-color-brand1-text-subtle); }
+#filterPanel .filter-bar { gap: var(--ds-size-5); padding: var(--ds-size-4) var(--ds-size-6) var(--ds-size-6); }
+#filterPanel .filter-intro { margin: 0; color: var(--ds-color-neutral-text-subtle); }
+#filterPanel .filter-group--main { padding: 0; background: none; border-radius: 0; }
+#filterPanel .filter-legend {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-size-2);
+    margin: 0 0 var(--ds-size-2);
+    color: var(--ds-color-neutral-text-default);
+}
+
+#filterPanel .filter-checks__options { display: flex; flex-wrap: wrap; gap: var(--ds-size-2); }
+#filterPanel .filter-checks .filter-option[hidden] { display: none; }
+#filterPanel .filter-checks .filter-option {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--ds-size-9);
+    margin: 0;
+    padding: 0 var(--ds-size-3);
+    border: 1px solid var(--ds-color-neutral-border-default);
+    border-radius: var(--ds-border-radius-full);
+    background: var(--ds-color-neutral-background-default);
+    color: var(--ds-color-neutral-text-default);
+    cursor: pointer;
+}
+#filterPanel .filter-checks .filter-option > input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+#filterPanel .filter-checks .filter-option label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-size-1);
+    color: inherit;
+}
+#filterPanel .filter-checks .filter-option:hover { border-color: var(--ds-color-brand1-border-strong); }
+#filterPanel .filter-checks .filter-option:has(input:checked) {
+    border-color: var(--ds-color-brand1-base-default);
+    background: var(--ds-color-brand1-base-default);
+    color: var(--ds-color-brand1-base-contrast-default);
+}
+#filterPanel .filter-checks .filter-option:has(input:checked) label::before {
+    content: "";
+    width: 1.1em;
+    height: 1.1em;
+    flex: none;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.75a9.25 9.25 0 1 1 0 18.5 9.25 9.25 0 0 1 0-18.5Zm0 1.5a7.75 7.75 0 1 0 0 15.5 7.75 7.75 0 0 0 0-15.5Zm3.47 4.72a.75.75 0 0 1 1.06 1.06l-5.5 5.5a.75.75 0 0 1-1.06 0l-2.5-2.5a.75.75 0 1 1 1.06-1.06L10.5 13.94l4.97-4.97Z'/%3E%3C/svg%3E") center / contain no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.75a9.25 9.25 0 1 1 0 18.5 9.25 9.25 0 0 1 0-18.5Zm0 1.5a7.75 7.75 0 1 0 0 15.5 7.75 7.75 0 0 0 0-15.5Zm3.47 4.72a.75.75 0 0 1 1.06 1.06l-5.5 5.5a.75.75 0 0 1-1.06 0l-2.5-2.5a.75.75 0 1 1 1.06-1.06L10.5 13.94l4.97-4.97Z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+#filterPanel .filter-checks .filter-option:has(:focus-visible) { outline: 3px solid var(--ds-color-focus-outer); outline-offset: 2px; }
+#filterPanel .filter-checks .chip-icon { display: none; }
+
+/* The bottom row: «Nullstill», then «Vis N skoler» on the right */
+#filterPanel .filter-dialog__foot {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--ds-size-3);
+    padding: var(--ds-size-4) var(--ds-size-6);
+}
+#filterPanel #filterResetDialog { order: -1; }
+
+@media (max-width: 640px) {
+    #filterPanel .filter-dialog__head,
+    #filterPanel .filter-bar,
+    #filterPanel .filter-dialog__foot { padding-inline: var(--ds-size-4); }
+    #filterPanel #filterDone { flex: 1; }
+}
+
+/* Trinn under the search: 44 px buttons with 8 px corners; the chosen one green */
+.search-panel .level-switch {
+    margin: 16px 0 0;
+}
+
+.search-panel .level-switch__options {
+    gap: 10px;
+    margin: 0;
+}
+
+.search-panel .level-switch__label {
+    margin: 0;
+    font-size: var(--sk-text-sm);
+    line-height: var(--ds-line-height-md);
+    font-weight: var(--ds-font-weight-semibold);
+}
+
+.search-panel .level-switch .ds-chip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    box-sizing: border-box;
+    min-height: 44px;
+    padding: 0 16px;
+    border: 1.5px solid var(--ds-color-brand1-text-subtle);
+    border-radius: 8px;
+    background: var(--ds-color-neutral-background-default);
+    color: var(--ds-color-brand1-text-subtle);
+}
+
+.search-panel .level-switch .ds-chip > input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.search-panel .level-switch .ds-chip:has(input:checked) {
+    border-color: var(--ds-color-brand1-base-default);
+    background: var(--ds-color-brand1-base-default);
+    color: var(--ds-color-brand1-base-contrast-default);
+}
+
+.search-panel .level-switch .ds-chip:has(:focus-visible) {
+    outline: 3px solid var(--ds-color-focus-outer);
+    outline-offset: 2px;
+}
+
+/* Search suggestions (Figma 10.1, F1 «Forslag»): white, a shadow, rows 10 / 16 px inside */
+#addressResults {
+    padding: 8px 0;
+    border: 1px solid var(--ds-color-neutral-border-subtle);
+    border-radius: 8px;
+    background: var(--ds-color-neutral-background-default);
+    box-shadow: 0 6px 18px rgb(0 0 0 / 0.16);
+}
+#addressResults u-option {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--ds-size-3);
+    box-sizing: border-box;
+    min-height: 48px;
+    margin: 0;
+    padding: 10px 16px;
+    border-radius: 0;
+    font-size: var(--sk-text-sm);
+    line-height: var(--ds-line-height-md);
+}
+#addressResults u-option:is(:hover, [aria-selected="true"], :focus-visible) { background: var(--ds-color-brand1-background-tinted); }
+/* A school: the name, and the kommune and trinn on their own row under it */
+#addressResults .search-result-kommune { flex-basis: 100%; }
+#addressResults .search-result-name { font-weight: var(--ds-font-weight-medium); color: var(--ds-color-brand1-text-default); }
+#addressResults .search-result-kommune,
+#addressResults .address-option__kind { font-size: var(--sk-text-xs); line-height: var(--ds-line-height-md); color: var(--ds-color-neutral-text-subtle); }
+
+/* «Sorter» and the language menu: the same rows as the header's dropdowns */
+.sort-menu .sort-menu__item.ds-button,
+.lang-menu .lang-menu__item.ds-button { min-height: 44px; justify-content: flex-start; }
+@media (max-width: 640px) {
+    #sortMenu.sort-menu {
+        position: fixed !important;
+        inset: auto 0 0 0 !important;
+        transform: none !important;
+        width: auto !important;
+        margin: 0 !important;
+        padding: 20px 16px 24px;
+        border-radius: 16px 16px 0 0;
+    }
+    .sort-menu .sort-menu__item.ds-button { min-height: 52px; }
+}
+
+/* The search band's intro: what you can search for (under «Leter du etter en skole?») */
+.search-panel .search-panel__intro {
+    margin: 0 0 var(--ds-size-4);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+/* «Les mer om fargene» on the right, under the colours */
+.color-scale .color-scale__link { justify-self: end; }
+
+/* «Åpne stort kart …» in the Kart card: the card's text size (Designsystemet sm) */
+.side-card .side-card__link { font-size: var(--sk-text-sm); line-height: var(--ds-line-height-md); }
+
+/* ══ School card in the list (Figma 178:12363): the school type under the coloured icon on the left, and the
+   result's colour also on «Snitt» ═══════════════════════════════════════════════════════════════ */
+.school-card.ds-card {
+    align-items: start;
+    gap: var(--ds-size-3);
+}
+
+.school-card__type {
+    display: grid;
+    justify-items: center;
+    gap: 2px;
+    width: calc(var(--ds-size-1) * 21);
+    text-align: center;
+}
+
+.school-card__type-label {
+    font-size: var(--sk-text-xs);
+    line-height: var(--ds-line-height-md);
+    color: var(--ds-color-neutral-text-subtle);
+    hyphens: manual;
+}
+
+.school-card__stats {
+    align-items: center;
+    row-gap: var(--ds-size-1);
+}
+
+/* «Snitt 54,7 ↑»: green over the national average, orange or red under it, dashed with no results */
+.school-card__snitt {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3em;
+    padding: 1px var(--ds-size-2);
+    border: 1px solid transparent;
+    border-radius: var(--ds-border-radius-md);
+    white-space: nowrap;
+}
+
+.school-card__snitt .school-card__stat-value { color: inherit; }
+
+.score-badge--very-high,
+.score-badge--high {
+    background: var(--ds-color-success-surface-tinted);
+    color: var(--ds-color-success-text-default);
+}
+
+.score-badge--low {
+    background: var(--ds-color-warning-surface-tinted);
+    color: var(--ds-color-warning-text-default);
+}
+
+.score-badge--very-low {
+    background: var(--ds-color-danger-surface-tinted);
+    color: var(--ds-color-danger-text-default);
+}
+
+.score-badge--none {
+    border: 1px dashed var(--ds-color-neutral-border-default);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+/* ══ Search suggestions in groups (Figma 10.1, F1 «Forslag»): an icon and two lines per row, the group names in
+   small capitals, «Ingen treff» per group and a hint line at the bottom ═══════════════════════════════════ */
+#addressResults .search-option {
+    flex-wrap: nowrap;
+    gap: var(--ds-size-3);
+    min-height: calc(var(--ds-size-1) * 15);
+}
+
+#addressResults .search-option > svg {
+    flex-shrink: 0;
+    width: calc(var(--ds-size-1) * 5.5);
+    height: calc(var(--ds-size-1) * 5.5);
+    color: var(--ds-color-brand1-base-default);
+}
+
+#addressResults .search-option__text {
+    display: grid;
+    min-width: 0;
+}
+
+#addressResults .search-group {
+    margin: 0;
+    padding: var(--ds-size-3) var(--ds-size-4) var(--ds-size-1);
+    font-size: var(--sk-text-xs);
+    line-height: var(--ds-line-height-md);
+    font-weight: var(--ds-font-weight-semibold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+#addressResults .search-group__empty {
+    margin: 0;
+    padding: 0 var(--ds-size-4) var(--ds-size-2);
+    font-size: var(--sk-text-xs);
+    line-height: var(--ds-line-height-md);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+#addressResults .search-group__hint {
+    margin: var(--ds-size-2) 0 calc(var(--ds-size-2) * -1);
+    padding: var(--ds-size-3) var(--ds-size-4);
+    background: var(--ds-color-neutral-background-tinted);
+    font-size: var(--sk-text-xs);
+    line-height: var(--ds-line-height-md);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+/* The list column a little wider than main's 28rem, just so «Snitt 50,3 ↑  Trivsel 4,1 ↑  Mobbing 15,7 % ↑»
+   fits on one line; the map takes the rest */
+@media (min-width: 961px) {
+    .results-grid,
+    .saved-bar {
+        grid-template-columns: minmax(20rem, 34rem) minmax(0, 1fr);
+    }
+}
+
+/* The school type icon in the middle of the card's height */
+.school-card .school-card__type { align-self: center; }
+
+/* Filter pills: 16 px like the group names (main's 18 px checkbox text looked too big inside a pill). rem,
+   not the token: inside data-size="sm" the token is one step smaller. Everything else in the panel has
+   main's sizes (title 21, group names 16, link 16, buttons 18). */
+#filterPanel .filter-checks .filter-option,
+#filterPanel .filter-checks .filter-option .ds-label {
+    font-size: var(--sk-text-sm);
+    line-height: var(--ds-line-height-sm);
+}
+
+/* No gap between a group's name and its choices beyond the legend's own margin */
+#filterPanel .ds-fieldset > .filter-checks__options,
+#filterPanel .filter-group > select { margin-top: 0; }
+
+/* ══ The address's barneskole and ungdomsskole in one card (two rows, a line between them) ═════════════ */
+.own-schools__group.ds-card {
+    --dsc-card-padding: 0;
+    display: grid;
+    overflow: hidden;
+}
+
+.own-schools__group .own-school-item + .own-school-item {
+    border-top: 1px solid var(--ds-color-neutral-border-subtle);
+}
+
+/* The rows have no frame of their own; the picked one is blue across the card's width */
+.own-schools__group .own-school.ds-card {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+}
+
+.own-schools__group .own-school.ds-card:hover {
+    background: var(--ds-color-neutral-surface-hover);
+}
+
+.own-schools__group .own-school.ds-card[aria-current="true"] {
+    border: 0;
+    box-shadow: inset 4px 0 0 var(--ds-color-brand1-border-default);
+    background: var(--ds-color-brand1-surface-tinted);
+}
+
+.own-schools__group .own-school-item > .school-card__details {
+    margin-top: 0;
+    border: 0;
+    border-radius: 0;
+}
+
+/* «Om fargefordelingen» in the header: the same weight as the menus next to it */
+.site-header .site-primary__colors { font-weight: inherit; display: inline-flex; align-items: center; }
+
+/* ══ School cards: the name is the link to the school page; a pin next to the bookmark shows it on the map ══
+   The card itself does nothing on a click; each action has its own control. */
+/* The cards are not clickable themselves (only their name, pin and bookmark): no pointer, no hover frame */
+.school-card.ds-card,
+.own-school.ds-card { cursor: auto; }
+
+.school-card .school-card__name.ds-link,
+.own-school .own-school__name.ds-link {
+    justify-self: start;
+    color: var(--ds-color-neutral-text-default);
+    font-weight: var(--ds-font-weight-semibold);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+}
+
+.school-card .school-card__name.ds-link:hover,
+.own-school .own-school__name.ds-link:hover {
+    color: var(--ds-color-brand1-text-default);
+    text-decoration-thickness: 2px;
+}
+
+/* The pin left of the bookmark, the same size */
+.school-card__show.ds-button {
+    position: absolute;
+    top: var(--ds-size-2);
+    right: calc(var(--ds-size-2) + var(--ds-size-10));
+    color: var(--ds-color-brand1-text-subtle);
+}
+
+.school-card__show.ds-button .ds-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/* Room for both buttons next to the name and the line under it; the numbers below may use the full width */
+.school-list .school-card__body,
+.own-school__body { padding-right: 0; }
+.school-list .school-card__body > :not(.school-card__stats),
+.own-school__body > :not(.school-card__stats) { margin-inline-end: calc(var(--ds-size-8) + var(--ds-size-6)); }
+
+/* ══ School page (Figma 321:30266): «På denne siden» in a column that stays in view, the parts beside it,
+   the smaller parts folded under «Mer om skolen» ═══════════════════════════════════════════════════ */
+.school-page__layout { margin-top: var(--ds-size-6); }
+
+.page-toc__summary { list-style: none; cursor: pointer; }
+.page-toc__summary::-webkit-details-marker { display: none; }
+.page-toc__title {
+    margin: 0;
+    font-size: var(--sk-text-sm);
+    font-weight: var(--ds-font-weight-semibold);
+    line-height: var(--ds-line-height-md);
+}
+.page-toc__list {
+    display: grid;
+    gap: 2px;
+    margin: var(--ds-size-2) 0 0;
+    padding: 0;
+    list-style: none;
+}
+.page-toc__link {
+    display: block;
+    padding: var(--ds-size-2) var(--ds-size-3);
+    border-radius: var(--ds-border-radius-md);
+    border-inline-start: 3px solid transparent;
+    color: var(--ds-color-brand1-text-subtle);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+}
+.page-toc__link:hover { background: var(--ds-color-neutral-surface-hover); text-decoration-thickness: 2px; }
+.page-toc__link[aria-current] {
+    border-inline-start-color: var(--ds-color-brand1-base-default);
+    background: var(--ds-color-brand1-surface-tinted);
+    color: var(--ds-color-neutral-text-default);
+    font-weight: var(--ds-font-weight-semibold);
+    text-decoration: none;
+}
+.page-toc__link:focus-visible { outline: 3px solid var(--ds-color-focus-outer); outline-offset: 2px; }
+
+@media (min-width: 64rem) {
+    .school-page__layout {
+        display: grid;
+        grid-template-columns: 15.5rem minmax(0, 1fr);
+        gap: var(--ds-size-12);
+        align-items: start;
+    }
+    .page-toc {
+        position: sticky;
+        top: var(--ds-size-4);
+        padding: var(--ds-size-5);
+        border: 1px solid var(--ds-color-neutral-border-subtle);
+        border-radius: var(--ds-border-radius-lg);
+    }
+    .page-toc__summary { cursor: default; }
+    .school-layout-body-reset,
+    .school-page__layout > .school-page__body { max-width: none; margin-inline: 0; }
+    .school-page__layout .school-page__body > section:first-child > h2.ds-heading:first-child { margin-top: 0; }
+}
+
+/* Phones: a folded box at the top, with an arrow */
+@media (max-width: 63.99rem) {
+    .page-toc {
+        border: 1px solid var(--ds-color-neutral-border-subtle);
+        border-radius: var(--ds-border-radius-lg);
+    }
+    .page-toc__summary { display: flex; align-items: center; justify-content: space-between; padding: var(--ds-size-3) var(--ds-size-4); }
+    .page-toc__summary::after {
+        content: "";
+        width: 1.25rem;
+        height: 1.25rem;
+        background: currentColor;
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5.97 9.47a.75.75 0 0 1 1.06 0L12 14.44l4.97-4.97a.75.75 0 1 1 1.06 1.06l-5.5 5.5a.75.75 0 0 1-1.06 0l-5.5-5.5a.75.75 0 0 1 0-1.06Z'/%3E%3C/svg%3E") center / contain no-repeat;
+                mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5.97 9.47a.75.75 0 0 1 1.06 0L12 14.44l4.97-4.97a.75.75 0 1 1 1.06 1.06l-5.5 5.5a.75.75 0 0 1-1.06 0l-5.5-5.5a.75.75 0 0 1 0-1.06Z'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
+    .page-toc__details[open] .page-toc__summary::after { transform: rotate(180deg); }
+    .page-toc__list { margin: 0; padding: 0 var(--ds-size-2) var(--ds-size-3); }
+}
+
+/* «Mer om skolen»: Designsystemet Details in a row, each opens in place */
+.more-about__item.ds-details { scroll-margin-top: var(--ds-size-6); }
+.more-about__item.ds-details > summary { font-size: var(--sk-text-md); }
+.more-about__item.ds-details > :not(summary) { padding-block: var(--ds-size-2) var(--ds-size-4); }
+
+/* ══ Information pages (Figma 321:31557): breadcrumbs, the text, and «Relatert» beside it ═══════════════ */
+.page-crumbs { margin-bottom: var(--ds-size-5); font-size: var(--sk-text-xs); }
+.page-crumbs ol { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ds-size-1) var(--ds-size-2); margin: 0; padding: 0; list-style: none; }
+.page-crumbs li { display: inline-flex; align-items: center; gap: var(--ds-size-2); color: var(--ds-color-neutral-text-subtle); }
+.page-crumbs li + li::before { content: "›"; color: var(--ds-color-neutral-text-subtle); }
+.page-crumbs a[aria-current] { color: var(--ds-color-neutral-text-subtle); text-decoration: none; }
+
+.page-related {
+    padding: var(--ds-size-5);
+    border: 1px solid var(--ds-color-neutral-border-subtle);
+    border-radius: var(--ds-border-radius-lg);
+}
+.page-related__title { margin: 0 0 var(--ds-size-3); font-size: var(--sk-text-sm); font-weight: var(--ds-font-weight-semibold); }
+.page-related ul { display: grid; gap: var(--ds-size-3); margin: 0; padding: 0; list-style: none; }
+
+.page__container--related { max-width: 76rem; }
+@media (min-width: 64rem) {
+    .page__container--related {
+        display: grid;
+        grid-template-columns: minmax(0, 48rem) 16rem;
+        justify-content: space-between;
+        column-gap: var(--ds-size-12);
+        align-items: start;
+    }
+    .page__container--related > .page-crumbs { grid-column: 1 / -1; }
+    .page__container--related > .page-related { position: sticky; top: var(--ds-size-4); }
+}
+@media (max-width: 63.99rem) {
+    .page__container--related > .page-related { margin-top: var(--ds-size-8); }
+}
+
+/* Feedback form: a short hint under a label, the fields spaced as one column */
+.feedback-form { display: grid; gap: var(--ds-size-5); }
+.feedback-form .field-hint { margin: 0; color: var(--ds-color-neutral-text-subtle); }
+.feedback-form .ds-error-summary[hidden] { display: none; }
+.feedback-form #feedbackSubmitBtn { justify-self: start; }
+/* The form as wide as the text (Figma 321:34630); no space above the error summary's heading */
+.page__content .feedback-form { max-width: none; }
+.feedback-form .ds-error-summary > .ds-heading { margin-top: 0; }
+.feedback-form .ds-error-summary .ds-list { margin-bottom: 0; }
+/* Kommune pages have breadcrumbs: no «Tilbake» on top of them (one way back, as on the other pages) */
+.page__container:has(.breadcrumbs) > .page__back { display: none; }
+
+/* ══ School page head (Figma 261:14869): text on the left, photo on the right with its credit under it,
+   no grey box; the actions as a row of buttons ═══════════════════════════════════════════════════════ */
+.school-banner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 22rem);
+    padding: 0;
+    border-radius: 0;
+    background: none;
+}
+.school-banner__media { order: 2; }
+.school-banner__kicker { text-transform: none; letter-spacing: 0; font-size: var(--sk-text-sm); }
+.school-banner__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-size-3);
+    margin-top: var(--ds-size-5);
+    justify-content: flex-start;
+}
+@media (max-width: 47.99rem) {
+    .school-banner { grid-template-columns: minmax(0, 1fr); }
+    .school-banner__media { order: 0; }
+}
+
+/* ══ «Oppsummering»: a light green band with what is worth checking and the questions to ask ══════════ */
+.school-summary-band {
+    padding: var(--ds-size-6);
+    border-radius: var(--ds-border-radius-lg);
+    background: var(--ds-color-brand1-surface-tinted);
+}
+.page__content .school-page__body > .school-summary-band > h2.ds-heading:first-child { margin-top: 0; }
+.summary-grid { display: grid; gap: var(--ds-size-5); margin-top: var(--ds-size-4); }
+@media (min-width: 48rem) { .summary-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: start; } }
+.summary-facts { display: grid; gap: var(--ds-size-3); align-content: start; }
+.summary-fact {
+    display: flex;
+    gap: var(--ds-size-2);
+    align-items: flex-start;
+    margin: 0;
+    padding: var(--ds-size-3) var(--ds-size-4);
+    border-radius: var(--ds-border-radius-md);
+}
+.summary-fact .ds-icon { flex: none; width: 1.25rem; height: 1.25rem; margin-top: 0.15em; }
+.summary-fact--warning { background: var(--ds-color-warning-surface-tinted); color: var(--ds-color-warning-text-default); }
+.summary-questions.ds-card { --dsc-card-padding: var(--ds-size-5); display: grid; gap: var(--ds-size-3); }
+.summary-questions .ds-heading { margin: 0; }
+.summary-questions .ds-list { margin: 0; }
+.summary-questions__actions { display: flex; flex-wrap: wrap; gap: var(--ds-size-3); }
+.summary-questions__status:empty { display: none; }
+
+/* ══ The numbers as a table of rows that open: name | value | comparison in words ═══════════════════ */
+.stat-rows {
+    margin-top: var(--ds-size-4);
+    border: 1px solid var(--ds-color-neutral-border-subtle);
+    border-radius: var(--ds-border-radius-lg);
+    overflow: hidden;
+}
+.stat-rows > .stat-row.ds-details { border-radius: 0; }
+.stat-rows > .stat-row + .stat-row { border-top: 1px solid var(--ds-color-neutral-border-subtle); }
+.stat-row__line {
+    display: grid;
+    flex: 1;
+    grid-template-columns: minmax(9rem, 1fr) minmax(7rem, auto) minmax(0, 1.4fr);
+    align-items: center;
+    gap: var(--ds-size-4);
+    text-align: start;
+}
+.stat-row__title { font-weight: var(--ds-font-weight-semibold); }
+.stat-row__summary .school-stat__value { font-size: var(--sk-text-lg); font-weight: var(--ds-font-weight-semibold); white-space: nowrap; }
+.stat-row__summary .school-stat__value > span:not(.color-dot) { font-size: var(--sk-text-xs); font-weight: var(--ds-font-weight-regular); color: var(--ds-color-neutral-text-subtle); }
+.stat-row__words {
+    justify-self: start;
+    padding: 2px var(--ds-size-2);
+    border-radius: var(--ds-border-radius-md);
+    font-size: var(--sk-text-xs);
+}
+.stat-row__words--good { background: var(--ds-color-success-surface-tinted); color: var(--ds-color-success-text-default); }
+.stat-row__words--bad { background: var(--ds-color-warning-surface-tinted); color: var(--ds-color-warning-text-default); }
+.stat-row__words--neutral { background: var(--ds-color-neutral-surface-tinted); color: var(--ds-color-neutral-text-default); }
+.stat-row__body { display: grid; gap: var(--ds-size-2); }
+.stat-row__body > .school-stat__compare,
+.stat-row__body > .school-stat__text,
+.stat-row__body > .school-stat__source { display: block; color: var(--ds-color-neutral-text-subtle); font-size: var(--sk-text-xs); }
+.stat-row__body > .school-stat__compare { color: var(--ds-color-neutral-text-default); }
+.stat-row__body > .school-stat__compare > span + span::before { content: " · "; }
+.stat-row__body .stat-panel { margin-top: var(--ds-size-3); }
+@media (max-width: 40rem) {
+    .stat-row__line { grid-template-columns: minmax(0, 1fr) auto; }
+    .stat-row__line .stat-row__words { grid-column: 1 / -1; }
+}
+
+/* Printing the school page: no header, menus, map or buttons */
+@media print {
+    .site-header, .site-footer, .page-toc, .page-crumbs, .school-banner__actions, .school-map-wrap, .summary-questions__actions, #site-footer { display: none !important; }
+    .school-page__layout { display: block !important; }
+    details.ds-details > :not(summary) { display: block !important; }
+}
+/* «Lagre» is now the first button in the row, not a bookmark in the corner */
+.school-banner__actions .school-banner__save.ds-button { position: static; color: inherit; }
+.school-banner__actions .school-banner__save.ds-button[data-variant="primary"] { color: var(--ds-color-brand1-base-contrast-default); }
+.stat-fold.ds-details { margin-top: var(--ds-size-4); border: 1px solid var(--ds-color-neutral-border-subtle); border-radius: var(--ds-border-radius-lg); }
+.stat-fold.ds-details > summary { font-weight: var(--ds-font-weight-semibold); }
+
+/* ══ /kart search list, the same as the front page's (groups, icon and two lines per row, hint) ═══════ */
+.map-search__results.ds-card { padding: var(--ds-size-1) 0 0; overflow: hidden; }
+.map-search__row { display: flex !important; align-items: center; gap: var(--ds-size-3); min-height: calc(var(--ds-size-1) * 15); padding: var(--ds-size-2) var(--ds-size-4) !important; }
+.map-search__row > .ds-icon, .map-search__row > svg { flex: none; width: calc(var(--ds-size-1) * 5.5); height: calc(var(--ds-size-1) * 5.5); margin: 0 !important; color: var(--ds-color-brand1-base-default) !important; }
+.map-search__text { display: grid; min-width: 0; }
+.map-search__item .map-search__name { color: var(--ds-color-neutral-text-default); font-size: var(--sk-text-sm); }
+.map-search__item .map-search__sub { color: var(--ds-color-neutral-text-subtle); font-size: var(--sk-text-xs); }
+.map-search__group {
+    padding: var(--ds-size-3) var(--ds-size-4) var(--ds-size-1);
+    font-size: var(--sk-text-xs);
+    font-weight: var(--ds-font-weight-semibold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ds-color-neutral-text-subtle);
+}
+.map-search__results .map-search__empty { padding: 0 var(--ds-size-4) var(--ds-size-2); font-size: var(--sk-text-xs); }
+.map-search__hint {
+    margin-top: var(--ds-size-2);
+    padding: var(--ds-size-3) var(--ds-size-4);
+    background: var(--ds-color-neutral-background-tinted);
+    font-size: var(--sk-text-xs);
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+/* ══ «Kartlag» like the filter panel: the layers as pills in each group, a chosen one green with a tick;
+   the long kommune list folded once under «Grenser» (as Norgeskart and Geonorge keep layer names short) ══ */
+.map-layers.ds-card { width: min(24rem, calc(100% - 2 * var(--ds-size-3) - var(--ds-size-12) - var(--ds-size-2))); }
+#layersPanel .map-layers__group { display: flex; flex-wrap: wrap; gap: var(--ds-size-2); margin: 0 0 var(--ds-size-4); padding: 0; border: 0; }
+#layersPanel .map-layers__group > legend { flex-basis: 100%; margin-bottom: var(--ds-size-2); font-size: var(--sk-text-xs); font-weight: var(--ds-font-weight-semibold); }
+#layersPanel .map-layers__group > .ds-field {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--ds-size-9);
+    margin: 0;
+    padding: 0 var(--ds-size-3);
+    border: 1px solid var(--ds-color-neutral-border-default);
+    border-radius: var(--ds-border-radius-full);
+    background: var(--ds-color-neutral-background-default);
+    cursor: pointer;
+}
+#layersPanel .map-layers__group > .ds-field > input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+#layersPanel .map-layers__group > .ds-field .ds-label { display: inline-flex; align-items: center; gap: var(--ds-size-1); font-size: var(--sk-text-xs); line-height: var(--ds-line-height-sm); color: inherit; }
+#layersPanel .map-layers__group > .ds-field:hover { border-color: var(--ds-color-brand1-border-strong); }
+#layersPanel .map-layers__group > .ds-field:has(input:checked) {
+    border-color: var(--ds-color-brand1-base-default);
+    background: var(--ds-color-brand1-base-default);
+    color: var(--ds-color-brand1-base-contrast-default);
+}
+#layersPanel .map-layers__group > .ds-field:has(input:checked) .ds-label::before {
+    content: "";
+    width: 1.1em;
+    height: 1.1em;
+    flex: none;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.75a9.25 9.25 0 1 1 0 18.5 9.25 9.25 0 0 1 0-18.5Zm0 1.5a7.75 7.75 0 1 0 0 15.5 7.75 7.75 0 0 0 0-15.5Zm3.47 4.72a.75.75 0 0 1 1.06 1.06l-5.5 5.5a.75.75 0 0 1-1.06 0l-2.5-2.5a.75.75 0 1 1 1.06-1.06L10.5 13.94l4.97-4.97Z'/%3E%3C/svg%3E") center / contain no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.75a9.25 9.25 0 1 1 0 18.5 9.25 9.25 0 0 1 0-18.5Zm0 1.5a7.75 7.75 0 1 0 0 15.5 7.75 7.75 0 0 0 0-15.5Zm3.47 4.72a.75.75 0 0 1 1.06 1.06l-5.5 5.5a.75.75 0 0 1-1.06 0l-2.5-2.5a.75.75 0 1 1 1.06-1.06L10.5 13.94l4.97-4.97Z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+#layersPanel .map-layers__group > .ds-field:has(:focus-visible) { outline: 3px solid var(--ds-color-focus-outer); outline-offset: 2px; }
+#layersPanel .map-layers__icon .school-marker { width: 1.25rem; height: 1.25rem; }
+#layersPanel .map-layers__count { opacity: 0.8; font-size: var(--sk-text-xs); }
+#layersPanel .map-layers__count::before { content: "· "; }
+#layersPanel .map-layers__kommuner { margin: calc(var(--ds-size-2) * -1) 0 var(--ds-size-3); }
+#layersPanel .map-layers__kommuner > summary { font-size: var(--sk-text-xs); }
+#layersPanel .map-layers__kommuner .ds-paragraph { margin: 0; color: var(--ds-color-neutral-text-subtle); }
+
+/* "Fargene" on the maps (score-colors.js, addColorLegend): a button like "Kartlag" in the upper left
+   corner, and under it what the colours mean (Figma 166:10374) */
+.leaflet-control.color-legend {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--ds-size-2);
+    margin: var(--ds-size-3) 0 0 var(--ds-size-3);
+}
+
+.color-legend__toggle.ds-button {
+    font-size: var(--sk-text-md); /* as "Kartlag" (Leaflet sets its own smaller font) */
+    background: var(--ds-color-neutral-background-default);
+    box-shadow: 0 1px 4px rgb(0 0 0 / 20%);
+}
+
+.color-legend__toggle .score-toggle__dots .color-dot:last-child {
+    margin-inline-end: 0;
+}
+
+.color-legend__panel.ds-card {
+    box-sizing: border-box;
+    width: min(22rem, calc(100vw - 2 * var(--ds-size-3) - 2rem));
+    padding: var(--ds-size-4);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
+    cursor: auto;
+}
+
+.color-legend__panel[hidden] {
+    display: none;
+}
+
+.color-legend__panel .ds-paragraph {
+    margin: 0;
+}
+
+.color-legend__title {
+    font-weight: var(--ds-font-weight-semibold, 600);
+}
+
+.color-legend__lead {
+    margin-top: var(--ds-size-1) !important;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.color-legend__scale {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--ds-size-1);
+    margin: var(--ds-size-3) 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--sk-text-xs);
+    line-height: 1.3;
+}
+
+.color-legend__bar {
+    display: block;
+    height: 0.4rem;
+    margin-bottom: var(--ds-size-1);
+    border-radius: var(--ds-border-radius-full);
+    background: var(--score-bg);
+}
+
+.color-legend__range {
+    display: block;
+    color: var(--ds-color-neutral-text-subtle);
+}
+
+.color-legend__none {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-size-2);
+    margin-bottom: var(--ds-size-3) !important;
+}
+
+/* The logo's circle as a pie of the four score colours (the map markers' colours), like a small chart */
+.site-logo__mark {
+    background: conic-gradient(
+        var(--ds-color-success-base-default) 0 25%,
+        var(--ds-color-success-border-subtle) 0 50%,
+        var(--ds-color-warning-base-default) 0 75%,
+        var(--ds-color-danger-base-default) 0 100%);
+    color: #fff;
+}
+
+.site-logo__mark svg {
+    filter: drop-shadow(0 0 1px rgb(0 0 0 / 60%)) drop-shadow(0 1px 2px rgb(0 0 0 / 35%));
+}
+
+.leaflet-control.color-legend[hidden] {
+    display: none;
+}
+
+/* The krets lines in "Skolekrets": the same colour and dashes as on the map */
+.krets-legend__line {
+    flex: none;
+    width: 2rem;
+    height: 0.5rem;
+    stroke: var(--ds-color-brand1-base-default);
+    stroke-width: 2.5;
+    fill: none;
+}
+
+.krets-legend__list {
+    display: grid;
+    gap: var(--ds-size-2);
+    margin: var(--ds-size-3) 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--sk-text-xs);
+}
+
+.krets-legend__list li {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-size-2);
+}
+
+.color-legend--krets .color-legend__lead + .ds-link,
+.color-legend--krets .krets-legend__list + .color-legend__lead {
+    margin-bottom: var(--ds-size-3) !important;
+}
+
+/* The front page map's buttons (finder.js, addMapTools): the same column as on /kart, in Leaflet's lower
+   right corner above the credits */
+.leaflet-control.map-tools--results {
+    position: static;
+    margin: 0 var(--ds-size-3) var(--ds-size-3) 0;
+}
+
+/* Full-height split view (as the map searches on Finn and Airbnb): from the results down, the list and the
+   map fill the rest of the screen exactly. The list scrolls on its own, the map stays as it is, and the page
+   itself only scrolls to the footer. --results-top is where the grid starts on the page (finder.js,
+   fitResults). Phones keep the plain list. */
+@media (min-width: 961px) {
+    .results-grid {
+        height: max(30rem, calc(100dvh - var(--results-top, 0px) - var(--ds-size-6)));
+        align-items: stretch;
+    }
+
+    .results-grid > .results-list {
+        min-height: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        /* room for the focus rings and the cards' shadow, and for the scrollbar */
+        padding: 2px var(--ds-size-2) var(--ds-size-2) 2px;
+        scrollbar-gutter: stable;
+    }
+
+    .results-grid > .results-map {
+        position: relative;
+        top: auto;
+        height: auto;
+        min-height: 0;
+    }
+}
+
+/* ══ The saved schools compared (finder.js, renderCompare; Figma 321:38686 and 174:11826) ═══════════════ */
+.results-grid[hidden] { display: none; }
+
+.compare { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--ds-size-5); margin-bottom: var(--ds-size-6); }
+.compare[hidden], .compare [hidden] { display: none; }
+.compare__intro { margin: 0; max-width: 48rem; }
+.compare__actions { display: flex; flex-wrap: wrap; gap: var(--ds-size-2); }
+
+/* «Hva skiller dem?»: one card per measure, an icon in a circle, the measure, the answer, the numbers */
+.compare__diff .ds-heading { margin: 0 0 var(--ds-size-1); }
+.compare__diff > .ds-paragraph { margin: 0 0 var(--ds-size-3); color: var(--ds-color-neutral-text-subtle); }
+.compare__diff-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr));
+    gap: var(--ds-size-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.compare-diff.ds-card { display: flex; gap: var(--ds-size-3); padding: var(--ds-size-4); }
+.compare-diff__icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--ds-border-radius-full);
+    background: var(--ds-color-neutral-surface-tinted);
+    color: var(--ds-color-neutral-text-default);
+    font-weight: var(--ds-font-weight-semibold);
+}
+.compare-diff[data-tone="good"] .compare-diff__icon { background: var(--ds-color-success-surface-tinted); color: var(--ds-color-success-text-default); }
+.compare-diff[data-tone="warn"] .compare-diff__icon { background: var(--ds-color-warning-surface-tinted); color: var(--ds-color-warning-text-default); }
+.compare-diff__body { display: grid; gap: 2px; min-width: 0; }
+.compare-diff__title { font-size: var(--sk-text-xs); color: var(--ds-color-neutral-text-subtle); }
+.compare-diff__head { font-weight: var(--ds-font-weight-semibold); }
+.compare-diff__text { font-size: var(--sk-text-xs); color: var(--ds-color-neutral-text-subtle); }
+
+/* «Vis som: Tabell | Kort og kart» (Designsystemet's ToggleGroup) */
+.compare__view { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ds-size-3); }
+.compare__view-label { color: var(--ds-color-neutral-text-subtle); }
+
+/* The table: one row per school, one column per number; scrolls sideways on narrow screens */
+.compare__scroll {
+    position: relative; /* keeps the screen reader texts in the headings inside the scrolling box */
+    overflow-x: auto;
+    border: 1px solid var(--ds-color-neutral-border-subtle);
+    border-radius: var(--ds-border-radius-lg);
+}
+.compare-table.ds-table { width: 100%; min-width: 40rem; margin: 0; }
+.compare-table th, .compare-table td { vertical-align: top; }
+.compare-table thead th { white-space: nowrap; }
+.compare-table thead th[aria-sort="ascending"] button,
+.compare-table thead th[aria-sort="descending"] button { color: var(--ds-color-brand1-text-default); }
+.compare-table tbody th { font-weight: inherit; text-align: start; }
+.compare-table__name { font-weight: var(--ds-font-weight-semibold); }
+.compare-table__meta { display: block; font-size: var(--sk-text-xs); color: var(--ds-color-neutral-text-subtle); }
+.compare-table__distance { white-space: nowrap; }
+.compare-table .compare-table__move { width: 1%; padding-inline-end: 0; }
+.compare-table__handle.ds-button { cursor: grab; touch-action: none; color: var(--ds-color-neutral-text-subtle); }
+.compare-table tr.is-dragging { background: var(--ds-color-brand1-surface-tinted); box-shadow: 0 2px 8px rgb(0 0 0 / 20%); }
+.compare-table tr.is-dragging .compare-table__handle.ds-button { cursor: grabbing; }
+.compare__note { margin: var(--ds-size-2) 0 0; color: var(--ds-color-neutral-text-subtle); }
+
+.compare-badge {
+    display: inline-flex;
+    gap: 0.3em;
+    padding: 1px var(--ds-size-2);
+    border: 1px solid transparent;
+    border-radius: var(--ds-border-radius-md);
+    white-space: nowrap;
+    background: var(--ds-color-neutral-surface-tinted);
+}
+.compare-badge[data-tone="good"] { background: var(--ds-color-success-surface-tinted); color: var(--ds-color-success-text-default); }
+.compare-badge[data-tone="warn"] { background: var(--ds-color-warning-surface-tinted); color: var(--ds-color-warning-text-default); }
+.compare-badge[data-tone="none"] { background: none; border: 1px dashed var(--ds-color-neutral-border-default); color: var(--ds-color-neutral-text-subtle); }
+
+/* On paper: the comparison alone (the table and «Hva skiller dem?»), without the buttons and the map */
+@media print {
+    body:has(#compare:not([hidden])) :is(.search-panel, .compare__actions, .compare__view, .compare__note, #savedToggle, .compare-table__move, .compare-table__save, .results-grid) { display: none !important; }
+    body:has(#compare:not([hidden])) .compare-table { min-width: 0; }
+}
+
+/* ══ School page top (Figma 321:39641): the address and phone in one line under the name; «Om skolen» on the
+   green card with the key figures, website, e-mail and social pages, the questions beside them ══════════ */
+.school-banner__contact { margin: var(--ds-size-3) 0 0; font-size: var(--sk-text-sm); }
+.school-banner__contact .ds-icon { width: 1em; height: 1em; margin-inline-start: 0.2em; vertical-align: -0.1em; }
+.school-summary-band .key-figures { margin-top: 0; }
+.school-summary-band .key-figures__grid { margin-bottom: var(--ds-size-4); }
+.school-about { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: var(--ds-size-4) var(--ds-size-5); margin: 0 0 var(--ds-size-4); }
+.school-about dt { margin-bottom: var(--ds-size-1); font-weight: var(--ds-font-weight-semibold); }
+.school-about dd { margin: 0; overflow-wrap: anywhere; }
+.school-about [hidden] { display: none; }
+
+/* ══ «Kort» (Figma 321:38751): the saved schools side by side, a coloured line on top in the result's colour,
+   the three measures as tinted tiles, a star for the clear best, «Fjern» in the corner ═══════════════════ */
+.compare__cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr));
+    gap: var(--ds-size-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.compare-card.ds-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-size-2);
+    padding: var(--ds-size-4);
+    border-top: 6px solid var(--score-bg, var(--ds-color-neutral-border-default));
+}
+.compare-card__head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--ds-size-2); }
+.compare-card__name { margin: 0; }
+.compare-card__meta { margin: 0 0 var(--ds-size-1); color: var(--ds-color-neutral-text-subtle); }
+.compare-remove.ds-button { flex: none; margin: calc(-1 * var(--ds-size-2)) calc(-1 * var(--ds-size-2)) 0 0; }
+.compare-tile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ds-size-3);
+    padding: var(--ds-size-2) var(--ds-size-3);
+    border: 1px solid transparent;
+    border-radius: var(--ds-border-radius-md);
+    background: var(--ds-color-neutral-surface-tinted);
+}
+.compare-tile[data-tone="good"] { background: var(--ds-color-success-surface-tinted); }
+.compare-tile[data-tone="warn"] { background: var(--ds-color-warning-surface-tinted); }
+.compare-tile[data-tone="none"] { background: none; border: 1px dashed var(--ds-color-neutral-border-default); }
+.compare-tile__text { display: grid; }
+.compare-tile__label { font-size: var(--sk-text-xs); color: var(--ds-color-neutral-text-subtle); }
+.compare-tile__words { font-size: var(--sk-text-xs); }
+.compare-tile__value { font-weight: var(--ds-font-weight-semibold); font-size: var(--sk-text-md); white-space: nowrap; }
+.compare-card__star {
+    align-self: flex-start;
+    padding: 2px var(--ds-size-2);
+    border-radius: var(--ds-border-radius-full);
+    background: var(--ds-color-brand1-base-default);
+    color: var(--ds-color-brand1-base-contrast-default);
+    font-size: var(--sk-text-xs);
+    font-weight: var(--ds-font-weight-semibold);
+}
+.compare-card__tag { align-self: flex-start; margin: 0; padding: 2px var(--ds-size-2); background: var(--ds-color-warning-surface-tinted); color: var(--ds-color-warning-text-default); font-size: var(--sk-text-xs); }
+.compare-card__more { margin-top: auto; padding-top: var(--ds-size-2); font-weight: var(--ds-font-weight-semibold); }
+.compare-card__more .ds-icon { width: 1em; height: 1em; margin-inline-start: 0.25em; vertical-align: -0.1em; }
+.compare-card--add {
+    display: grid;
+    place-content: center;
+    gap: var(--ds-size-1);
+    min-height: 12rem;
+    padding: var(--ds-size-4);
+    border: 1px dashed var(--ds-color-brand1-border-default);
+    border-radius: var(--ds-border-radius-lg);
+    text-align: center;
+}
+.compare-card__hint { font-size: var(--sk-text-xs); color: var(--ds-color-neutral-text-subtle); }
+.compare-remove .ds-icon { width: 1.1em; height: 1.1em; }
+@media print { body:has(#compare:not([hidden])) :is(.compare-remove, .compare-card--add) { display: none !important; } }
+
+/* «Spørsmål å stille skolen» on its own under «Om skolen» (it was half of «Oppsummering») */
+section.summary-questions { display: grid; gap: var(--ds-size-3); justify-items: start; }
+section.summary-questions .summary-fact { max-width: 48rem; }
+section.summary-questions .school-page__sources { margin: 0; }
+.school-summary-band .school-page__sources { margin: 0; }
+
+/* Website, e-mail and «Følg skolen» in the banner, under the address */
+/* E-post, Nettside and «Følg skolen» side by side in one row; they wrap only when the banner is too narrow */
+.school-about--banner { display: flex; flex-wrap: wrap; gap: var(--ds-size-4) var(--ds-size-6); margin: var(--ds-size-4) 0 0; }
+.school-about--banner dd { font-size: var(--sk-text-sm); }
+
+/* A map info button in the right corner: its panel opens under it, against the right edge */
+.leaflet-right .leaflet-control.color-legend { align-items: flex-end; margin: var(--ds-size-3) var(--ds-size-3) 0 0; }
+
+/* The cards' marks in the list too, in one line with the school's name */
+.compare-table__title { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ds-size-1) var(--ds-size-2); }
+.compare-table__mark { white-space: nowrap; }
+
+/* «Vis som» on the right; the cards' handle before the name, as in the list */
+.compare__view { justify-content: flex-end; }
+.compare-card__head .compare-table__handle.ds-button { flex: none; margin: calc(-1 * var(--ds-size-2)) 0 0 calc(-1 * var(--ds-size-2)); }
+.compare-card__head .compare-card__name { flex: 1; }
+.compare-card.is-dragging { box-shadow: 0 4px 16px rgb(0 0 0 / 25%); background: var(--ds-color-brand1-surface-tinted); }
+
+/* ══ The saved schools (the comparison) as one centred column, as in Figma 321:38684: the way back above
+   the title, «Hva skiller dem?» in three columns and the cards in four on wide screens ══════════════════ */
+.saved-bar.site-container,
+.compare.site-container { max-width: calc(72rem + 2 * var(--ds-size-6)); }
+.saved-bar { display: block; }
+.saved-bar__row { flex-direction: column; align-items: flex-start; gap: var(--ds-size-3); }
+.compare { margin-top: var(--ds-size-4); }
+@media (min-width: 64rem) {
+    .compare__diff-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .compare__cards { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+.saved-bar__back { display: inline-flex; align-items: center; gap: var(--ds-size-1); }
+.saved-bar__back .ds-icon { width: 1.1em; height: 1.1em; }
+.saved-bar .ds-heading[data-size="md"] { margin: 0; }
+
+/* A shared list (?skoler=): read only until «Lagre listen», so no handles, «Fjern» or «Legg til» */
+.compare--shared :is([data-move], [data-remove], .compare-card--add, #compareMoveHelp) { display: none !important; }
+.compare__shared.ds-alert { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--ds-size-3); }
+.compare__shared[hidden] { display: none; }
+.compare__shared .ds-paragraph { margin: 0; }
+
+/* ══ «Veiviser for foreldre» at the bottom of the front page (Figma 321:40019) ══════════════════════════ */
+.parents-guide { padding-block: var(--ds-size-4) var(--ds-size-6); }
+.parents-guide .ds-heading { margin: 0 0 var(--ds-size-3); }
+.parents-guide__lead { max-width: 48rem; margin: 0 0 var(--ds-size-5); }
+.parents-guide__list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--ds-size-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+/* Three cards in a row, as in the design */
+@media (min-width: 48rem) { .parents-guide__list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.parents-guide__card.ds-card { display: grid; gap: var(--ds-size-2); align-content: start; padding: var(--ds-size-5); }
+.parents-guide__link { display: inline-flex; align-items: center; gap: var(--ds-size-2); font-weight: var(--ds-font-weight-semibold); }
+.parents-guide__link .ds-icon { flex: none; width: 1.2em; height: 1.2em; }
+.parents-guide__card .ds-paragraph { margin: 0; color: var(--ds-color-neutral-text-subtle); }
+
+/* ══ Dialogs and confirmations (Figma section I; dialogs.js) ═════════════════════════════════════════════
+   A dialog: 620 px, 32 px padding, 16 px between the parts, the title and «✕ Lukk» on top, the buttons in a
+   column at full width, a grey note («Merknad») where there is one. A confirmation: 520 px at the top. */
+.ds-dialog.ui-dialog,
+.ui-confirm {
+    box-sizing: border-box;
+    width: min(38.75rem, calc(100vw - 2 * var(--ds-size-4)));
+    max-height: calc(100dvh - 2 * var(--ds-size-4));
+    overflow-y: auto;
+    padding: var(--ds-size-8);
+    border: 1px solid var(--ds-color-neutral-border-subtle);
+    border-radius: var(--ds-border-radius-xl, 16px);
+    background: var(--ds-color-neutral-background-default);
+    color: var(--ds-color-neutral-text-default);
+    box-shadow: 0 8px 32px rgb(0 0 0 / 18%);
+}
+.ds-dialog.ui-dialog::backdrop { background: rgb(0 0 0 / 45%); }
+.ui-dialog[open], .ui-confirm[open] { display: flex; flex-direction: column; gap: var(--ds-size-4); }
+.ui-dialog__head { display: flex; align-items: center; gap: var(--ds-size-3); }
+.ui-dialog__head .ds-heading,
+.ui-confirm .ds-heading { flex: 1; margin: 0; }
+.ui-dialog__close.ds-button { flex: none; }
+.ui-dialog__body { display: grid; gap: var(--ds-size-4); }
+.ui-dialog__body > *, .ui-confirm > .ds-paragraph { margin: 0; }
+.ui-dialog__actions { display: grid; gap: var(--ds-size-3); }
+.ui-dialog__action.ds-button { width: 100%; min-height: 3.25rem; justify-content: center; }
+/* «Merknad»: a short note on grey */
+.ui-note { margin: 0; padding: var(--ds-size-3) var(--ds-size-4); border-radius: var(--ds-border-radius-md); background: var(--ds-color-neutral-surface-tinted); font-size: var(--sk-text-xs); }
+/* A list of choices, one per row (radio buttons or links that look like them) */
+.ui-choices { display: grid; margin: 0; padding: 0; list-style: none; }
+.ui-choice { display: flex; align-items: center; gap: 0.875rem; min-height: 3.5rem; padding-inline-start: var(--ds-size-1); color: inherit; text-decoration: none; cursor: pointer; }
+.ui-choice__mark { flex: none; width: 1.5rem; height: 1.5rem; box-sizing: border-box; border: 2px solid var(--ds-color-neutral-text-default); border-radius: 50%; }
+.ui-choice[aria-current="true"] .ui-choice__mark,
+.ui-choice input:checked + .ui-choice__mark { border: 7px solid var(--ds-color-brand1-base-default); }
+.ui-choice[aria-current="true"], .ui-choice:has(input:checked) { font-weight: var(--ds-font-weight-semibold); }
+.ui-choice input { position: absolute; opacity: 0; pointer-events: none; }
+.ui-choice:has(input:focus-visible), a.ui-choice:focus-visible { outline: var(--ds-border-width-focus, 3px) solid var(--ds-color-focus-outer, #000); outline-offset: 2px; border-radius: var(--ds-border-radius-md); }
+.ui-choice--check .ui-choice__mark { border-radius: 4px; }
+.ui-choice--check input:checked + .ui-choice__mark { border: 2px solid var(--ds-color-brand1-base-default); background: var(--ds-color-brand1-base-default) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 80% no-repeat; }
+.ui-label { margin: 0; font-size: var(--sk-text-xs); font-weight: var(--ds-font-weight-semibold); letter-spacing: 0.04em; text-transform: uppercase; color: var(--ds-color-neutral-text-subtle); }
+.ui-big { margin: 0; font-size: var(--sk-heading-md); font-weight: var(--ds-font-weight-bold, 700); line-height: 1.45; }
+.ui-dialog .ds-input { width: 100%; box-sizing: border-box; }
+
+/* The confirmation box: at the top in the middle, over the page but not blocking it */
+.ui-confirm {
+    position: fixed;
+    inset: var(--ds-size-6) 0 auto;
+    z-index: 3000;
+    width: min(32.5rem, calc(100vw - 2 * var(--ds-size-4)));
+    margin: 0 auto;
+}
+.ui-confirm .ds-list { margin: 0; }
+fieldset.ui-choices { min-width: 0; margin: 0; padding: 0; border: 0; }
+
+/* «Vi fikk ikke bruke posisjonen din» under the search (Figma 332:29820) */
+.locate-alert.ds-alert { margin-top: var(--ds-size-3); }
+.locate-alert .ds-heading, .locate-alert .ds-paragraph { margin: 0 0 var(--ds-size-2); }
+.locate-alert__links { display: flex; flex-wrap: wrap; gap: var(--ds-size-2) var(--ds-size-6); margin-bottom: 0 !important; }
+.locate-alert__link.ds-link { padding: 0; border: 0; background: none; font: inherit; cursor: pointer; }
+
+/* ══ The map closed (the default on wide screens): the list takes the room, a small «Kart» card opens the map.
+   The map stays in the page out of sight at about its open size, as the list is built from what it shows. ══ */
+/* (with the card classes' weight, so .side-card's own display does not show it next to an open map) */
+.results-map-card.side-card.ds-card { display: none; }
+@media (min-width: 961px) {
+    .results-grid.is-map-closed { grid-template-columns: minmax(0, 1fr) 22rem; position: relative; }
+    .results-grid.is-map-closed > .results-map-card.side-card.ds-card { display: grid; align-self: start; position: sticky; top: var(--ds-size-4); }
+    /* With the map closed the list is not fitted to the screen: it is the page, and the page scrolls */
+    .results-grid.is-map-closed { height: auto; align-items: start; }
+    .results-grid.is-map-closed > .results-list { overflow: visible; }
+    .results-grid.is-map-closed > .results-map {
+        position: absolute;
+        top: 0;
+        left: -200vw;
+        width: 55vw;
+        height: calc(100dvh - var(--results-top, 0px) - var(--ds-size-6));
+        visibility: hidden;
+    }
+}
+.results-map-card .side-card__map-button { padding: 0; border: 0; background: none; cursor: pointer; }
+
+/* «Veiviser for foreldre» belongs to the start only: not under the search results or the saved schools */
+#main:not([data-mode="start"]) .parents-guide { display: none; }
+
+/* The logo: the backpack and the hat (barneskole and ungdomsskole) side by side in the coloured circle */
+.site-logo__mark { gap: 0; }
+.site-header .site-logo__mark .site-logo__icon,
+.site-logo__mark .site-logo__icon { width: 42%; height: 42%; }
+.site-logo__mark .site-logo__icon--backpack { margin-inline-end: -1px; }
+
+/* The map closed: the list and the «Kart» card (its «Vis kart» opens the map; › on the map folds it away) */
+.leaflet-control.map-collapse .ds-button { background: var(--ds-color-neutral-background-default); box-shadow: 0 1px 4px rgb(0 0 0 / 20%); }
+.results-map-card__head { display: flex; align-items: center; gap: var(--ds-size-3); }
+.results-map-card__head .ds-heading { margin: 0; }

@@ -153,6 +153,15 @@ function bindSchoolPopup(marker, levels) {
         maxWidth: 320
     });
 
+    // The list map is a narrow column: keep the popup inside it
+    marker.on('popupopen', (event) => {
+        const width = Math.max(200, Math.min(320, event.target._map.getSize().x - 80));
+        if (event.popup.options.maxWidth !== width) {
+            event.popup.options.maxWidth = width;
+            event.popup.update();
+        }
+    });
+
     // Add school data to marker for later retrieval
     marker.schoolData = school;
     marker.schoolLevels = levels;
@@ -163,50 +172,6 @@ function bindSchoolPopup(marker, levels) {
 
 // Popup content for a school (Designsystemet heading, tag, paragraphs); a school with both levels
 // gets one block per level, as the national tests are taken on 5. trinn and on ungdomstrinnet
-function createPopupContent(levels) {
-    const school = levels[0];
-    const combined = levels.length > 1;
-    const formatScore = (score) => (score === null || score === undefined) ? '*' : score;
-    const typeLabel = combined ? t('Barne- og ungdomsskole (1.–10. trinn)') : (SCHOOL_TYPE_LABEL[school.schoolType] || school.schoolType);
-
-    const levelHtml = level => {
-        const subjects = level.hasData
-            ? t('Engelsk {engelsk} · Lesing {lesing} · Regning {regning}', { engelsk: formatScore(level.engelsk), lesing: formatScore(level.lesing), regning: formatScore(level.regning) })
-            : 'Ingen resultater publisert';
-        // Snitt and Trivsel on one row; a missing value is a dash
-        const snitt = level.hasData
-            ? `<strong>Snitt</strong> ${formatDecimal(level.average)} <small>${t('({count} fag)', { count: level.validScoresCount })}</small>`
-            : '<strong>Snitt</strong> –';
-        const trivsel = level.trivsel
-            ? `<strong>Trivsel</strong> ${formatDecimal(level.trivsel.score)} <small>${t('({trinn}. trinn)', { trinn: level.trivsel.trinn })}</small>`
-            : '<strong>Trivsel</strong> –';
-        const mobbing = level.mobbing
-            ? `<strong>Mobbing</strong> ${formatPercent(level.mobbing.share)} <small>${t('(landet {value})', { value: formatPercent(level.mobbing.national) })}</small>`
-            : '<strong>Mobbing</strong> –';
-        return `${combined ? `<p class="ds-paragraph popup-level" data-size="xs"><span class="school-marker score-${scoreCategory(level.color)}" aria-hidden="true">${schoolTypeIcon(level.schoolType)}</span>${t(level.schoolType === 'barneskole' ? '5. trinn' : 'Ungdomstrinnet')}</p>` : ''}
-            <p class="ds-paragraph popup-subjects" data-size="sm">${subjects}</p>
-            <p class="ds-paragraph popup-stats" data-size="sm">${snitt} · ${trivsel}<br>${mobbing}</p>`;
-    };
-
-    const yearTag = window.SCHOOL_DATA_YEAR
-        ? `<span class="ds-tag" data-color="neutral" data-size="sm">${window.SCHOOL_DATA_YEAR}</span>`
-        : '';
-
-    return `
-        <div class="popup-school">
-            <div class="popup-header">
-                <h3 class="ds-heading popup-name" data-size="2xs">${escapeHtml(school.name)}</h3>
-                ${yearTag}
-            </div>
-            <p class="ds-paragraph popup-kommune" data-size="xs">${escapeHtml(school.kommune)} · ${typeLabel}${school.eierform === 'privat' ? ` · ${t('Privat')}` : ''}</p>
-            ${levels.map(levelHtml).join('')}
-            ${schoolPhotoHtml(school, 'popup-photo')}
-            <p class="ds-paragraph popup-more" data-size="sm">
-                <a class="ds-link popup-more__link" href="${schoolUrl(school)}">Les mer om skolen${icon('arrowRight')}</a>
-            </p>
-        </div>`;
-}
-
 // Find schools whose name (or kommune) matches the query, best matches first:
 // name starts with query, name contains query, then kommune matches.
 function findSchools(query) {
