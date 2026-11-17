@@ -234,7 +234,9 @@ and has no "Videre" for the same school. Missing numbers are shown as "–".
 GitHub Pages cannot send security headers, so every page has a `Content-Security-Policy` meta tag: scripts
 only from the site, cdn.jsdelivr.net and cdnjs.cloudflare.com; data only from the services the pages use
 (OpenFreeMap, Geonorge, NSR, Entur, Formspree) and the two CDNs (browser tools load the scripts' source maps
-from there); images also from Wikimedia. There are no inline scripts or
+from there); images also from Wikimedia. The home page also allows Google Analytics (scripts from
+www.googletagmanager.com, data and images to `*.google-analytics.com`, `*.analytics.google.com` and
+`*.googletagmanager.com`). There are no inline scripts or
 `on…=` attributes (JSON-LD blocks are data, not scripts). Every CDN file has an exact version and an
 `integrity` hash (`theme.js` sets the hash of the theme it swaps in). When a CDN version changes, compute the
 new hash, for example `curl -sL <url> | openssl dgst -sha384 -binary | openssl base64 -A`, and update the tags.
@@ -252,12 +254,16 @@ data cannot be loaded, a message with "Prøv igjen" shows; on the pages under `s
 the school comes back under it. `theme.js` sets `class="js"` on `<html>`, which hides that static text while
 scripts run.
 
-### Privacy: no analytics, no cookies
+### Privacy: Google Analytics and cookies
 
-Google Analytics (G-HHMNN59GDS) was removed from all pages in November 2026: it set cookies without
-consent. The site sets no cookies; language, theme, saved schools (localStorage) and the searched address
-for the walking time (sessionStorage, this tab only) stay in the browser. If statistics are needed again,
-add a consent banner first and say so on personvern.html.
+Google Analytics (G-HHMNN59GDS) is on the home page (`index.html`) again: it was removed in November 2026
+and restored on 16 November 2026, on the page where it was before. `index.html` loads gtag.js from
+www.googletagmanager.com and the setup from `static/js/analytics.js` (no inline script, see Security).
+GA sets the `_ga` and `_ga_HHMNN59GDS` cookies (2 years) and sends the visit, with the IP address, to
+Google. There is no consent banner. The other pages have no analytics. Apart from GA the site sets no
+cookies; language, theme, saved schools (localStorage) and the searched address for the walking time
+(sessionStorage, this tab only) stay in the browser. personvern.html describes GA and its cookies; keep it
+true when this changes.
 
 ### Themes (`static/js/theme.js`)
 
