@@ -492,12 +492,9 @@
                 document.getElementById('copyStatus').textContent = t('Kunne ikke kopiere. Marker spørsmålene og kopier selv.');
                 return;
             }
-            // Figma I10: «✓ 4 spørsmål er kopiert», with the questions themselves
-            const items = [...document.querySelectorAll('#summaryQuestions li')].map(li => `<li>${escapeHtml(li.textContent.trim())}</li>`);
-            UiDialog.confirm({
-                title: `✓ ${t('{count} spørsmål er kopiert', { count: items.length })}`,
-                html: `<ul class="ds-list">${items.join('')}</ul>`
-            });
+            // Figma I10: «✓ 4 spørsmål er kopiert». The questions are right above it on the page, so they are not repeated
+            const count = document.querySelectorAll('#summaryQuestions li').length;
+            UiDialog.confirm({ title: `✓ ${t('{count} spørsmål er kopiert', { count })}` });
         });
         // «Ring skolen» (Figma I8): the number large, «Ring nå» and «Kopier nummeret», so it also works on a PC
         // (on the page, as the banner's number is added later)

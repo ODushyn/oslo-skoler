@@ -909,24 +909,25 @@ const Finder = (() => {
         const url = listUrl();
         const names = compareEntries.map(entry => `– ${entry.school.name} (${entry.school.kommune})`).join('\n');
         const smsBody = `${t('Lagrede skoler på Skolekartet')}:\n${names}\n${url}`;
+        // Copying and the e-mail confirm in this same box (one window, not one more on top of it); printing is the
+        // button on the page itself
         const { dialog } = UiDialog.open({
             title: t('Del listen med familien'),
             html: `<p class="ds-paragraph">${t('Lenken viser de samme skolene. Adressen deres er ikke med.')}</p>
                 <label class="ds-sr-only" for="shareUrl">${t('Lenke til listen')}</label>
-                <input class="ds-input" id="shareUrl" type="text" readonly value="${escapeHtml(url)}">`,
+                <input class="ds-input" id="shareUrl" type="text" readonly value="${escapeHtml(url)}">
+                <p class="ds-paragraph ui-status" id="shareStatus" role="status"></p>`,
             actions: [
-                { label: t('Kopier lenke'), primary: true, onClick: async () => {
+                { label: t('Kopier lenke'), primary: true, keepOpen: true, onClick: async () => {
                     let ok = false;
                     try { await navigator.clipboard.writeText(url); ok = true; } catch (_) { /* no clipboard */ }
-                    if (ok) UiDialog.confirm({ title: `✓ ${t('Lenken er kopiert')}`, text: t('Lim den inn i en melding til familien.') });
+                    if (ok) dialog.querySelector('#shareStatus').textContent = `✓ ${t('Lenken er kopiert')}`;
                     else window.prompt(t('Kopier lenken til listen:'), url);
                 } },
                 { label: t('Send på SMS'), href: `sms:?&body=${encodeURIComponent(smsBody)}` },
-                { label: t('Send på e-post'), href: mailHref(), onClick: () => setTimeout(() => UiDialog.confirm({
-                    title: `✓ ${t('E-posten er klar')}`,
-                    text: t('Vi åpnet e-postprogrammet ditt med lenken og en kort forklaring. Du velger selv hvem den går til.')
-                }), 300) },
-                { label: t('Skriv ut eller lagre som PDF'), onClick: () => setTimeout(() => window.print(), 100) }
+                { label: t('Send på e-post'), href: mailHref(), keepOpen: true, onClick: () => {
+                    dialog.querySelector('#shareStatus').textContent = `✓ ${t('E-posten er klar')}`;
+                } }
             ]
         });
         // The whole link is selected when the field gets the focus, ready to copy by hand
@@ -1024,12 +1025,13 @@ const Finder = (() => {
         const moveLabel = t('Flytt {name}, plass {place} av {total}', { name: school.name, place: index + 1, total });
         // The same marks as on the cards: a star for the clear best, «Verdt å sjekke» for high mobbing
         const stars = compareCardStars[entry.key] || {};
-        const star = (on, label) => (on ? `<span class="compare-card__star compare-table__mark">★ ${t(label)}</span>` : '');
+        // The Digdir tag for the mark (the same on the cards and in the list)
+        const star = (on, label) => (on ? `<span class="ds-tag compare-table__mark" data-color="success" data-size="sm">★ ${t(label)}</span>` : '');
         const mob = mobbingOf(entry), national = mobbingNationalOf(entry);
         const worry = mob !== null && national && mob / national >= 1.5;
         // In one line with the school's name
         const marks = star(stars.prover, 'Best på prøver') + star(stars.trivsel, 'Best trivsel') + star(stars.mobbing, 'Minst mobbing')
-            + (worry ? `<span class="compare-card__tag compare-table__mark">${t('Verdt å sjekke: Mobbing')}</span>` : '');
+            + (worry ? `<span class="ds-tag compare-table__mark" data-color="warning" data-size="sm">${t('Verdt å sjekke: Mobbing')}</span>` : '');
         return `<tr data-key="${escapeHtml(entry.key)}">
                 <td class="compare-table__move"><button type="button" class="ds-button compare-table__handle" data-variant="tertiary" data-size="sm" data-icon="true"
                         data-move aria-label="${escapeHtml(moveLabel)}" aria-describedby="compareMoveHelp">${icon('grip')}</button></td>
@@ -1044,9 +1046,11 @@ const Finder = (() => {
     }
 
     // «Fjern ×»: takes the school (each of its saved levels) off the list
-    function removeButtonHtml(entry) {
-        return `<button type="button" class="ds-button compare-remove" data-variant="tertiary" data-size="sm" data-remove="${escapeHtml(entry.key)}"
-            aria-label="${escapeHtml(t('Fjern {name} fra listen', { name: entry.school.name }))}"><span>${t('Fjern')}</span>${icon('xMark')}</button>`;
+    // «Fjern» on the cards is the ✕ alone; the name is for screen readers (aria-label)
+    function removeButtonHtml(entry, iconOnly = false) {
+        const label = escapeHtml(t('Fjern {name} fra listen', { name: entry.school.name }));
+        return `<button type="button" class="ds-button compare-remove${iconOnly ? ' compare-remove--icon' : ''}" data-variant="tertiary" data-size="sm" data-remove="${escapeHtml(entry.key)}"
+            aria-label="${label}"${iconOnly ? ` title="${label}"` : ''}>${iconOnly ? '' : `<span>${t('Fjern')}</span>`}${icon('xMark')}</button>`;
     }
 
     // The best school on a measure gets a star, only where the lead is clear (the same limits as «Hva skiller dem?»)
@@ -1067,7 +1071,7 @@ const Finder = (() => {
     // One measure on a card: the name and the comparison in words on the left, the number on the right, on the
     // colour of how it compares (green better, orange worse, grey the same, dashed with no number)
     function compareTile(label, value, words, tone, star) {
-        return `${star ? `<span class="compare-card__star">★ ${star}</span>` : ''}
+        return `${star ? `<span class="ds-tag" data-color="success" data-size="sm">★ ${star}</span>` : ''}
             <div class="compare-tile" data-tone="${tone}">
                 <span class="compare-tile__text"><span class="compare-tile__label">${label}</span><span class="compare-tile__words">${words}</span></span>
                 <span class="compare-tile__value">${value}</span>
@@ -1113,11 +1117,11 @@ const Finder = (() => {
                     <button type="button" class="ds-button compare-table__handle" data-variant="tertiary" data-size="sm" data-icon="true"
                         data-move aria-label="${escapeHtml(t('Flytt {name}, plass {place} av {total}', { name: school.name, place: compareEntries.indexOf(entry) + 1, total: compareEntries.length }))}" aria-describedby="compareMoveHelp">${icon('grip')}</button>
                     <h3 class="ds-heading compare-card__name" data-size="2xs">${escapeHtml(school.name)}</h3>
-                    ${removeButtonHtml(entry)}
+                    ${removeButtonHtml(entry, true)}
                 </div>
                 <p class="ds-paragraph compare-card__meta" data-size="sm">${meta.join(' · ')}</p>
                 ${prove}${trivsel}${mobbing}
-                ${worry ? `<p class="compare-card__tag" data-tone="warn">${t('Verdt å sjekke: Mobbing')}</p>` : ''}
+                ${worry ? `<p class="ds-tag" data-color="warning" data-size="sm">${t('Verdt å sjekke: Mobbing')}</p>` : ''}
                 <a class="ds-link compare-card__more" href="${schoolUrl(levelsShown(entry)[0] || school)}">${t('Se hele skolesiden')}${icon('arrowRight')}</a>
             </li>`;
     }
@@ -1284,8 +1288,7 @@ const Finder = (() => {
                         setSavedOrder(order);
                         refreshList();
                         el('compareStatus').textContent = t('{name} er tilbake i listen', { name: entry.school.name });
-                    } },
-                    { label: t('OK') }
+                    } }
                 ]
             });
         };
@@ -1994,10 +1997,7 @@ const Finder = (() => {
                 </ul>
                 <p class="ui-label">${t('På iPhone (Safari)')}</p>
                 <ul class="ds-list"><li>${t('Innstillinger → Personvern og sikkerhet → Stedstjenester → Safari-nettsteder → «Når appen er i bruk»')}</li></ul>`,
-            actions: [
-                { label: t('Prøv igjen'), primary: true, onClick: () => setTimeout(locate, 50) },
-                { label: t('Skriv adressen i stedet'), onClick: () => setTimeout(() => el('addressSearch').focus(), 50) }
-            ]
+            // Only the steps and the close button: «Prøv igjen» and the address are on the page, under the search
         });
     }
 
@@ -2375,7 +2375,7 @@ const Finder = (() => {
         function cards(hits) {
             const rows = hits.map(card).join('');
             return hits.length > 1
-                ? `<div class="ds-card own-schools__group" data-variant="tinted" data-color="neutral">${rows}</div>`
+                ? `<div class="ds-card own-schools__group">${rows}</div>`
                 : rows;
         }
 
@@ -2384,16 +2384,16 @@ const Finder = (() => {
             // The krets school is not in our data (too small to have published results): name only
             if (!entry) return `
                 <div class="own-school-item">
-                    <div class="ds-card own-school" data-variant="tinted" data-color="neutral">
-                        <span class="own-school__head">
-                            <span class="school-marker score-none" aria-hidden="true">${schoolTypeIcon(k.level)}</span>
-                            <span class="own-school__body">
-                                <span class="own-school__name">${escapeHtml(k.school)}</span>
-                                <span class="own-school__meta">${[t(k.level === 'barneskole' ? 'Barneskole' : 'Ungdomsskole'),
-                                    t('({name} skolekrets)', { name: escapeHtml(k.name) }).replace(/^\(|\)$/g, '')].join(' · ')}</span>
-                                <span class="own-school__meta">${t('Skolen har ingen offentlige resultater og er derfor ikke med i lista.')}</span>
-                                ${splitNote(k)}
-                            </span>
+                    <div class="ds-card school-card own-school">
+                        <span class="school-card__type">
+                            <span class="school-card__badge" aria-hidden="true"><span class="school-marker score-none">${schoolTypeIcon(k.level)}</span></span>
+                            <span class="school-card__type-label">${t(k.level === 'barneskole' ? 'Barneskole' : 'Ungdomsskole')}</span>
+                        </span>
+                        <span class="school-card__body">
+                            <span class="school-card__name">${escapeHtml(k.school)}</span>
+                            <span class="school-card__meta">${t('({name} skolekrets)', { name: escapeHtml(k.name) }).replace(/^\(|\)$/g, '')}</span>
+                            <span class="school-card__meta">${t('Skolen har ingen offentlige resultater og er derfor ikke med i lista.')}</span>
+                            ${splitNote(k)}
                         </span>
                     </div>
                 </div>`;
@@ -2406,14 +2406,15 @@ const Finder = (() => {
             // bookmark sits next to it, and the school page is one click further, in the popup
             return `
                 <div class="own-school-item">
-                    <div class="ds-card own-school" data-variant="tinted" data-color="neutral" data-show="${escapeHtml(key)}">
-                        <span class="own-school__head">
-                            <span class="school-marker score-${scoreCategory(school.color)}" aria-hidden="true">${schoolTypeIcon(school.schoolType)}</span>
-                            <span class="own-school__body">
-                                <a class="ds-link own-school__name" href="${schoolUrl(school)}">${escapeHtml(school.name)}</a>
-                                <span class="own-school__meta">${meta.join(' · ')}</span>
-                                ${statsLine(school)}
-                            </span>
+                    <div class="ds-card school-card own-school" data-show="${escapeHtml(key)}">
+                        <span class="school-card__type">
+                            <span class="school-card__badge" aria-hidden="true"><span class="school-marker score-${scoreCategory(school.color)}">${schoolTypeIcon(school.schoolType)}</span></span>
+                            <span class="school-card__type-label">${escapeHtml(t(school.schoolType === 'barneskole' ? 'Barneskole' : 'Ungdomsskole'))}</span>
+                        </span>
+                        <span class="school-card__body">
+                            <a class="ds-link school-card__name" href="${schoolUrl(school)}">${escapeHtml(school.name)}</a>
+                            <span class="school-card__meta">${meta.join(' · ')}</span>
+                            ${statsLine(school)}
                         </span>
                     </div>
                     ${showButtonHtml(key, school.name)}

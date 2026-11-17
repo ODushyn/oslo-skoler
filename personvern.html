@@ -29,9 +29,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.24.0/dist/src/index.css" integrity="sha384-ZhYp/bciQIDqD2O/UMa1sn3kKt2en6Rgpl+xh8Qd247KA21gpykPrv0B9B7fr8ld" crossorigin="anonymous" />
 
 
-    <link rel="stylesheet" href="static/css/styles.css?v=286"/>
+    <link rel="stylesheet" href="static/css/styles.css?v=300"/>
 
-    <script src="static/js/i18n.js?v=136"></script>
+    <script src="static/js/i18n.js?v=138"></script>
     <script src="static/js/theme.js?v=11"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-web@1.24.0/dist/umd/index.js" integrity="sha384-JsXSA7qIz52VZCnbdLCUFHOiUb3/P2reRis4MLljUMynSFk1wFFiXyWPX4znqWiM" crossorigin="anonymous"></script>
 </head>
@@ -40,7 +40,7 @@
 
     <!-- Header (shared, see static/js/layout.js) -->
     <div id="site-header"></div>
-    <script src="static/js/layout.js?v=47"></script>
+    <script src="static/js/layout.js?v=49"></script>
 
     <main id="main" tabindex="-1" class="page">
         <div class="site-container page__container">
@@ -65,9 +65,11 @@
 
             <h2 class="ds-heading" data-size="xs">Besøksstatistikk (Google Analytics)</h2>
             <p class="ds-paragraph">Forsiden (kartet med søket) bruker Google Analytics (Google Ireland Limited) med målings-ID G-HHMNN59GDS for å telle besøk. Google Analytics setter informasjonskapsler i nettleseren din og sender opplysninger om besøket til Google: adressen til siden, nettleser, enhet, omtrentlig sted og IP-adressen din. Google kan overføre opplysningene til USA. Vi bruker tallene bare til å se hvor mange som bruker Skolekartet og hvordan. Du kan blokkere informasjonskapslene i nettleseren din, eller slette dem ved å slette nettstedsdata.</p>
+            <p class="ds-paragraph">Google Analytics brukes bare hvis du sier ja i banneret på forsiden. Uten ja lastes ingenting fra Google. Valget ditt lagres i nettleseren og spørres ikke igjen.</p>
+            <button type="button" class="ds-button" data-variant="secondary" data-size="sm" data-analyse-reset>Endre valg for statistikk</button>
 
             <h2 class="ds-heading" data-size="xs">Lagring på enheten din</h2>
-            <p class="ds-paragraph">Skolekartet lagrer det som trengs for funksjoner du selv bruker. I tillegg setter Google Analytics informasjonskapsler på forsiden. Du kan slette alt ved å slette nettstedsdata i nettleseren.</p>
+            <p class="ds-paragraph">Skolekartet lagrer det som trengs for funksjoner du selv bruker. I tillegg setter Google Analytics informasjonskapsler på forsiden, men bare hvis du har sagt ja. Du kan slette alt ved å slette nettstedsdata i nettleseren.</p>
             <div class="table-scroll">
                 <table class="ds-table sources-table" data-size="sm" data-border>
                     <thead><tr><th>Nøkkel og type</th><th>Formål</th><th>Lagringstid</th></tr></thead>

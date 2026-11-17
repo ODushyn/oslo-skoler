@@ -208,8 +208,8 @@
                 status.textContent = t('Svaret ditt er sendt.');
                 // Figma I13 and I14: «Ja» is thanked at once; «Nei» asks what was missing, in a dialog
                 if (window.UiDialog) {
-                    stepThree();
-                    if (answer === 'nei') askWhatWasMissing(); else thank();
+                    // «Nei» first asks what was missing; the thank-you comes once, after that (or at once for «Ja»)
+                    if (answer === 'nei') askWhatWasMissing(); else stepThree();
                 } else {
                     stepTwo();
                 }
@@ -219,10 +219,6 @@
             }
         }));
     }
-    function thank() {
-        UiDialog.confirm({ title: t('Takk for svaret!'), text: t('Det hjelper oss å gjøre Skolekartet bedre for alle familier.') });
-    }
-
     // «Hva manglet?» (Figma I14): a few ticks and an optional text, all optional; nothing about the child
     function askWhatWasMissing() {
         const reasons = ['Jeg fant ikke skolen jeg lette etter', 'Informasjonen var vanskelig å forstå',
@@ -253,7 +249,7 @@
                     }
                 }
                 close();
-                thank();
+                stepThree();
             } }]
         });
         dialog.querySelector('input').focus();
