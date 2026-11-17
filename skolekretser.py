@@ -252,8 +252,8 @@ def nordre_follo():
             'source': 'Nordre Follo kommune, «Barneskolekretser» og «Ungdomskolekretser» (kartet «Utdanning Nordre Follo»)',
             'sourceUrl': 'https://nordrefollo-kom.maps.arcgis.com/apps/instant/media/index.html?appid=304bf373976340e39ddba95d6acf867a',
             'updated': None,
-            'caveat': 'Kretsene følger forskrift om skoletilhørighet i Nordre Follo kommune fra 1. august 2024. '
-                      'Elever i Skotbu skolekrets går på Kråkstad skole fra 5. trinn. Det er kommunen som fatter vedtak om skoleplass.',
+            'caveat': 'Kretsene følger forskrift om skoletilhørighet fra 1. august 2024. '
+                      'Elever i Skotbu skolekrets går på Kråkstad skole fra 5. trinn.',
         }
     return result
 
@@ -271,15 +271,15 @@ OSLO_WFS = ('https://od2.pbe.oslo.kommune.no/cgi-bin/wms?map=SKOLER&SERVICE=WFS&
             '&REQUEST=GetFeature&TYPENAME=Skolekretser_f')
 OSLO_FILE = Path('source-data/oslo-skolekretser.geojson')
 GML = {'gml': 'http://www.opengis.net/gml', 'ms': 'http://mapserver.gis.umn.edu/mapserver'}
-OSLO_CAVEAT = ('Kretsgrensene er veiledende. Ungdomsskolekretsene er satt sammen av barneskolekretsene etter '
-               'Oslo kommunes oversikt over hvilken ungdomsskole elevene går videre til. For noen barneskoler '
-               'avhenger ungdomsskolen av adressen. Det er kommunen som fatter vedtak om skoleplass.')
+# Short: the popover already says that the boundaries are a guide and that the kommune decides (finder.js)
+OSLO_CAVEAT = ('Ungdomsskolekretsene er satt sammen av barneskolekretsene. '
+               'For noen barneskoler avhenger ungdomsskolen av adressen.')
 OSLO_SOURCE = {
     'levels': ['barneskole'],
     'source': 'Plan- og bygningsetaten, Oslo kommune, barneskolekretser (brukt med tillatelse)',
     'sourceUrl': 'https://www.oslo.kommune.no/skole-og-utdanning/skoleoversikt-og-skolekrets/skolekrets-barneskole/',
     'updated': None,
-    'caveat': 'Kretsgrensene er veiledende. Det er kommunen som fatter vedtak om skoleplass.',
+    'caveat': None,
 }
 
 

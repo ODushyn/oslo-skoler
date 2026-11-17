@@ -31,3 +31,89 @@ const BACKPACK_ICON = "<svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"tr
 function schoolTypeIcon(schoolType) {
     return schoolType === 'barneskole' ? BACKPACK_ICON : HAT_SCHOOL_ICON;
 }
+
+// A button on the map, like "Kartlag", that opens a short explanation under it (Figma 166:10374):
+// "Fargene" (what the marker colours mean) and "Skolekrets" (what the krets lines mean). Both in the
+// upper left corner of the map on the front page and on /kart.
+function addMapInfo(map, { className, buttonHtml, label, bodyHtml, position = 'topleft' }) {
+    const id = 'mapInfo' + Math.random().toString(36).slice(2, 7);
+    const control = L.control({ position });
+    control.onAdd = () => {
+        const box = L.DomUtil.create('div', `leaflet-control color-legend ${className}`);
+        box.innerHTML = `
+            <button type="button" class="ds-button color-legend__toggle" data-variant="secondary"
+                    aria-expanded="false" aria-controls="${id}">${buttonHtml}</button>
+            <section class="ds-card color-legend__panel" id="${id}" aria-label="${label}" hidden>${bodyHtml}</section>`;
+        const button = box.querySelector('button');
+        const panel = box.querySelector('section');
+        control.setOpen = open => {
+            panel.hidden = !open;
+            button.setAttribute('aria-expanded', String(open));
+        };
+        button.addEventListener('click', () => control.setOpen(panel.hidden));
+        box.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && !panel.hidden) {
+                control.setOpen(false);
+                button.focus();
+            }
+        });
+        // A click on the map closes it, as the layer list does
+        map.on('click', () => control.setOpen(false));
+        L.DomEvent.disableClickPropagation(box);
+        L.DomEvent.disableScrollPropagation(box);
+        return box;
+    };
+    control.addTo(map);
+    return control;
+}
+
+// "Fargene": the same scale as on "Om fargefordelingen" (the line between orange and light green is the
+// schools' actual average, 49,3)
+function addColorLegend(map, position = 'topleft') {
+    const say = typeof t === 'function' ? t : text => text;
+    const href = typeof I18N !== 'undefined' ? I18N.href('om-fargefordelingen') : 'om-fargefordelingen';
+    const dot = category => `<span class="color-dot score-${category}" aria-hidden="true"></span>`;
+    const steps = [
+        ['very-high', 'Godt over', '55 og over'],
+        ['high', 'Over', '49,3–55'],
+        ['low', 'Under', '45–49,3'],
+        ['very-low', 'Godt under', 'under 45']
+    ];
+    return addMapInfo(map, {
+        className: 'color-legend--colors',
+        position,
+        label: say('Fargene på kartet'),
+        buttonHtml: `<span class="score-toggle__dots" aria-hidden="true">${['very-high', 'high', 'low', 'very-low'].map(dot).join('')}</span><span>${say('Fargene')}</span>`,
+        bodyHtml: `
+            <p class="ds-paragraph color-legend__title" data-size="sm">${say('Fargene viser resultater på nasjonale prøver')}</p>
+            <p class="ds-paragraph color-legend__lead" data-size="sm">${say('Skolens snitt siste skoleår, sammenlignet med snittet for alle skoler (49,3)')}</p>
+            <ul class="color-legend__scale">${steps.map(([category, text, range]) => `
+                <li class="score-${category}"><span class="color-legend__bar" aria-hidden="true"></span>${say(text)}<span class="color-legend__range">(${say(range)})</span></li>`).join('')}
+            </ul>
+            <p class="ds-paragraph color-legend__none" data-size="sm">${dot('none')}${say('Grå: ingen resultater publisert')}</p>
+            <a class="ds-link" href="${href}">${say('Om fargefordelingen')}</a>`
+    });
+}
+
+// "Skolekrets": what the two krets lines mean (the same dashes as the polygons in finder.js and kart.js:
+// barneskolekrets "6 4", ungdomsskolekrets "2 6")
+function addKretsLegend(map, position = 'topleft') {
+    const say = typeof t === 'function' ? t : text => text;
+    const href = typeof I18N !== 'undefined' ? I18N.href('om-skolekrets') : 'om-skolekrets';
+    const line = dash => `<svg class="krets-legend__line" viewBox="0 0 40 8" aria-hidden="true" focusable="false"><line x1="1" y1="4" x2="39" y2="4" stroke-dasharray="${dash}"/></svg>`;
+    return addMapInfo(map, {
+        className: 'color-legend--krets',
+        position,
+        label: say('Skolekretser på kartet'),
+        buttonHtml: `${line('6 4')}<span>${say('Skolekrets')}</span>`,
+        bodyHtml: `
+            <p class="ds-paragraph color-legend__title" data-size="sm">${say('Linjene viser skolekretsen')}</p>
+            <p class="ds-paragraph color-legend__lead" data-size="sm">${say('Barn som bor innenfor linjen, sokner til skolen i den kretsen.')}</p>
+            <ul class="krets-legend__list">
+                <li>${line('6 4')}<span>${say('Barneskolekrets (1.–7. trinn)')}</span></li>
+                <li>${line('2 6')}<span>${say('Ungdomsskolekrets (8.–10. trinn)')}</span></li>
+            </ul>
+            <p class="ds-paragraph color-legend__lead" data-size="sm">${say('Grensene kan endre seg – sjekk med kommunen.')}</p>
+            <a class="ds-link" href="${href}">${say('Om skolekrets')}</a>`
+    });
+}

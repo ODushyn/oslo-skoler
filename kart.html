@@ -33,17 +33,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.css" integrity="sha384-uTttxo/aOKbdE5RlD/SPzSDoDmNvGlUYPjONi2MN/b7c9HPSvW07OIuyP7uL6jxK" crossorigin="anonymous"/>
 
     <!-- Designsystemet (Digdir): font, theme and component CSS -->
-    <link rel="stylesheet" id="dsTheme" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/theme/designsystemet.css" integrity="sha384-IT4guVJwkq1uL/GwNWhv2zk3uUZ18gRVe1qOVMWTTjaEkDut+i02gT9l/cnPrDSm" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.23.0/dist/src/index.css" integrity="sha384-CAE1Qe2Yp1euTdmOujy77VIT0GR/Yu8V+3taPP8Oo7GGV9hrQKrVigMB51hyUKYD" crossorigin="anonymous" />
+    <link rel="stylesheet" id="dsTheme" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.24.0/dist/theme/designsystemet.css" integrity="sha384-CaMwhtl194lwIHkKMzv8JlvkIRiAlHAofG5leTwGh0/Uy5Kirvvx5Rus42qj77J8" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-css@1.24.0/dist/src/index.css" integrity="sha384-ZhYp/bciQIDqD2O/UMa1sn3kKt2en6Rgpl+xh8Qd247KA21gpykPrv0B9B7fr8ld" crossorigin="anonymous" />
 
     <!-- Marker Cluster CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css" integrity="sha384-lPzjPsFQL6te2x+VxmV6q1DpRxpRk0tmnl2cpwAO5y04ESyc752tnEWPKDfl1olr" crossorigin="anonymous"/>
 
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="static/css/styles.css?v=210"/>
-    <script src="static/js/i18n.js?v=105"></script>
-    <script src="static/js/theme.js?v=9"></script>
+    <link rel="stylesheet" href="static/css/styles.css?v=286"/>
+    <script src="static/js/i18n.js?v=136"></script>
+    <script src="static/js/theme.js?v=11"></script>
 
     <!-- Leaflet JS -->
     <script defer src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js" integrity="sha384-okbbMvvx/qfQkmiQKfd5VifbKZ/W8p1qIsWvE1ROPUfHWsDcC8/BnHohF7vPg2T6" crossorigin="anonymous"></script>
@@ -54,7 +54,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/@maplibre/maplibre-gl-leaflet@0.1.4/leaflet-maplibre-gl.js" integrity="sha384-tXYNKOHx4T02jMP7YYCtBxPIv1B5gaA5mcVPBzqMp6d7VzWzxJgI2aWF/nJLrQdS" crossorigin="anonymous"></script>
 
     <!-- Designsystemet web: dialog, popover, field, suggestion and tooltip behaviour -->
-    <script defer src="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-web@1.23.0/dist/umd/index.js" integrity="sha384-gB8nQDA1vTT5N2EUrwILb4EmNquufjYcGqx5Cmce63dC5l/zyDRlxPjzv4/pG6mE" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@digdir/designsystemet-web@1.24.0/dist/umd/index.js" integrity="sha384-JsXSA7qIz52VZCnbdLCUFHOiUb3/P2reRis4MLljUMynSFk1wFFiXyWPX4znqWiM" crossorigin="anonymous"></script>
 
     <!-- Marker Cluster JS -->
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js" integrity="sha384-d3fZjp9NKg6g+z82JfePUaUc/O3DiJNfYUQh1lQ/+pV1TocwxX0ZU/+jVHjJ9dSU" crossorigin="anonymous"></script>
@@ -71,7 +71,7 @@
             <p class="ds-paragraph">Kartet og søket trenger JavaScript. Du finner alle skolene uten JavaScript på <a class="ds-link" href="skoler/">Skoler etter kommune</a>.</p>
         </div>
     </noscript>
-        <script src="static/js/layout.js?v=33"></script>
+        <script src="static/js/layout.js?v=47"></script>
 
     <!-- A map with layers (schools and boundaries) and tools to find your position, draw, measure distance and
          area, change the background map and zoom, as in the kommunes' own map services; everything here is
@@ -122,6 +122,11 @@
                 <ds-field class="ds-field"><input class="ds-input" type="checkbox" id="layer-grunnkretser" data-layer="grunnkretser" />
                     <label class="ds-label" data-weight="regular" for="layer-grunnkretser">Grunnkretser</label></ds-field>
             </fieldset>
+            <!-- Which kommuner have skolekretser: once, folded, instead of a long list in each layer's name -->
+            <details class="ds-details map-layers__kommuner" data-variant="default">
+                <summary>Hvilke kommuner har skolekretser?</summary>
+                <div><p class="ds-paragraph" data-size="xs" id="kretsKommuner"></p></div>
+            </details>
             <p class="ds-paragraph map-layers__note" data-size="xs">Videregående skoler har ikke skolekretser: elevene søker selv. Voksenopplæring har ikke et eget kartlag ennå. <a class="ds-link" href="om-skolekrets">Om skolekrets</a></p>
         </section>
 
@@ -149,8 +154,13 @@
         </div>
     </main>
 
-    <script defer src="static/js/score-colors.js?v=3"></script>
-    <script defer src="static/js/shared.js?v=29"></script>
-    <script defer src="static/js/kart.js?v=14"></script>
+    <!-- Footer (shared, see static/js/layout.js): the map is 16:9 now, so the page goes on under it -->
+    <div id="site-footer"><!-- Replaced by layout.js; without scripts (and for search engines) these links stay -->
+        <nav class="site-container static-footer" aria-label="Om tjenesten"><ul><li><a href="skoler/">Skoler etter kommune</a></li><li><a href="kart">Kart med kartlag og måling</a></li><li><a href="om-skolekartet">Om Skolekartet</a></li><li><a href="datakilder">Datakilder</a></li><li><a href="personvern">Personvern</a></li><li><a href="tilgjengelighet">Tilgjengelighetserklæring</a></li></ul></nav>
+    </div>
+
+    <script defer src="static/js/score-colors.js?v=10"></script>
+    <script defer src="static/js/shared.js?v=34"></script>
+    <script defer src="static/js/kart.js?v=22"></script>
 </body>
 </html>

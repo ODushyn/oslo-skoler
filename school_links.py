@@ -70,6 +70,8 @@ AKS_LINK = re.compile(r'<a[^>]+href="(/aktivitetsskolen/[^"#]+)"[^>]*>(.*?)</a>'
 DEVICES_FILE = Path('cached-data/school-devices.json')
 ANY_LINK = re.compile(r'<a[^>]+href="([^"#]+)"[^>]*>(.*?)</a>', re.S | re.I)
 DEVICE_WORDS = re.compile(r'l(æ|ae|a)ringsbrett|ipad|chromebook', re.I)
+# Oslo's shared page on blocking the internet on the pupils' tablets is not about the school's own læringsbrett
+NOT_DEVICE = re.compile(r'sperr|ekstern lenke|filter', re.I)
 
 
 def _get(url, accept='text/html', timeout=20):
@@ -743,6 +745,8 @@ def _device_links(orgnr, website):
         url = urllib.parse.urljoin(final_url, html.unescape(href))
         if not title or not url.startswith('http') or url in seen:
             continue
+        if NOT_DEVICE.search(title):
+            continue
         if DEVICE_WORDS.search(title) or DEVICE_WORDS.search(urllib.parse.unquote(urllib.parse.urlparse(url).path)):
             seen.add(url)
             links.append({'title': title, 'url': url})
@@ -771,7 +775,11 @@ def refresh_devices(path=DEVICES_FILE):
 def load_devices(path=DEVICES_FILE):
     if not path.exists():
         return {'fetched': None, 'schools': {}}
-    return json.loads(path.read_text(encoding='utf-8'))
+    data = json.loads(path.read_text(encoding='utf-8'))
+    # Also for links cached before NOT_DEVICE existed
+    schools = {orgnr: [link for link in links if not NOT_DEVICE.search(link['title'])] for orgnr, links in data['schools'].items()}
+    data['schools'] = {orgnr: links for orgnr, links in schools.items() if links}
+    return data
 
 
 if __name__ == '__main__':

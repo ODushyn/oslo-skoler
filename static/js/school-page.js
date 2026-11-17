@@ -138,7 +138,6 @@
         : Promise.resolve(null);
 
     const tags = [];
-    if (school.eierform) tags.push(school.eierform === 'privat' ? 'Privat' : 'Offentlig');
     if (school.profil && PROFILE_LABEL[school.profil]) tags.push(t(PROFILE_LABEL[school.profil]));
 
     const resultCard = school.hasData
@@ -188,78 +187,83 @@
                     <td class="num">${national === undefined || national === null ? '–' : formatDecimal(national)}</td></tr>`;
         }).join('');
 
-    // Shortcuts to each part of the page, as in the Røde Kors "snarveier" block
     const careLabel = isOslo ? 'AKS' : 'SFO';
     // Only what is about this school: AKS links from the school's website (Oslo) and the school's
     // groups for newcomers (Oslo). The general texts are on skolefritid and ny-i-norge.
     const showCare = hasBarnetrinn && isPublic && isOslo;
     const showNew = isPublic && isOslo;
+    // «På denne siden» (Figma 321:30266, as the content lists on Nav's and Digdir's pages): the main parts;
+    // the smaller ones are folded together under «Mer om skolen»
     const shortcuts = [
         ['om-skolen', 'Om skolen'],
-        ['resultater', 'Resultater'],
-        ['kart', 'Kart'],
-        ['aktiviteter', 'Anlegg'],
-        ['mat', 'Mat'],
-        showCare ? ['etter-skoletid', careLabel] : null,
-        showNew ? ['ny-i-norge', 'Ny i Norge'] : null
-    ].filter(Boolean);
+        ['resultater', 'Resultater, trivsel og mobbing'],
+        ['sporsmal', 'Spørsmål å stille skolen'],
+        ['kart', 'Kart og gangtid'],
+        ['naerheten', 'Andre skoler i nærheten'],
+        ['mer-om-skolen', 'Mer om skolen']
+    ];
 
     // Everything the top of the page needs is loaded first, and the page is drawn once, so the banner does not
     // grow when the address and links arrive (the loading placeholder holds the place until then)
     const [details, unit] = await Promise.all([detailsRequest, unitRequest]);
     root.removeAttribute('aria-busy');
+    const summary = summaryParts(details);
     root.innerHTML = `
         <section class="school-banner" aria-labelledby="schoolName">
-            ${saveButtonHtml(schoolKey(school), 'school-banner__save')}
             <div class="school-banner__media" id="schoolMedia">${mediaPlaceholder()}</div>
             <div class="school-banner__body">
-                <p class="school-banner__kicker">${escapeHtml(otherLevel ? t('Barne- og ungdomsskole (1.–10. trinn)') : typeLabel)} · <a class="ds-link" href="${I18N.href(`./?kommune=${encodeURIComponent(school.kommune)}`)}">${t('{kommune} kommune', { kommune: escapeHtml(school.kommune) })}</a></p>
+                <!-- Figma 261:14869: type · trinn · owner · kommune in one line over the name -->
+                <p class="school-banner__kicker">${[
+                    // «Barneskole», not «Barneskole (5. trinn)»: the trinn follow in this line
+                    escapeHtml(t(otherLevel ? 'Barne- og ungdomsskole' : school.schoolType === 'barneskole' ? 'Barneskole' : 'Ungdomsskole')),
+                    otherLevel ? '1.–10. trinn' : school.schoolType === 'barneskole' ? '1.–7. trinn' : '8.–10. trinn',
+                    school.eierform ? t(school.eierform === 'privat' ? 'Privat' : 'Offentlig') : null,
+                    `<a class="ds-link" href="${I18N.href(`./?kommune=${encodeURIComponent(school.kommune)}`)}">${t('{kommune} kommune', { kommune: escapeHtml(school.kommune) })}</a>`
+                ].filter(Boolean).join(' · ')}</p>
                 <h1 class="ds-heading" data-size="lg" id="schoolName">${escapeHtml(school.name)}</h1>
                 <ul class="school-banner__tags" id="schoolTags" aria-label="${t('Kjennetegn')}">
                     ${tags.map(tag => `<li><span class="ds-tag" data-color="neutral" data-size="sm">${tag}</span></li>`).join('')}
                 </ul>
-                <div class="school-banner__info">
-                    <!-- Contact (address, email, phone, each with a small button to act on it) on the left;
-                         website and "Følg skolen" under each other on the right -->
-                    <dl class="school-banner__facts">
-                        <div>
-                            <dt class="ds-sr-only">${t('Kontakt')}</dt>
-                            <dd><ul class="school-contact" id="bannerContactList">
-                                <li><span id="bannerAddress">${t('Henter adresse…')}</span></li>
-                            </ul></dd>
-                        </div>
-                        <div id="bannerContact" hidden>
-                            <dt>Nettside</dt>
-                            <dd id="bannerContactLinks"></dd>
-                        </div>
-                        <div id="bannerFollow" hidden>
-                            <dt>Følg skolen</dt>
-                            <dd><ul class="school-banner__links" id="bannerFollowLinks"></ul></dd>
-                        </div>
-                    </dl>
-                    <!-- Share and Google Maps, at the bottom right -->
-                    <div class="school-banner__actions">
-                        <button type="button" class="ds-button" data-variant="tertiary" data-size="sm" id="bannerShare">${icon('link')}<span>${t('Del')}</span></button>
-                        <a class="ds-button" data-variant="tertiary" data-size="sm" id="bannerGoogle" target="_blank" rel="noopener"
-                           href="${googleMapsUrl(`${school.name}, ${school.kommune}`)}">${icon('externalLink')}<span>Google Maps</span></a>
+                <!-- Figma 321:39641: the address (to the map) and the phone in one line under the name -->
+                <p class="school-banner__contact" id="bannerContactLine"><span id="bannerAddress">${t('Henter adresse…')}</span></p>
+                <!-- The website, e-mail and the school's own social pages, under the address -->
+                <dl class="school-about school-about--banner">
+                    <div id="bannerContact" hidden>
+                        <dt>${t('Nettside')}</dt>
+                        <dd id="bannerContactLinks"></dd>
                     </div>
+                    <div id="bannerEmail" hidden>
+                        <dt>${t('E-post')}</dt>
+                        <dd id="bannerEmailLink"></dd>
+                    </div>
+                    <div id="bannerFollow" hidden>
+                        <dt>${t('Følg skolen')}</dt>
+                        <dd><ul class="school-banner__links" id="bannerFollowLinks"></ul></dd>
+                    </div>
+                </dl>
+                <!-- What you can do with the page, as buttons in a row -->
+                <div class="school-banner__actions">
+                    ${bannerSaveHtml()}
+                    <button type="button" class="ds-button" data-variant="secondary" data-size="sm" id="bannerShare">${icon('link')}<span>${t('Del')}</span></button>
+                    <button type="button" class="ds-button" data-variant="secondary" data-size="sm" id="bannerPrint">${icon('printer')}<span>${t('Skriv ut')}</span></button>
                 </div>
             </div>
         </section>
 
-        <nav class="snarveier" aria-labelledby="snarveierLabel">
-            <h2 class="ds-sr-only" id="snarveierLabel">Snarveier</h2>
-            <ul class="snarveier__list">
-                ${shortcuts.map(([id, label]) => `<li><a class="ds-link" href="#${id}">${icon('arrowDown')}${t(label)}</a></li>`).join('')}
-            </ul>
+        <div class="school-page__layout">
+        <!-- Wide screens: a column that stays in view and marks the part you are reading; phones: a folded
+             list at the top -->
+        <nav class="page-toc" aria-labelledby="tocHeading">
+            <details class="page-toc__details" open>
+                <summary class="page-toc__summary"><h2 class="page-toc__title" id="tocHeading">${t('På denne siden')}</h2></summary>
+                <ul class="page-toc__list">
+                    ${shortcuts.map(([id, label]) => `<li><a class="page-toc__link" href="#${id}">${t(label)}</a></li>`).join('')}
+                </ul>
+            </details>
         </nav>
 
         <div class="school-page__body">
-            <section id="om-skolen" class="key-figures" aria-labelledby="omHeading">
-                <h2 class="ds-heading" data-size="sm" id="omHeading">Om skolen</h2>
-                <p class="ds-paragraph key-figures__lead">Nøkkeltall fra Nasjonalt skoleregister (Udir).</p>
-                <div id="schoolSummary"><p class="ds-paragraph" data-size="sm">Henter opplysninger fra Nasjonalt skoleregister…</p></div>
-            </section>
+            ${summary}
 
             <section id="resultater" aria-labelledby="resultaterHeading">
                 <h2 class="ds-heading" data-size="sm" id="resultaterHeading">Resultater, trivsel og mobbing</h2>
@@ -269,36 +273,32 @@
                         : 'https://www.udir.no/tall-og-forskning/statistikk/statistikk-grunnskole/nasjonale-prover-8.-og-9.-trinn/'}" target="_blank" rel="noopener">${t('Nasjonale prøver')}</a>`,
                     eu: `<a class="ds-link" href="${ELEVUNDERSOKELSEN_URL}" target="_blank" rel="noopener">Elevundersøkelsen</a>` })}</p>
                 ${otherLevel ? levelSwitchHtml() : ''}
-                <p class="ds-paragraph school-stats__hint" data-size="sm">Velg et kort for å se utviklingen over tid.</p>
-                <div class="school-stats" role="tablist" aria-label="Velg hva du vil se over tid">
-                    ${statTab('np', 'Nasjonale prøver', resultCard, true)}
-                    ${statTab('trivsel', 'Trivsel', trivselCard, false)}
-                    ${statTab('mobbing', 'Mobbing', mobbingCard, false)}
-                    ${statTab('laerere', 'Lærertetthet', staffCard, false)}
+                <!-- The numbers as a table of rows that open (Figma 261:14861): name, value and comparison in the
+                     row, the explanation, source and the years when it is opened -->
+                <div class="stat-rows">
+                    ${statRow('np', t('Nasjonale prøver'), resultCard, `
+                        ${npDotPlotHtml()}
+                        <h3 class="ds-heading" data-size="xs">Nasjonale prøver over tid</h3>
+                        <div class="table-scroll">
+                            <table class="ds-table school-history" data-size="sm" data-border>
+                                <thead><tr><th>År</th><th class="num">Engelsk</th><th class="num">Lesing</th><th class="num">Regning</th><th class="num">Snitt</th><th class="num">Hele landet</th></tr></thead>
+                                <tbody>${rows}</tbody>
+                            </table>
+                        </div>
+                        <p class="ds-paragraph table-caption" data-size="xs">${t('Skalapoeng, {type}. Landsgjennomsnittet var 50 i 2022. * betyr at resultatet ikke er publisert. Resultater for 2026–27 kommer når Udir publiserer dem.', { type: typeLabel.toLowerCase() })}</p>
+                        ${worseLegend()}`)}
+                    ${statRow('trivsel', t('Trivsel'), trivselCard, `<p class="ds-paragraph">${t('Henter tall…')}</p>`)}
+                    ${statRow('mobbing', t('Mobbing'), mobbingCard, `<p class="ds-paragraph">${t('Henter tall…')}</p>`)}
+                    ${statRow('laerere', t('Lærertetthet'), staffCard, `<p class="ds-paragraph">${t('Henter tall…')}</p>`)}
                 </div>
-                <div class="stat-panel" role="tabpanel" id="panel-np" aria-labelledby="tab-np" tabindex="0">
-                    ${npDotPlotHtml()}
-                    <h3 class="ds-heading" data-size="xs">Nasjonale prøver over tid</h3>
-                    <div class="table-scroll">
-                        <table class="ds-table school-history" data-size="sm" data-border>
-                            <thead><tr><th>År</th><th class="num">Engelsk</th><th class="num">Lesing</th><th class="num">Regning</th><th class="num">Snitt</th><th class="num">Hele landet</th></tr></thead>
-                            <tbody>${rows}</tbody>
-                        </table>
-                    </div>
-                    <p class="ds-paragraph table-caption" data-size="xs">${t('Skalapoeng, {type}. Landsgjennomsnittet var 50 i 2022. * betyr at resultatet ikke er publisert. Resultater for 2026–27 kommer når Udir publiserer dem.', { type: typeLabel.toLowerCase() })}</p>
-                    ${worseLegend()}
-                </div>
-                <div class="stat-panel" role="tabpanel" id="panel-trivsel" aria-labelledby="tab-trivsel" tabindex="0" hidden>
-                    <p class="ds-paragraph">Henter tall…</p>
-                </div>
-                <div class="stat-panel" role="tabpanel" id="panel-mobbing" aria-labelledby="tab-mobbing" tabindex="0" hidden>
-                    <p class="ds-paragraph">Henter tall…</p>
-                </div>
-                <div class="stat-panel" role="tabpanel" id="panel-laerere" aria-labelledby="tab-laerere" tabindex="0" hidden>
-                    <p class="ds-paragraph">Henter tall…</p>
-                </div>
-                <div id="surveyAll"></div>
+                <!-- All the Pupil Survey's indicators, folded like the rows above -->
+                <details class="ds-details stat-fold" data-variant="default" id="row-survey">
+                    <summary>${t('Alle svar fra Elevundersøkelsen')}</summary>
+                    <div id="surveyAll"></div>
+                </details>
             </section>
+
+            ${questionsHtml(details)}
 
             <!-- One map for the school and the walking time: the map card shows only the time,
                  the address field and the details sit under the map -->
@@ -319,52 +319,62 @@
                 ${nearbyHtml()}
             </section>
 
-            <section id="aktiviteter" class="icon-block" aria-labelledby="aktiviteterHeading">
-                <h2 class="ds-heading" data-size="sm" id="aktiviteterHeading">Aktiviteter og anlegg</h2>
-                <div id="aktiviteterContent"><p class="ds-paragraph" data-size="sm">${t('Henter…')}</p></div>
-            </section>
-
-            <section id="mat" class="icon-block" aria-labelledby="matHeading">
-                <h2 class="ds-heading" data-size="sm" id="matHeading">Mat</h2>
-                <div id="matContent"><p class="ds-paragraph" data-size="sm">${t('Henter…')}</p></div>
-            </section>
-
-            ${showCare ? `<section id="etter-skoletid" aria-labelledby="careHeading">
-                <h2 class="ds-heading" data-size="sm" id="careHeading">${isOslo ? 'Aktivitetsskolen (AKS)' : 'Skolefritidsordning (SFO)'}</h2>
-                <div id="careContent">${careHtml({})}</div>
-            </section>` : ''}
-
-            ${showNew ? `<section id="ny-i-norge" aria-labelledby="newHeading">
-                <h2 class="ds-heading" data-size="sm" id="newHeading">Ny i Norge</h2>
-                <div id="newContent"><p class="ds-paragraph" data-size="sm">${t('Henter…')}</p></div>
-            </section>` : ''}
-
-
-            <!-- Where the pupils go after this school (or come from): last, with the last shortcut -->
+            <!-- Where the pupils go after this school (or come from) -->
             <section id="videre" aria-labelledby="videreHeading" hidden>
                 <h2 class="ds-heading" data-size="sm" id="videreHeading"></h2>
                 <div class="next-school" id="videreContent"></div>
             </section>
 
-            <section id="registeret" aria-labelledby="registerHeading">
-                <h2 class="ds-heading" data-size="sm" id="registerHeading">Mer fra skoleregisteret</h2>
-                <div id="registerSections"></div>
+            <!-- The smaller parts, each folded (Figma 321:30266 «Mer om skolen»), so the page reads shorter -->
+            <section id="mer-om-skolen" class="more-about" aria-labelledby="moreHeading">
+                <h2 class="ds-heading" data-size="sm" id="moreHeading">${t('Mer om skolen')}</h2>
+                <details class="ds-details more-about__item icon-block" data-variant="default" id="aktiviteter">
+                    <summary>${t('Aktiviteter og anlegg')}</summary>
+                    <div id="aktiviteterContent"><p class="ds-paragraph" data-size="sm">${t('Henter…')}</p></div>
+                </details>
+                <details class="ds-details more-about__item icon-block" data-variant="default" id="mat">
+                    <summary>${t('Mat')}</summary>
+                    <div id="matContent"><p class="ds-paragraph" data-size="sm">${t('Henter…')}</p></div>
+                </details>
+                ${showCare ? `<details class="ds-details more-about__item" data-variant="default" id="etter-skoletid">
+                    <summary>${isOslo ? t('Aktivitetsskolen (AKS)') : t('Skolefritidsordning (SFO)')}</summary>
+                    <div id="careContent">${careHtml({})}</div>
+                </details>` : ''}
+                ${showNew ? `<details class="ds-details more-about__item" data-variant="default" id="ny-i-norge">
+                    <summary>${t('Ny i Norge')}</summary>
+                    <div id="newContent"><p class="ds-paragraph" data-size="sm">${t('Henter…')}</p></div>
+                </details>` : ''}
+                <details class="ds-details more-about__item" data-variant="default" id="registeret">
+                    <summary>${t('Mer fra skoleregisteret')}</summary>
+                    <div id="registerSections"></div>
+                </details>
             </section>
+        </div>
         </div>`;
 
     showMap(school);
+    bindToc();
+    openFoldedTarget(location.hash);
     renderWalk(rememberedAddress());
-    bindStatTabs();
     labelParts();
     new MutationObserver(() => requestAnimationFrame(labelParts)).observe(root, { childList: true, subtree: true });
-    root.querySelector('.school-banner__save').addEventListener('click', event => {
-        updateSaveButton(event.currentTarget, toggleSaved(schoolKey(school)));
+    // «Lagre» / «Lagret» with its words (Figma 261:14869); the button is drawn again so the label follows
+    root.querySelector('.school-banner__actions').addEventListener('click', event => {
+        const button = event.target.closest('.school-banner__save');
+        if (!button) return;
+        toggleSaved(schoolKey(school));
+        button.outerHTML = bannerSaveHtml();
+        root.querySelector('.school-banner__save').focus();
     });
+    document.getElementById('bannerPrint').addEventListener('click', () => window.print());
+    bindSummary();
+    showCrumbs();
     document.getElementById('bannerShare').addEventListener('click', event => shareSchoolPage(school, event.currentTarget));
     showSurveyHistory(details.survey || {});
     showStaffHistory(details.gsi);
     showComparisons(details.elevundersokelsen);
     document.getElementById('surveyAll').innerHTML = surveyTableHtml(details.elevundersokelsen);
+    if (!document.getElementById('surveyAll').innerHTML.trim()) document.getElementById('row-survey').hidden = true;
     showMedia(details.gallery || []);
     showLinks(details, unit);
     if (showCare) document.getElementById('careContent').innerHTML = careHtml(details);
@@ -392,6 +402,212 @@
     // opens that one and closes the first.
     // Screen readers: each stat tab is described by its explanation and source, and each table is named by
     // the heading above it and described by the note under it. Runs again when parts of the page are filled in.
+    function bannerSaveHtml() {
+        const on = isSaved(schoolKey(school));
+        return `<button type="button" class="ds-button school-banner__save" data-variant="${on ? 'primary' : 'secondary'}" data-size="sm"
+            data-save="${escapeHtml(schoolKey(school))}" aria-pressed="${on}">${icon(on ? 'bookmarkFill' : 'bookmark')}<span>${t(on ? 'Lagret' : 'Lagre')}</span></button>`;
+    }
+
+    // ── «Oppsummering» (Figma 261:14861): the three numbers in words, compared with the country, what is worth
+    // checking, and questions to ask the school. Only what we have data for; no score is invented.
+    function summaryParts(details) {
+        // The comparison in words goes into the numbers table's rows (statRow), so each number is shown once
+        const words = summaryParts.words = {};
+        const tiles = [];
+        const tile = (id, words_, tone) => { words[id] = { words: words_, tone }; tiles.push(id); };
+        // Nasjonale prøver: over or under the national average (differences under 1 point are "about the same")
+        if (school.hasData && nationalNow) {
+            const diff = school.average - nationalNow;
+            tile('np', t(diff >= 1 ? 'Over snittet ({value})' : diff <= -1 ? 'Under snittet ({value})' : 'Omtrent som snittet ({value})', { value: formatDecimal(nationalNow) }),
+                diff >= 1 ? 'good' : diff <= -1 ? 'bad' : 'neutral');
+        }
+        // Trivsel: the national level from the school's own survey file (same year and trinn)
+        const trivselNational = school.trivsel ? ((surveyEntry(details.elevundersokelsen, 'trivsel', school.trivsel.year) || {}).national) : null;
+        if (school.trivsel) {
+            const diff = trivselNational === null || trivselNational === undefined ? null : Math.round((school.trivsel.score - trivselNational) * 10);
+            tile('trivsel', diff === null ? t('Ingen tall for hele landet') : t(diff > 0 ? 'Over snittet ({value})' : diff < 0 ? 'Under snittet ({value})' : 'Som snittet ({value})', { value: formatDecimal(trivselNational) }),
+                diff === null || diff === 0 ? 'neutral' : diff > 0 ? 'good' : 'bad');
+        }
+        // Mobbing: lower is better; "over twice as high" when it is
+        let mobbingWorry = null;
+        if (school.mobbing) {
+            const share = school.mobbing.share, national = school.mobbing.national;
+            let words_m = t('Ingen tall for hele landet'), tone = 'neutral';
+            if (national) {
+                const ratio = share / national;
+                if (ratio >= 2) { words_m = t('Over dobbelt så høyt som landet'); tone = 'bad'; }
+                else if (share - national >= 1) { words_m = t('Høyere enn landet ({value})', { value: formatPercent(national) }); tone = 'bad'; }
+                else if (national - share >= 1) { words_m = t('Lavere enn landet ({value})', { value: formatPercent(national) }); tone = 'good'; }
+                else words_m = t('Omtrent som landet ({value})', { value: formatPercent(national) });
+                if (ratio >= 1.5) mobbingWorry = t('Mobbing {value} – {words}', { value: formatPercent(share), words: words_m.toLowerCase() });
+            }
+            tile('mobbing', words_m, tone);
+        }
+        const questions = [
+            mobbingWorry ? t('Hva gjør dere for å få ned mobbingen, og hvordan følger dere opp?') : t('Hvordan forebygger dere mobbing, og hva gjør dere hvis det skjer?'),
+            t('Hvordan får elever som er sterke faglig – og de som trenger mer hjelp – utfordringer som passer?'),
+            t('Hvordan tilrettelegger dere for barn som trenger ekstra støtte – og hvem kontakter vi?'),
+            t('Kan vi besøke skolen og snakke med noen før skolestart?')
+        ];
+        const phone = details.contact && details.contact.phone;
+        const sourceYear = (school.mobbing && school.mobbing.year) || (school.trivsel && school.trivsel.year) || year;
+        summaryParts.questions = { mobbingWorry, questions, phone, sourceYear };
+        // «Om skolen» on the green card: the register's key figures, the website, e-mail and social pages. Under it,
+        // on its own, what was «Oppsummering»: what is worth checking and the questions to ask the school
+        return `
+            <section id="om-skolen" class="school-summary-band" aria-labelledby="omHeading">
+                <h2 class="ds-heading" data-size="sm" id="omHeading">${t('Om skolen')}</h2>
+                <div class="key-figures" id="schoolSummary"><p class="ds-paragraph" data-size="sm">${t('Henter opplysninger fra Nasjonalt skoleregister…')}</p></div>
+                <p class="ds-paragraph school-page__sources" data-size="xs">${t('Kilde: Nasjonalt skoleregister (Udir).')}</p>
+            </section>`;
+    }
+
+    // «Spørsmål å stille skolen»: after the results, as they follow from them (what is worth checking, then
+    // the questions). Built with the summary's words, so summaryParts runs first.
+    function questionsHtml(details) {
+        const { mobbingWorry, questions, phone, sourceYear } = summaryParts.questions;
+        return `
+            <section id="sporsmal" class="summary-questions" aria-labelledby="questionsHeading">
+                <h2 class="ds-heading" data-size="sm" id="questionsHeading">${t('Spørsmål å stille skolen')}</h2>
+                ${mobbingWorry ? `<p class="summary-fact summary-fact--warning">${icon('exclamationmarkTriangle')}<span><strong>${t('Verdt å sjekke:')}</strong> ${mobbingWorry} – ${t('spør skolen hva de gjør')}</span></p>
+                    <p class="ds-paragraph school-page__sources" data-size="xs">${t('Kilde: Elevundersøkelsen og nasjonale prøver (Udir), {year}.', { year: escapeHtml(sourceYear) })}</p>` : ''}
+                <ol class="ds-list" id="summaryQuestions">${questions.map(q => `<li>${escapeHtml(q)}</li>`).join('')}</ol>
+                <div class="summary-questions__actions">
+                    ${phone ? `<a class="ds-button" data-variant="primary" data-size="sm" href="tel:+47${escapeHtml(phone)}" data-call="${escapeHtml(phone)}">${icon('phone')}<span>${t('Ring skolen')}</span></a>` : ''}
+                    <button type="button" class="ds-button" data-variant="secondary" data-size="sm" id="copyQuestions">${icon('files')}<span>${t('Kopier spørsmålene')}</span></button>
+                </div>
+                <p class="ds-paragraph summary-questions__status" data-size="sm" role="status" id="copyStatus"></p>
+            </section>`;
+    }
+
+    function bindSummary() {
+        const button = document.getElementById('copyQuestions');
+        if (!button) return;
+        button.addEventListener('click', async () => {
+            const text = [`${t('Spørsmål til {name}', { name: school.name })}:`,
+                ...[...document.querySelectorAll('#summaryQuestions li')].map((li, i) => `${i + 1}. ${li.textContent.trim()}`)].join('\n');
+            let ok = false;
+            try { await navigator.clipboard.writeText(text); ok = true; } catch (_) { /* no clipboard (old browser, blocked) */ }
+            if (!ok) {
+                document.getElementById('copyStatus').textContent = t('Kunne ikke kopiere. Marker spørsmålene og kopier selv.');
+                return;
+            }
+            // Figma I10: «✓ 4 spørsmål er kopiert», with the questions themselves
+            const items = [...document.querySelectorAll('#summaryQuestions li')].map(li => `<li>${escapeHtml(li.textContent.trim())}</li>`);
+            UiDialog.confirm({
+                title: `✓ ${t('{count} spørsmål er kopiert', { count: items.length })}`,
+                html: `<ul class="ds-list">${items.join('')}</ul>`
+            });
+        });
+        // «Ring skolen» (Figma I8): the number large, «Ring nå» and «Kopier nummeret», so it also works on a PC
+        // (on the page, as the banner's number is added later)
+        root.addEventListener('click', event => {
+            const link = event.target.closest('[data-call]');
+            if (!link) return;
+            event.preventDefault();
+            openCallDialog(link.dataset.call);
+        });
+    }
+
+    function openCallDialog(phone) {
+        const spaced = phone.replace(/^(\d{2})(\d{2})(\d{2})(\d{2})$/, '$1 $2 $3 $4');
+        UiDialog.open({
+            title: t('Ring {name}', { name: school.name }),
+            html: `<p class="ui-big">${escapeHtml(spaced)}</p>
+                <p class="ds-paragraph">${t('Spør etter kontaktlærer, sosiallærer eller rektor.')}</p>
+                <p class="ui-note">${t('Tips: Ha spørsmålene klare. Trykk «Kopier spørsmålene» på skolesiden før du ringer.')}</p>`,
+            actions: [
+                { label: t('Ring nå'), primary: true, href: `tel:+47${phone}` },
+                { label: t('Kopier nummeret'), onClick: async () => {
+                    try {
+                        await navigator.clipboard.writeText(spaced);
+                        UiDialog.confirm({ title: `✓ ${t('Nummeret er kopiert')}` });
+                    } catch (_) { window.prompt(t('Kopier nummeret:'), spaced); }
+                } }
+            ]
+        });
+    }
+
+    // Breadcrumbs instead of «Tilbake» (Figma 261:14861): Finn skole › Skoler i {kommune} › the school.
+    // «Finn skole» goes back in history when we came from the map, so the map keeps its state (as «Tilbake» did).
+    function showCrumbs() {
+        const back = document.querySelector('.page__container > .page__back');
+        if (!back) return;
+        const kommunePage = school.page && school.page.includes('/') ? school.page.replace(/[^/]+$/, '') : null;
+        // Opened from the saved schools (the compare table): the way back goes there instead of to the kommune
+        let fromSaved = false;
+        try { fromSaved = new URL(document.referrer).origin === location.origin && new URL(document.referrer).searchParams.get('lagrede') === '1'; } catch (_) { /* no referrer */ }
+        // The same steps as the kommune lists' breadcrumbs (Skolekartet › Skoler › Oslo), and the URL: skoler/oslo/…
+        const middle = fromSaved
+            ? `<li><a class="ds-link" href="${I18N.href('./?lagrede=1')}" data-crumb-back>${t('Lagrede skoler')}</a></li>`
+            : kommunePage
+                ? `<li><a class="ds-link" href="${I18N.href('skoler/')}">${t('Skoler')}</a></li>
+                   <li><a class="ds-link" href="${I18N.href(kommunePage)}">${escapeHtml(school.kommune)}</a></li>`
+                : '';
+        back.outerHTML = `<nav class="page-crumbs" aria-label="${t('Du er her')}"><ol>
+                <li><a class="ds-link" href="${I18N.href('./')}"${fromSaved ? '' : ' data-crumb-back'}>Skolekartet</a></li>
+                ${middle}
+                <li><a class="ds-link" aria-current="page" href="${location.pathname}">${escapeHtml(school.name)}</a></li>
+            </ol></nav>`;
+        document.querySelector('[data-crumb-back]').addEventListener('click', event => {
+            try { sessionStorage.setItem('skolekartet.tilbake', '1'); } catch (_) { /* storage blocked */ }
+            // Back in history only when the page before was the map page itself (it keeps its state that way);
+            // from a kommune list (skoler/oslo/, also ending in /) the link goes to the map page as written
+            const mapPage = new URL(event.currentTarget.href, location.href).pathname;
+            if (document.referrer.startsWith(location.origin) && new URL(document.referrer).pathname.replace(/index\.html$/, '') === mapPage && history.length > 1) {
+                event.preventDefault();
+                history.back();
+            }
+        });
+    }
+
+    // «På denne siden»: wide screens keep the list open and mark the part in view (aria-current, as on
+    // Nav's content lists); phones start with it folded, so the school's facts come first
+    // (declared as functions, so they work before this point of the code is reached)
+    function bindToc() {
+        const tocWide = bindToc.wide || (bindToc.wide = window.matchMedia('(min-width: 64rem)'));
+        const details = document.querySelector('.page-toc__details');
+        if (!details) return;
+        if (!details.dataset.bound) {
+            details.dataset.bound = 'true';
+            const fit = () => { details.open = tocWide.matches; };
+            fit();
+            tocWide.addEventListener('change', fit);
+            // On wide screens the list is not a fold: a click on its title does nothing
+            details.querySelector('summary').addEventListener('click', event => { if (tocWide.matches) event.preventDefault(); });
+            details.addEventListener('click', event => {
+                const link = event.target.closest('a[href^="#"]');
+                if (!link) return;
+                openFoldedTarget(link.getAttribute('href'));
+                if (!tocWide.matches) details.open = false;
+            });
+        }
+        if (bindToc.observer) bindToc.observer.disconnect();
+        const links = [...document.querySelectorAll('.page-toc__link')];
+        const sections = links.map(l => document.getElementById(l.getAttribute('href').slice(1))).filter(Boolean);
+        const mark = id => links.forEach(l => l.toggleAttribute('aria-current', l.getAttribute('href') === `#${id}`));
+        if (!('IntersectionObserver' in window)) return;
+        const visible = new Map();
+        const tocObserver = bindToc.observer = new IntersectionObserver(items => {
+            items.forEach(item => visible.set(item.target.id, item.isIntersecting));
+            const first = sections.find(section => visible.get(section.id));
+            if (first) mark(first.id);
+        }, { rootMargin: '0px 0px -60% 0px' });
+        sections.forEach(section => tocObserver.observe(section));
+    }
+
+    // A link to a folded part («#mat», «#registeret») opens it first, then the browser scrolls to it
+    function openFoldedTarget(hash) {
+        if (!hash || hash.length < 2) return;
+        const target = document.getElementById(decodeURIComponent(hash.slice(1)));
+        for (let node = target; node; node = node.parentElement) if (node.tagName === 'DETAILS') node.open = true;
+    }
+    document.addEventListener('click', event => {
+        const link = event.target.closest('#schoolPage a[href^="#"]');
+        if (link && !link.closest('.page-toc')) openFoldedTarget(link.getAttribute('href'));
+    });
+    window.addEventListener('hashchange', () => openFoldedTarget(location.hash));
+
     function labelParts() {
         document.querySelectorAll('.school-stat[role="tab"], .school-stat[aria-controls]').forEach(tab => {
             const id = tab.id.replace(/^tab-/, '');
@@ -418,90 +634,32 @@
         });
     }
 
-    function statTab(id, title, content, selected) {
-        // The tab's name is the title and the value; the explanation and the source are its description,
-        // so a screen reader does not read 30 words on every arrow key
-        const body = content
-            .replace('class="school-stat__value"', `class="school-stat__value" id="tab-${id}-value"`)
-            .replace(/class="school-stat__(text|compare|source)"/g, (match, part) => `class="school-stat__${part}" data-describe="${id}"`);
-        return `<button type="button" class="ds-card school-stat" data-variant="tinted" data-color="${selected ? 'brand1' : 'neutral'}" role="tab" id="tab-${id}"
-                    aria-selected="${selected}" aria-controls="panel-${id}" tabindex="${selected ? 0 : -1}"
-                    aria-labelledby="tab-${id}-title tab-${id}-value">
-                    <span class="school-stat__title" id="tab-${id}-title">${title}</span>
-                    ${body}
-                    <span class="school-stat__chevron" aria-hidden="true">${icon('chevronDown')}</span>
-                </button>`;
-    }
-
-    function bindStatTabs() {
-        const list = document.querySelector('.school-stats');
-        const tabs = [...list.querySelectorAll('.school-stat')];
-        const panelOf = tab => document.getElementById(tab.getAttribute('aria-controls'));
-        const phone = window.matchMedia('(max-width: 640px)');
-        const show = (tab, on) => {
-            tab.dataset.color = on ? 'brand1' : 'neutral';
-            panelOf(tab).hidden = !on;
-            if (phone.matches) {
-                tab.setAttribute('aria-expanded', String(on));
-            } else {
-                tab.setAttribute('aria-selected', String(on));
-                tab.tabIndex = on ? 0 : -1;
-            }
-        };
-        const select = tab => tabs.forEach(other => show(other, other === tab));
-
-        // Tabs with the details after the row of cards, or (phones) each card with its details under it
-        const layout = () => {
-            const open = tabs.find(tab => !panelOf(tab).hidden) || (phone.matches ? null : tabs[0]);
-            if (phone.matches) {
-                list.removeAttribute('role');
-                tabs.forEach(tab => {
-                    const panel = panelOf(tab);
-                    tab.after(panel);
-                    tab.removeAttribute('role');
-                    tab.removeAttribute('aria-selected');
-                    tab.tabIndex = 0;
-                    panel.setAttribute('role', 'region');
-                });
-            } else {
-                list.setAttribute('role', 'tablist');
-                let after = list;
-                tabs.forEach(tab => {
-                    const panel = panelOf(tab);
-                    after.after(panel);
-                    after = panel;
-                    tab.setAttribute('role', 'tab');
-                    tab.removeAttribute('aria-expanded');
-                    panel.setAttribute('role', 'tabpanel');
-                });
-            }
-            tabs.forEach(tab => show(tab, tab === open));
-        };
-        layout();
-        phone.addEventListener('change', layout);
-
-        tabs.forEach((tab, i) => {
-            tab.addEventListener('click', () => {
-                if (phone.matches && !panelOf(tab).hidden) {
-                    show(tab, false);
-                    return;
-                }
-                const before = tab.getBoundingClientRect().top;
-                select(tab);
-                // Phones: the tapped card keeps its place when the details of a card above it close
-                if (phone.matches) window.scrollBy(0, tab.getBoundingClientRect().top - before);
-            });
-            // Arrow keys move between the cards, as in a tab list (wider screens)
-            tab.addEventListener('keydown', event => {
-                if (phone.matches) return;
-                const next = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[event.key];
-                if (next === undefined) return;
-                event.preventDefault();
-                const target = tabs[(next + tabs.length) % tabs.length];
-                target.focus();
-                select(target);
-            });
-        });
+    // One row of the numbers table: a Designsystemet Details whose summary has the name, the value and the
+    // comparison; opened, it has the explanation, the source and the years (the panel the other code fills)
+    function statRow(id, title, content, panel) {
+        const box = document.createElement('div');
+        box.innerHTML = content;
+        const part = name => box.querySelector(`.school-stat__${name}`);
+        // «landet 49,3» after the score is said by the words in the row («Over snittet (49,3)»): only once
+        if ((summaryParts.words || {})[id] && id === 'np' && part('value')) {
+            part('value').querySelectorAll('span:not(.color-dot)').forEach(span => span.remove());
+        }
+        const take = name => (part(name) ? part(name).outerHTML : '');
+        return `<details class="ds-details stat-row" data-variant="default" id="row-${id}">
+                <summary class="stat-row__summary"><span class="stat-row__line">
+                    <span class="stat-row__title">${title}</span>
+                    ${take('value')}
+                    ${(summaryParts.words || {})[id]
+                        ? `<span class="stat-row__words stat-row__words--${summaryParts.words[id].tone}">${summaryParts.words[id].words}</span>`
+                        : take('compare')}
+                </span></summary>
+                <div class="stat-row__body">
+                    ${(summaryParts.words || {})[id] ? take('compare') : ''}
+                    ${take('text')}
+                    ${take('source')}
+                    <div class="stat-panel" id="panel-${id}">${panel}</div>
+                </div>
+            </details>`;
     }
 
     // Trivsel and Mobbing for every school year, with the national level beside it
@@ -633,25 +791,21 @@
         const addressText = unit && unit.Beliggenhetsadresse && unit.Beliggenhetsadresse.Adresse
             ? `${unit.Beliggenhetsadresse.Adresse}, ${unit.Beliggenhetsadresse.Postnummer || ''} ${titleCase(unit.Beliggenhetsadresse.Poststed)}`.trim()
             : null;
-        document.getElementById('bannerAddress').textContent = addressText || t('Ikke registrert i skoleregisteret');
-
-        // Address, email and phone, each with a small button: Google Maps, write an email, call
-        // The address itself, so Google shows the right place (a name search can find another school)
+        // Figma 321:39641: «Bogstadveien 74, 0366 Oslo · 23 46 24 00» under the name. The address opens Google Maps
+        // (the address itself, so Google shows the right place; a name search can find another school)
         const google = googleMapsUrl(addressText || `${school.name}, ${school.kommune}`);
-        document.getElementById('bannerGoogle').href = google;
-        const action = (href, label, iconName, external) => `<a class="ds-button school-contact__action" data-variant="tertiary" data-size="sm" data-icon="true"
-                href="${escapeHtml(safeUrl(href))}" aria-label="${label}" data-tooltip="${label}"${external ? ' target="_blank" rel="noopener"' : ''}>${icon(iconName)}</a>`;
-        const list = document.getElementById('bannerContactList');
-        if (addressText) {
-            list.firstElementChild.insertAdjacentHTML('beforeend', action(google, t('Åpne i Google Maps'), 'externalLink', true));
-        }
         const reach = details.contact || {};
-        if (reach.email) {
-            list.insertAdjacentHTML('beforeend', `<li><span class="school-contact__text">${escapeHtml(reach.email).replace('@', '@<wbr>')}</span>${action(`mailto:${reach.email}`, t('Send e-post til skolen'), 'envelopeClosed')}</li>`);
-        }
+        const parts = [addressText
+            ? `<a class="ds-link" href="${escapeHtml(safeUrl(google))}" target="_blank" rel="noopener">${escapeHtml(addressText)}${icon('externalLink')}<span class="ds-sr-only"> (${t('Åpne i Google Maps')})</span></a>`
+            : escapeHtml(t('Ikke registrert i skoleregisteret'))];
         if (reach.phone) {
             const spaced = reach.phone.replace(/^(\d{2})(\d{2})(\d{2})(\d{2})$/, '$1 $2 $3 $4');
-            list.insertAdjacentHTML('beforeend', `<li><span>${escapeHtml(spaced)}</span>${action(`tel:+47${reach.phone}`, t('Ring skolen'), 'phone')}</li>`);
+            parts.push(`<a class="ds-link" href="tel:+47${escapeHtml(reach.phone)}" data-call="${escapeHtml(reach.phone)}" aria-label="${t('Ring skolen')}: ${escapeHtml(spaced)}">${escapeHtml(spaced)}</a>`);
+        }
+        document.getElementById('bannerContactLine').innerHTML = parts.join(' · ');
+        if (reach.email) {
+            document.getElementById('bannerEmailLink').innerHTML = `<a class="ds-link" href="mailto:${escapeHtml(reach.email)}">${escapeHtml(reach.email).replace('@', '@<wbr>')}</a>`;
+            document.getElementById('bannerEmail').hidden = false;
         }
 
         const website = details.websiteBroken ? null : (details.website || (unit && unit.Internettadresse
@@ -915,18 +1069,36 @@
             if (sport.hall) tiles.push({ icon: materialIcon('sportsGymnastics'), label: t('Gymsal eller idrettshall ved skolen') });
             sources.push(t('OpenStreetMap (ODbL), kartdata fra {date}', { date: date(sport.fetched) }));
         }
-        const aks = [
-            [/\blekse/i, 'Leksehjelp på AKS', 'openBook'],
-            [/\bkurs|aktivitetstilbud/i, 'Kurs og aktiviteter på AKS', 'palette'],
-            [/\bferie/i, 'Ferietilbud på AKS', 'sun']
-        ].map(([pattern, label, name]) => {
-            const link = isOslo && aksLink(details, pattern);
-            return link && { icon: icon(name), label: t(label), href: link.url };
-        }).filter(Boolean);
+        // Links from the school's own website: Oslo's AKS menu first, then what school_site.py found
+        // (any kommune). SFO, its courses and holidays only for schools with barnetrinn.
+        const site = (details.site && details.site.links) || {};
+        const siteDate = details.site && details.site.fetched;
+        let fromSite = false;
+        const linkTile = (aksPattern, kind, iconName, aksLabel, siteLabel) => {
+            const aksHit = isOslo && aksLink(details, aksPattern);
+            if (aksHit) return { icon: icon(iconName), label: t(aksLabel), href: aksHit.url };
+            if (!site[kind]) return null;
+            fromSite = true;
+            return { icon: icon(iconName), label: t(siteLabel), href: site[kind].url };
+        };
+        const care = [];
+        if (hasBarnetrinn && !isOslo && site.sfo) {
+            fromSite = true;
+            care.push({ icon: icon('child'), label: t('SFO ved skolen'), href: site.sfo.url });
+        }
+        care.push(linkTile(/\blekse/i, 'leksehjelp', 'openBook', 'Leksehjelp på AKS', 'Leksehjelp'));
+        if (hasBarnetrinn) {
+            care.push(linkTile(/\bkurs|aktivitetstilbud/i, 'kurs', 'palette', 'Kurs og aktiviteter på AKS',
+                               isOslo ? 'Kurs og aktiviteter på AKS' : 'Kurs og aktiviteter på SFO'));
+            care.push(linkTile(/\bferie/i, 'ferie', 'sun', 'Ferietilbud på AKS', isOslo ? 'Ferietilbud på AKS' : 'Ferietilbud på SFO'));
+        }
+        const aks = care.filter(Boolean);
         tiles.push(...aks);
-        const device = details.devices && details.devices.links[0];
+        const device = (details.devices && details.devices.links[0]) || site.devices;
         if (device) tiles.push({ icon: icon('tablet'), label: t('Læringsbrett – les mer på skolens nettside'), href: device.url });
-        if (aks.length || device) sources.push(t('lenker fra skolens nettside, hentet {date}', { date: date((device && details.devices.fetched) || details.updated) }));
+        if (device && !(details.devices && details.devices.links[0])) fromSite = true;
+        const linkDate = fromSite ? siteDate : (device && details.devices.fetched) || details.updated;
+        if (aks.length || device) sources.push(t('lenker fra skolens nettside, hentet {date}', { date: date(linkDate) }));
 
         // What applies to all Oslo schools (skolehage, nettfilter, fritid) is on skolehverdag
         const notes = isOslo && isPublic
@@ -943,11 +1115,10 @@
         const tiles = [];
         const sources = [];
         const notes = [];
-        if (isOslo && showCare) {
-            tiles.push({ icon: icon('trayFood'), label: t('Mat på AKS'), href: AKS_PAGE,
-                         text: t('Et mellommåltid etter skolelunsjen. Matpengene er med i prisen.') });
-            // Facts read from the school's own AKS pages; without them, a link to the menu
-            const food = details.aksMat;
+        const site = (details.site && details.site.links) || {};
+        let siteLinks = false;
+        // Days a week, warm food and extra matpakke, read from the school's own AKS/SFO pages
+        const factTiles = (food) => {
             const facts = (food && food.facts) || {};
             if (facts.perWeek) {
                 tiles.push({ icon: icon('calendar'), href: food.url,
@@ -961,16 +1132,47 @@
             if (facts.packedDays) {
                 tiles.push({ icon: icon('backpack'), href: food.url, label: t('Ta med ekstra matpakke'), text: dayList(facts.packedDays) });
             }
+            return Object.keys(facts).length > 0;
+        };
+        if (isOslo && showCare) {
+            tiles.push({ icon: icon('trayFood'), label: t('Mat på AKS'), href: AKS_PAGE,
+                         text: t('Et mellommåltid etter skolelunsjen. Matpengene er med i prisen.') });
+            // Facts read from the school's own AKS pages; without them, a link to the menu
+            const hasFacts = factTiles(details.aksMat);
             const menu = aksLink(details, /\bmat|\bmeny/i);
-            if (menu && !Object.keys(facts).length) tiles.push({ icon: icon('plate'), label: t('Se menyen'), href: menu.url });
+            if (menu && !hasFacts) tiles.push({ icon: icon('plate'), label: t('Se menyen'), href: menu.url });
             const milk = aksLink(details, /skolemelk/i);
             if (milk) tiles.push({ icon: materialIcon('waterFull'), label: t('Skolemelk'), href: milk.url });
+        }
+        // Outside Oslo: food at SFO from the school's own SFO pages (school_site.py)
+        const sfoFood = !isOslo && hasBarnetrinn && details.site && details.site.sfoFood;
+        const sfoMenu = !isOslo && hasBarnetrinn && site.sfoMat;
+        if (sfoFood || sfoMenu) {
+            tiles.push({ icon: icon('trayFood'), label: t('Mat på SFO'), href: (sfoMenu || sfoFood).url,
+                         text: sfoFood ? '' : t('Se menyen') });
+            factTiles(sfoFood);
+            siteLinks = !sfoFood;
+        }
+        // Skolemat, fruit, milk or breakfast: a link the school publishes, labelled by what it is about
+        const school = site.skolemat;
+        const milkTile = tiles.some(tile => tile.label === t('Skolemelk'));
+        if (school && !(milkTile && /melk|mjølk/i.test(school.title))) {
+            const title = school.title;
+            const [label, iconHtml] = /melk|mjølk/i.test(title) ? ['Skolemelk', materialIcon('waterFull')]
+                : /frokost/i.test(title) ? ['Frokost på skolen', icon('bowl')]
+                : /frukt/i.test(title) ? ['Frukt og grønt', icon('bowl')]
+                : /kantine/i.test(title) ? ['Kantine', icon('plate')]
+                : ['Skolemat', icon('bowl')];
+            tiles.push({ icon: iconHtml, label: t(label), href: school.url });
+            siteLinks = true;
         }
         // Skolemat in Oslo and the allergy advice apply to all schools: skolehverdag
         if (isOslo && showCare) sources.push(t('Oslo kommune, hentet {date}', { date: date(OSLO_CHECKED) }));
         if (isOslo) notes.push(`<a class="ds-link" href="${I18N.href('skolehverdag#mat')}">${t('Om skolemat i Oslo, allergier og spesialkost')}</a>`);
-        if (details.aksMat) sources.push(t('AKS-sidene på skolens nettside, lest {date}', { date: date(details.aksMat.fetched) }));
-        else if (tiles.length > 1) sources.push(t('lenker fra skolens nettside, hentet {date}', { date: date(details.updated) }));
+        if (details.aksMat && isOslo && showCare) sources.push(t('AKS-sidene på skolens nettside, lest {date}', { date: date(details.aksMat.fetched) }));
+        else if (isOslo && tiles.length > 1 && !siteLinks) sources.push(t('lenker fra skolens nettside, hentet {date}', { date: date(details.updated) }));
+        if (sfoFood) sources.push(t('SFO-sidene på skolens nettside, lest {date}', { date: date(details.site.fetched) }));
+        if (siteLinks) sources.push(t('lenker fra skolens nettside, hentet {date}', { date: date(details.site.fetched) }));
         const website = details.websiteBroken ? null : details.website;
         const empty = t('Vi har ikke opplysninger om mat ved denne skolen.') + (website ? ` ${outLink(website, t('Gå til skolens nettside'))}` : '');
         if (!sources.length) sources.push(t('Nasjonalt skoleregister (skolens nettside)'));
@@ -997,6 +1199,8 @@
     // several steps, so this runs after each change; a line from an earlier render is replaced.
     function liftSources() {
         root.querySelectorAll('.section-source').forEach(line => {
+            // The folds under «Mer om skolen» keep their own source inside them: lifted, each would replace the last
+            if (line.closest('.more-about__item')) return;
             const scope = line.parentElement.closest('[data-source-scope]');
             const heading = scope ? scope.querySelector(':scope > h3')
                 : line.closest('section') && line.closest('section').querySelector(':scope > h2');
@@ -1016,10 +1220,12 @@
         document.getElementById('videreHeading').textContent = t(heading);
         document.getElementById('videreContent').innerHTML = html;
         document.getElementById('videre').hidden = false;
-        const list = document.querySelector('.snarveier__list');
+        const list = document.querySelector('.page-toc__list');
         const old = list.querySelector('a[href="#videre"]');
         if (old) old.parentElement.remove();
-        list.insertAdjacentHTML('beforeend', `<li><a class="ds-link" href="#videre">${icon('arrowDown')}${t(heading)}</a></li>`);
+        list.querySelector('a[href="#mer-om-skolen"]').parentElement
+            .insertAdjacentHTML('beforebegin', `<li><a class="page-toc__link" href="#videre">${t(heading)}</a></li>`);
+        bindToc();
     }
 
 
@@ -1250,7 +1456,7 @@
         });
     }
 
-    // The school's skolekrets on the map, from kommuner that publish it as open data (pilot)
+    // The school's skolekrets on the map, in the kommuner we have it for (om-skolekrets lists them)
     function drawKrets(info) {
         const own = info && info.kretser.filter(k => k.level === school.schoolType);
         if (!schoolMap || !own || !own.length) return;
@@ -1262,9 +1468,9 @@
         kretsBounds = layer.getBounds();
         if (!walkLayer) drawWalk(null);
         const caption = document.getElementById('kretsCaption');
-        caption.innerHTML = `${t('Den stiplede linjen viser skolekretsen ({name}). Dette er en pilot og kan avvike fra kommunens gjeldende grenser.', { name: escapeHtml(own[0].name) })}
+        caption.innerHTML = `${t('Den stiplede linjen viser skolekretsen ({name}). Grensene er veiledende og kan avvike fra kommunens.', { name: escapeHtml(own[0].name) })}
             ${t('Kilde:')} <a class="ds-link" href="${escapeHtml(safeUrl(info.sourceUrl))}" target="_blank" rel="noopener">${escapeHtml(t(info.source))}</a>.
-            <a class="ds-link" href="${I18N.href('om-skolekrets')}#pilot">${t('Om skolekretsdataene')}</a>`;
+            <a class="ds-link" href="${I18N.href('om-skolekrets')}#kommuner">${t('Om skolekretsdataene')}</a>`;
         caption.hidden = false;
     }
 
@@ -1336,11 +1542,8 @@
         // built with Designsystemet type and spacing. The label says what the number is, so there is no line
         // under it repeating that; the register's categories ("Grunnskole, Offentlig skole …") repeat the tags
         // and are in "Mer fra skoleregisteret".
-        const grades = [unit.SkoletrinnGSFra && `${unit.SkoletrinnGSFra}.–${unit.SkoletrinnGSTil}.`,
-                        unit.SkoletrinnVGSFra && `VGS ${unit.SkoletrinnVGSFra}.–${unit.SkoletrinnVGSTil}.`]
-            .filter(Boolean);
         const figures = [
-            grades.length ? { label: 'Trinn', value: grades.join(', ') } : null,
+            // «Trinn» is in the line over the name already
             unit.Elevtall ? { label: 'Elever', value: new Intl.NumberFormat(I18N.locale).format(unit.Elevtall) } : null,
             unit.AntallAnsatte ? { label: 'Ansatte', value: new Intl.NumberFormat(I18N.locale).format(unit.AntallAnsatte) } : null,
             unit.Maalform ? { label: 'Målform', value: escapeHtml(unit.Maalform.Navn) } : null

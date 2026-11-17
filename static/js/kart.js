@@ -42,6 +42,7 @@
         .setView(start, Number.isFinite(zoom) ? zoom : 12);
     map.attributionControl.setPrefix(false);
     keyboardPopupFocus(map);
+    addColorLegend(map);
     let baseName = 'openfreemap';
     let baseLayer = BASE_MAPS[baseName]().addTo(map);
     map.on('moveend', () => {
@@ -76,9 +77,15 @@
         });
     };
     const schoolLayers = {};
+    // Each school's marker, so a school chosen in the search opens its popup
+    const markerByKey = new Map();
     ['barneskole', 'ungdomsskole'].forEach(type => {
         const group = L.markerClusterGroup({ disableClusteringAtZoom: 13, maxClusterRadius: 50, showCoverageOnHover: false, iconCreateFunction: clusterIcon });
-        group.addLayers(data.schools.filter(s => s.schoolType === type && s.lat && s.lng).map(schoolMarker));
+        group.addLayers(data.schools.filter(s => s.schoolType === type && s.lat && s.lng).map(school => {
+            const marker = schoolMarker(school);
+            markerByKey.set(`${school.name}|${school.kommune}|${school.schoolType}`, marker);
+            return marker;
+        }));
         schoolLayers[type] = group.addTo(map);
     });
 
@@ -92,21 +99,9 @@
             title: `${school.name}, ${SCHOOL_TYPE_LABEL[school.schoolType] || school.schoolType}, ${scoreTitle(school)}`,
             fillColor: school.color
         });
-        return marker.bindPopup(() => schoolPopup(school), { maxWidth: 300 });
-    }
-
-    function schoolPopup(school) {
-        const facts = [
-            `<strong>${t('Snitt')}</strong> ${school.hasData ? formatDecimal(school.average) : '–'}`,
-            `<strong>${t('Trivsel')}</strong> ${school.trivsel ? formatDecimal(school.trivsel.score) : '–'}`,
-            `<strong>${t('Mobbing')}</strong> ${school.mobbing ? formatPercent(school.mobbing.share) : '–'}`
-        ].join(' · ');
-        return `<div class="popup-school">
-                <h3 class="ds-heading popup-name" data-size="2xs">${escapeHtml(school.name)}</h3>
-                <p class="ds-paragraph popup-kommune" data-size="xs">${escapeHtml(school.kommune)} · ${SCHOOL_TYPE_LABEL[school.schoolType] || school.schoolType}</p>
-                <p class="ds-paragraph popup-stats" data-size="sm">${facts}</p>
-                <p class="ds-paragraph popup-more" data-size="sm"><a class="ds-link popup-more__link" href="${schoolUrl(school)}">${t('Les mer om skolen')}${icon('arrowRight')}</a></p>
-            </div>`;
+        // The same popup as on the front page's map (shared.js)
+        // The popup keeps clear of the search field at the top and the tools on the right
+        return marker.bindPopup(() => createPopupContent([school]), { maxWidth: 320, autoPanPaddingTopLeft: [16, 96], autoPanPaddingBottomRight: [72, 24] });
     }
 
     // Data files, each fetched the first time a layer or the address search needs it
@@ -203,22 +198,38 @@
 
     document.querySelectorAll('[data-layer]').forEach(input => input.addEventListener('change', () => setLayer(input.dataset.layer, input.checked)));
 
+    // ?lag=kretser-barneskole,kretser-ungdomsskole turns layers on from the start (the front page's «Kart» card)
+    new URLSearchParams(location.search).getAll('lag').flatMap(v => v.split(',')).forEach(name => {
+        const input = document.querySelector(`[data-layer="${CSS.escape(name)}"]`);
+        if (!input || input.checked) return;
+        input.checked = true;
+        setLayer(name, true);
+    });
+
     // The layer panel opens under its button; Esc or the close button closes it
-    // Each skolekrets layer names the kommuner that have kretser for its level, read when the panel first opens
+    // Each skolekrets layer says how many kommuner it covers; the kommuner are listed once, folded under the
+    // layers (Norgeskart and Geonorge keep layer names short the same way). Read when the panel first opens.
     let kretsLabelDone = false;
     const KRETS_LABELS = {
-        barneskole: 'Skolekretser for barneskoler ({kommuner})',
-        ungdomsskole: 'Skolekretser for ungdomsskoler ({kommuner})',
+        barneskole: 'Skolekretser for barneskoler',
+        ungdomsskole: 'Skolekretser for ungdomsskoler',
     };
     async function labelKretsLayer() {
         kretsLabelDone = true;
         const all = Object.entries((await loadKretser()).kommuner);
         for (const [level, text] of Object.entries(KRETS_LABELS)) {
-            const kommuner = all.filter(([, info]) => info.levels.includes(level)).map(([name]) => name)
-                .sort((a, b) => (b === 'Oslo') - (a === 'Oslo'));
+            const count = all.filter(([, info]) => info.levels.includes(level)).length;
             const label = document.querySelector(`[data-krets-label="${level}"]`);
-            if (label && kommuner.length) label.textContent = t(text, { kommuner: kommuner.join(', ') });
+            if (label && count) label.innerHTML = `${escapeHtml(t(text))} <span class="map-layers__count">${escapeHtml(t('{count} kommuner', { count }))}</span>`;
         }
+        // One list per layer, with the same count as the layer's name
+        const kommunerFor = level => all.filter(([, info]) => info.levels.includes(level)).map(([name]) => name)
+            .sort((a, b) => a.localeCompare(b, 'nb'));
+        const LIST_TITLES = { barneskole: 'Barneskolekretser ({count})', ungdomsskole: 'Ungdomsskolekretser ({count})' };
+        el('kretsKommuner').innerHTML = Object.entries(LIST_TITLES).map(([level, title]) => {
+            const names = kommunerFor(level);
+            return `<strong>${escapeHtml(t(title, { count: names.length }))}:</strong> ${escapeHtml(names.join(', '))}.`;
+        }).join('<br><br>') + `<br><br><a class="ds-link" href="${I18N.href('om-skolekrets')}#kommuner">${t('Om skolekretsdataene')}</a>`;
     }
     const setLayersPanel = open => {
         if (open && !kretsLabelDone) labelKretsLayer();
@@ -245,20 +256,45 @@
     const canLocate = () => 'geolocation' in navigator;
     const kind = label => ` <span>${t(label)}</span>`;
 
-    function showResults(items, { failed = false, empty = false } = {}) {
-        searchItems = items;
-        const message = text => `<li class="map-search__empty">${t(text)}</li>`;
-        results.innerHTML = items.map((item, i) => {
-            const text = item.kind === 'locate' ? `${TARGET_ICON}${escapeHtml(t('Din posisjon'))}`
-                : item.kind === 'kommune' ? `${escapeHtml(item.kommune)}${kind('Kommune')}`
-                : `${escapeHtml(item.label)}${item.sub ? ` <span>${escapeHtml(item.sub)}</span>` : item.postnummer ? kind('Postnummer') : ''}`;
-            return `<li><button type="button" class="map-search__item" data-i="${i}">${text}</button></li>`;
-        }).join('') + (failed ? message('Adressesøket er ikke tilgjengelig akkurat nå') : empty && !items.length ? message('Ingen treff') : '');
+    // The list as on the front page (Figma 10.1 «Forslag»): «Din posisjon» first, then Skoler, Adresser, and
+    // Kommuner og postnummer, each row an icon and two lines, «Ingen treff» per group and a hint at the bottom
+    function showResults(items, { failed = false, empty = false, pending = false, grouped = false } = {}) {
+        const schools = items.filter(item => item.kind === 'school');
+        const addresses = items.filter(item => item.kind === 'place' || (!item.kind && !item.postnummer));
+        const areas = items.filter(item => item.kind === 'kommune' || item.postnummer);
+        const locateRow = canLocate();
+        searchItems = [...(locateRow ? [{ kind: 'locate' }] : []), ...schools, ...addresses, ...areas];
+        const row = (i, iconHtml, name, sub) => `<li><button type="button" class="map-search__item map-search__row" data-i="${i}">${iconHtml}
+                <span class="map-search__text"><span class="map-search__name">${name}</span>${sub ? `<span class="map-search__sub">${sub}</span>` : ''}</span></button></li>`;
+        const option = (item, i) => {
+            if (item.kind === 'locate') return row(i, TARGET_ICON, escapeHtml(t('Din posisjon')), escapeHtml(t('Bruk posisjonen i stedet for en adresse')));
+            if (item.kind === 'school') return row(i, HAT_SCHOOL_ICON.replace('<svg ', '<svg class="ds-icon" '), escapeHtml(item.label), escapeHtml(item.sub || ''));
+            if (item.kind === 'kommune') return row(i, icon('buildings3'), escapeHtml(item.kommune), escapeHtml(t('Kommune')));
+            if (item.postnummer) return row(i, icon('buildings3'), escapeHtml(item.label), escapeHtml(t('Postnummer')));
+            const cut = item.label.lastIndexOf(', ');
+            return row(i, icon('locationPin'), escapeHtml(cut > 0 ? item.label.slice(0, cut) : item.label), escapeHtml(cut > 0 ? item.label.slice(cut + 2) : ''));
+        };
+        let index = 0;
+        const group = (title, list, waiting) => `<li class="map-search__group" aria-hidden="true">${t(title)}</li>${list.length
+            ? list.map(item => option(item, index++)).join('')
+            : `<li class="map-search__empty" aria-hidden="true">${t(waiting ? 'Søker …' : failed ? 'Adressesøket er ikke tilgjengelig akkurat nå' : 'Ingen treff')}</li>`}`;
+        results.innerHTML = (locateRow ? option({ kind: 'locate' }, index++) : '')
+            + (grouped
+                ? group('Skoler', schools, false) + group('Adresser', addresses, pending) + group('Kommuner og postnummer', areas, pending)
+                  + `<li class="map-search__hint" aria-hidden="true">${t('Skole: viser skolen på kartet')} · ${t('Adresse: viser skolekretsen og skolene i nærheten')}</li>`
+                : '');
         results.hidden = !results.innerHTML;
         // How many hits, said once; the hits are buttons right after the field (Tab or arrow down)
-        const hits = items.filter(item => item.kind !== 'locate').length;
+        const hits = schools.length + addresses.length + areas.length;
         el('mapSearchStatus').textContent = failed ? t('Adressesøket er ikke tilgjengelig akkurat nå')
-            : !input.value.trim() ? '' : hits === 1 ? t('1 treff') : hits ? t('{count} treff', { count: hits }) : t('Ingen treff');
+            : !input.value.trim() || pending ? '' : hits === 1 ? t('1 treff') : hits ? t('{count} treff', { count: hits }) : t('Ingen treff');
+        void empty;
+    }
+
+    function hideResults() {
+        results.hidden = true;
+        results.innerHTML = '';
+        searchItems = [];
     }
 
     // Schools by name (a 1–10 skole is one hit), videregående skoler and kommuner, best matches first
@@ -272,7 +308,7 @@
             .map(s => {
                 const both = data.schools.filter(o => o.name === s.name && o.kommune === s.kommune).length > 1;
                 const type = both ? t('Barne- og ungdomsskole (1.–10. trinn)') : (SCHOOL_TYPE_LABEL[s.schoolType] || s.schoolType);
-                return { kind: 'school', label: s.name, sub: `${s.kommune} · ${type}`, lat: s.lat, lng: s.lng };
+                return { kind: 'school', label: s.name, sub: `${s.kommune} · ${type}`, lat: s.lat, lng: s.lng, school: s };
             });
         const kommuner = [...new Set(data.schools.map(s => s.kommune))].filter(has)
             .sort((a, b) => starts(a) - starts(b) || a.localeCompare(b, 'nb'))
@@ -298,7 +334,7 @@
     }
 
     async function choose(item) {
-        showResults([]);
+        hideResults();
         if (item.kind === 'locate') {
             input.value = '';
             locate();
@@ -311,8 +347,15 @@
             const points = data.schools.filter(s => s.kommune === item.kommune && s.lat).map(s => [s.lat, s.lng]);
             if (points.length) map.fitBounds(points, { padding: [40, 40], maxZoom: 14 });
         } else if (item.kind === 'school') {
-            placeMarker(item.lat, item.lng);
-            map.setView([item.lat, item.lng], 16);
+            // Our schools open their popup, as on the front page; a videregående skole gets a pin
+            const marker = item.school && markerByKey.get(`${item.school.name}|${item.school.kommune}|${item.school.schoolType}`);
+            const layer = item.school && schoolLayers[item.school.schoolType];
+            if (marker && layer && map.hasLayer(layer)) {
+                layer.zoomToShowLayer(marker, () => marker.openPopup());
+            } else {
+                placeMarker(item.lat, item.lng);
+                map.setView([item.lat, item.lng], 16);
+            }
         } else if (item.postnummer) {
             // A postnummer is an area: its outline (Kartverket), not a skolekrets
             await placePostalArea(item);
@@ -339,7 +382,7 @@
 
     // An empty field lists "Din posisjon", so it is there when the field gets focus
     const offerLocation = () => {
-        if (!input.value.trim()) showResults(canLocate() ? [{ kind: 'locate' }] : []);
+        if (!input.value.trim()) showResults([]);
     };
     input.addEventListener('focus', offerLocation);
     input.addEventListener('pointerdown', offerLocation);
@@ -351,7 +394,7 @@
         if (!query) { offerLocation(); return; }
         if (query.length < 2) { showResults([]); return; }
         const local = localMatches(query);
-        showResults(local);
+        showResults(local, { grouped: true, pending: query.length >= 3 });
         if (query.length < 3) return;
         searchTimer = setTimeout(async () => {
             searchAbort = new AbortController();
@@ -361,10 +404,10 @@
             try {
                 // Beside schools and kommuner a few addresses are enough
                 const places = await searchPlaces(query, { limit: ours.length ? 5 : 8, signal: searchAbort.signal });
-                if (input.value.trim() === query) showResults(ordered(query, ours, places), { empty: true });
+                if (input.value.trim() === query) showResults(ordered(query, ours, places), { grouped: true });
             } catch (error) {
                 if (error.name === 'AbortError') return;
-                if (input.value.trim() === query) showResults(ours, { failed: true });
+                if (input.value.trim() === query) showResults(ours, { grouped: true, failed: true });
             }
         }, 250);
     });
@@ -375,7 +418,7 @@
         const list = buttons();
         const at = list.indexOf(document.activeElement);
         if (event.key === 'Escape') {
-            showResults([]);
+            hideResults();
             input.focus();
         } else if (event.key === 'ArrowDown' && list.length) {
             event.preventDefault();
@@ -386,12 +429,22 @@
         }
     });
     document.addEventListener('pointerdown', event => {
-        if (!event.target.closest('.map-search')) showResults([]);
+        if (!event.target.closest('.map-search')) hideResults();
     });
 
     // An address: its bydel in Oslo, and its skolekretser where the kommune has published them as open data
     // (drawn on the map too). Elsewhere a link to where the kommune tells it.
     const addressKretser = L.layerGroup().addTo(map);
+    // «Skolekrets» (score-colors.js) explains the two krets lines; it is there while a krets is on the map
+    const kretsLegend = addKretsLegend(map);
+    function updateKretsLegend() {
+        const on = ['kretser-barneskole', 'kretser-ungdomsskole'].some(name => boundaryLayers[name] && map.hasLayer(boundaryLayers[name]))
+            || addressKretser.getLayers().length > 0;
+        kretsLegend.getContainer().hidden = !on;
+        if (!on) kretsLegend.setOpen(false);
+    }
+    map.on('layeradd layerremove', updateKretsLegend);
+    updateKretsLegend();
     async function showAddress(item, marker) {
         const [kretser, bydeler, vgs] = await Promise.all([loadKretser(), loadBydeler(), loadVgs()]);
         const kommune = Object.keys(kretser.kommuner).find(k => k.toLowerCase() === (item.kommune || '').toLowerCase())

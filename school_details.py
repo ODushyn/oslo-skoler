@@ -3,13 +3,15 @@ Per-school detail files for the school page: static/data/skoler/<orgnr>.json
 
 The map loads static/js/school-data.json, which holds what every marker and list card
 needs. Details that only the school page shows (photo gallery, website, social links,
-AKS links, hjertesone, groups for newly arrived pupils, sports facilities, læringsbrett links, GSI history,
+AKS links, SFO/food/leksehjelp links from the school website, hjertesone, groups for newly arrived pupils,
+sports facilities, læringsbrett links, GSI history,
 skolekrets) live in one small file per school, so the map stays light and the school
 page loads only its own data. No server or database is needed: the data changes when
 the build scripts run, not when visitors use the site.
 
 Inputs (run these first, all cached in cached-data/):
     python photos.py --refresh --galleries   # Wikimedia Commons photos (open licences)
+    python photo_search.py                   # more photos by name on Commons; shown only once approved (review/bilder.html)
     python school_links.py --refresh         # NSR website, own Facebook/Instagram, Oslo AKS links
     python school_links.py --contacts        # email and phone from Enhetsregisteret
     python elevundersokelsen.py --refresh    # Trivsel and Mobbing for every school year
@@ -20,6 +22,7 @@ Inputs (run these first, all cached in cached-data/):
     python anlegg.py --refresh               # pool, football pitch and hall near the school (OpenStreetMap)
     python school_links.py --devices         # links about læringsbrett on the school's front page
     python aks_mat.py --refresh              # food facts from the AKS "Mat" page (Oslo)
+    python school_site.py --refresh          # SFO, food, leksehjelp, kurs, ferie links from every school website
     python gsi.py --refresh                  # lærertetthet, elevtall, forsterket norsk (GSI), every year
     python skolekretser.py                   # skolekretser (Halden, Stavanger, Fredrikstad, Oslo); writes static/js/
 Then:
@@ -38,6 +41,8 @@ import elevundersokelsen
 import gsi
 import photos
 import school_links
+import school_site
+import photo_search
 import ungdomsskole_oslo
 import velkomst
 
@@ -67,6 +72,10 @@ def main():
     orgnrs = sorted({s['orgnr'] for s in schools if s.get('orgnr')})
     single = photos.load_cache()
     galleries = photos.load_galleries()
+    # Photos found by photo_search.py, only those a person has approved on the review page
+    review = photo_search.load_review()
+    searched = {orgnr: [p for p in entry.get('candidates', []) if review.get(p['page']) == 'ok']
+                for orgnr, entry in photo_search.load_candidates().items()}
     links = school_links.load_cache()
     survey = elevundersokelsen.load_history()
     wikipedia = school_links.load_wikipedia()
@@ -82,6 +91,7 @@ def main():
     indicators = elevundersokelsen.load_indicators()
     devices = school_links.load_devices()
     aks_food = aks_mat.load_cache()
+    site = school_site.load()
     contacts = school_links.load_contacts()
     gsi_cache = gsi.load_cache()
     kommune_of = {s['orgnr']: s['kommune'] for s in schools if s.get('orgnr')}
@@ -118,7 +128,7 @@ def main():
         previous[old.stem] = json.loads(old.read_text(encoding='utf-8'))
         old.unlink()
 
-    counts = {'gallery': 0, 'facebook': 0, 'instagram': 0, 'aks': 0, 'hjertesone': 0, 'velkomst': 0, 'devices': 0}
+    counts = {'gallery': 0, 'facebook': 0, 'instagram': 0, 'aks': 0, 'hjertesone': 0, 'velkomst': 0, 'devices': 0, 'site': 0}
     for orgnr in orgnrs:
         gallery = []
         if orgnr in single:
@@ -127,6 +137,9 @@ def main():
         if not photos.is_school_category(own.get('category', '')):
             own = {}
         for photo in own.get('photos', []):
+            if all(photo['page'] != p['page'] for p in gallery):
+                gallery.append(photo)
+        for photo in searched.get(orgnr, []):
             if all(photo['page'] != p['page'] for p in gallery):
                 gallery.append(photo)
         entry = links.get(orgnr, {})
@@ -156,6 +169,8 @@ def main():
                        if orgnr in devices['schools'] else None,
             'aksMat': dict(aks_food['schools'][orgnr], fetched=aks_food['fetched'])
                       if orgnr in aks_food['schools'] else None,
+            'site': dict(site['schools'][orgnr], fetched=site['fetched'])
+                    if orgnr in site['schools'] else None,
             'contact': dict(contacts['schools'][orgnr], source=contacts['source'], fetched=contacts['fetched'])
                        if orgnr in contacts['schools'] else None,
             'skolekrets': {'kretser': kretser[orgnr], **krets_file['kommuner'][kretser_kommune[orgnr]]}
@@ -167,14 +182,14 @@ def main():
         if before.get('updated') and {k: v for k, v in before.items() if k != 'updated'} == {k: v for k, v in detail.items() if k != 'updated'}:
             detail['updated'] = before['updated']
         counts['gallery'] += len(gallery) > 1
-        for key in ('facebook', 'instagram', 'aks', 'hjertesone', 'velkomst', 'devices'):
+        for key in ('facebook', 'instagram', 'aks', 'hjertesone', 'velkomst', 'devices', 'site'):
             counts[key] += key in detail
         (OUTPUT_DIR / f'{orgnr}.json').write_text(json.dumps(detail, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
 
     print(f"Wrote {len(orgnrs)} files to {OUTPUT_DIR}: {counts['gallery']} with several photos, "
           f"{counts['facebook']} Facebook, {counts['instagram']} Instagram, {counts['aks']} AKS, "
           f"{counts['hjertesone']} hjertesone, {counts['velkomst']} with newcomer groups, "
-          f"{counts['devices']} with læringsbrett links")
+          f"{counts['devices']} with læringsbrett links, {counts['site']} with links from the school website")
 
 
 if __name__ == '__main__':

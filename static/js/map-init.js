@@ -12,7 +12,7 @@ function initMap() {
             // MapLibre limits latitude more strictly than Leaflet; keep panning inside it
             maxBounds: [[180, -Infinity], [-180, Infinity]],
             maxBoundsViscosity: 1,
-            zoomControl: false, // added below in the top-right corner
+            zoomControl: false, // the zoom buttons are in finder.js (bottom right, as on /kart)
             preferCanvas: true
         }
     );
@@ -22,7 +22,6 @@ function initMap() {
     baseMapLayer().addTo(map_a50579ea0c01426b15ce2ac53c4f579f);
 
     map_a50579ea0c01426b15ce2ac53c4f579f.attributionControl.setPrefix(false);
-    L.control.zoom({ position: 'topright' }).addTo(map_a50579ea0c01426b15ce2ac53c4f579f);
 
     // Initialize marker cluster
     var marker_cluster_66d9cb3de4e330e0d20b4c240f24f016 = L.markerClusterGroup({
