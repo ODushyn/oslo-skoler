@@ -37,8 +37,8 @@
         dialog.innerHTML = `
             <div class="ui-dialog__head">
                 <h2 class="ds-heading" data-size="sm" id="${id}Title">${esc(title)}</h2>
-                <button type="button" class="ds-button ui-dialog__close" data-variant="tertiary" data-close>
-                    <span aria-hidden="true">✕</span> ${esc(say('Lukk'))}</button>
+                <button type="button" class="ds-button ui-dialog__close" data-variant="tertiary" data-icon="true" data-close>
+                    <span aria-hidden="true">✕</span><span class="ds-sr-only">${esc(say('Lukk'))}</span></button>
             </div>
             <div class="ui-dialog__body">${html}</div>
             ${actions.length ? `<div class="ui-dialog__actions">${actions.map(actionHtml).join('')}</div>` : ''}`;
@@ -82,7 +82,7 @@
         box.innerHTML = `
             <div class="ui-confirm__head">
                 <h2 class="ds-heading" data-size="sm" id="${id}Title" role="status">${esc(title)}</h2>
-                <button type="button" class="ds-button ui-dialog__close" data-variant="tertiary" data-close><span aria-hidden="true">✕</span> ${esc(say('Lukk'))}</button>
+                <button type="button" class="ds-button ui-dialog__close" data-variant="tertiary" data-icon="true" data-close><span aria-hidden="true">✕</span><span class="ds-sr-only">${esc(say('Lukk'))}</span></button>
             </div>
             ${text ? `<p class="ds-paragraph">${esc(text)}</p>` : ''}${html}
             ${list.length ? `<div class="ui-dialog__actions">${list.map(actionHtml).join('')}</div>` : ''}`;

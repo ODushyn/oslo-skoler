@@ -195,7 +195,7 @@
 
     // Dialogs and confirmations (Figma section I), on every page
     const dialogs = document.createElement('script');
-    dialogs.src = `${typeof I18N !== 'undefined' ? I18N.url('static/js/dialogs.js') : 'static/js/dialogs.js'}?v=14`;
+    dialogs.src = `${typeof I18N !== 'undefined' ? I18N.url('static/js/dialogs.js') : 'static/js/dialogs.js'}?v=15`;
     document.head.appendChild(dialogs);
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -204,7 +204,7 @@
         if (slot && current !== 'tilbakemelding') {
             slot.insertAdjacentHTML('beforebegin', '<div id="page-feedback"></div>');
             const script = document.createElement('script');
-            script.src = `${I18N.url('static/js/page-feedback.js')}?v=8`;
+            script.src = `${I18N.url('static/js/page-feedback.js')}?v=11`;
             document.body.appendChild(script);
         }
         if (slot) slot.outerHTML = footer;

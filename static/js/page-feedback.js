@@ -161,17 +161,9 @@
 
     function stepThree() {
         show(`
-            <h2 class="ds-heading page-feedback__heading" data-size="xs" tabindex="-1" data-step-heading>${t('Takk for tilbakemeldingen!')}</h2>
-            <div class="page-feedback__actions">
-                <a class="ds-link page-feedback__privacy" href="${typeof I18N !== 'undefined' ? I18N.href('personvern') : 'personvern'}">${t('Personvern')}</a>
-                <button type="button" class="ds-button" data-variant="secondary" data-size="sm" data-close>${t('Lukk')}</button>
+            <div class="ds-alert page-feedback__thanks" data-color="success" data-size="sm" role="status">
+                <p class="ds-paragraph" data-size="sm" tabindex="-1" data-step-heading>${t('Takk for tilbakemeldingen!')}</p>
             </div>`);
-        body.querySelector('[data-close]').addEventListener('click', () => {
-            block.remove();
-            document.body.classList.remove('has-page-feedback');
-            const main = document.getElementById('main');
-            if (main) main.focus({ preventScroll: true });
-        });
     }
 
     // Step one starts without moving focus, so the page loads as usual
