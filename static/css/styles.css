@@ -6095,3 +6095,11 @@ fieldset.ui-choices { min-width: 0; margin: 0; padding: 0; border: 0; }
 .ds-link:hover,
 .ds-link:focus-visible,
 .ds-link:visited { font-weight: var(--ds-font-weight-regular, 400); }
+
+/* The feedback block (footer): the question, the thank-you and the steps use the same 18 px as the page's text */
+.page-feedback__heading.ds-heading,
+.page-feedback__heading { font-size: var(--sk-heading-2xs); }
+
+/* The two answers of the consent banner sit close together */
+.analyse-banner__actions { gap: var(--ds-size-1); }
+.analyse-banner__actions > .ds-button { margin: 0; }
