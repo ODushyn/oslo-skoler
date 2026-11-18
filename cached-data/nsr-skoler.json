@@ -1395,7 +1395,7 @@
 "navn": "Onyoga AS",
 "fulltNavn": "Onyoga AS",
 "kommunenummer": "0301",
-"aktiv": true,
+"aktiv": false,
 "grunnskole": false,
 "privat": true,
 "offentlig": false
@@ -26375,7 +26375,7 @@
 "navn": "Wattkoden AS",
 "fulltNavn": "Wattkoden AS",
 "kommunenummer": "0301",
-"aktiv": true,
+"aktiv": false,
 "grunnskole": false,
 "privat": true,
 "offentlig": false
