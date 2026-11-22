@@ -38331,6 +38331,26 @@
 "offentlig": false
 },
 {
+"orgnr": "938890382",
+"navn": "Eykrin ungdomsskole",
+"fulltNavn": "Eykrin ungdomsskole",
+"kommunenummer": "0301",
+"aktiv": true,
+"grunnskole": true,
+"privat": false,
+"offentlig": true
+},
+{
+"orgnr": "938903344",
+"navn": "Gym & Gaming AS",
+"fulltNavn": "Gym & Gaming AS",
+"kommunenummer": "0301",
+"aktiv": true,
+"grunnskole": false,
+"privat": true,
+"offentlig": false
+},
+{
 "orgnr": "970963847",
 "navn": "Nord-Østerdal videregående skole",
 "fulltNavn": "Nord-Østerdal videregående skole",
