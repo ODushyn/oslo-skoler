@@ -14834,7 +14834,7 @@
 "orgnr": "915563341",
 "navn": "Delfin Sk AS",
 "fulltNavn": "Delfin Sk AS",
-"kommunenummer": "4003",
+"kommunenummer": "3903",
 "aktiv": true,
 "grunnskole": false,
 "privat": true,
@@ -16377,6 +16377,16 @@
 "kommunenummer": "3802",
 "aktiv": false,
 "grunnskole": false,
+"privat": true,
+"offentlig": false
+},
+{
+"orgnr": "916759916",
+"navn": "Den Norske skolen Ved Shape",
+"fulltNavn": "Den Norske skolen Ved Shape",
+"kommunenummer": null,
+"aktiv": true,
+"grunnskole": true,
 "privat": true,
 "offentlig": false
 },
