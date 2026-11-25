@@ -20382,8 +20382,8 @@
 },
 {
 "orgnr": "920365426",
-"navn": "Hypopressiv Trening Norge AS",
-"fulltNavn": "Hypopressiv Trening Norge AS",
+"navn": "Tiltrekning Datter AS",
+"fulltNavn": "Tiltrekning Datter AS",
 "kommunenummer": "0301",
 "aktiv": true,
 "grunnskole": false,
@@ -37295,7 +37295,7 @@
 "navn": "Tiltrekning Datter AS",
 "fulltNavn": "Tiltrekning Datter AS",
 "kommunenummer": "0301",
-"aktiv": true,
+"aktiv": false,
 "grunnskole": false,
 "privat": true,
 "offentlig": false
@@ -105454,16 +105454,6 @@
 "orgnr": "U90099020",
 "navn": "Den Norske Skolen i Brussel",
 "fulltNavn": "Den Norske Skolen i Brussel",
-"kommunenummer": "2599",
-"aktiv": true,
-"grunnskole": false,
-"privat": true,
-"offentlig": false
-},
-{
-"orgnr": "U90099021",
-"navn": "Norskskolen LLC",
-"fulltNavn": "Norskskolen LLC",
 "kommunenummer": "2599",
 "aktiv": true,
 "grunnskole": false,
