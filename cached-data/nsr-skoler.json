@@ -2561,6 +2561,16 @@
 "offentlig": false
 },
 {
+"orgnr": "836699262",
+"navn": "Yokomotion AS",
+"fulltNavn": "Yokomotion AS",
+"kommunenummer": "1577",
+"aktiv": true,
+"grunnskole": false,
+"privat": true,
+"offentlig": false
+},
+{
 "orgnr": "836857372",
 "navn": "Mind-Set-Go AS",
 "fulltNavn": "Mind-Set-Go AS",
@@ -27555,7 +27565,7 @@
 "navn": "Arild Golf Academy AS",
 "fulltNavn": "Arild Golf Academy AS",
 "kommunenummer": "3103",
-"aktiv": true,
+"aktiv": false,
 "grunnskole": false,
 "privat": true,
 "offentlig": false
@@ -38355,6 +38365,16 @@
 "navn": "Gym & Gaming AS",
 "fulltNavn": "Gym & Gaming AS",
 "kommunenummer": "0301",
+"aktiv": true,
+"grunnskole": false,
+"privat": true,
+"offentlig": false
+},
+{
+"orgnr": "938920893",
+"navn": "Arctic Freediver AS",
+"fulltNavn": "Arctic Freediver AS",
+"kommunenummer": "1868",
 "aktiv": true,
 "grunnskole": false,
 "privat": true,
