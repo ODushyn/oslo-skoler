@@ -2741,6 +2741,16 @@
 "offentlig": false
 },
 {
+"orgnr": "838925642",
+"navn": "H.O.T AS",
+"fulltNavn": "H.O.T AS",
+"kommunenummer": "1838",
+"aktiv": true,
+"grunnskole": false,
+"privat": true,
+"offentlig": false
+},
+{
 "orgnr": "871817162",
 "navn": "Stiftelsen Risøy folkehøyskole",
 "fulltNavn": "Stiftelsen Risøy folkehøyskole",
@@ -25352,8 +25362,8 @@
 },
 {
 "orgnr": "925365602",
-"navn": "Urban Fitness AS",
-"fulltNavn": "Urban Fitness AS",
+"navn": "Urban Studio AS",
+"fulltNavn": "Urban Studio AS",
 "kommunenummer": "4204",
 "aktiv": true,
 "grunnskole": false,
@@ -38375,6 +38385,16 @@
 "navn": "Arctic Freediver AS",
 "fulltNavn": "Arctic Freediver AS",
 "kommunenummer": "1868",
+"aktiv": true,
+"grunnskole": false,
+"privat": true,
+"offentlig": false
+},
+{
+"orgnr": "938926751",
+"navn": "Tg Trening & Coaching AS",
+"fulltNavn": "Tg Trening & Coaching AS",
+"kommunenummer": "3437",
 "aktiv": true,
 "grunnskole": false,
 "privat": true,
